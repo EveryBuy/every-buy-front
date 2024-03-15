@@ -1,8 +1,30 @@
 #root {
-  max-width: 1280px;
+  max-width: 1440px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+}
+
+header {
+  max-width: inherit;
+  max-height: 108px;
+  padding: 16px 60px 16px 60px;
+}
+
+nav {
+  width: 424px;
+  height: 39px;
+  margin-right: 32px;
+  vertical-align: middle;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+nav span {
+  flex: 0 0 33.333333%;
+  width: 166px;
+  height: 32px;
+  padding-left: 8px;
 }
 
 .logo {
@@ -11,9 +33,11 @@
   will-change: filter;
   transition: filter 300ms;
 }
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
+
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
@@ -22,6 +46,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
