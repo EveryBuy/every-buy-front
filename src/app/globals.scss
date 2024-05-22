@@ -1,0 +1,14 @@
+@import "../styles/reset";
+@import "../styles/fonts.scss";
+@import "../styles/mixins";
+@import "../styles/variables";
+
+:root {
+  --f-family: "Inter", Arial, sans-serif;
+
+  // font size
+  --f-size-h1: 36px;
+
+  // colors
+  --color-yellow: rgb(229, 255, 70);
+}
