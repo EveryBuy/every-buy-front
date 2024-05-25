@@ -2,11 +2,23 @@
 
 import styled from "@emotion/styled";
 
+export const Pagination = styled.div`
+  display: inline-flex;
+  padding: 20px 506px;
+  align-items: flex-start;
+  gap: 60px;
+  background: var(--not-active, #f5ffb6);
+`;
+
+export const List = styled.ul`
+
+`
+
 export const HeaderContainer = styled.header`
   display: flex;
   justify-content: space-between;
   width: 1410px;
-  padding: 16px 0;
+  padding: 16px 60px;
 `;
 
 export const AddAdvertisingContainer = styled.div`

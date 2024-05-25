@@ -5,6 +5,7 @@ import styled from "@emotion/styled";
 export const FooterContainer = styled.footer`
   display: flex;
   gap: 161px;
+  padding: 12px 61px 12px 60px;
   align-items: center;
 `;
 
@@ -37,5 +38,26 @@ export const EmailButton = styled.button`
   justify-content: center;
   border-radius: 10px;
   background: var(--not-active, #f5ffb6);
-  margin-left: -10px;
+  margin-left: -15px;
+`;
+
+export const ContactContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+`;
+
+export const SocialMediaContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+`;
+
+export const MarketPlace = styled.div`
+  display: flex;
+  padding: 10px 607px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  background: var(--not-active, #f5ffb6);
 `;

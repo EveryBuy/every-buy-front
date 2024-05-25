@@ -5,6 +5,7 @@ import Logo from "../../asest/Svg/logo.svg";
 import Heart from "../../asest/Svg/heart.svg";
 import User from "../../asest/Svg/user.svg";
 import {
+  Pagination,
   HeaderContainer,
   AddAdvertisingContainer,
   AddAdvertisingButton,
@@ -15,11 +16,18 @@ import {
 const Header = () => {
   return (
     <>
+      <Pagination>
+        <ul>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+        </ul>
+      </Pagination>
       <HeaderContainer>
         <Image src={Logo} alt="Logo" />
         <AddAdvertisingContainer>
           <AddAdvertisingButton>Додати оголошення</AddAdvertisingButton>
-
           <Image src={Heart} alt="Heart" />
           <RegisterContainer>
             <Image src={User} alt="User" />
