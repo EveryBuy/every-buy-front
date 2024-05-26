@@ -6,6 +6,7 @@ import Heart from "../../asest/Svg/heart.svg";
 import User from "../../asest/Svg/user.svg";
 import {
   Pagination,
+  List,
   HeaderContainer,
   AddAdvertisingContainer,
   AddAdvertisingButton,
@@ -17,12 +18,12 @@ const Header = () => {
   return (
     <>
       <Pagination>
-        <ul>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-        </ul>
+        <List>
+          <li><a href="">Про нас</a></li>
+          <li><a href="">Акції</a></li>
+          <li><a href="">Доставка</a></li>
+          <li><a href="">Контакти</a></li>
+        </List>
       </Pagination>
       <HeaderContainer>
         <Image src={Logo} alt="Logo" />

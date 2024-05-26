@@ -11,7 +11,8 @@ export const Pagination = styled.div`
 `;
 
 export const List = styled.ul`
-
+display: flex;
+gap: 60px;
 `
 
 export const HeaderContainer = styled.header`
