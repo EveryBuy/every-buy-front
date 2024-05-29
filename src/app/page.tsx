@@ -1,6 +1,7 @@
-import Category from "@/components/Category/Category";
+// import Category from "@/components/Category/Category";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
+// import styles from "./globals.scss";
 
 export default function HomePage() {
   return (

@@ -4,18 +4,18 @@ import Logo from "../../asest/Svg/logo.svg";
 import Heart from "../../asest/Svg/heart.svg";
 import User from "../../asest/Svg/user.svg";
 import {
+  HeaderContainer,
+  HeaderTag,
   NavBar,
   List,
-  HeaderContainer,
   AddAdvertisingContainer,
   AddAdvertisingButton,
   RegisterContainer,
-  Line,
 } from "./Header.styled";
 
 const Header = () => {
   return (
-    <header>
+    <HeaderTag>
       <NavBar>
         <List>
           <li>
@@ -43,8 +43,7 @@ const Header = () => {
           </RegisterContainer>
         </AddAdvertisingContainer>
       </HeaderContainer>
-      <Line />
-    </header>
+    </HeaderTag>
   );
 };
 
