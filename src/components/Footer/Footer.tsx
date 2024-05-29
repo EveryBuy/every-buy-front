@@ -2,6 +2,14 @@ import React from "react";
 import Logo from "../../asest/Svg/logo.svg";
 import Facebook from "../../asest/Svg/facebook.svg";
 import Instagram from "../../asest/Svg/instagram.svg";
+//
+import House from "../../asest/Svg/house.svg";
+import SmallHeart from "../../asest/Svg/smallHeart.svg";
+import AddIcon from "../../asest/Svg/addIcon.svg";
+import Chat from "../../asest/Svg/chat.svg";
+import SmallUser from "../../asest/Svg/smallUser.svg";
+
+//
 import Image from "next/image";
 import {
   FooterContainer,
@@ -13,11 +21,15 @@ import {
   ContactContainer,
   SocialMediaContainer,
   MarketPlace,
+  FooterContainerMobile,
+  MobilePagination,
+  MobilePaginationItem,
+  MobilePaginationButton,
 } from "./Footer.styled";
 
 const Footer = () => {
   return (
-    <>
+    <footer>
       <Line />
       <FooterContainer>
         <Image src={Logo} alt="Logo  " />
@@ -40,7 +52,41 @@ const Footer = () => {
       <MarketPlace>
         <p>Маркетплейс EveryBuy 2024</p>
       </MarketPlace>
-    </>
+      <FooterContainerMobile>
+        <MobilePagination>
+          <MobilePaginationItem>
+            <MobilePaginationButton>
+              <Image src={House} alt="House" />
+              <span>Головна</span>
+            </MobilePaginationButton>
+          </MobilePaginationItem>
+          <MobilePaginationItem>
+            <MobilePaginationButton>
+              <Image src={SmallHeart} alt="SmallHeart" />
+              <span>Вибране</span>
+            </MobilePaginationButton>
+          </MobilePaginationItem>
+          <MobilePaginationItem>
+            <MobilePaginationButton>
+              <Image src={AddIcon} alt="AddIcon" />
+              <span>Створити</span>
+            </MobilePaginationButton>
+          </MobilePaginationItem>
+          <MobilePaginationItem>
+            <MobilePaginationButton>
+              <Image src={Chat} alt="Chat" />
+              <span>Чат</span>
+            </MobilePaginationButton>
+          </MobilePaginationItem>
+          <MobilePaginationItem>
+            <MobilePaginationButton>
+              <Image src={SmallUser} alt="SmallUser" />
+              <span>Профіль</span>
+            </MobilePaginationButton>
+          </MobilePaginationItem>
+        </MobilePagination>
+      </FooterContainerMobile>
+    </footer>
   );
 };
 

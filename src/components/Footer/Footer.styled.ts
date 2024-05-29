@@ -2,23 +2,39 @@
 
 import styled from "@emotion/styled";
 
-export const FooterContainer = styled.footer`
+export const FooterContainer = styled.div`
   display: flex;
-  gap: 161px;
-  padding: 12px 61px 12px 60px;
+  justify-content: center;
   align-items: center;
+  width: 1440px;
+  gap: 161px;
+  padding: 12px 0;
+  @media (max-width: 1439px) {
+    gap: 121px;
+    width: 768px;
+  }
+
+  @media (max-width: 767px) {
+    display: none;
+  }
 `;
 
 export const Line = styled.div`
   width: 100%;
   height: 5px;
   background-color: #f5ffb6;
+  @media (max-width: 767px) {
+    display: none;
+  }
 `;
 
 export const NotificationContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
+  @media (max-width: 1439px) {
+    display: none;
+  }
 `;
 
 export const EmailContainer = styled.div`
@@ -55,9 +71,42 @@ export const SocialMediaContainer = styled.div`
 
 export const MarketPlace = styled.div`
   display: flex;
-  padding: 10px 607px;
+  width: 1440px;
+  height: 59px;
   justify-content: center;
   align-items: center;
-  gap: 10px;
   background: var(--not-active, #f5ffb6);
+  @media (max-width: 1439px) {
+    width: 768px;
+    height: 49px;
+  }
+  @media (max-width: 767px) {
+    display: none;
+  }
+`;
+
+export const FooterContainerMobile = styled.div`
+  width: 375px;
+  border: 1px solid var(--button, #e5ff46);
+  background: #fff;
+  padding: 12px 0;
+  margin-top: 30px;
+  @media (min-width: 768px) {
+    display: none;
+  }
+`;
+
+export const MobilePagination = styled.ul`
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+`;
+
+export const MobilePaginationItem = styled.li``;
+
+export const MobilePaginationButton = styled.button`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 8px;
 `;

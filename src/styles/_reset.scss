@@ -23,8 +23,9 @@ html,
 body {
   height: 100%;
   display: flex;
-  justify-content: center;
-  padding: 0 15px;
+  flex-direction: column;
+  align-items: center;
+  // padding: 0 15px;
 }
 
 input,
