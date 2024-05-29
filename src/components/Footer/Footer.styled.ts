@@ -3,11 +3,9 @@
 import styled from "@emotion/styled";
 
 export const FooterTag = styled.footer`
-  /* width: 100%; */
   display: flex;
   flex-direction: column;
   border-top: 5px solid #f5ffb6;
-  /* justify-content: space-between; */
 `;
 
 export const FooterContainer = styled.div`
@@ -91,13 +89,6 @@ export const SocialMediaContainer = styled.div`
   }
 `;
 
-// export const ContactsWrapper = styled.div`
-//   order: 3;
-//   display: flex;
-//   justify-content: space-between;
-//   align-items: center;
-// `;
-
 export const MarketPlace = styled.div`
   width: 100%;
   display: flex;
@@ -105,17 +96,13 @@ export const MarketPlace = styled.div`
   justify-content: center;
   align-items: center;
   background-color: #f5ffb6;
-  /* @media (max-width: 1439px) {
-    width: 768px;
-    height: 49px;
-  }*/
+
   @media (max-width: 480px) {
     display: none;
   }
 `;
 
 export const FooterContainerMobile = styled.ul`
-  /* width: 375px; */
   width: 100%;
   display: flex;
   justify-content: space-between;
