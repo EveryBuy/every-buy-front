@@ -1,19 +1,20 @@
 import React from "react";
-import Logo from "../../asest/Svg/logo.svg";
-import Facebook from "../../asest/Svg/facebook.svg";
-import Instagram from "../../asest/Svg/instagram.svg";
+
+import Logo from "../../assets/Svg/logo.svg";
+import Facebook from "../../assets/Svg/facebook.svg";
+import Instagram from "../../assets/Svg/instagram.svg";
 //
-import House from "../../asest/Svg/house.svg";
-import SmallHeart from "../../asest/Svg/smallHeart.svg";
-import AddIcon from "../../asest/Svg/addIcon.svg";
-import Chat from "../../asest/Svg/chat.svg";
-import SmallUser from "../../asest/Svg/smallUser.svg";
+import House from "../../assets/Svg/house.svg";
+import SmallHeart from "../../assets/Svg/smallHeart.svg";
+import AddIcon from "../../assets/Svg/addIcon.svg";
+import Chat from "../../assets/Svg/chat.svg";
+import SmallUser from "../../assets/Svg/smallUser.svg";
 
 //
 import Image from "next/image";
 import {
+  FooterTag,
   FooterContainer,
-  Line,
   NotificationContainer,
   EmailContainer,
   EmailInput,
@@ -22,17 +23,18 @@ import {
   SocialMediaContainer,
   MarketPlace,
   FooterContainerMobile,
-  MobilePagination,
+  ImageWrapper,
   MobilePaginationItem,
   MobilePaginationButton,
 } from "./Footer.styled";
 
 const Footer = () => {
   return (
-    <footer>
-      <Line />
+    <FooterTag>
       <FooterContainer>
-        <Image src={Logo} alt="Logo  " />
+        <ImageWrapper>
+          <Image src={Logo} alt="Logo  " />
+        </ImageWrapper>
         <NotificationContainer>
           <p>Бажаєте отримувати повідомлення про новинки?</p>
           <EmailContainer>
@@ -49,44 +51,42 @@ const Footer = () => {
           <Image src={Instagram} alt="Instagram" />
         </SocialMediaContainer>
       </FooterContainer>
+      <FooterContainerMobile>
+        <MobilePaginationItem>
+          <MobilePaginationButton>
+            <Image src={House} alt="House" />
+            <span>Головна</span>
+          </MobilePaginationButton>
+        </MobilePaginationItem>
+        <MobilePaginationItem>
+          <MobilePaginationButton>
+            <Image src={SmallHeart} alt="SmallHeart" />
+            <span>Вибране</span>
+          </MobilePaginationButton>
+        </MobilePaginationItem>
+        <MobilePaginationItem>
+          <MobilePaginationButton>
+            <Image src={AddIcon} alt="AddIcon" />
+            <span>Створити</span>
+          </MobilePaginationButton>
+        </MobilePaginationItem>
+        <MobilePaginationItem>
+          <MobilePaginationButton>
+            <Image src={Chat} alt="Chat" />
+            <span>Чат</span>
+          </MobilePaginationButton>
+        </MobilePaginationItem>
+        <MobilePaginationItem>
+          <MobilePaginationButton>
+            <Image src={SmallUser} alt="SmallUser" />
+            <span>Профіль</span>
+          </MobilePaginationButton>
+        </MobilePaginationItem>
+      </FooterContainerMobile>
       <MarketPlace>
         <p>Маркетплейс EveryBuy 2024</p>
       </MarketPlace>
-      <FooterContainerMobile>
-        <MobilePagination>
-          <MobilePaginationItem>
-            <MobilePaginationButton>
-              <Image src={House} alt="House" />
-              <span>Головна</span>
-            </MobilePaginationButton>
-          </MobilePaginationItem>
-          <MobilePaginationItem>
-            <MobilePaginationButton>
-              <Image src={SmallHeart} alt="SmallHeart" />
-              <span>Вибране</span>
-            </MobilePaginationButton>
-          </MobilePaginationItem>
-          <MobilePaginationItem>
-            <MobilePaginationButton>
-              <Image src={AddIcon} alt="AddIcon" />
-              <span>Створити</span>
-            </MobilePaginationButton>
-          </MobilePaginationItem>
-          <MobilePaginationItem>
-            <MobilePaginationButton>
-              <Image src={Chat} alt="Chat" />
-              <span>Чат</span>
-            </MobilePaginationButton>
-          </MobilePaginationItem>
-          <MobilePaginationItem>
-            <MobilePaginationButton>
-              <Image src={SmallUser} alt="SmallUser" />
-              <span>Профіль</span>
-            </MobilePaginationButton>
-          </MobilePaginationItem>
-        </MobilePagination>
-      </FooterContainerMobile>
-    </footer>
+    </FooterTag>
   );
 };
 
