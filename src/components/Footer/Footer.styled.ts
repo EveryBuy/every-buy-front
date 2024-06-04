@@ -2,38 +2,47 @@
 
 import styled from "@emotion/styled";
 
-export const FooterContainer = styled.div`
+export const FooterTag = styled.footer`
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  border-top: 5px solid #f5ffb6;
+`;
+
+export const FooterContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  width: 1440px;
-  gap: 161px;
-  padding: 12px 0;
-  @media (max-width: 1439px) {
-    gap: 121px;
-    width: 768px;
+  padding: 16px 60px;
+  flex-wrap: wrap;
+
+  @media (max-width: 1000px) {
+    gap: 10px;
+    padding: 10px 30px;
   }
 
-  @media (max-width: 767px) {
+  @media (max-width: 480px) {
     display: none;
   }
 `;
 
-export const Line = styled.div`
-  width: 100%;
-  height: 5px;
-  background-color: #f5ffb6;
-  @media (max-width: 767px) {
-    display: none;
-  }
+export const ImageWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  order: 1;
 `;
 
 export const NotificationContainer = styled.div`
   display: flex;
   flex-direction: column;
+  order: 2;
   gap: 12px;
-  @media (max-width: 1439px) {
+  @media (max-width: 800px) {
     display: none;
+  }
+  @media (max-width: 480px) {
+    order: 4;
   }
 `;
 
@@ -46,6 +55,10 @@ export const EmailInput = styled.input`
   border-radius: 10px;
   border: 1px solid var(--not-active, #f5ffb6);
   background: var(--background, #fff);
+
+  @media (max-width: 1000px) {
+    padding: 0px;
+  }
 `;
 
 export const EmailButton = styled.button`
@@ -60,46 +73,51 @@ export const EmailButton = styled.button`
 export const ContactContainer = styled.div`
   display: flex;
   flex-direction: column;
+  order: 3;
   gap: 16px;
+
+  @media (max-width: 480px) {
+    order: 2;
+  }
 `;
 
 export const SocialMediaContainer = styled.div`
   display: flex;
   flex-direction: column;
+  order: 4;
   gap: 16px;
+
+  @media (max-width: 480px) {
+    order: 3;
+  }
 `;
 
 export const MarketPlace = styled.div`
+  width: 100%;
   display: flex;
-  width: 1440px;
-  height: 59px;
+  height: 39px;
   justify-content: center;
   align-items: center;
-  background: var(--not-active, #f5ffb6);
-  @media (max-width: 1439px) {
-    width: 768px;
-    height: 49px;
-  }
-  @media (max-width: 767px) {
+  background-color: #f5ffb6;
+
+  @media (max-width: 480px) {
     display: none;
   }
 `;
 
-export const FooterContainerMobile = styled.div`
-  width: 375px;
+export const FooterContainerMobile = styled.ul`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
   border: 1px solid var(--button, #e5ff46);
   background: #fff;
-  padding: 12px 0;
+  padding: 12px 20px;
   margin-top: 30px;
-  @media (min-width: 768px) {
+  font-size: var(--f-size-small);
+
+  @media (min-width: 481px) {
     display: none;
   }
-`;
-
-export const MobilePagination = styled.ul`
-  display: flex;
-  justify-content: center;
-  gap: 10px;
 `;
 
 export const MobilePaginationItem = styled.li``;
