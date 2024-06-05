@@ -36,8 +36,8 @@ const Footer = () => {
           <a href="mailto:EveryBuymarket@gmail.com">EveryBuymarket@gmail.com</a>
         </ContactContainer>
         <SocialMediaContainer>
-          <CommonIcon id="icon-facebook" className={styles.facebookIcon} />
-          <CommonIcon id="icon-instagram" className={styles.instagrammIcon} />
+          <CommonIcon id="icon-facebook" width="40" height="40" className={styles.facebookIcon} />
+          <CommonIcon id="icon-instagram" width="40" height="40" className={styles.instagramIcon} />
         </SocialMediaContainer>
       </FooterContainer>
 

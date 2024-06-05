@@ -13,6 +13,7 @@ import {
   AddAdvertisingButton,
   RegisterContainer,
 } from "./Header.styled";
+import CommonIcon from "../CommonIcon/CommonIcon";
 
 const Header = () => {
   return (

@@ -1,6 +1,6 @@
 .facebookIcon,
-.instagrammIcon {
-  width: 40px;
-  height: 40px;
-  color: #e5ff46;
+.instagramIcon {
+ fill: var(--button);
+stroke-width: 1px;
+stroke: var(--input-text);
 }
