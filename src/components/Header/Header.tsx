@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import CommonIcon from "../CommonIcon/CommonIcon";
+// import CommonIcon from "../CommonIcon/CommonIcon";
 import Logo from "../../assets/Svg/logo.svg";
 import Heart from "../../assets/Svg/heart.svg";
 import User from "../../assets/Svg/user.svg";
