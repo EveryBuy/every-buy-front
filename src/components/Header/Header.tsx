@@ -22,7 +22,7 @@ const Header = () => {
         <List>
           {footerItems.map(({ text }) => (
             <li key={text}>
-              <a href="">Про нас</a>
+              <a href="">{text}</a>
             </li>
           ))}
         </List>
