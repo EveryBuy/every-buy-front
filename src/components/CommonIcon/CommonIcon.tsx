@@ -1,19 +1,10 @@
-import React from 'react';
-import sprite from "../../assets/icons.svg";
+import CommonIconProps from "@/types/commonIconProps";
+import styles from "./CommonIcon.module.scss";
 
-interface CommonIconProps {
-  id: string;
-  className?: string;
-  width?: number | string;
-  height?: number | string;
-  style?: React.CSSProperties;
-}
-
-const CommonIcon: React.FC<CommonIconProps> = ({ id, className, width, height, style }) => {
-  
+const CommonIcon: React.FC<CommonIconProps> = ({ id, className }) => {
   return (
-    <svg className={className} width={width} height={height} style={style}>
-      <use href={`${sprite}#${id}`}></use>
+    <svg className={`${styles.icon} ${className}`}>
+      <use href={`/icons.svg#${id}`} />
     </svg>
   );
 };
