@@ -1,17 +1,8 @@
 import React from "react";
-
-import Logo from "../../assets/Svg/logo.svg";
-import Facebook from "../../assets/Svg/facebook.svg";
-import Instagram from "../../assets/Svg/instagram.svg";
-//
-import House from "../../assets/Svg/house.svg";
-import SmallHeart from "../../assets/Svg/smallHeart.svg";
-import AddIcon from "../../assets/Svg/addIcon.svg";
-import Chat from "../../assets/Svg/chat.svg";
-import SmallUser from "../../assets/Svg/smallUser.svg";
-
-//
 import Image from "next/image";
+import CommonIcon from "../CommonIcon/CommonIcon";
+import FooterMobile from "./components/FooterMobile";
+import Logo from "../../assets/Svg/logo.svg";
 import {
   FooterTag,
   FooterContainer,
@@ -22,18 +13,16 @@ import {
   ContactContainer,
   SocialMediaContainer,
   MarketPlace,
-  FooterContainerMobile,
   ImageWrapper,
-  MobilePaginationItem,
-  MobilePaginationButton,
 } from "./Footer.styled";
+import styles from "./Footer.module.scss";
 
 const Footer = () => {
   return (
     <FooterTag>
       <FooterContainer>
         <ImageWrapper>
-          <Image src={Logo} alt="Logo  " />
+          <Image priority src={Logo} alt="Logo" width={104} height={77} />
         </ImageWrapper>
         <NotificationContainer>
           <p>Бажаєте отримувати повідомлення про новинки?</p>
@@ -47,42 +36,13 @@ const Footer = () => {
           <a href="mailto:EveryBuymarket@gmail.com">EveryBuymarket@gmail.com</a>
         </ContactContainer>
         <SocialMediaContainer>
-          <Image src={Facebook} alt="Facebook" />
-          <Image src={Instagram} alt="Instagram" />
+          <CommonIcon id="icon-facebook" className={styles.facebookIcon} />
+          <CommonIcon id="icon-instagram" className={styles.instagrammIcon} />
         </SocialMediaContainer>
       </FooterContainer>
-      <FooterContainerMobile>
-        <MobilePaginationItem>
-          <MobilePaginationButton>
-            <Image src={House} alt="House" />
-            <span>Головна</span>
-          </MobilePaginationButton>
-        </MobilePaginationItem>
-        <MobilePaginationItem>
-          <MobilePaginationButton>
-            <Image src={SmallHeart} alt="SmallHeart" />
-            <span>Вибране</span>
-          </MobilePaginationButton>
-        </MobilePaginationItem>
-        <MobilePaginationItem>
-          <MobilePaginationButton>
-            <Image src={AddIcon} alt="AddIcon" />
-            <span>Створити</span>
-          </MobilePaginationButton>
-        </MobilePaginationItem>
-        <MobilePaginationItem>
-          <MobilePaginationButton>
-            <Image src={Chat} alt="Chat" />
-            <span>Чат</span>
-          </MobilePaginationButton>
-        </MobilePaginationItem>
-        <MobilePaginationItem>
-          <MobilePaginationButton>
-            <Image src={SmallUser} alt="SmallUser" />
-            <span>Профіль</span>
-          </MobilePaginationButton>
-        </MobilePaginationItem>
-      </FooterContainerMobile>
+
+      <FooterMobile />
+
       <MarketPlace>
         <p>Маркетплейс EveryBuy 2024</p>
       </MarketPlace>

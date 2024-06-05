@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-// import CommonIcon from "../CommonIcon/CommonIcon";
+import { footerItems } from "@/mock-data/footerItems";
 import Logo from "../../assets/Svg/logo.svg";
 import Heart from "../../assets/Svg/heart.svg";
 import User from "../../assets/Svg/user.svg";
@@ -19,27 +19,20 @@ const Header = () => {
     <HeaderTag>
       <NavBar>
         <List>
-          <li>
-            <a href="">Про нас</a>
-          </li>
-          <li>
-            <a href="">Акції</a>
-          </li>
-          <li>
-            <a href="">Доставка</a>
-          </li>
-          <li>
-            <a href="">Контакти</a>
-          </li>
+          {footerItems.map(({ text }) => (
+            <li key={text}>
+              <a href="">Про нас</a>
+            </li>
+          ))}
         </List>
       </NavBar>
       <HeaderContainer>
-        <Image src={Logo} alt="Logo" />
+        <Image priority src={Logo} alt="Logo" width={104} height={77} />
         <AddAdvertisingContainer>
           <AddAdvertisingButton>Додати оголошення</AddAdvertisingButton>
-          <Image src={Heart} alt="Heart" />
+          <Image priority src={Heart} alt="Heart" width={32} height={32} />
           <RegisterContainer>
-            <Image src={User} alt="User" />
+            <Image src={User} alt="User" width={32} height={32} />
             <button>Вхід|Реєстрація</button>
           </RegisterContainer>
         </AddAdvertisingContainer>
