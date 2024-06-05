@@ -8,7 +8,7 @@ export default function HomePage() {
       <Header />
       <main>
         <h2>Home Page</h2>
-        {/* <Category/> */}
+        <Category/>
       </main>
       <Footer />
     </body>
