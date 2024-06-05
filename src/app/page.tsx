@@ -12,7 +12,7 @@ export default function HomePage() {
       <main>
         <h2>Home Page</h2>
         <CommonButton type="button" title="hello" color="white" />
-        <CommonIcon id='icon-heart' width='30' height='30'/>
+        <CommonIcon id='icon-warning-filled' width='30' height='30'/>
         {/* <Category/> */}
       </main>
       <Footer />
