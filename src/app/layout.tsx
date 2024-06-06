@@ -1,10 +1,5 @@
-import RootLayoutPropsType from "../types/rootLayout";
-import "./globals.scss";
+import LayoutProps from "@/types/layoutProp";
 
-export default function RootLayout({ children }: RootLayoutPropsType) {
-  return (
-    <html>
-      <body>{children}</body>
-    </html>
-  );
+export default function RootLayout({ children }: LayoutProps) {
+  return children;
 }
