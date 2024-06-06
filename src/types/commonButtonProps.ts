@@ -1,6 +1,6 @@
 export default interface CommonButtonProps {
   type: "submit" | "reset" | "button";
   title: string;
-  color: "white" | "light-yellow" | "yellow";
+  color: "transparent" | "light-yellow" | "yellow";
   className?: string;
 }

@@ -16,6 +16,7 @@ import {
 import CommonIcon from "../CommonIcon/CommonIcon";
 import Category from "../Category/Category";
 import styles from "./Header.module.scss";
+import CommonButton from "../CommonButton/CommonButton";
 
 const Header = () => {
   return (

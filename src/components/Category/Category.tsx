@@ -21,6 +21,7 @@ import {
 import CategoryItem from "@/types/categoryItemType";
 import ApiResponse from "@/types/apiResponseType";
 import CommonButton from "../CommonButton/CommonButton";
+import styles from "./Category.module.scss";
 
 const Category: React.FC = () => {
   const [data, setData] = useState<CategoryItem[] | null>(null);
@@ -77,8 +78,20 @@ const Category: React.FC = () => {
             {windowWidth >= 768 ? "Розподіл на категорії" : "Категорії"}
           </Title>
           <ButtonsContainer>
-            <BuyButton>Куплю</BuyButton>
-            <SellButton>Продам</SellButton>
+            {/* <BuyButton>Куплю</BuyButton>
+            <SellButton>Продам</SellButton> */}
+            <CommonButton
+              type="button"
+              title="Куплю"
+              color="yellow"
+              className={styles.categoryButtonBuy}
+            />
+            <CommonButton
+              type="button"
+              title="Продам"
+              color="transparent"
+              className={styles.categoryButtonSell}
+            />
           </ButtonsContainer>
         </TitleContainer>
         {data && data.length > 0 ? (
