@@ -64,47 +64,10 @@ const Category: React.FC = () => {
   if (loading) {
     return <div>Loading...</div>;
   }
-  
-  interface ApiResponse {
-    status: number;
-    data: CategoryItem[];
+
+  if (error) {
+    return <div>Error: {error}</div>;
   }
-  
-  const Category: React.FC = () => {
-    const [data, setData] = useState<CategoryItem[] | null>(null); // типізуємо стан даних
-    const [loading, setLoading] = useState<boolean>(true); // типізуємо стан завантаження
-    const [error, setError] = useState<string | null>(null); // типізуємо стан помилки
-  
-    useEffect(() => {
-        const fetchData = async () => {
-          try {
-            const response = await fetch('/api/ad/category');
-            if (!response.ok) {
-              throw new Error('Network response was not ok');
-            }
-            const result: ApiResponse = await response.json();
-            setData(result.data); 
-            console.log(result.data); // Додай вивід даних у консоль
-          } catch (error: any) {
-            console.error('Error fetching data:', error);
-            setError(error.message);
-          } finally {
-            setLoading(false);
-          }
-        };
-      
-        fetchData();
-      }, []);
-      
-    if (loading) {
-      return <div>Loading...</div>;
-    }
-  
-    if (error) {
-      return <div>Error: {error}</div>;
-    }
-  
-console.log(data);
 
   return (
     <section>
@@ -114,10 +77,8 @@ console.log(data);
             {windowWidth >= 768 ? "Розподіл на категорії" : "Категорії"}
           </Title>
           <ButtonsContainer>
-            {/* <BuyButton>Куплю</BuyButton>
-            <SellButton>Продам</SellButton> */}
-            <CommonButton type="button" title="Куплю" color="yellow" />
-            <CommonButton type="button" title="Продам" color="white" />
+            <BuyButton>Куплю</BuyButton>
+            <SellButton>Продам</SellButton>
           </ButtonsContainer>
         </TitleContainer>
         {data && data.length > 0 ? (
@@ -140,11 +101,9 @@ console.log(data);
         ) : (
           <p>No data available</p>
         )}
-          </SectionContainer>
-      </section>
-    );
-  };
-  
-  export default Category;
-  
-  
+      </SectionContainer>
+    </section>
+  );
+};
+
+export default Category;
