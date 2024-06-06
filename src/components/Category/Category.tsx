@@ -18,18 +18,8 @@ import {
   ListItemImage,
   FoldImg,
 } from "./Category.styled";
-
-interface CategoryItem {
-  id: number;
-  categoryName: string;
-  nameUkr: string;
-  photoUrl: string;
-}
-
-interface ApiResponse {
-  status: number;
-  data: CategoryItem[];
-}
+import CategoryItem from "@/types/categoryItemType";
+import ApiResponse from "@/types/apiResponseType";
 
 const Category: React.FC = () => {
   const [data, setData] = useState<CategoryItem[] | null>(null);
@@ -41,7 +31,7 @@ const Category: React.FC = () => {
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
     };
-
+    
     window.addEventListener("resize", handleResize);
 
     return () => {
