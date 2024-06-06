@@ -1,0 +1,22 @@
+.common-styles {
+  border-radius: 10px;
+  
+  font-family: var(--font-family);
+  font-weight: 400;
+  color: var(--label);
+}
+
+.white {
+  @extend .common-styles;
+  border: 1px solid var(--label);
+}
+
+.light-yellow {
+  @extend .common-styles;
+  background: var(--not-active);
+}
+
+.yellow {
+  @extend .common-styles;
+  background: var(--button);
+}
