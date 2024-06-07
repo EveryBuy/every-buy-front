@@ -9,13 +9,14 @@ import {
   NotificationContainer,
   EmailContainer,
   EmailInput,
-  EmailButton,
+  // EmailButton,
   ContactContainer,
   SocialMediaContainer,
   MarketPlace,
   ImageWrapper,
 } from "./Footer.styled";
 import styles from "./Footer.module.scss";
+import CommonButton from "../CommonButton/CommonButton";
 
 const Footer = () => {
   return (
@@ -28,7 +29,8 @@ const Footer = () => {
           <p>Бажаєте отримувати повідомлення про новинки?</p>
           <EmailContainer>
             <EmailInput type="text" placeholder="Введіть свій e-mail" />
-            <EmailButton>Підписатись</EmailButton>
+            <CommonButton type="button" title="Підписатись" color="light-yellow" className={styles.buttonSubscribe } />
+            {/* <EmailButton>Підписатись</EmailButton> */}
           </EmailContainer>
         </NotificationContainer>
         <ContactContainer>
@@ -42,7 +44,6 @@ const Footer = () => {
       </FooterContainer>
 
       <FooterMobile />
-
       <MarketPlace>
         <p>Маркетплейс EveryBuy 2024</p>
       </MarketPlace>

@@ -10,10 +10,13 @@ import {
   NavBar,
   List,
   AddAdvertisingContainer,
-  AddAdvertisingButton,
+  // AddAdvertisingButton,
   RegisterContainer,
 } from "./Header.styled";
 import CommonIcon from "../CommonIcon/CommonIcon";
+import Category from "../Category/Category";
+import styles from "./Header.module.scss";
+import CommonButton from "../CommonButton/CommonButton";
 
 const Header = () => {
   return (
@@ -30,7 +33,13 @@ const Header = () => {
       <HeaderContainer>
         <Image priority src={Logo} alt="Logo" width={104} height={77} />
         <AddAdvertisingContainer>
-          <AddAdvertisingButton>Додати оголошення</AddAdvertisingButton>
+          {/* <AddAdvertisingButton>Додати оголошення</AddAdvertisingButton> */}
+          <CommonButton
+            type="button"
+            title="Додати оголошення"
+            color="light-yellow"
+            className={styles.headerButton}
+          />
           <Image priority src={Heart} alt="Heart" width={32} height={32} />
           <RegisterContainer>
             <Image src={User} alt="User" width={32} height={32} />
@@ -38,6 +47,7 @@ const Header = () => {
           </RegisterContainer>
         </AddAdvertisingContainer>
       </HeaderContainer>
+      <Category />
     </HeaderTag>
   );
 };

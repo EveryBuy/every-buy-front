@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import Image from 'next/image'; // Import Image from next/image
+import Image from "next/image"; // Import Image from next/image
 import Fold from "../../assets/Svg/fold.svg";
 import PC from "../../assets/pc.png";
 import {
@@ -20,6 +20,8 @@ import {
 } from "./Category.styled";
 import CategoryItem from "@/types/categoryItemType";
 import ApiResponse from "@/types/apiResponseType";
+import CommonButton from "../CommonButton/CommonButton";
+import styles from "./Category.module.scss";
 
 const Category: React.FC = () => {
   const [data, setData] = useState<CategoryItem[] | null>(null);
@@ -31,7 +33,7 @@ const Category: React.FC = () => {
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
     };
-    
+
     window.addEventListener("resize", handleResize);
 
     return () => {
@@ -72,10 +74,24 @@ const Category: React.FC = () => {
     <section>
       <SectionContainer>
         <TitleContainer>
-          <Title>{windowWidth >= 768 ? "Розподіл на категорії" : "Категорії"}</Title>
+          <Title>
+            {windowWidth >= 768 ? "Розподіл на категорії" : "Категорії"}
+          </Title>
           <ButtonsContainer>
-            <BuyButton>Куплю</BuyButton>
-            <SellButton>Продам</SellButton>
+            {/* <BuyButton>Куплю</BuyButton>
+            <SellButton>Продам</SellButton> */}
+            <CommonButton
+              type="button"
+              title="Куплю"
+              color="yellow"
+              className={styles.categoryButtonBuy}
+            />
+            <CommonButton
+              type="button"
+              title="Продам"
+              color="transparent"
+              className={styles.categoryButtonSell}
+            />
           </ButtonsContainer>
         </TitleContainer>
         {data && data.length > 0 ? (
@@ -84,11 +100,11 @@ const Category: React.FC = () => {
               <ListItem key={id}>
                 <FoldImg src={Fold} alt="Fold" />
                 <ListItemWrapper>
-                  <ListItemImage 
-                    src={photoUrl} 
-                    alt={nameUkr} 
-                    width={98} 
-                    height={98} 
+                  <ListItemImage
+                    src={photoUrl}
+                    alt={nameUkr}
+                    width={98}
+                    height={98}
                   />
                   <ListItemText>{nameUkr}</ListItemText>
                 </ListItemWrapper>
