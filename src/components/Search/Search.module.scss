@@ -6,6 +6,18 @@
   justify-content: center;
 }
 
+@include media-min($breakpoint-mobile + 1) {
+  .searchContainer {
+    padding-top: 26px;
+  }
+}
+
+@include media-min($breakpoint-tablet) {
+  .searchContainer {
+    padding-top: 41px;
+  }
+}
+
 .searchForm {
   display: flex;
 }
@@ -32,10 +44,23 @@
   font-size: 16px;
   color: var(--input-text);
 
+  background: var(--background);
+
+  transition: border 0.25s, box-shadow 0.25s;
+
   // background-image: url("/icons.svg#icon-search");
   // background-repeat: no-repeat;
   // background-position: right 10px center;
   // background-size: 20px 20px;
+}
+
+.searchInput:hover {
+  border: 1px solid var(--input-text);
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+.searchInput:focus {
+  border: 2px solid var(--accent);
 }
 
 @include media-min($breakpoint-tablet) {
@@ -44,6 +69,8 @@
     min-width: 500px;
     max-width: 873px;
     height: 60px;
+
+    background: #e6e6e6;
   }
 }
 
