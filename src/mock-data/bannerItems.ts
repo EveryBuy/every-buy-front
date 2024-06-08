@@ -7,6 +7,7 @@ export const bannerItems: BannerItemType[] = [
     condition: "вживане",
     price: "8490 грн",
     buttonName: "Купити",
+    backgroundImage: "",
   },
   {
     label: "NEW",
@@ -14,6 +15,7 @@ export const bannerItems: BannerItemType[] = [
     condition: "нове",
     price: "1200 грн",
     buttonName: "Купити",
+    backgroundImage: "",
   },
   {
     label: "SALE",
@@ -21,6 +23,7 @@ export const bannerItems: BannerItemType[] = [
     condition: "акція діє до кінця березня",
     price: "",
     buttonName: "Перейти",
+    backgroundImage: "",
   },
   {
     label: "NEW",
@@ -28,6 +31,7 @@ export const bannerItems: BannerItemType[] = [
     condition: "вживане",
     price: "12450 грн",
     buttonName: "Купити",
+    backgroundImage: "",
   },
   {
     label: "NEW",
@@ -35,5 +39,6 @@ export const bannerItems: BannerItemType[] = [
     condition: "вживане/нове",
     price: "від 600 до 1400 грн",
     buttonName: "Запропонувати",
+    backgroundImage: "",
   },
 ];

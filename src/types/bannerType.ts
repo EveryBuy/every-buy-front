@@ -4,4 +4,5 @@ export default interface BannerItemType {
   condition: string;
   price: string;
   buttonName: string;
+  backgroundImage: string;
 }
