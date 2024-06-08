@@ -1,9 +1,12 @@
 import "../globals.scss";
+import Search from "@/components/Search/Search";
+// import Category from "@/components/Category/Category";
 
 export default function HomePage() {
   return (
     <main>
-      <h2>Home Page</h2>
+      <Search />
+      {/* <Category /> */}
     </main>
   );
 }

@@ -1,0 +1,99 @@
+@import "../../styles/mixins";
+@import "../../styles/variables";
+
+.searchContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.searchForm {
+  display: flex;
+}
+
+@include media-min($breakpoint-tablet) {
+  .searchForm {
+    gap: 12px;
+  }
+}
+
+.searchInputWrapper {
+  position: relative;
+}
+
+.searchInput {
+  border: 1px solid var(--button);
+  border-radius: 10px;
+  padding: 11px 8px;
+
+  max-width: 275px;
+  height: 41px;
+
+  font-weight: 400;
+  font-size: 16px;
+  color: var(--input-text);
+
+  // background-image: url("/icons.svg#icon-search");
+  // background-repeat: no-repeat;
+  // background-position: right 10px center;
+  // background-size: 20px 20px;
+}
+
+@include media-min($breakpoint-tablet) {
+  .searchInput {
+    padding: 20px 23px;
+    min-width: 500px;
+    max-width: 873px;
+    height: 60px;
+  }
+}
+
+.searchInputIcon {
+  @extend .searchIcon;
+  display: none;
+}
+
+@include media-min($breakpoint-tablet) {
+  .searchInputIcon {
+    display: block;
+    top: 50%;
+    right: 23px;
+    transform: translateY(-50%);
+  }
+}
+
+.searchButton {
+  position: relative;
+  padding: 10px 20px;
+  width: 60px;
+  height: 41px;
+}
+
+@include media-min($breakpoint-tablet) {
+  .searchButton {
+    position: static;
+    padding: 20px 40px;
+    min-width: 136px;
+    height: 59px;
+  }
+
+  .searchButton::before {
+    content: "Знайти";
+  }
+}
+
+.searchIcon {
+  position: absolute;
+}
+
+.searchButtonIcon {
+  @extend .searchIcon;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+}
+
+@include media-min($breakpoint-tablet) {
+  .searchButtonIcon {
+    display: none;
+  }
+}
