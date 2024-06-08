@@ -5,6 +5,9 @@ import styles from "./SliderComponent.module.scss";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useRef } from "react";
+import Banner from "../Banner/Banner";
+import { bannerItems } from "@/mock-data/bannerItems";
+import { nanoid } from "nanoid";
 
 const SliderComponent = () => {
   // const slider = useRef(null); ref={slider}
@@ -25,24 +28,9 @@ const SliderComponent = () => {
 
   return (
     <Slider {...settings}>
-      <div>
-        <h3>1</h3>
-      </div>
-      <div>
-        <h3>2</h3>
-      </div>
-      <div>
-        <h3>3</h3>
-      </div>
-      <div>
-        <h3>4</h3>
-      </div>
-      <div>
-        <h3>5</h3>
-      </div>
-      <div>
-        <h3>6</h3>
-      </div>
+      {bannerItems.map((item) => (
+        <Banner item={item} key={nanoid()} />
+      ))}
     </Slider>
   );
 };

@@ -77,3 +77,25 @@
   }
 }
 */
+@import "../../styles/mixins";
+@import "../../styles/variables";
+
+.bannerItem {
+  border-radius: 10px;
+  width: 282px;
+  height: 103px;
+  padding: 6px 10px 8px 10px;
+
+  @include media-min($breakpoint-tablet) {
+    border-radius: 33px;
+    width: 900px;
+    height: 330px;
+  }
+}
+
+// .bannerIcon {
+//   background: var(--button);
+//   fill: none;
+//   stroke: none;
+//   border: 1px solid black;
+// }
