@@ -1,0 +1,10 @@
+@import "../../styles/mixins";
+@import "../../styles/variables";
+
+.sliderSection {
+  height: 103px;
+
+  @include media-min($breakpoint-tablet) {
+    height: 392px;
+  }
+}

@@ -1,4 +1,3 @@
-import { bannerItems } from "@/mock-data/bannerItems";
 import CommonIcon from "../CommonIcon/CommonIcon";
 import styles from "./Banner.module.scss";
 import CommonButton from "../CommonButton/CommonButton";
@@ -12,18 +11,25 @@ const Banner = ({ item }: BannerProps) => {
   };
 
   return (
-    <div className={styles.bannerItem} style={bannerStyle}>
-      <CommonIcon
-        id="icon-star"
-        width="40"
-        height="26"
-        className={styles.bannerIcon}
+    <div className={styles.bannerContainer} style={bannerStyle}>
+      <div className={styles.bannerLabelContainer}>
+        <CommonIcon
+          id="icon-star"
+          width="40"
+          height="26"
+          className={styles.bannerIcon}
+        />
+        <span className={styles.bannerLabel}>{label}</span>
+      </div>
+      <h2 className={styles.bannerTitle}>{title}</h2>
+      <p className={styles.bannerAdditionalInfo}>{condition}</p>
+      <p className={styles.bannerPrice}>{price}</p>
+      <CommonButton
+        type="button"
+        title={buttonName}
+        color="yellow"
+        className={styles.bannerButton}
       />
-      <span>{label}</span>
-      <h2>{title}</h2>
-      <p>{condition}</p>
-      <p>{price}</p>
-      <CommonButton type="button" title={buttonName} color="yellow" />
     </div>
   );
 };

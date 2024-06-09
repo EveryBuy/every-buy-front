@@ -1,13 +1,13 @@
-import SliderComponent from "@/components/SliderComponent/SliderComponent";
 import "../globals.scss";
 import Search from "@/components/Search/Search";
+import SliderContainer from "@/components/SliderContainer/SliderContainer";
 // import Category from "@/components/Category/Category";
 
 export default function HomePage() {
   return (
     <main>
       <Search />
-      <SliderComponent />
+      <SliderContainer />
       {/* <Category /> */}
     </main>
   );
