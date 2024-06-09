@@ -22,8 +22,9 @@ const Banner = ({ item }: BannerProps) => {
         <span className={styles.bannerLabel}>{label}</span>
       </div>
       <h2 className={styles.bannerTitle}>{title}</h2>
-      <p className={styles.bannerAdditionalInfo}>{condition}</p>
-      <p className={styles.bannerPrice}>{price}</p>
+      <p className={styles.bannerAdditionalInfo}>{condition || "\u00A0"}</p>
+      {/* Non-breaking space */}
+      <p className={styles.bannerPrice}>{price || "\u00A0"}</p>
       <CommonButton
         type="button"
         title={buttonName}

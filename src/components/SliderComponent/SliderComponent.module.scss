@@ -1,26 +1,14 @@
 @import "../../styles/mixins";
 @import "../../styles/variables";
 
-.slider {
-  margin: 0 10px;
-}
-
-.slick-current {
-  margin-right: 15px;
-  margin-left: 15px;
-}
-
 .bannerContainer {
   border-radius: 10px;
-  width: 282px;
-  /* height: 103px; */
   padding: 6px 10px 8px 10px;
   box-sizing: border-box;
   border: 1px solid green;
 
   @include media-min($breakpoint-tablet) {
     border-radius: 33px;
-    width: 900px;
-    height: 330px;
+    padding: 18px 32px;
   }
 }

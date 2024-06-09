@@ -18,6 +18,7 @@ const SliderComponent = () => {
     centerMode: true,
     infinite: true,
     speed: 500,
+    centerPadding: "16%",
     slidesToShow: 1,
     slidesToScroll: 1,
     responsive: [
@@ -25,6 +26,7 @@ const SliderComponent = () => {
         breakpoint: 768,
         settings: {
           dots: false,
+          centerPadding: "9%",
         },
       },
     ],

@@ -2,9 +2,11 @@
 @import "../../styles/variables";
 
 .sliderSection {
-  height: 103px;
+  padding-top: 40px;
+  padding-bottom: 60px;
 
   @include media-min($breakpoint-tablet) {
-    height: 392px;
+    padding-top: 76px;
+    padding-bottom: 138px;
   }
 }
