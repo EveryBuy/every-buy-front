@@ -1,0 +1,103 @@
+@import "../../styles/mixins";
+@import "../../styles/variables";
+
+.searchContainer {
+  display: flex;
+  justify-content: center;
+
+  @include media-min($breakpoint-mobile + 1) {
+    padding-top: 26px;
+  }
+
+  @include media-min($breakpoint-tablet) {
+    padding-top: 41px;
+  }
+}
+
+.searchForm {
+  display: flex;
+
+  @include media-min($breakpoint-tablet) {
+    gap: 12px;
+  }
+}
+
+.searchInputWrapper {
+  position: relative;
+}
+
+.searchInput {
+  border: 1px solid var(--button);
+  border-radius: 10px;
+  padding: 11px 8px;
+  max-width: 275px;
+  height: 41px;
+  font-weight: 400;
+  font-size: 16px;
+  color: var(--input-text);
+  background: var(--background);
+  transition: border 0.25s, box-shadow 0.25s;
+
+  &:hover {
+    border: 1px solid var(--input-text);
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+  }
+
+  &:focus {
+    border: 2px solid var(--accent);
+  }
+
+  @include media-min($breakpoint-tablet) {
+    padding: 20px 23px;
+    min-width: 500px;
+    max-width: 873px;
+    height: 60px;
+    background: #e6e6e6;
+  }
+}
+
+.searchInputIcon {
+  @extend .searchIcon;
+  display: none;
+
+  @include media-min($breakpoint-tablet) {
+    display: block;
+    top: 50%;
+    right: 23px;
+    transform: translateY(-50%);
+  }
+}
+
+.searchButton {
+  position: relative;
+  border-radius: 10px;
+  padding: 10px 20px;
+  width: 60px;
+  height: 41px;
+
+  @include media-min($breakpoint-tablet) {
+    position: static;
+    padding: 20px 40px;
+    min-width: 136px;
+    height: 59px;
+
+    &::before {
+      content: "Знайти";
+    }
+  }
+}
+
+.searchIcon {
+  position: absolute;
+}
+
+.searchButtonIcon {
+  @extend .searchIcon;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+
+  @include media-min($breakpoint-tablet) {
+    display: none;
+  }
+}

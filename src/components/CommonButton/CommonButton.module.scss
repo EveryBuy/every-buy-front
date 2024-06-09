@@ -1,14 +1,18 @@
 .common-styles {
-  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   font-family: var(--font-family);
   font-weight: 400;
   color: var(--label);
+  border: 1px solid transparent;
+  transition: border-color 0.25s, box-shadow 0.25s;
 }
 
 .transparent {
   @extend .common-styles;
-  border: 1px solid var(--label);
+  background: transparent;
 }
 
 .light-yellow {
@@ -19,4 +23,21 @@
 .yellow {
   @extend .common-styles;
   background: var(--button);
+}
+
+.transparent:hover,
+.transparent:focus,
+.light-yellow:hover,
+.light-yellow:focus,
+.yellow:hover,
+.yellow:focus {
+  border-color: var(--input-text);
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+.transparent:active,
+.light-yellow:active,
+.yellow:active {
+  border: 1px solid var(--label);
+  box-shadow: inset 0 4px 4px 0 rgba(0, 0, 0, 0.25);
 }

@@ -13,8 +13,6 @@ import {
   // AddAdvertisingButton,
   RegisterContainer,
 } from "./Header.styled";
-import CommonIcon from "../CommonIcon/CommonIcon";
-import Category from "../Category/Category";
 import styles from "./Header.module.scss";
 import CommonButton from "../CommonButton/CommonButton";
 
@@ -47,7 +45,6 @@ const Header = () => {
           </RegisterContainer>
         </AddAdvertisingContainer>
       </HeaderContainer>
-      <Category />
     </HeaderTag>
   );
 };

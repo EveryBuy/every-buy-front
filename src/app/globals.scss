@@ -10,19 +10,57 @@
   --f-size-h1: 36px;
 
   // colors
-  --main-background: #F6F6F6;
-  --background: #FFFFFF;
+  --main-background: #f6f6f6;
+  --background: #ffffff;
   --label: #000000;
-  --input-text: #9D9D9D;
+  --input-text: #9d9d9d;
 
   --color-yellow: rgb(229, 255, 70);
 
-  --button: #E5FF46;
+  --button: #e5ff46;
   --not-active: #f5ffb6;
 
-  --accent: #6735F4;
-  --success: #29B126;
-  --error: #FF5656;
+  --accent: #6735f4;
+  --success: #29b126;
+  --error: #ff5656;
+}
 
+//styles for slider
+.slick-current {
+  padding: 0 20px;
 
+  @include media-min($breakpoint-tablet) {
+    padding: 0 32px;
+  }
+}
+
+.slick-dots {
+  bottom: -62px !important;
+  display: flex !important;
+  justify-content: center;
+  gap: 24px;
+
+  li {
+    margin: 0 !important;
+    width: 30px !important;
+    height: 30px !important;
+    border-radius: 50%;
+    background: #d9d9d9;
+
+    button {
+      width: 30px !important;
+      height: 30px !important;
+      border-radius: 50%;
+      background: #d9d9d9;
+      transition: border 0.3s;
+
+      &:before {
+        display: none;
+      }
+    }
+
+    &.slick-active button {
+      border: 1px solid var(--label);
+    }
+  }
 }

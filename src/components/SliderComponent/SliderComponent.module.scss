@@ -1,0 +1,14 @@
+@import "../../styles/mixins";
+@import "../../styles/variables";
+
+.bannerContainer {
+  border-radius: 10px;
+  padding: 6px 10px 8px 10px;
+  box-sizing: border-box;
+  border: 1px solid green;
+
+  @include media-min($breakpoint-tablet) {
+    border-radius: 33px;
+    padding: 18px 32px;
+  }
+}
