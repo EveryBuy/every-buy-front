@@ -26,6 +26,18 @@ export const Title = styled.h2`
   font-family: Inter;
   font-size: 36px;
   font-weight: 400;
+
+  @media (min-width: 768px) {
+    &::before {
+      content: "Розподіл на категорії";
+    }
+  }
+  @media (max-width: 767px) {
+    &::before {
+      content: "Категорії";
+    }
+  }
+
   @media (max-width: 600px) {
     font-size: 24px;
   }
@@ -37,7 +49,8 @@ export const ButtonsContainer = styled.div`
 `;
 
 export const BuyButton = styled.button`
-  padding: 10px 24px;
+  padding: 10px 29px;
+  font-size: 32px;
   border-radius: 10px;
   border-bottom: 2px solid #000;
   background: var(--button, #e5ff46);
@@ -60,7 +73,7 @@ export const List = styled.ul`
   max-width: 1320px;
   gap: 19px 31px;
   flex-wrap: wrap;
-
+  justify-content: center;
   @media (max-width: 600px) {
     flex-wrap: nowrap;
     overflow-x: scroll;
