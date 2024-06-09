@@ -25,11 +25,42 @@
   --error: #ff5656;
 }
 
-//style for slider
+//styles for slider
 .slick-current {
   padding: 0 20px;
 
   @include media-min($breakpoint-tablet) {
     padding: 0 32px;
+  }
+}
+
+.slick-dots {
+  bottom: -62px !important;
+  display: flex !important;
+  justify-content: center;
+  gap: 24px;
+
+  li {
+    margin: 0 !important;
+    width: 30px !important;
+    height: 30px !important;
+    border-radius: 50%;
+    background: #d9d9d9;
+
+    button {
+      width: 30px !important;
+      height: 30px !important;
+      border-radius: 50%;
+      background: #d9d9d9;
+      transition: border 0.3s;
+
+      &:before {
+        display: none;
+      }
+    }
+
+    &.slick-active button {
+      border: 1px solid var(--label);
+    }
   }
 }

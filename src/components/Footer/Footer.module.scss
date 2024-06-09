@@ -1,11 +1,12 @@
 .facebookIcon,
 .instagramIcon {
- fill: var(--button);
-stroke-width: 1px;
-stroke: var(--input-text);
+  fill: var(--button);
+  stroke-width: 1px;
+  stroke: var(--input-text);
 }
 
-.buttonSubscribe{
+.buttonSubscribe {
+  border-radius: 10px;
   padding: 10px 40px;
   width: 178px;
   height: 39px;

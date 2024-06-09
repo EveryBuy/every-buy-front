@@ -1,10 +1,11 @@
 "use client";
+import styles from "./SliderComponent.module.scss";
+
 import Slider from "react-slick";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import styles from "./SliderComponent.module.scss";
 import { useRef } from "react";
 import Banner from "../Banner/Banner";
 import { bannerItems } from "@/mock-data/bannerItems";
@@ -21,6 +22,8 @@ const SliderComponent = () => {
     centerPadding: "16%",
     slidesToShow: 1,
     slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 5000,
     responsive: [
       {
         breakpoint: 768,
