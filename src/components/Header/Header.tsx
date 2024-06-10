@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { footerItems } from "@/mock-data/footerItems";
+import { headerItems } from "@/mock-data/headerItems";
 import Logo from "../../assets/Svg/logo.svg";
 import Heart from "../../assets/Svg/heart.svg";
 import User from "../../assets/Svg/user.svg";
@@ -21,7 +21,7 @@ const Header = () => {
     <HeaderTag>
       <NavBar>
         <List>
-          {footerItems.map(({ text }) => (
+          {headerItems.map(({ text }) => (
             <li key={text}>
               <a href="">{text}</a>
             </li>

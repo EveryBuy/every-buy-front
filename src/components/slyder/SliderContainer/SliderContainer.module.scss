@@ -1,12 +1,12 @@
-@import "../../styles/mixins";
-@import "../../styles/variables";
+@import "../../../styles/mixins";
+@import "../../../styles/variables";
 
 .sliderSection {
   padding-top: 40px;
   padding-bottom: 60px;
 
   @include media-min($breakpoint-tablet) {
-    padding-top: 76px;
+    padding-top: 60px;
     padding-bottom: 138px;
   }
 }

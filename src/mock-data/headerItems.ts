@@ -1,6 +1,6 @@
 import ItemType from "@/types/headerItemType";
 
-export const footerItems: ItemType[] = [
+export const headerItems: ItemType[] = [
   {
     text: "Про нас",
   },
