@@ -30,7 +30,8 @@
   border: 1px solid var(--button);
   border-radius: 10px;
   padding: 11px 8px;
-  max-width: 275px;
+  // max-width: 275px;
+  width: 73vw;
   height: 41px;
   font-weight: 400;
   font-size: 16px;
@@ -49,10 +50,13 @@
 
   @include media-min($breakpoint-tablet) {
     padding: 20px 23px;
-    min-width: 500px;
-    max-width: 873px;
+    width: 60vw;
     height: 60px;
     background: #e6e6e6;
+  }
+
+  @include media-min($breakpoint-laptop) {
+    width: 873px;
   }
 }
 
