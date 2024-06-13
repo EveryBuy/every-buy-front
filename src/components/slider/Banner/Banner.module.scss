@@ -1,24 +1,6 @@
 @import "@/styles/mixins";
 @import "@/styles/variables";
 
-.bannerBackground {
-  background-size: cover;
-  background-position: center;
-  overflow: hidden;
-
-  @media (min-resolution: 2dppx) and (max-width: $breakpoint-mobile) {
-    background-image: var(--banner-background_mobile1x);
-  }
-
-  @include media-min($breakpoint-mobile + 1) {
-    background-image: var(--banner-background_laptop1x);
-
-    @media (min-resolution: 2dppx) {
-      background-image: var(--banner-background_laptop2x);
-    }
-  }
-}
-
 .bannerLabelContainer {
   position: relative;
 
@@ -52,12 +34,13 @@
   margin-top: 4px;
   font-weight: 200;
   font-size: 13px;
+  color: var(--background);
 
   @include media-min($breakpoint-tablet) {
     margin-top: 17px;
 
     font-weight: 400;
-    font-size: 34px;
+    font-size: 28px;
   }
 
   @include media-min($breakpoint-laptop) {
@@ -69,6 +52,7 @@
   margin-top: 2px;
   font-weight: 400;
   font-size: 6px;
+  color: var(--background);
 
   @include media-min($breakpoint-tablet) {
     margin-top: 6px;
@@ -80,6 +64,7 @@
   margin-top: 5px;
   font-weight: 400;
   font-size: 10px;
+  color: var(--background);
 
   @include media-min($breakpoint-tablet) {
     margin-top: 32px;
