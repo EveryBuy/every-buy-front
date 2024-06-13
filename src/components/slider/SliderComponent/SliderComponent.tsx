@@ -7,7 +7,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 import { useRef } from "react";
-import Banner from "../../Banner/Banner";
+import Banner from "../Banner/Banner";
 import { bannerItems } from "@/mock-data/bannerItems";
 import { nanoid } from "nanoid";
 

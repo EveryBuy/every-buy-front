@@ -1,0 +1,108 @@
+@import "@/styles/mixins";
+@import "@/styles/variables";
+
+.bannerBackground {
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+
+  @media (min-resolution: 2dppx) and (max-width: $breakpoint-mobile) {
+    background-image: var(--banner-background_mobile1x);
+  }
+
+  @include media-min($breakpoint-mobile + 1) {
+    background-image: var(--banner-background_laptop1x);
+
+    @media (min-resolution: 2dppx) {
+      background-image: var(--banner-background_laptop2x);
+    }
+  }
+}
+
+.bannerLabelContainer {
+  position: relative;
+
+  display: inline-block;
+}
+
+.bannerIcon {
+  fill: #e5ff46;
+
+  @include media-min($breakpoint-tablet) {
+    width: 128px;
+    height: 82px;
+  }
+}
+
+.bannerLabel {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+
+  font-weight: 400;
+  font-size: 8px;
+
+  @include media-min($breakpoint-tablet) {
+    font-size: 24px;
+  }
+}
+
+.bannerTitle {
+  margin-top: 4px;
+  font-weight: 200;
+  font-size: 13px;
+
+  @include media-min($breakpoint-tablet) {
+    margin-top: 17px;
+
+    font-weight: 400;
+    font-size: 34px;
+  }
+
+  @include media-min($breakpoint-laptop) {
+    font-weight: 400;
+    font-size: 40px;
+  }
+}
+.bannerAdditionalInfo {
+  margin-top: 2px;
+  font-weight: 400;
+  font-size: 6px;
+
+  @include media-min($breakpoint-tablet) {
+    margin-top: 6px;
+
+    font-size: 16px;
+  }
+}
+.bannerPrice {
+  margin-top: 5px;
+  font-weight: 400;
+  font-size: 10px;
+
+  @include media-min($breakpoint-tablet) {
+    margin-top: 32px;
+
+    font-size: 24px;
+  }
+}
+
+.bannerButton {
+  border-radius: 3px;
+  padding: 4px 10px;
+  height: 23px;
+
+  font-weight: 400;
+  font-size: 12px;
+
+  @include media-min($breakpoint-tablet) {
+    margin-top: 10px;
+
+    border-radius: 10px;
+    padding: 16px 40px;
+    height: 51px;
+
+    font-size: 16px;
+  }
+}

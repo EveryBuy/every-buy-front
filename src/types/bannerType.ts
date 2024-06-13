@@ -4,5 +4,10 @@ export default interface BannerItemType {
   condition: string;
   price: string;
   buttonName: string;
-  backgroundImage: string;
+  backgroundImages: {
+    mobile1x: string;
+    mobile2x: string;
+    laptop1x: string;
+    laptop2x: string;
+  };
 }
