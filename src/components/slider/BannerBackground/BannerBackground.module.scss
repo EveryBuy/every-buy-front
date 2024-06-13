@@ -12,10 +12,7 @@
   overflow: hidden;
 
   @include media-max($breakpoint-mobile) {
-    background-image: linear-gradient(
-        rgba(186, 186, 186, 0.5),
-        rgba(186, 186, 186, 0.5)
-      ),
+    background-image: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)),
       var(--banner-background_mobile1x);
 
     @media (min-resolution: 2dppx) {

@@ -23,10 +23,17 @@ const SliderComponent = () => {
     autoplaySpeed: 5000,
     responsive: [
       {
-        breakpoint: 768,
+        breakpoint: 478,
         settings: {
           dots: false,
           centerPadding: "9%",
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          dots: false,
+          centerPadding: "16%",
         },
       },
     ],
