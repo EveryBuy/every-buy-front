@@ -4,7 +4,7 @@
 @import "../styles/breakpoints";
 
 :root {
-  --f-family: "Inter", Arial, sans-serif;
+  --font-family: "Inter", Arial, sans-serif;
 
   // font size
   --f-size-h1: 36px;
@@ -25,11 +25,9 @@
   --error: #ff5656;
 }
 
-// body,
-// html {
-//   margin: 0 auto;
-//   min-height: 100vh;
-// }
+body {
+  font-family: var(--font-family);
+}
 
 .container {
   display: flex;

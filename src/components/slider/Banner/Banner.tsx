@@ -1,17 +1,14 @@
-import CommonIcon from "../ui/CommonIcon/CommonIcon";
+import CommonIcon from "../../ui/CommonIcon/CommonIcon";
 import styles from "./Banner.module.scss";
-import CommonButton from "../ui/CommonButton/CommonButton";
+import CommonButton from "../../ui/CommonButton/CommonButton";
 import BannerProps from "@/types/bannerProps";
+import BannerBackground from "../BannerBackground/BannerBackground";
 
 const Banner = ({ item }: BannerProps) => {
-  const { label, title, condition, price, buttonName, backgroundImage } = item;
-
-  const bannerStyle = {
-    backgroundImage: `url(${backgroundImage})`,
-  };
+  const { label, title, condition, price, buttonName, backgroundImages } = item;
 
   return (
-    <div className={styles.bannerContainer} style={bannerStyle}>
+    <BannerBackground backgroundImages={backgroundImages}>
       <div className={styles.bannerLabelContainer}>
         <CommonIcon
           id="icon-star"
@@ -30,7 +27,7 @@ const Banner = ({ item }: BannerProps) => {
         color="yellow"
         className={styles.bannerButton}
       />
-    </div>
+    </BannerBackground>
   );
 };
 

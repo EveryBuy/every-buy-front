@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import Image from "next/image";
+// import Image from "next/image";
 import Fold from "../../assets/Svg/fold.svg";
 import { fetchCategoryData } from "../../api/fetchCategoryData";
 import CategoryItem from "@/types/categoryItemType";
@@ -18,6 +18,8 @@ import {
   ListItemText,
   ListItemImage,
   FoldImg,
+  Loading,
+  Error,
 } from "./Category.styled";
 
 const Category: React.FC = () => {
@@ -42,11 +44,11 @@ const Category: React.FC = () => {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loading>Loading...</Loading>;
   }
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return <Error>Error: {error}</Error>;
   }
 
   return (

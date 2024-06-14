@@ -8,9 +8,9 @@ export const SectionContainer = styled.div`
   justify-content: center;
   flex-direction: column;
   gap: 40px;
-  padding: 0 60px;
+  padding: 154px 60px 0px;
   @media (max-width: 768px) {
-    padding: 0 20px;
+    padding: 76px 20px 0px;
   }
 `;
 
@@ -23,11 +23,11 @@ export const TitleContainer = styled.div`
 
 export const Title = styled.h2`
   color: #000;
-  font-family: Inter;
   font-size: 36px;
   font-weight: 400;
 
   @media (min-width: 768px) {
+    font-size: 30px;
     &::before {
       content: "Розподіл на категорії";
     }
@@ -50,12 +50,15 @@ export const ButtonsContainer = styled.div`
 
 export const BuyButton = styled.button`
   padding: 10px 29px;
-  font-size: 32px;
+  /* font-size: 32px; */
   border-radius: 10px;
   border-bottom: 2px solid #000;
   background: var(--button, #e5ff46);
   @media (max-width: 600px) {
     padding: 4px 16px;
+  }
+  @media (min-width: 768px) {
+    font-size: 30px;
   }
 `;
 
@@ -66,18 +69,21 @@ export const SellButton = styled.button`
     padding: 4px 11px;
     font-size: 16px;
   }
+  @media (min-width: 768px) {
+    font-size: 30px;
+  }
 `;
 
 export const List = styled.ul`
   display: flex;
-  max-width: 1320px;
+  /* max-width: 1320px; */
   gap: 19px 31px;
   flex-wrap: wrap;
   justify-content: center;
   @media (max-width: 600px) {
     flex-wrap: nowrap;
     overflow-x: scroll;
-    gap: 17px;
+    column-gap: 0px;
     scrollbar-width: none;
     -ms-overflow-style: none;
 
@@ -90,10 +96,22 @@ export const List = styled.ul`
 export const ListItem = styled.li`
   position: relative;
   width: 160px;
-  height: 170px;
+  height: 185px;
   @media (max-width: 600px) {
-    width: 95px;
-    height: 102px;
+    width: 97px;
+    height: 103px;
+  }
+`;
+
+export const FoldImg = styled(Image)`
+  position: absolute;
+  top: 0px;
+  right: -5px;
+  z-index: 1;
+  @media (max-width: 600px) {
+    height: 45px;
+    top: 1px;
+    right: -20px;
   }
 `;
 
@@ -101,14 +119,16 @@ export const ListItemWrapper = styled.div`
   height: 100%;
   background-image: url("./icons/base.svg");
   background-repeat: no-repeat;
+  background-size: cover;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: flex-start;
   align-items: center;
-  gap: 8px;
-  padding-bottom: 6px;
+  row-gap: 8px;
+  padding: 36px 0px 5px;
   @media (max-width: 600px) {
     width: 93px;
+    padding: 23px 0px 5px;
     background-image: url("./icons/MobileBase.svg");
   }
 `;
@@ -124,20 +144,35 @@ export const ListItemImage = styled(Image)`
 `;
 
 export const ListItemText = styled.p`
-  font-size: 13px;
+  width: 100%;
+  text-align: center;
+  /* font-size: 16px; */
   @media (max-width: 600px) {
-    font-size: 7px;
+    font-size: 10px;
+    padding: 0px 5px;
   }
 `;
 
-export const FoldImg = styled(Image)`
-  position: absolute;
-  top: -2px;
-  right: -5px;
-  z-index: 1;
+export const Loading = styled("div")`
+  width: 100%;
+  padding: 160px 0 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   @media (max-width: 600px) {
-    height: 45px;
-    top: 1px;
-    right: -20px;
+    padding: 110px 0 50px;
+  }
+`;
+
+export const Error = styled("div")`
+  width: 100%;
+  padding: 160px 0 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media (max-width: 600px) {
+    padding: 110px 0 50px;
   }
 `;
