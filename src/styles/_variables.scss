@@ -2,3 +2,9 @@
 $breakpoint-mobile: 480px; // mobile
 $breakpoint-tablet: 768px; // tablet
 $breakpoint-laptop: 1440px; // laptop
+
+//banner backgrounds
+$banner-background_mobile1x: url("../mock-data/bannerItems.ts/backgroundImages.mobile1x");
+$banner-background_mobile2x: url("../mock-data/bannerItems.ts/backgroundImages.mobile2x");
+$banner-background_laptop1x: url("../mock-data/bannerItems.ts/backgroundImages.laptop1x");
+$banner-background_laptop2x: url("../mock-data/bannerItems.ts/backgroundImages.laptop2x");

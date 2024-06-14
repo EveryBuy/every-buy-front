@@ -1,0 +1,44 @@
+@import "@/styles/mixins";
+@import "@/styles/variables";
+
+.bannerBackground {
+  font-family: var(--font-family);
+  border-radius: 10px;
+  padding: 6px 10px 8px 10px;
+  box-sizing: border-box;
+
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+
+  @include media-max($breakpoint-mobile) {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)),
+      var(--banner-background_mobile1x);
+
+    @media (min-resolution: 2dppx) {
+      background-image: linear-gradient(
+          rgba(0, 0, 0, 0.35),
+          rgba(0, 0, 0, 0.35)
+        ),
+        var(--banner-background_mobile2x);
+    }
+  }
+
+  @include media-min($breakpoint-mobile + 1) {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)),
+      var(--banner-background_laptop1x);
+
+    @media (min-resolution: 2dppx) {
+      background-image: linear-gradient(
+          rgba(0, 0, 0, 0.35),
+          rgba(0, 0, 0, 0.35)
+        ),
+        var(--banner-background_laptop2x);
+    }
+  }
+
+  @include media-min($breakpoint-tablet) {
+    border-radius: 33px;
+    padding: 18px 32px;
+  }
+}
