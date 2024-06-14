@@ -5,7 +5,12 @@ import styled from "@emotion/styled";
 export const FooterTag = styled.footer`
   display: flex;
   flex-direction: column;
+  margin-top: 76px;
   border-top: 5px solid #f5ffb6;
+
+  @media (min-width: 1200px) {
+    margin-top: 49px;
+  }
 `;
 
 export const FooterContainer = styled.div`
@@ -15,6 +20,7 @@ export const FooterContainer = styled.div`
   align-items: center;
   padding: 16px 60px;
   flex-wrap: wrap;
+  /* margin-top: 49px; */
 
   @media (max-width: 1000px) {
     gap: 10px;

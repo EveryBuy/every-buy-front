@@ -1,7 +1,0 @@
-@use "../../styles/mixins" as mixins;
-@import "../../styles/variables";
-
-.test {
-  font-family: var(--f-family);
-  font-size: var(--f-size-h1);
-}

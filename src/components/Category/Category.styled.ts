@@ -99,7 +99,7 @@ export const ListItem = styled.li`
 
 export const ListItemWrapper = styled.div`
   height: 100%;
-  background-image: url("./base.svg");
+  background-image: url("./icons/base.svg");
   background-repeat: no-repeat;
   display: flex;
   flex-direction: column;
@@ -109,7 +109,7 @@ export const ListItemWrapper = styled.div`
   padding-bottom: 6px;
   @media (max-width: 600px) {
     width: 93px;
-    background-image: url("./MobileBase.svg");
+    background-image: url("./icons/MobileBase.svg");
   }
 `;
 

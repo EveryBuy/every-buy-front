@@ -1,6 +1,6 @@
-import CommonIcon from "../CommonIcon/CommonIcon";
+import CommonIcon from "../ui/CommonIcon/CommonIcon";
 import styles from "./Banner.module.scss";
-import CommonButton from "../CommonButton/CommonButton";
+import CommonButton from "../ui/CommonButton/CommonButton";
 import BannerProps from "@/types/bannerProps";
 
 const Banner = ({ item }: BannerProps) => {

@@ -2,7 +2,7 @@
 
 import styled from "@emotion/styled";
 
-import "../../styles/_variables.scss";
+import "../../styles/_breakpoints.scss";
 import "../../styles/_mixins.scss";
 
 export const HeaderTag = styled.header`
@@ -80,5 +80,7 @@ export const AddAdvertisingButton = styled.button`
 
 export const RegisterContainer = styled.div`
   display: flex;
+  align-items: center;
+  gap: 10px;
   margin-left: 16px;
 `;

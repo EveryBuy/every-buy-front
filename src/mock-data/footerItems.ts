@@ -2,27 +2,27 @@ import ItemType from "@/types/footerItemType";
 
 export const footerItems: ItemType[] = [
   {
-    src: "icons/house.svg",
+    id: "icon-home",
     alt: "House",
     text: "Головна",
   },
   {
-    src: "icons/smallHeart.svg",
+    id: "icon-heart",
     alt: "SmallHeart",
     text: "Вибране",
   },
   {
-    src: "icons/addIcon.svg",
+    id: "icon-create-plus",
     alt: "AddIcon",
     text: "Створити",
   },
   {
-    src: "icons/chat.svg",
+    id: "icon-chat",
     alt: "Chat",
     text: "Чат",
   },
   {
-    src: "icons/smallUser.svg",
+    id: "icon-user",
     alt: "SmallUser",
     text: "Профіль",
   },

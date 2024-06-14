@@ -1,7 +1,7 @@
 @import "../styles/reset";
 @import "../styles/fonts.scss";
 @import "../styles/mixins";
-@import "../styles/variables";
+@import "../styles/breakpoints";
 
 :root {
   --f-family: "Inter", Arial, sans-serif;
@@ -23,6 +23,24 @@
   --accent: #6735f4;
   --success: #29b126;
   --error: #ff5656;
+}
+
+// body,
+// html {
+//   margin: 0 auto;
+//   min-height: 100vh;
+// }
+
+.container {
+  display: flex;
+  flex-direction: column;
+  max-width: 1440px;
+  min-height: 100vh;
+  margin: 0 auto;
+}
+
+.content {
+  flex-grow: 1;
 }
 
 //styles for slider

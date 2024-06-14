@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import Image from 'next/image';
+import Image from "next/image";
 import Fold from "../../assets/Svg/fold.svg";
-import { fetchCategoryData } from "./fetchCategoryData";
+import { fetchCategoryData } from "../../api/fetchCategoryData";
 import CategoryItem from "@/types/categoryItemType";
 import {
   SectionContainer,
@@ -30,7 +30,6 @@ const Category: React.FC = () => {
       try {
         const result = await fetchCategoryData();
         setData(result);
-        console.log(result);
       } catch (error: any) {
         console.error("Error fetching data:", error);
         setError(error.message);
@@ -66,11 +65,11 @@ const Category: React.FC = () => {
               <ListItem key={id}>
                 <FoldImg src={Fold} alt="Fold" />
                 <ListItemWrapper>
-                  <ListItemImage 
-                    src={photoUrl} 
-                    alt={nameUkr} 
-                    width={98} 
-                    height={98} 
+                  <ListItemImage
+                    src={photoUrl}
+                    alt={nameUkr}
+                    width={98}
+                    height={98}
                   />
                   <ListItemText>{nameUkr}</ListItemText>
                 </ListItemWrapper>

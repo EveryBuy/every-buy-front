@@ -1,6 +1,6 @@
-import CommonIcon from "../CommonIcon/CommonIcon";
+import CommonIcon from "../ui/CommonIcon/CommonIcon";
 import styles from "./Search.module.scss";
-import CommonButton from "@/components/CommonButton/CommonButton";
+import CommonButton from "@/components/ui/CommonButton/CommonButton";
 
 const Search = () => {
   return (

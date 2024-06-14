@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
-import CommonIcon from "../CommonIcon/CommonIcon";
-import FooterMobile from "./components/FooterMobile";
+import CommonIcon from "../ui/CommonIcon/CommonIcon";
+import FooterMobile from "./FooterMobile/FooterMobile";
 import Logo from "../../assets/Svg/logo.svg";
 import {
   FooterTag,
@@ -16,7 +16,7 @@ import {
   ImageWrapper,
 } from "./Footer.styled";
 import styles from "./Footer.module.scss";
-import CommonButton from "../CommonButton/CommonButton";
+import CommonButton from "../ui/CommonButton/CommonButton";
 
 const Footer = () => {
   return (
@@ -29,7 +29,12 @@ const Footer = () => {
           <p>Бажаєте отримувати повідомлення про новинки?</p>
           <EmailContainer>
             <EmailInput type="text" placeholder="Введіть свій e-mail" />
-            <CommonButton type="button" title="Підписатись" color="light-yellow" className={styles.buttonSubscribe } />
+            <CommonButton
+              type="button"
+              title="Підписатись"
+              color="light-yellow"
+              className={styles.buttonSubscribe}
+            />
             {/* <EmailButton>Підписатись</EmailButton> */}
           </EmailContainer>
         </NotificationContainer>
@@ -38,8 +43,18 @@ const Footer = () => {
           <a href="mailto:EveryBuymarket@gmail.com">EveryBuymarket@gmail.com</a>
         </ContactContainer>
         <SocialMediaContainer>
-          <CommonIcon id="icon-facebook" width="40" height="40" className={styles.facebookIcon} />
-          <CommonIcon id="icon-instagram" width="40" height="40" className={styles.instagramIcon} />
+          <CommonIcon
+            id="icon-facebook"
+            width="40"
+            height="40"
+            className={styles.facebookIcon}
+          />
+          <CommonIcon
+            id="icon-instagram"
+            width="40"
+            height="40"
+            className={styles.instagramIcon}
+          />
         </SocialMediaContainer>
       </FooterContainer>
 

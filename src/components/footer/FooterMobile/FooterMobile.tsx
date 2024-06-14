@@ -1,14 +1,17 @@
 import React, { FC } from "react";
-import Item from "./Item";
+import Item from "../Item/Item";
 import { footerItems } from "../../../mock-data/footerItems";
-import { FooterContainerMobile, MobilePaginationItem } from "../Footer.styled";
+import {
+  FooterContainerMobile,
+  MobilePaginationItem,
+} from "./FooterMobile.styled";
 
 const FooterMobile: FC = () => {
   return (
     <FooterContainerMobile>
-      {footerItems.map(({ src, alt, text }) => (
+      {footerItems.map(({ id, alt, text }) => (
         <MobilePaginationItem key={text}>
-          <Item src={src} alt={alt} text={text} />
+          <Item id={id} alt={alt} text={text} />
         </MobilePaginationItem>
       ))}
     </FooterContainerMobile>
