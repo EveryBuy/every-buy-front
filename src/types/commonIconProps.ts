@@ -1,6 +1,12 @@
-export default interface CommonIconProps {
+export interface CommonIconProps {
   id: string;
-  className?: string;
-  width: string;
-  height: string;
+  width?: string;
+  height?: string;
+  fill?: string;
+}
+
+export interface StyledSVGProps {
+  width?: string;
+  height?: string;
+  fill?: string;
 }

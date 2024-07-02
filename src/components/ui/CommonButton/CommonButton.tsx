@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import CommonButtonProps from "@/types/commonButtonProps";
+import { CommonButtonProps } from "@/types/commonButtonProps";
 import styles from "./CommonButton.module.scss";
 
 const CommonButton: FC<CommonButtonProps> = ({

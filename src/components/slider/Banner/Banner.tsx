@@ -3,32 +3,34 @@ import styles from "./Banner.module.scss";
 import CommonButton from "../../ui/CommonButton/CommonButton";
 import BannerProps from "@/types/bannerProps";
 import BannerBackground from "../BannerBackground/BannerBackground";
+import {
+  BannerAdditionalInfo,
+  BannerLabel,
+  BannerLabelContainer,
+  BannerPrice,
+  BannerTitle,
+} from "./Banner.styled";
 
 const Banner = ({ item }: BannerProps) => {
   const { label, title, condition, price, buttonName, backgroundImages } = item;
 
   return (
     <BannerBackground backgroundImages={backgroundImages}>
-      <div className={styles.bannerLabelContainer}>
+      <BannerLabelContainer>
         <CommonIcon
           id="icon-star"
-          width="30"
-          height="20"
-          className={`${styles.bannerIcon} ${
-            label.toLocaleLowerCase() === "sale" && styles.bannerIconSale
-          }`}
+          fill={
+            label.toLocaleLowerCase() === "sale"
+              ? "var(--error)"
+              : "var(--not-active)"
+          }
         />
-        <span className={styles.bannerLabel}>{label}</span>
-      </div>
-      <h2 className={styles.bannerTitle}>{title}</h2>
-      <p className={styles.bannerAdditionalInfo}>{condition || "\u00A0"}</p>
-      <p className={styles.bannerPrice}>{price || "\u00A0"}</p>
-      <CommonButton
-        type="button"
-        title={buttonName}
-        color="yellow"
-        className={styles.bannerButton}
-      />
+        <BannerLabel>{label}</BannerLabel>
+      </BannerLabelContainer>
+      <BannerTitle>{title}</BannerTitle>
+      <BannerAdditionalInfo>{condition || "\u00A0"}</BannerAdditionalInfo>
+      <BannerPrice>{price || "\u00A0"}</BannerPrice>
+      <CommonButton type="button" title={buttonName} color="yellow" />
     </BannerBackground>
   );
 };
