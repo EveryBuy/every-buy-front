@@ -7,7 +7,9 @@ const Search = () => {
     <div className={styles.searchContainer}>
       <form className={styles.searchForm}>
         <div className={styles.searchInputWrapper}>
-          <input className={styles.searchInput} placeholder="Що шукаєте?" />
+          <input
+            className={styles.searchInput} //placeholder="Що шукаєте?"
+          />
           <CommonIcon
             id="icon-search"
             width="20"

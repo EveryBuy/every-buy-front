@@ -52,7 +52,8 @@
     padding: 20px 23px;
     width: 60vw;
     height: 60px;
-    background: #e6e6e6;
+    background: var(--bg-header-footer);
+    border: none;
   }
 
   @include media-min($breakpoint-laptop) {
@@ -84,6 +85,7 @@
     padding: 20px 40px;
     min-width: 136px;
     height: 59px;
+    background: var(--background);
 
     &::before {
       content: "Знайти";

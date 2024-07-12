@@ -12,9 +12,11 @@ const Banner = ({ item }: BannerProps) => {
       <div className={styles.bannerLabelContainer}>
         <CommonIcon
           id="icon-star"
-          width="40"
-          height="26"
-          className={styles.bannerIcon}
+          width="30"
+          height="20"
+          className={`${styles.bannerIcon} ${
+            label.toLocaleLowerCase() === "sale" && styles.bannerIconSale
+          }`}
         />
         <span className={styles.bannerLabel}>{label}</span>
       </div>

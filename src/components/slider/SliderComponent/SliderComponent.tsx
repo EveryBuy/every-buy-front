@@ -13,6 +13,7 @@ const SliderComponent = () => {
   const settings = {
     className: "center",
     dots: true,
+    arrows: false,
     centerMode: true,
     infinite: true,
     speed: 500,
