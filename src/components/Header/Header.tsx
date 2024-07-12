@@ -14,7 +14,7 @@ import {
 import styles from "./Header.module.scss";
 import CommonButton from "../ui/CommonButton/CommonButton";
 
-const Header = () => {
+export default async function Header() {
   return (
     <HeaderTag>
       <NavBar>
@@ -44,6 +44,6 @@ const Header = () => {
       </HeaderContainer>
     </HeaderTag>
   );
-};
+}
 
-export default Header;
+// export default Header;

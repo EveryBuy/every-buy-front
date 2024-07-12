@@ -3,7 +3,11 @@ import Header from "@/components/Header/Header";
 import Footer from "@/components/footer/Footer";
 import "../globals.scss";
 
-export default function ClientLayout({ children }: { children: ReactNode }) {
+export default async function ClientLayout({
+  children,
+}: {
+  children: ReactNode;
+}) {
   return (
     <html lang="uk">
       <body>

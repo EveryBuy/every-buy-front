@@ -4,7 +4,7 @@ import SliderContainer from "@/components/slider/SliderContainer/SliderContainer
 import Category from "@/components/Category/Category";
 import Test from "../../components/Test/Test";
 
-export default function HomePage() {
+export default async function HomePage() {
   return (
     <main>
       <Search />
