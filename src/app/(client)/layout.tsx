@@ -3,7 +3,7 @@
 import { ReactNode } from "react";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/footer/Footer";
-import { AuthProvider } from "../Lofin-Register-feature/AuthContextType";
+import { AuthProvider } from "@/components/Lofin-Register-feature/AuthContextType";
 import "../globals.scss";
 
 export default function ClientLayout({ children }: { children: ReactNode }) {

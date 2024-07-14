@@ -1,6 +1,7 @@
 "use client";
 
 import styled from "@emotion/styled";
+import Image from "next/image";
 
 export const Form = styled.form`
   display: flex;
@@ -25,6 +26,7 @@ export const InputContainer = styled.div`
   flex-direction: column;
   align-items: flex-start;
   gap: 4px;
+  max-width: 420px;
 `;
 
 export const Input = styled.input`
@@ -32,9 +34,15 @@ export const Input = styled.input`
   height: 52px;
   padding: 14px 12px;
   border-radius: 10px;
-  border: 1px solid var(--input-text);
-  background: var(--background);
-  cursor: pointer;
+  border: 2px solid #ccc;
+
+  &.invalid {
+    border-color: red;
+  }
+
+  &.valid {
+    border-color: green;
+  }
   &:focus {
     border: 2px solid var(--accent);
     outline: none;
@@ -43,10 +51,8 @@ export const Input = styled.input`
 
 export const TogglePasswordButton = styled.button`
   margin-left: 8px;
-
   cursor: pointer;
 `;
-
 
 export const SubmitButton = styled.button`
   padding: 20px 185px;
@@ -54,4 +60,17 @@ export const SubmitButton = styled.button`
   border-radius: 10px;
   margin-top: 36px;
   background: var(--not-active, #f5ffb6);
+`;
+
+export const ErrorMessage = styled.span`
+  color: red;
+  font-size: 12px;
+  margin-top: 4px;
+`;
+
+export const ErrorIcon = styled(Image)`
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
 `;
