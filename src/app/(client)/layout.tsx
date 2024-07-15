@@ -11,11 +11,10 @@ export default async function ClientLayout({
   return (
     <html lang="uk">
       <body>
-        <div className="container">
-          <Header />
-          <div className="content">{children}</div>
-          <Footer />
-        </div>
+        <Header />
+        {/* <main className="content container ">{children}</main> */}
+        <main className="container">{children}</main>
+        <Footer />
       </body>
     </html>
   );

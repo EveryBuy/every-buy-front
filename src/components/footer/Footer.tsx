@@ -20,7 +20,7 @@ import CommonButton from "../ui/CommonButton/CommonButton";
 
 const Footer = () => {
   return (
-    <FooterTag>
+    <FooterTag className="container">
       <FooterContainer>
         <ImageWrapper>
           <Image priority src={Logo} alt="Logo" width={104} height={77} />

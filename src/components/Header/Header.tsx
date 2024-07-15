@@ -1,4 +1,3 @@
-import React from "react";
 import Image from "next/image";
 import CommonIcon from "../ui/CommonIcon/CommonIcon";
 import { headerItems } from "@/mock-data/headerItems";
@@ -16,7 +15,7 @@ import CommonButton from "../ui/CommonButton/CommonButton";
 
 export default async function Header() {
   return (
-    <HeaderTag>
+    <HeaderTag className="container">
       <NavBar>
         <List>
           {headerItems.map(({ text }) => (
