@@ -42,9 +42,17 @@ const Test: FC = () => {
   //   message: "User with ID: 79 not found";
   // }
 
+  // 633200211
+  // mitskp11@gmail.com
+  // 14fgGH7_er$$
+
+  // const authBody = {
+  //   login: "118@gmail.com",
+  //   password: "kdf{DT'nR(d!/i8r4)+U>00",
+  // };
   const authBody = {
-    login: "118@gmail.com",
-    password: "kdf{DT'nR(d!/i8r4)+U>00",
+    login: "mitskp11@gmail.com",
+    password: "14fgGH7_er$$",
   };
 
   async function getToken(auth: { login: string; password: string }) {
