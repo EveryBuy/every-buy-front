@@ -13,7 +13,7 @@ import {
 } from "./Header.styled";
 import styles from "./Header.module.scss";
 import CommonButton from "../ui/CommonButton/CommonButton";
-
+import ProfileModal from "../ProfileModal/ProfileModal";
 const Header = () => {
   return (
     <HeaderTag>
@@ -40,6 +40,7 @@ const Header = () => {
             <CommonIcon id="icon-user" width="20" height="20" />
             <button>Вхід|Реєстрація</button>
           </RegisterContainer>
+          <ProfileModal/>
         </AddAdvertisingContainer>
       </HeaderContainer>
     </HeaderTag>
