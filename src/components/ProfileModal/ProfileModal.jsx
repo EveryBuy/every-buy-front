@@ -20,23 +20,23 @@ const ProfileModal = () => {
 
   return (
     <div className={styled.profileModal}>
-      <button onClick={toggleModal} className="styled.aboutMeIcon">
+      <button onClick={toggleModal} className={styled.aboutMeIcon}>
         <ImUser />
       </button>
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={toggleModal}
         contentLabel="Content Label"
-        className="styled.modalContent"
-        overlayClassName="styled.modalOverlay"
+        className={styled.modalContent}
+        overlayClassName={styled.modalOverlay}
       >
-        <div className='styled.profileBubble'>
-        <div className="styled.profileHeader">
-          <img src="/src/assets/images/profile.png" alt="Profile" className="styled.profilePicture" />
+        <div className={styled.profileBubble}>
+        <div className={styled.profileHeader}>
+          <img src="/src/assets/images/profile.png" alt="Profile" className={styled.profilePicture} />
             
           <h2>Вікторія</h2>
         </div>
-        <ul className="styled.profileOptions">
+        <ul className={styled.profileOptions}>
           <li onClick={() => openSubModal('Редагування профілю')}>Редагування профілю</li>
           <li onClick={() => openSubModal('Оголошення')}>Оголошення</li>
           <li onClick={() => openSubModal('Повідомлення')}>Повідомлення</li>
@@ -49,8 +49,8 @@ const ProfileModal = () => {
         isOpen={subModalIsOpen}
         onRequestClose={closeSubModal}
         contentLabel="Sub Modal"
-        className="styled.modalContent"
-        overlayClassName="styled.modalOverlay"
+        className={styled.modalContent}
+        overlayClassName={styled.modalOverlay}
       >
         <h2>{subModalContent}</h2>
         <button onClick={closeSubModal}>Close</button>
