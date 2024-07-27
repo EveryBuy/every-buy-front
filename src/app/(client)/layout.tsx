@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/footer/Footer";
+import { AuthProvider } from "@/context/AuthContextType";
 import "../globals.scss";
 
 export default async function ClientLayout({
@@ -11,10 +12,12 @@ export default async function ClientLayout({
   return (
     <html lang="uk">
       <body>
-        <Header />
-        {/* <main className="content container ">{children}</main> */}
-        <main className="container">{children}</main>
-        <Footer />
+        <AuthProvider>
+          <Header />
+          {/* <main className="container content">{children}</main> */}
+          <main className="container">{children}</main>
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   );
