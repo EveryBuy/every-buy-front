@@ -1,34 +1,31 @@
 "use client";
 
-import React from 'react';
-import { useRouter,usePathname } from 'next/navigation';
+import React from "react";
+import { useRouter, usePathname } from "next/navigation";
 // import styled from '@emotion/styled';
-import { ButtonContainer,HandleButton } from './Register-Login-Buttons.styled';
+import { ButtonContainer, HandleButton } from "./AuthButtons.styled";
 
 const RegisterLoginButtons: React.FC = () => {
   const router = useRouter();
   const currentPath = usePathname();
 
   const handleRegister = () => {
-    router.push('/register');
+    router.push("/register");
   };
 
   const handleLogin = () => {
-    router.push('/login');
+    router.push("/login");
   };
 
   return (
     <ButtonContainer>
-      <HandleButton 
+      <HandleButton
         onClick={handleRegister}
-        active={currentPath === '/register'}
+        active={currentPath === "/register"}
       >
         Реєстрація
       </HandleButton>
-      <HandleButton 
-        onClick={handleLogin}
-        active={currentPath === '/login'}
-      >
+      <HandleButton onClick={handleLogin} active={currentPath === "/login"}>
         Вхід
       </HandleButton>
     </ButtonContainer>

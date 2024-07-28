@@ -1,11 +1,12 @@
+"use client";
+
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useAuth } from "../../../context/AuthContextType";
-import RegisterLoginButtons from "./Register-Login-Buttons/Register-Login-Buttons";
-import EyePassword from "../../../assets/Svg/EyePassword.svg";
-import EyeInvisibleFilled from "../../../assets/Svg/EyeInvisibleFilled.svg";
-import FilledIconSrc from "../../../assets/Svg/CircleFilled.svg";
-import ErrorIconSrc from "../../../assets/Svg/CircleError.svg";
+import { useAuth } from "@/context/AuthContextType";
+import EyePassword from "@/assets/Svg/EyePassword.svg";
+import EyeInvisibleFilled from "@/assets/Svg/EyeInvisibleFilled.svg";
+import FilledIconSrc from "@/assets/Svg/CircleFilled.svg";
+import ErrorIconSrc from "@/assets/Svg/CircleError.svg";
 import {
   Form,
   InputTitle,
@@ -67,26 +68,20 @@ const Register: React.FC = () => {
       password: "",
       confirmPassword: "",
     };
-
     if (!validatePhone(phone)) {
       newErrors.phone = "невірний формат телефону";
     }
-
     if (!validateEmail(email)) {
       newErrors.email = "невірний формат e-mail";
     }
-
     if (!validatePassword(password)) {
       newErrors.password =
         "Пароль повинен включати: Великі літери: A-Z. Маленькі літери: a-z. Цифри: 0-9. Символи: ~! @#$%^&*()_-+={[}]|\\:;\"'<,>.?/ ";
     }
-
     if (password !== confirmPassword) {
       newErrors.confirmPassword = "Паролі не співпадають";
     }
-
     setErrors(newErrors);
-
     if (
       newErrors.phone ||
       newErrors.email ||
@@ -96,35 +91,9 @@ const Register: React.FC = () => {
       return;
     }
 
-    try {
-      const response = await fetch(
-        "https://service-authorization-b1jx.onrender.com/auth/registration",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email, phone, password }),
-        }
-      );
-
-      if (response.ok) {
-        const data = await response.json();
-        console.log("Реєстрація успішна:", data);
-        register(phone, email, password);
-        router.push("/");
-      } else {
-        const errorData = await response.json();
-        console.error("Помилка реєстрації:", errorData);
-        setErrors((prevErrors) => ({
-          ...prevErrors,
-        }));
-      }
-    } catch (error) {
-      console.error("Помилка мережі:", error);
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-      }));
+    const response: any = register(email, phone, password);
+    if (response) {
+      router.push("/user");
     }
   };
 
@@ -149,7 +118,6 @@ const Register: React.FC = () => {
 
   return (
     <>
-      <RegisterLoginButtons />
       <Form onSubmit={handleSubmit}>
         <InputContainer>
           <InputTitle htmlFor="phone">Телефон</InputTitle>

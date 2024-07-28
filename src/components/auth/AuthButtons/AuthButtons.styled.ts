@@ -7,6 +7,7 @@ export const ButtonContainer = styled.div`
   justify-content: center;
   gap: 10px;
   margin-bottom: 35px;
+  margin-top: 76px;
 `;
 
 export const HandleButton = styled.button<{ active: boolean }>`
@@ -16,7 +17,8 @@ export const HandleButton = styled.button<{ active: boolean }>`
   font-size: 32px;
   font-weight: 400;
   border: none;
-  border-bottom: ${(props) => (props.active ? '1px solid var(--label, #000)' : 'none')};
+  border-bottom: ${(props) =>
+    props.active ? "1px solid var(--label, #000)" : "none"};
   background-color: transparent;
   cursor: pointer;
 `;

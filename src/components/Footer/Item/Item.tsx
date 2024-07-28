@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import CommonIcon from "@/components/ui/CommonIcon/CommonIcon";
+import { CommonIcon } from "@/components";
 import ItemType from "@/types/footerItemType";
 import { MobilePaginationButton } from "./Item.styled";
 

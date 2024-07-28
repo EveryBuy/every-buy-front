@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import Menu from "../../../components/pages/userPage/Menu";
+import { Menu } from "@/components";
 export default async function UserLayout({
   children,
 }: {

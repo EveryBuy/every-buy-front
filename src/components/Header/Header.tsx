@@ -1,7 +1,8 @@
+import { FC } from "react";
 import Image from "next/image";
-import CommonIcon from "../ui/CommonIcon/CommonIcon";
+import { CommonIcon, CommonButton } from "@/components";
 import { headerItems } from "@/mock-data/headerItems";
-import Logo from "../../assets/Svg/logo.svg";
+import Logo from "@/assets/Svg/logo.svg";
 import {
   HeaderContainer,
   HeaderTag,
@@ -11,9 +12,8 @@ import {
   RegisterContainer,
 } from "./Header.styled";
 import styles from "./Header.module.scss";
-import CommonButton from "../ui/CommonButton/CommonButton";
 
-export default async function Header() {
+const Header: FC = () => {
   return (
     <HeaderTag className="container">
       <NavBar>
@@ -43,6 +43,6 @@ export default async function Header() {
       </HeaderContainer>
     </HeaderTag>
   );
-}
+};
 
-// export default Header;
+export default Header;

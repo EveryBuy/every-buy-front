@@ -1,10 +1,9 @@
-import CommonIcon from "../../ui/CommonIcon/CommonIcon";
-import styles from "./Banner.module.scss";
-import CommonButton from "../../ui/CommonButton/CommonButton";
+import { FC } from "react";
+import { CommonIcon, CommonButton, BannerBackground } from "@/components";
 import BannerProps from "@/types/bannerProps";
-import BannerBackground from "../BannerBackground/BannerBackground";
+import styles from "./Banner.module.scss";
 
-const Banner = ({ item }: BannerProps) => {
+const Banner: FC<BannerProps> = ({ item }) => {
   const { label, title, condition, price, buttonName, backgroundImages } = item;
 
   return (

@@ -1,10 +1,15 @@
+import { FC } from "react";
 import BannerBackgroundProps from "@/types/bannerBackgroundProps";
 import styles from "./BannerBackground.module.scss";
+
 interface BackgroundStyles {
   [key: string]: string;
 }
 
-const BannerBackground = ({ backgroundImages, children }: BannerBackgroundProps) => {
+const BannerBackground: FC<BannerBackgroundProps> = ({
+  backgroundImages,
+  children,
+}) => {
   const backgroundImageStyles: BackgroundStyles = {
     "--banner-background_mobile1x": `url(${backgroundImages.mobile1x})`,
     "--banner-background_mobile2x": `url(${backgroundImages.mobile2x})`,
@@ -13,10 +18,9 @@ const BannerBackground = ({ backgroundImages, children }: BannerBackgroundProps)
   };
 
   return (
-    <div
-      className={styles.bannerBackground}
-      style={backgroundImageStyles}
-    >{children}</div>
+    <div className={styles.bannerBackground} style={backgroundImageStyles}>
+      {children}
+    </div>
   );
 };
 

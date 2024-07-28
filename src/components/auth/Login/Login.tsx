@@ -3,9 +3,8 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContextType";
-import RegisterLoginButtons from "../Register/Register-Login-Buttons/Register-Login-Buttons";
-import EyePassword from "../../../assets/Svg/EyePassword.svg";
-import EyeInvisibleFilled from "../../../assets/Svg/EyeInvisibleFilled.svg";
+import EyePassword from "@/assets/Svg/EyePassword.svg";
+import EyeInvisibleFilled from "@/assets/Svg/EyeInvisibleFilled.svg";
 
 import {
   Form,
@@ -24,15 +23,21 @@ const Login: React.FC = () => {
   const [password, setPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // for testing
+  // login: "mitskp11@gmail.com",
+  // password: "14fgGH7_er$$",
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    login(emailOrPhone, password);
-    router.push("/");
+    const response: any = login(emailOrPhone, password);
+    console.log(await response);
+    if (response.status === 200) {
+      router.push("/user");
+    }
   };
 
   return (
     <>
-      <RegisterLoginButtons />
       <Form onSubmit={handleSubmit}>
         <InputContainer>
           <InputTitle htmlFor="emailOrPhone">Телефон або e-mail</InputTitle>

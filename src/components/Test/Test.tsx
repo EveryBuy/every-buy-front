@@ -68,7 +68,7 @@ const Test: FC = () => {
       throw error;
     }
   }
-  getToken(authBody);
+  // getToken(authBody);
 
   async function getData(auth: { login: string; password: string }) {
     try {

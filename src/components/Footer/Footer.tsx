@@ -1,8 +1,8 @@
+import { FC } from "react";
 import React from "react";
 import Image from "next/image";
-import CommonIcon from "../ui/CommonIcon/CommonIcon";
-import FooterMobile from "./FooterMobile/FooterMobile";
-import Logo from "../../assets/Svg/logo.svg";
+import { CommonIcon, CommonButton, FooterMobile } from "@/components";
+import Logo from "@/assets/Svg/logo.svg";
 import {
   FooterTag,
   FooterContainer,
@@ -16,9 +16,8 @@ import {
   ImageWrapper,
 } from "./Footer.styled";
 import styles from "./Footer.module.scss";
-import CommonButton from "../ui/CommonButton/CommonButton";
 
-const Footer = () => {
+const Footer: FC = () => {
   return (
     <FooterTag className="container">
       <FooterContainer>

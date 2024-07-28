@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import Item from "../Item/Item";
+import { Item } from "@/components";
 import { footerItems } from "../../../mock-data/footerItems";
 import {
   FooterContainerMobile,

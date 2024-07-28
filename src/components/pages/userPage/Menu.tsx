@@ -1,9 +1,9 @@
 // "use client";
-
+import { FC } from "react";
 import Link from "next/link";
 // import { usePathname } from "next/navigation";
 
-const Menu = () => {
+const Menu: FC = () => {
   // const pathname = usePathname();
   return (
     <nav>

@@ -1,4 +1,4 @@
-import AboutMe from "@/components/pages/userPage/AboutMe";
+import { AboutMe } from "@/components";
 
 export default function AboutMePage() {
   return <AboutMe />;
