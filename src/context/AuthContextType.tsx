@@ -1,7 +1,9 @@
 "use client";
 
 import React, { createContext, useContext, useState, ReactNode } from "react";
-import axios from "axios";
+import getTokenLogin from "@/api/getTokenLogin";
+import getUserData from "@/api/getUserData";
+import getTokenRegistration from "@/api/getTokenRegistration";
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -22,63 +24,14 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       login: emailOrPhone,
       password: password,
     };
-
-    async function getToken(auth: { login: string; password: string }) {
-      try {
-        const response = await axios.post(
-          "https://api-everybuy.onrender.com/auth/auth",
-          auth
-        );
-        console.log(response.data.data.token);
-        return response.data.data.token;
-      } catch (error) {
-        console.log(error);
-        throw error;
-      }
-    }
-    getToken(authBody);
-
-    async function getData(auth: { login: string; password: string }) {
-      try {
-        const token = await getToken(auth);
-        console.log(token);
-        localStorage.setItem("token", token);
-        const response = await axios.get(
-          "https://api-everybuy.onrender.com/user",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        return response;
-      } catch (error) {
-        console.log(error);
-      }
-    }
     setIsAuthenticated(true);
-    return getData(authBody);
+    getTokenLogin(authBody);
+    return getUserData(authBody);
   };
 
   const register = (email: string, phone: string, password: string) => {
-    async function getData() {
-      try {
-        const response = await axios.post(
-          "https://api-everybuy.onrender.com/auth/registration",
-          {
-            email: email,
-            phone: phone,
-            password: password,
-          }
-        );
-        localStorage.setItem("token", response.data.data.token);
-        return response.data.data.token;
-      } catch (error) {
-        console.log(error);
-      }
-    }
     setIsAuthenticated(true);
-    return getData();
+    return getTokenRegistration(email, phone, password);
   };
 
   const logout = () => setIsAuthenticated(false);

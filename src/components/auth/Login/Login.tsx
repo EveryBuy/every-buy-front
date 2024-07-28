@@ -1,11 +1,9 @@
 "use client";
-
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContextType";
 import EyePassword from "@/assets/Svg/EyePassword.svg";
 import EyeInvisibleFilled from "@/assets/Svg/EyeInvisibleFilled.svg";
-
 import {
   Form,
   InputTitle,
@@ -26,13 +24,16 @@ const Login: React.FC = () => {
   // for testing
   // login: "mitskp11@gmail.com",
   // password: "14fgGH7_er$$",
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const response: any = login(emailOrPhone, password);
-    console.log(await response);
-    if (response.status === 200) {
-      router.push("/user");
+
+    try {
+      const response: any = await login(emailOrPhone, password);
+      if (response.status === 200) {
+        router.push("/user");
+      }
+    } catch (error) {
+      console.error("Login failed", error);
     }
   };
 
