@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import { Header, Footer } from "../components";
 import { AuthProvider } from "@/context/AuthContextType";
 import "./globals.scss";
-import { Providers } from "./GlobalRedux/provider";
+import { Providers } from "../redux/provider";
 
 export default async function ClientLayout({
   children,
@@ -13,7 +13,7 @@ export default async function ClientLayout({
     <html lang="uk">
       <body>
         <Providers>
-        {/* <AuthProvider> */}
+        {/* <AuthProvider> */} 
           <Header />
           <main className="container">{children}</main>
           <Footer />

@@ -15,8 +15,8 @@ import {
 } from "./Login.styled";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "@/app/GlobalRedux/auth/operations";
-import { authSelector } from '@/app/GlobalRedux/auth/selectors';
+import { login } from "@/redux/auth/operations";
+import { authSelector } from '@/redux/auth/selectors';
 
 const Login: React.FC = () => {
   // const { login } = useAuth();
@@ -31,8 +31,8 @@ const Login: React.FC = () => {
   // password: "14fgGH7_er$$",
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(login({ emailOrPhone, password }));
-    console.log(dataUser);
+    await dispatch(login({ emailOrPhone, password }));
+    console.log('review state:', dataUser);
     
     // try {
     //   const response: any = await login(emailOrPhone, password);

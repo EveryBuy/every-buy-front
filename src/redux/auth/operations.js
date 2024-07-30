@@ -38,12 +38,12 @@ export const login = createAsyncThunk(
   "auth/login",
   async (userLogData, thunkAPI) => {
     try {
-      const { data } = await getTokenLogin(userLogData);
-      await API.post("/auth/auth", {
-        login: "test@gmail.com",
-        password: "kdf{DT'nR(d!/i8r4)+U>Wa",
-      });
-      setHeaderAuthToken(data.data.token);
+      //await getTokenLogin(userLogData);
+      // const { data } = await API.post("/auth/auth", {
+      //   login: "test@gmail.com",
+      //   password: "kdf{DT'nR(d!/i8r4)+U>Wa",
+      // });
+      // setHeaderAuthToken(data.data.token);
       // const userData = await API.get("/user");
       const userData = await getUserData({
         login: "test@gmail.com",
