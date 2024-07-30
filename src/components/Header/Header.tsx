@@ -12,6 +12,7 @@ import {
   RegisterContainer,
 } from "./Header.styled";
 import styles from "./Header.module.scss";
+import Link from "next/link";
 
 const Header: FC = () => {
   return (
@@ -36,8 +37,10 @@ const Header: FC = () => {
           />
           <CommonIcon id="icon-heart" width="20" height="20" />
           <RegisterContainer>
-            <CommonIcon id="icon-user" width="20" height="20" />
-            <button>Вхід|Реєстрація</button>
+            <Link href='/login'>
+              <CommonIcon id="icon-user" width="20" height="20" />
+              <button>Вхід|Реєстрація</button>
+            </Link>
           </RegisterContainer>
         </AddAdvertisingContainer>
       </HeaderContainer>

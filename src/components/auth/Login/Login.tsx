@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContextType";
@@ -13,29 +14,38 @@ import {
   TogglePasswordButton,
 } from "./Login.styled";
 import Image from "next/image";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "@/app/GlobalRedux/auth/operations";
+import { authSelector } from '@/app/GlobalRedux/auth/selectors';
 
 const Login: React.FC = () => {
-  const { login } = useAuth();
+  // const { login } = useAuth();
   const router = useRouter();
   const [emailOrPhone, setEmailOrPhone] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
-
+  const dispatch = useDispatch();
+  const dataUser = useSelector(authSelector);
   // for testing
   // login: "mitskp11@gmail.com",
   // password: "14fgGH7_er$$",
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    dispatch(login({ emailOrPhone, password }));
+    console.log(dataUser);
+    
+    // try {
+    //   const response: any = await login(emailOrPhone, password);
+    //   if (response.status === 200) {
+    //     router.push("/user");
+    //   }
+    // } catch (error) {
+    //   console.error("Login failed", error);
+    // }
 
-    try {
-      const response: any = await login(emailOrPhone, password);
-      if (response.status === 200) {
-        router.push("/user");
-      }
-    } catch (error) {
-      console.error("Login failed", error);
-    }
   };
+
+
 
   return (
     <>
