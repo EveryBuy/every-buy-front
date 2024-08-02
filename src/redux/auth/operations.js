@@ -1,5 +1,3 @@
-import getTokenLogin from "@/api/getTokenLogin";
-import getUserData from "@/api/getUserData";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -20,8 +18,9 @@ export const register = createAsyncThunk(
   async (userRegisterData, thunkAPI) => {
     try {
       const { data } = await API.post("/auth/registration", userRegisterData);
-      setHeaderAuthToken(data.token);
-      return data;
+      setHeaderAuthToken(data.data.token);
+      const userData = await API.get("/auth/validate");
+      return { data: userData.data.data, token: data.data.token };
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
@@ -38,19 +37,10 @@ export const login = createAsyncThunk(
   "auth/login",
   async (userLogData, thunkAPI) => {
     try {
-      //await getTokenLogin(userLogData);
-      // const { data } = await API.post("/auth/auth", {
-      //   login: "test@gmail.com",
-      //   password: "kdf{DT'nR(d!/i8r4)+U>Wa",
-      // });
-      // setHeaderAuthToken(data.data.token);
-      // const userData = await API.get("/user");
-      const userData = await getUserData({
-        login: "test@gmail.com",
-        password: "kdf{DT'nR(d!/i8r4)+U>Wa",
-      });
-      console.log(userData);
-      return userData;
+      const { data } = await API.post("/auth/auth", userLogData);
+      setHeaderAuthToken(data.data.token);
+      const userData = await API.get("/user");
+      return { data: userData.data.data, token: data.data.token };
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }

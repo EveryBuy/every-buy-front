@@ -13,18 +13,21 @@ const authSlice = createSlice({
       phone: null,
       userPhotoUrl: null,
     },
-    isLoggedIn: false,
     token: null,
+    isLoggedIn: false,
   },
   extraReducers: (builder) => {
     builder
-      .addCase(register.fulfilled, (state, action) => {
+      .addCase(register.fulfilled, (state, { payload }) => {
+        console.log(payload);
+        state.user = payload.data;
+        state.token = payload.token;
         state.isLoggedIn = true;
       })
       .addCase(login.fulfilled, (state, { payload }) => {
-        console.log(payload);
         state.user = payload.data;
-        state.user.isLoggedIn = true;
+        state.token = payload.token;
+        state.isLoggedIn = true;
       });
     // .addCase(logout)
     // .addCase(refreshUser);

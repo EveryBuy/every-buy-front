@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+// import { useAuth } from "@/context/AuthContextType";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/context/AuthContextType";
 import EyePassword from "@/assets/Svg/EyePassword.svg";
 import EyeInvisibleFilled from "@/assets/Svg/EyeInvisibleFilled.svg";
 import FilledIconSrc from "@/assets/Svg/CircleFilled.svg";
@@ -18,6 +18,9 @@ import {
   ErrorIcon,
 } from "./Register.styled";
 import Image from "next/image";
+import { useDispatch, useSelector } from "react-redux";
+import { register } from "@/redux/auth/operations";
+import { selectIsLoggedIn } from "@/redux/auth/selectors";
 
 type ErrorsType = {
   phone: string;
@@ -28,8 +31,9 @@ type ErrorsType = {
 };
 
 const Register: React.FC = () => {
-  const { register } = useAuth();
+  // const { register } = useAuth();
   const router = useRouter();
+  const dispatch = useDispatch();
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -42,6 +46,11 @@ const Register: React.FC = () => {
     password: "",
     confirmPassword: "",
   });
+  const isLoggedIn = useSelector(selectIsLoggedIn)
+
+  useEffect(() => {
+    isLoggedIn && router.push('/user');
+  }, [isLoggedIn])
 
   const validatePhone = (phone: string) => {
     const phoneRegex = /^\+?[0-9]{9,15}$/;
@@ -91,10 +100,15 @@ const Register: React.FC = () => {
       return;
     }
 
-    const response: any = register(email, phone, password);
-    if (response) {
-      router.push("/user");
-    }
+    dispatch(register({
+      email: email,
+      phone: phone,
+      password: password,
+    }));
+  //   const response: any = register(email, phone, password);
+  //   if (response) {
+  //     router.push("/user");
+  //   }
   };
 
   const getInputClass = (field: string) => {

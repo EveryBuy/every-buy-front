@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/context/AuthContextType";
+// import { useAuth } from "@/context/AuthContextType";
 import EyePassword from "@/assets/Svg/EyePassword.svg";
 import EyeInvisibleFilled from "@/assets/Svg/EyeInvisibleFilled.svg";
 import {
@@ -16,36 +16,35 @@ import {
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "@/redux/auth/operations";
-import { authSelector } from '@/redux/auth/selectors';
+import { selectIsLoggedIn, selectToken, selectUser } from '@/redux/auth/selectors';
+import { log } from "console";
 
 const Login: React.FC = () => {
-  // const { login } = useAuth();
   const router = useRouter();
   const [emailOrPhone, setEmailOrPhone] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const dispatch = useDispatch();
-  const dataUser = useSelector(authSelector);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const user = useSelector(selectUser);
+  const token = useSelector(selectToken);
+
+  useEffect(() => {   
+    isLoggedIn && router.push("/user")
+  }, [isLoggedIn])
+
   // for testing
   // login: "mitskp11@gmail.com",
   // password: "14fgGH7_er$$",
-  const handleSubmit = async (e: React.FormEvent) => {
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    await dispatch(login({ emailOrPhone, password }));
-    console.log('review state:', dataUser);
-    
-    // try {
-    //   const response: any = await login(emailOrPhone, password);
-    //   if (response.status === 200) {
-    //     router.push("/user");
-    //   }
-    // } catch (error) {
-    //   console.error("Login failed", error);
-    // }
-
+    dispatch(login(
+      {
+        login: emailOrPhone,
+        password: password
+      }));
   };
-
-
 
   return (
     <>
