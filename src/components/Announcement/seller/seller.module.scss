@@ -1,0 +1,76 @@
+@import "../../../styles/mixins";
+@import "../../../styles/breakpoints";
+
+.container {
+  padding: 10px 20px;
+  border-radius: 20px;
+  background-color: lightgray;
+  margin-top: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  @include media-min($breakpoint-tablet) {
+    margin-top: 0;
+  }
+}
+
+.title {
+  font-size: 24px;
+}
+
+.sellerInfo {
+  display: flex;
+  gap: 28px;
+  align-items: center;
+}
+
+.name {
+  font-size: 20px;
+}
+
+.status {
+  position: relative;
+  font-size: 14px;
+  margin-left: 14px;
+}
+
+.status::before {
+  position: absolute;
+  content: "";
+  top: 50%;
+  transform: translateY(-50%);
+  left: -14px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  overflow: hidden;
+  //   background-color: var(--success);
+}
+
+.online::before {
+  background-color: var(--success);
+}
+
+.offline {
+  background-color: var(--error);
+}
+
+.allOrders {
+  font-size: 16px;
+  display: flex;
+  gap: 11px;
+  align-items: center;
+}
+
+.sellerImage {
+  width: 83px;
+  height: 83px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.arrow {
+  width: 8px;
+  height: 12px;
+}

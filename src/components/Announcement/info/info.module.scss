@@ -1,0 +1,68 @@
+@import "../../../styles/mixins";
+@import "../../../styles/breakpoints";
+
+.infoComp {
+  padding: 20px 22px;
+  border-radius: 20px;
+  background-color: lightgray;
+
+  @include media-min($breakpoint-tablet) {
+    padding: 30px 40px;
+  }
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.description {
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+.text {
+  font-size: 14px;
+}
+
+.locationTitle {
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.region {
+  color: var(--input-text);
+}
+
+.mobileContent {
+  @include media-min($breakpoint-tablet) {
+    display: none;
+  }
+}
+
+.deliveryTitle {
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+.appeal {
+  color: var(--error);
+  display: block;
+  margin-top: 32px;
+  text-align: end;
+}
+
+.locationInfo {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.locationSvg {
+  width: 17.5px;
+  height: 25px;
+}

@@ -1,0 +1,24 @@
+@import "../../../styles/mixins";
+@import "../../../styles/breakpoints";
+
+.container {
+  padding: 0 21px;
+  margin: 0 auto;
+  max-width: 375px;
+
+  @include media-min($breakpoint-tablet) {
+    margin-top: 40px;
+    margin-bottom: 138px;
+    max-width: 768px;
+    padding: 0 32px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px 46px;
+  }
+}
+
+.item {
+  @include media-min($breakpoint-tablet) {
+    width: calc((100% - 46px) / 2);
+  }
+}

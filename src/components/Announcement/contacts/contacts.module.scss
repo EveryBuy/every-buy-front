@@ -1,0 +1,110 @@
+@import "../../../styles/mixins";
+@import "../../../styles/breakpoints";
+
+.list {
+  margin-top: 32px;
+
+  @include media-min($breakpoint-tablet) {
+    margin-top: 0;
+  }
+}
+
+.titleItem {
+  padding: 10px 20px;
+  background-color: lightgray;
+  border-radius: 20px;
+
+  @include media-min($breakpoint-tablet) {
+    display: flex;
+    flex-direction: column;
+    margin-top: 0;
+    gap: 40px;
+  }
+}
+
+.public {
+  font-size: 14px;
+  color: var(--input-text);
+  margin-bottom: 24px;
+
+  @include media-min($breakpoint-tablet) {
+    margin-top: 0;
+  }
+}
+
+.title {
+  color: var(--label);
+  font-size: 20px;
+  margin-bottom: 8px;
+
+  @include media-min($breakpoint-tablet) {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 0;
+  }
+}
+
+.changeWidth {
+  display: none;
+
+  @include media-min($breakpoint-tablet) {
+    display: block;
+    font-size: 26px;
+  }
+}
+
+.price {
+  font-size: 24px;
+
+  @include media-min($breakpoint-tablet) {
+    font-size: 26px;
+    font-weight: 700;
+  }
+}
+
+.buttonsItem {
+  margin: 32px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  @include media-min($breakpoint-tablet) {
+    margin-top: 40px;
+    margin-bottom: 0;
+  }
+}
+
+.deliveryTitle {
+  font-size: 20px;
+  font-weight: 500;
+  margin-top: 12px;
+  margin-bottom: 12px;
+
+  @include media-min($breakpoint-tablet) {
+    margin-top: 0;
+    font-size: 26px;
+    font-weight: 600;
+  }
+}
+
+.descVersion {
+  display: none;
+
+  @include media-min($breakpoint-tablet) {
+    display: block;
+  }
+}
+
+.mobileButtons {
+  @include media-min($breakpoint-tablet) {
+    display: none;
+  }
+}
+
+.text {
+  font-size: 14px;
+
+  @include media-min($breakpoint-tablet) {
+    font-size: 16px;
+  }
+}

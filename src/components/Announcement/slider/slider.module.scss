@@ -1,0 +1,12 @@
+@import "../../../styles/mixins";
+@import "../../../styles/breakpoints";
+
+.image {
+  margin-top: 27px;
+  width: 100%;
+  height: 100%;
+
+  @include media-min($breakpoint-tablet) {
+    margin-top: 0;
+  }
+}
