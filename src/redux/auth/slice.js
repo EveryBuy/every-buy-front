@@ -1,7 +1,7 @@
 "use client";
 
 import { createSlice } from "@reduxjs/toolkit";
-import { register, login, logout } from "./operations";
+import { register, login, logout, refreshUser } from "./operations";
 
 const handleRejected = (state, { payload }) => {
   state.isLoggedIn = false;
@@ -48,8 +48,16 @@ const authSlice = createSlice({
         };
         state.token = null;
         state.isLoggedIn = false;
+      })
+      .addCase(refreshUser.rejected, (state) => {
+        state.token = null;
+      })
+      .addCase(refreshUser.fulfilled, (state, { payload }) => {
+        console.log(payload);
+        state.user = payload.data;
+        state.token = payload.token;
+        state.isLoggedIn = true;
       });
-    // .addCase(refreshUser);
   },
 });
 

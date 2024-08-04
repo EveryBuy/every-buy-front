@@ -50,3 +50,27 @@ export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
     return thunkAPI.rejectWithValue(error);
   }
 });
+
+export const refreshUser = createAsyncThunk(
+  "auth/refresh",
+  async (_, { rejectWithValue, getState }) => {
+    try {
+      const state = getState();
+
+      setHeaderAuthToken(state.auth.token);
+      const { data } = await API.get("/user");
+      return data.data;
+    } catch (error) {
+      clearHeaderAuthToken();
+      return rejectWithValue(error.message);
+    }
+  },
+  {
+    condition: (_, { getState }) => {
+      const { auth } = getState();
+      if (!auth.token) {
+        return false;
+      }
+    },
+  }
+);
