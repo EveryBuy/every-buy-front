@@ -19,20 +19,15 @@ export const register = createAsyncThunk(
     try {
       const { data } = await API.post("/auth/registration", userRegisterData);
       setHeaderAuthToken(data.data.token);
-      const userData = await API.get("/auth/validate");
+      const userData = await API.get("/user");
       return { data: userData.data.data, token: data.data.token };
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
-
-// {
 //   login: "test@gmail.com",
 //   password: "kdf{DT'nR(d!/i8r4)+U>Wa",
-// }
-// ("test@gmail.com", "kdf{DT'nR(d!/i8r4)+U>Wa")
-
 export const login = createAsyncThunk(
   "auth/login",
   async (userLogData, thunkAPI) => {
@@ -46,3 +41,12 @@ export const login = createAsyncThunk(
     }
   }
 );
+
+export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
+  try {
+    await API.get("/auth/validate");
+    clearHeaderAuthToken();
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
