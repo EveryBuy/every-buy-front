@@ -4,20 +4,7 @@ import {
   createSlice,
 } from "@reduxjs/toolkit";
 import { register, login, logout, refreshUser } from "./operations";
-
-type User = {
-  userId: string | null;
-  userName: string | null;
-  email: string | null;
-  phone: string | null;
-  userPhotoUrl: string | null;
-};
-
-type AuthState = {
-  user: User;
-  token: string | null;
-  isLoggedIn: boolean;
-};
+import { AuthState } from "@/types/stateType";
 
 const initialState: AuthState = {
   user: {
