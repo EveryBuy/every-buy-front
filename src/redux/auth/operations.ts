@@ -1,11 +1,22 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+type UserRegisterData = {
+      email: string,
+      phone: string,
+      password: string,
+}
+
+type UserLogData = {
+        login: string,
+        password: string
+}
+      
 const API = axios.create({
   baseURL: "https://api-everybuy.onrender.com",
 });
 
-const setHeaderAuthToken = (token) => {
+const setHeaderAuthToken = (token: string) => {
   API.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 };
 
@@ -13,15 +24,16 @@ const clearHeaderAuthToken = () => {
   delete API.defaults.headers.common["Authorization"];
 };
 
+
 export const register = createAsyncThunk(
   "auth/register",
-  async (userRegisterData, thunkAPI) => {
+  async (userRegisterData: UserRegisterData, thunkAPI) => {
     try {
       const { data } = await API.post("/auth/registration", userRegisterData);
       setHeaderAuthToken(data.data.token);
       const userData = await API.get("/user");
       return { data: userData.data.data, token: data.data.token };
-    } catch (error) {
+    } catch (error: any) {
       return thunkAPI.rejectWithValue(error.message);
     }
   }
@@ -30,7 +42,7 @@ export const register = createAsyncThunk(
 //   password: "kdf{DT'nR(d!/i8r4)+U>Wa",
 export const login = createAsyncThunk(
   "auth/login",
-  async (userLogData, thunkAPI) => {
+  async (userLogData: UserLogData, thunkAPI) => {
     try {
       const { data } = await API.post("/auth/auth", userLogData);
       setHeaderAuthToken(data.data.token);
@@ -60,7 +72,7 @@ export const refreshUser = createAsyncThunk(
       setHeaderAuthToken(state.auth.token);
       const { data } = await API.get("/user");
       return data.data;
-    } catch (error) {
+    } catch (error: any) {
       clearHeaderAuthToken();
       return rejectWithValue(error.message);
     }

@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-// import { useAuth } from "@/context/AuthContextType";
 import EyePassword from "@/assets/Svg/EyePassword.svg";
 import EyeInvisibleFilled from "@/assets/Svg/EyeInvisibleFilled.svg";
 import {
@@ -14,20 +13,18 @@ import {
   TogglePasswordButton,
 } from "./Login.styled";
 import Image from "next/image";
-import { useDispatch, useSelector } from "react-redux";
 import { login } from "@/redux/auth/operations";
-import { selectIsLoggedIn, selectToken, selectUser } from '@/redux/auth/selectors';
-import { log } from "console";
+import { selectIsLoggedIn } from '@/redux/auth/selectors';
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+
 
 const Login: React.FC = () => {
   const router = useRouter();
   const [emailOrPhone, setEmailOrPhone] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const dispatch = useDispatch();
-  const isLoggedIn = useSelector(selectIsLoggedIn);
-  const user = useSelector(selectUser);
-  const token = useSelector(selectToken);
+  const dispatch = useAppDispatch();
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
 
   useEffect(() => {   
     isLoggedIn && router.push("/user")
