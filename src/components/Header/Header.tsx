@@ -1,8 +1,8 @@
-import React from "react";
+import { FC } from "react";
 import Image from "next/image";
-import CommonIcon from "../ui/CommonIcon/CommonIcon";
+import { CommonIcon, CommonButton } from "@/components";
 import { headerItems } from "@/mock-data/headerItems";
-import Logo from "../../assets/Svg/logo.svg";
+import Logo from "@/assets/Svg/logo.svg";
 import {
   HeaderContainer,
   HeaderTag,
@@ -12,11 +12,11 @@ import {
   RegisterContainer,
 } from "./Header.styled";
 import styles from "./Header.module.scss";
-import CommonButton from "../ui/CommonButton/CommonButton";
+import Link from "next/link";
 
-const Header = () => {
+const Header: FC = () => {
   return (
-    <HeaderTag>
+    <HeaderTag className="container">
       <NavBar>
         <List>
           {headerItems.map(({ text }) => (
@@ -37,8 +37,10 @@ const Header = () => {
           />
           <CommonIcon id="icon-heart" width="20" height="20" />
           <RegisterContainer>
-            <CommonIcon id="icon-user" width="20" height="20" />
-            <button>Вхід|Реєстрація</button>
+            <Link href='/login'>
+              <CommonIcon id="icon-user" width="20" height="20" />
+              <button>Вхід|Реєстрація</button>
+            </Link>
           </RegisterContainer>
         </AddAdvertisingContainer>
       </HeaderContainer>

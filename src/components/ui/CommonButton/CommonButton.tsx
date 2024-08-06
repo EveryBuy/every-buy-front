@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import CommonButtonProps from "@/types/commonButtonProps";
 import styles from "./CommonButton.module.scss";
 

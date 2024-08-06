@@ -1,8 +1,8 @@
-import CommonIcon from "../ui/CommonIcon/CommonIcon";
+import { FC } from "react";
+import { CommonIcon, CommonButton } from "@/components";
 import styles from "./Search.module.scss";
-import CommonButton from "@/components/ui/CommonButton/CommonButton";
 
-const Search = () => {
+const Search: FC = () => {
   return (
     <div className={styles.searchContainer}>
       <form className={styles.searchForm}>

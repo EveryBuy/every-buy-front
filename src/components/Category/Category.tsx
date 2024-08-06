@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 // import Image from "next/image";
-import Fold from "../../assets/Svg/fold.svg";
-import { fetchCategoryData } from "../../api/fetchCategoryData";
+import Fold from "@/assets/Svg/fold.svg";
+import { fetchCategoryData } from "@/api/fetchCategoryData";
 import CategoryItem from "@/types/categoryItemType";
 import {
   SectionContainer,
@@ -21,6 +21,7 @@ import {
   Loading,
   Error,
 } from "./Category.styled";
+// import style from "./Category.module.scss";
 
 const Category: React.FC = () => {
   const [data, setData] = useState<CategoryItem[] | null>(null);
@@ -72,6 +73,7 @@ const Category: React.FC = () => {
                     alt={nameUkr}
                     width={98}
                     height={98}
+                    style={{ objectFit: "cover" }}
                   />
                   <ListItemText>{nameUkr}</ListItemText>
                 </ListItemWrapper>

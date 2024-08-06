@@ -1,18 +1,5 @@
-import { ReactNode } from "react";
-import Header from "@/components/Header/Header";
-import Footer from "@/components/footer/Footer";
-import "../globals.scss";
+import LayoutProps from "@/types/layoutProp";
 
-export default function ClientLayout({ children }: { children: ReactNode }) {
-  return (
-    <html lang="uk">
-      <body>
-        <div className="container">
-          <Header />
-          <div className="content">{children}</div>
-          <Footer />
-        </div>
-      </body>
-    </html>
-  );
+export default function RootLayout({ children }: LayoutProps) {
+  return children;
 }
