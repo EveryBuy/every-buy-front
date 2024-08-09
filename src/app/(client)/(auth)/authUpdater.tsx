@@ -2,15 +2,21 @@
 
 import { refreshUser } from "@/redux/auth/operations";
 import { useAppDispatch } from "@/redux/store"
-import { useEffect } from "react";
+import { ReactNode, useEffect } from "react";
 
-export const AuthUpdater = () => {
+export const AuthUpdater = ({
+  children,
+}: {
+  children: ReactNode;
+}) => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
+        console.log("First ok");
+        
         dispatch(refreshUser())
-    }, [dispatch])
-    return;
+    })
+    return <>{ children} </>;
 }
 
 export default AuthUpdater;

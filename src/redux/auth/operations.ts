@@ -1,7 +1,12 @@
-import { AuthState, UserLogData, UserRegisterData } from "@/types/stateType";
+import {
+  AuthState,
+  UserDeleteData,
+  UserLogData,
+  UserRegisterData,
+} from "@/types/stateType";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
- 
+
 const API = axios.create({
   baseURL: "https://api-everybuy.onrender.com",
 });
@@ -13,7 +18,6 @@ const setHeaderAuthToken = (token: string | null) => {
 const clearHeaderAuthToken = () => {
   delete API.defaults.headers.common["Authorization"];
 };
-
 
 export const register = createAsyncThunk(
   "auth/register",
@@ -60,7 +64,10 @@ export const refreshUser = createAsyncThunk(
       const { auth }: any = getState();
       setHeaderAuthToken(auth.token);
       const { data } = await API.get("/user");
-      return data.data;
+      return {
+        data: data.data,
+        token: API.defaults.headers.common["Authorization"],
+      };
     } catch (error: any) {
       clearHeaderAuthToken();
       return rejectWithValue(error.message);
@@ -73,5 +80,30 @@ export const refreshUser = createAsyncThunk(
         return false;
       }
     },
+  }
+);
+
+export const getDeleteCode = createAsyncThunk(
+  "auth/getDeleteCode",
+  async (_, thunkApi) => {
+    try {
+      const { data } = await API.get("/auth/get-code-to-del");
+      return data;
+    } catch (error: any) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const deleteUser = createAsyncThunk(
+  "auth/deleteUser",
+  async (deleteData, thunkAPI) => {
+    try {
+      // receive { code, password }
+      const { data } = await API.delete("/auth/delete", deleteData);
+      return data;
+    } catch (error: any) {
+      thunkAPI.rejectWithValue(error.message);
+    }
   }
 );
