@@ -10,6 +10,7 @@ export type AuthState = {
   user: User;
   token: string | null;
   isLoggedIn: boolean;
+  isDeleted: boolean;
 };
 
 export type UserRegisterData = {

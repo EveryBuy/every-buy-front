@@ -103,7 +103,19 @@ export const deleteUser = createAsyncThunk(
       const { data } = await API.delete("/auth/delete", deleteData);
       return data;
     } catch (error: any) {
-      thunkAPI.rejectWithValue(error.message);
+      return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
+
+export const changePassword = createAsyncThunk(
+  "auth/changePassword",
+  async (changeData, thunkAPI) => {
+    try {
+      const { data } = await API.put("/auth/change-password", changeData);
+      return data;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+)
