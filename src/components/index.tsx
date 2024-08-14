@@ -6,7 +6,11 @@ export { default as BannerBackground } from "./Slider/BannerBackground/BannerBac
 export { default as Banner } from "./Slider/Banner/Banner";
 export { default as Search } from "./Search/Search";
 export { default as AboutMe } from "./pages/userPage/AboutMe";
-export { default as Menu } from "./pages/userPage/Menu";
+export { default as SelectedGoods } from "./pages/userPage/SelectedGoods";
+export { default as MyAds } from "./pages/userPage/MyAds";
+export { default as MyActiveAds } from "./pages/userPage/MyActiveAds";
+export { default as MyNonActiveAds } from "./pages/userPage/MyNonActiveAds";
+export { default as ProfileMenu } from "./pages/ProfileMenu";
 export { default as Header } from "./Header/Header";
 export { default as Footer } from "./Footer/Footer";
 export { default as Item } from "./Footer/Item/Item";

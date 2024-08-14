@@ -7,7 +7,12 @@
   --font-family: "Inter", Arial, sans-serif;
 
   // font size
-  --f-size-h1: 36px;
+  --f-size-h1: 40px;
+  --f-size-h2: 36px;
+  --f-size-h3: 32px;
+  --f-size-h4: 24px;
+  --large-body-medium: 20px;
+  --body-text: 16px;
 
   // colors
   --main-background: #f6f6f6;
@@ -35,12 +40,22 @@ body {
   flex-direction: column;
   max-width: 1440px;
   margin: 0 auto;
+  padding: 0 20px;
   // min-height: 100vh;
+  @include media-min($breakpoint-tablet) {
+    padding: 0 60px;
+  }
 }
 
-// .content {
-//   flex-grow: 1;
-// }
+.title {
+  padding-bottom: 30px;
+  font-size: var(--f-size-h4);
+  @include media-min($breakpoint-tablet) {
+    ppadding: 60px 0px 50px;
+    font-size: 40px;
+    font-weight: 700;
+  }
+}
 
 //styles for slider
 .slick-current {
@@ -48,6 +63,14 @@ body {
 
   @include media-min($breakpoint-tablet) {
     padding: 0 32px;
+  }
+}
+
+.profileSectionWrapper {
+  display: none;
+  @include media-min($breakpoint-tablet) {
+    display: flex;
+    padding-left: 110px;
   }
 }
 

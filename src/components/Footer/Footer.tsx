@@ -19,7 +19,7 @@ import styles from "./Footer.module.scss";
 
 const Footer: FC = () => {
   return (
-    <FooterTag className="container">
+    <FooterTag>
       <FooterContainer>
         <ImageWrapper>
           <Image priority src={Logo} alt="Logo" width={104} height={77} />

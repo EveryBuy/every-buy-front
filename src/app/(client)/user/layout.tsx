@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { Menu } from "@/components";
+import { ProfileMenu } from "@/components";
 export default async function UserLayout({
   children,
 }: {
@@ -7,24 +7,13 @@ export default async function UserLayout({
 }) {
   return (
     <>
-      <div style={{ padding: "10px 30px" }}>
+      <div className="title">
         <h1>Профіль користувача</h1>
       </div>
-      <div style={{ display: "flex" }}>
-        {/* <div
-          style={{
-            width: "20%",
-            borderRight: "1px solid #ccc",
-            padding: "1rem",
-          }}
-        > */}
-        <Menu />
-        {children}
-        {/* </div> */}
-        {/* <div style={{ width: "80%", padding: "1rem" }}>{children}</div> */}
+      <div style={{ display: "flex", width: "100%" }}>
+        <ProfileMenu />
+        <section className="profileSectionWrapper">{children}</section>
       </div>
     </>
   );
 }
-
-// export default UserLayout;

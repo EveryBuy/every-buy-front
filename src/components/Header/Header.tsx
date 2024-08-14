@@ -16,7 +16,7 @@ import Link from "next/link";
 
 const Header: FC = () => {
   return (
-    <HeaderTag className="container">
+    <HeaderTag>
       <NavBar>
         <List>
           {headerItems.map(({ text }) => (
@@ -37,7 +37,7 @@ const Header: FC = () => {
           />
           <CommonIcon id="icon-heart" width="20" height="20" />
           <RegisterContainer>
-            <Link href='/login'>
+            <Link href="/login">
               <CommonIcon id="icon-user" width="20" height="20" />
               <button>Вхід|Реєстрація</button>
             </Link>

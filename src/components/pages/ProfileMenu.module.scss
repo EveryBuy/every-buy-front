@@ -1,0 +1,43 @@
+@import "../../styles/mixins";
+@import "../../styles/breakpoints";
+
+.profileMenu {
+  width: 100%;
+  @include media-min($breakpoint-tablet) {
+    width: 225px;
+  }
+}
+
+.itemWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  font-size: var(--body-text);
+  row-gap: 15px;
+
+  @include media-min($breakpoint-tablet) {
+    row-gap: 20px;
+    padding: 8px 12px 0px 0px;
+    font-size: var(--large-body-medium);
+    border-right: 1px solid #9d9d9d;
+  }
+
+  & li {
+    padding: 10px;
+    border-bottom: 1px solid #9d9d9d;
+    @include media-min($breakpoint-tablet) {
+      padding: 0px;
+      border-bottom: 0px;
+    }
+  }
+}
+
+.subMenuWrapper {
+  display: none;
+  @include media-min($breakpoint-tablet) {
+    display: flex;
+    flex-direction: column;
+    row-gap: 12px;
+    padding: 20px 0px 0px 40px;
+  }
+}
