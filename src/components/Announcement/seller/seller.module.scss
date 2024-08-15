@@ -12,17 +12,32 @@
 
   @include media-min($breakpoint-tablet) {
     margin-top: 0;
+    gap: 28px;
+    padding: 20px 30px;
+  }
+  
+  @include media-min($breakpoint-laptop) {
+    gap: 0;
   }
 }
 
 .title {
   font-size: 24px;
+
+  @include media-min($breakpoint-laptop) {
+    font-size: 36px;
+    font-weight: 600;
+  }
 }
 
 .sellerInfo {
   display: flex;
   gap: 28px;
   align-items: center;
+
+  @include media-min($breakpoint-laptop) {
+    margin-top: 32px;
+  }
 }
 
 .name {
@@ -33,6 +48,12 @@
   position: relative;
   font-size: 14px;
   margin-left: 14px;
+  margin-top: 12px;
+
+  @include media-min($breakpoint-laptop) {
+    font-size: 16px;
+    margin-top: 16px;
+  }
 }
 
 .status::before {
@@ -61,6 +82,12 @@
   display: flex;
   gap: 11px;
   align-items: center;
+
+  @include media-min($breakpoint-laptop) {
+    font-size: 24px;
+    justify-content: center;
+    margin-top: 71px;
+  }
 }
 
 .sellerImage {
@@ -73,4 +100,9 @@
 .arrow {
   width: 8px;
   height: 12px;
+
+  @include media-min($breakpoint-laptop) {
+    width: 10px;
+    height: 16px;
+  }
 }

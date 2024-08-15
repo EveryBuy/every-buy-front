@@ -15,6 +15,10 @@
     flex-wrap: wrap;
     gap: 30px 46px;
   }
+
+  @include media-min($breakpoint-laptop) {
+    max-width: 1440px;
+  }
 }
 
 .item {

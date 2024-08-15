@@ -1,5 +1,5 @@
-import AnnouncementBtn from "@/components/ui/AnnouncementBtn/AnnouncementBtn";
 import styles from "./contacts.module.scss";
+import CommonButton from "@/components/ui/CommonButton/CommonButton";
 
 interface Location {
   city: string;
@@ -35,14 +35,43 @@ export default function Contacts({ contactsInfo }: ContactsProps) {
             <p className={styles.text}>{delivery.join(", ")}</p>
           </div>
           <div className={styles.buttonsItem}>
-            <AnnouncementBtn>Надіслати повідомлення</AnnouncementBtn>
-            <AnnouncementBtn>Показати телефон</AnnouncementBtn>
+            <CommonButton
+              type="button"
+              title=""
+              color="transparent"
+              className={styles.yellowBorderButton}
+            >
+              Надіслати повідомлення
+            </CommonButton>
+            <CommonButton
+              type="button"
+              color="transparent"
+              title={""}
+              className={styles.yellowBorderButton}
+            >
+              Показати телефон
+            </CommonButton>
           </div>
         </div>
       </div>
       <div className={`${styles.buttonsItem} ${styles.mobileButtons}`}>
-        <AnnouncementBtn>Надіслати повідомлення</AnnouncementBtn>
-        <AnnouncementBtn>Показати телефон</AnnouncementBtn>
+        <CommonButton
+          type="button"
+          color="transparent"
+          title=""
+          className={styles.yellowBorderButton}
+        >
+          Надіслати повідомлення
+        </CommonButton>
+
+        <CommonButton
+          type="button"
+          color="transparent"
+          title=""
+          className={styles.yellowBorderButton}
+        >
+          Показати телефон
+        </CommonButton>
       </div>
       {/* <div className={styles.item}>
         <h3>Вартість</h3>

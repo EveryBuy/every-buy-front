@@ -17,7 +17,6 @@ const SliderComponent = () => {
     centerMode: true,
     infinite: true,
     speed: 500,
-    centerPadding: "16%",
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,

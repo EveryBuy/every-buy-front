@@ -43,45 +43,48 @@ body {
 }
 
 //styles for slider
-.slick-current {
-  padding: 0 20px;
 
-  @include media-min($breakpoint-tablet) {
-    padding: 0 32px;
-  }
-}
+// I moved them to slider component
 
-.slick-slider {
-  width: 100%;
-}
+// .slick-current {
+//   padding: 0 20px;
 
-.slick-dots {
-  bottom: -40px !important;
-  display: flex !important;
-  justify-content: center;
-  gap: 12px;
+//   @include media-min($breakpoint-tablet) {
+//     padding: 0 32px;
+//   }
+// }
 
-  li {
-    margin: 0 !important;
-    width: 8px !important;
-    height: 8px !important;
-    border-radius: 50%;
-    background: #d9d9d9;
+// .slick-slider {
+//   width: 100%;
+// }
 
-    button {
-      padding: 0 !important;
-      width: 8px !important;
-      height: 8px !important;
-      border-radius: 50%;
-      background: #d9d9d9;
+// .slick-dots {
+//   bottom: -40px !important;
+//   display: flex !important;
+//   justify-content: center;
+//   gap: 12px;
 
-      &:before {
-        display: none;
-      }
-    }
+//   li {
+//     margin: 0 !important;
+//     width: 8px !important;
+//     height: 8px !important;
+//     border-radius: 50%;
+//     background: #d9d9d9;
 
-    &.slick-active button {
-      background: var(--input-text);
-    }
-  }
-}
+//     button {
+//       padding: 0 !important;
+//       width: 8px !important;
+//       height: 8px !important;
+//       border-radius: 50%;
+//       background: #d9d9d9;
+
+//       &:before {
+//         display: none;
+//       }
+//     }
+
+//     &.slick-active button {
+//       background: var(--input-text);
+//     }
+//   }
+// }

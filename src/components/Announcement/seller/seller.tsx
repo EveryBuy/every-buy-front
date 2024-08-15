@@ -32,7 +32,7 @@ export default function Seller({ sellerInfo }: ResSeller) {
           </p>
         </div>
       </div>
-      <a href="linkToAllAdvert" className={styles.allOrders}>
+      <a href={linkToAllAdvert} className={styles.allOrders}>
         Усі оголошення автора
         <Image className={styles.arrow} src={arrowUrl} alt="Right arrow" />
       </a>

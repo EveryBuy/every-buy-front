@@ -36,7 +36,7 @@ export default function Info({ articleInfo }: ArticleInfo) {
               className={styles.locationSvg}
             />
             <div>
-              <p>{location.city}</p>
+              <p className={styles.city}>{location.city}</p>
               <p className={styles.region}>{location.region}</p>
             </div>
           </div>

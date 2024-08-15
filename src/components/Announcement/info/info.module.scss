@@ -7,6 +7,10 @@
   background-color: lightgray;
 
   @include media-min($breakpoint-tablet) {
+    padding: 20px 30px;
+  }
+
+  @include media-min($breakpoint-laptop) {
     padding: 30px 40px;
   }
 }
@@ -21,20 +25,44 @@
   font-size: 20px;
   font-weight: 500;
   margin-bottom: 16px;
+
+  @include media-min($breakpoint-laptop) {
+    font-weight: 400;
+  }
 }
 
 .text {
   font-size: 14px;
+
+  @include media-min($breakpoint-laptop) {
+    margin-top: 16px;
+  }
 }
 
 .locationTitle {
   font-size: 20px;
   font-weight: 500;
   margin-bottom: 8px;
+
+  @include media-min($breakpoint-laptop) {
+    font-weight: 400;
+  }
+}
+
+.city {
+  font-size: 16px;
+
+  @include media-min($breakpoint-laptop) {
+    font-size: 20px;
+  }
 }
 
 .region {
   color: var(--input-text);
+
+  @include media-min($breakpoint-laptop) {
+    font-size: 16px;
+  }
 }
 
 .mobileContent {
@@ -54,6 +82,10 @@
   display: block;
   margin-top: 32px;
   text-align: end;
+
+  @include media-min($breakpoint-laptop) {
+    font-size: 16px;
+  }
 }
 
 .locationInfo {

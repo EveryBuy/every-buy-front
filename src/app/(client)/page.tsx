@@ -12,7 +12,6 @@ export default function HomePage() {
       <Category />
 
       <Announcement />
-    
     </main>
   );
 }
