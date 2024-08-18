@@ -8,14 +8,12 @@ import FilledIconSrc from "@/assets/Svg/CircleFilled.svg";
 import ErrorIconSrc from "@/assets/Svg/CircleError.svg";
 import {
   Form,
-  InputTitle,
-  InputContainer,
-  Input,
   SubmitButton,
   TogglePasswordButton,
   ErrorMessage,
   ErrorIcon,
 } from "./Register.styled";
+import CommonInput from "@/components/ui/CommonInput/CommonInput";
 import Image from "next/image";
 import { register } from "@/redux/auth/operations";
 import { selectIsLoggedIn } from "@/redux/auth/selectors";
@@ -44,11 +42,11 @@ const Register: React.FC = () => {
     password: "",
     confirmPassword: "",
   });
-  const isLoggedIn = useAppSelector(selectIsLoggedIn)
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
 
   useEffect(() => {
-    isLoggedIn && router.push('/user');
-  }, [isLoggedIn])
+    isLoggedIn && router.push("/user");
+  }, [isLoggedIn]);
 
   const validatePhone = (phone: string) => {
     const phoneRegex = /^\+?[0-9]{9,15}$/;
@@ -98,11 +96,13 @@ const Register: React.FC = () => {
       return;
     }
 
-    dispatch(register({
-      email: email,
-      phone: phone,
-      password: password,
-    }));
+    dispatch(
+      register({
+        email: email,
+        phone: phone,
+        password: password,
+      })
+    );
   };
 
   const getInputClass = (field: string) => {
@@ -127,114 +127,106 @@ const Register: React.FC = () => {
   return (
     <>
       <Form onSubmit={handleSubmit}>
-        <InputContainer>
-          <InputTitle htmlFor="phone">Телефон</InputTitle>
-          <div style={{ position: "relative" }}>
-            <Input
-              type="text"
-              id="phone"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              className={getInputClass("phone")}
-              required
-              placeholder="Введіть номер телефону"
-            />
-            {errors.phone ? (
-              <ErrorIcon src={ErrorIconSrc} alt="Error" />
-            ) : (
-              validatePhone(phone) && (
-                <ErrorIcon src={FilledIconSrc} alt="Valid" />
-              )
-            )}
-          </div>
-          {errors.phone && <ErrorMessage>{errors.phone}</ErrorMessage>}
-        </InputContainer>
-        <InputContainer>
-          <InputTitle htmlFor="email">Email</InputTitle>
-          <div style={{ position: "relative" }}>
-            <Input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className={getInputClass("email")}
-              required
-              placeholder="Введіть email"
-            />
-            {errors.email ? (
-              <ErrorIcon src={ErrorIconSrc} alt="Error" />
-            ) : (
-              validateEmail(email) && (
-                <ErrorIcon src={FilledIconSrc} alt="Valid" />
-              )
-            )}
-          </div>
-          {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
-        </InputContainer>
-        <InputContainer>
-          <InputTitle htmlFor="password">Введіть пароль</InputTitle>
-          <div style={{ position: "relative" }}>
-            <Input
-              type={showPassword ? "text" : "password"}
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className={getInputClass("password")}
-              required
-              placeholder="Введіть пароль"
-            />
-            <TogglePasswordButton
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              style={{
-                position: "absolute",
-                right: "0.5rem",
-                top: "50%",
-                transform: "translateY(-50%)",
-              }}
-            >
-              <Image
-                src={showPassword ? EyePassword : EyeInvisibleFilled}
-                alt="Toggle Password Visibility"
-              />
-            </TogglePasswordButton>
-          </div>
-          {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
-        </InputContainer>
-        <InputContainer>
-          <InputTitle htmlFor="confirmPassword">
-            Введіть пароль ще раз
-          </InputTitle>
-          <div style={{ position: "relative" }}>
-            <Input
-              type={showConfirmPassword ? "text" : "password"}
-              id="confirmPassword"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              className={getInputClass("confirmPassword")}
-              required
-              placeholder="Введіть пароль ще раз"
-            />
-            <TogglePasswordButton
-              type="button"
-              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              style={{
-                position: "absolute",
-                right: "0.5rem",
-                top: "50%",
-                transform: "translateY(-50%)",
-              }}
-            >
-              <Image
-                src={showConfirmPassword ? EyePassword : EyeInvisibleFilled}
-                alt="Toggle Password Visibility"
-              />
-            </TogglePasswordButton>
-          </div>
-          {errors.confirmPassword && (
-            <ErrorMessage>{errors.confirmPassword}</ErrorMessage>
+        <CommonInput
+          typeTitle="phone"
+          text="Телефон"
+          typeInput="text"
+          value={phone}
+          setValue={(e) => setPhone(e.target.value)}
+          className={getInputClass("phone")}
+          placeholder="Введіть номер телефону"
+        >
+          {errors.phone ? (
+            <ErrorIcon src={ErrorIconSrc} alt="Error" />
+          ) : (
+            validatePhone(phone) && (
+              <ErrorIcon src={FilledIconSrc} alt="Valid" />
+            )
           )}
-        </InputContainer>
+        </CommonInput>
+
+        <CommonInput
+          typeTitle="email"
+          text="Email"
+          typeInput="email"
+          value={email}
+          setValue={(e) => setEmail(e.target.value)}
+          className={getInputClass("email")}
+          placeholder="Введіть email"
+          errorsMessage={
+            errors.email && <ErrorMessage>{errors.email}</ErrorMessage>
+          }
+        >
+          {errors.email ? (
+            <ErrorIcon src={ErrorIconSrc} alt="Error" />
+          ) : (
+            validateEmail(email) && (
+              <ErrorIcon src={FilledIconSrc} alt="Valid" />
+            )
+          )}
+        </CommonInput>
+
+        <CommonInput
+          typeTitle="password"
+          text="Введіть пароль"
+          typeInput={showPassword ? "text" : "password"}
+          value={password}
+          setValue={(e) => setPassword(e.target.value)}
+          className={getInputClass("password")}
+          required={true}
+          placeholder="Введіть пароль"
+          errorsMessage={
+            errors.password && <ErrorMessage>{errors.password}</ErrorMessage>
+          }
+        >
+          <TogglePasswordButton
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            style={{
+              position: "absolute",
+              right: "0.5rem",
+              top: "50%",
+              transform: "translateY(-50%)",
+            }}
+          >
+            <Image
+              src={showPassword ? EyePassword : EyeInvisibleFilled}
+              alt="Toggle Password Visibility"
+            />
+          </TogglePasswordButton>
+        </CommonInput>
+
+        <CommonInput
+          typeTitle="confirmPassword"
+          text="Введіть пароль ще разь"
+          typeInput={showConfirmPassword ? "text" : "password"}
+          value={confirmPassword}
+          setValue={(e) => setConfirmPassword(e.target.value)}
+          className={getInputClass("confirmPassword")}
+          required={true}
+          placeholder="Введіть пароль ще раз"
+          errorsMessage={
+            errors.confirmPassword && (
+              <ErrorMessage>{errors.confirmPassword}</ErrorMessage>
+            )
+          }
+        >
+          <TogglePasswordButton
+            type="button"
+            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+            style={{
+              position: "absolute",
+              right: "0.5rem",
+              top: "50%",
+              transform: "translateY(-50%)",
+            }}
+          >
+            <Image
+              src={showConfirmPassword ? EyePassword : EyeInvisibleFilled}
+              alt="Toggle Password Visibility"
+            />
+          </TogglePasswordButton>
+        </CommonInput>
         <SubmitButton type="submit">Зареєструватися</SubmitButton>
       </Form>
     </>
