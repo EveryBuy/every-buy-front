@@ -43,6 +43,8 @@ const authSlice = createSlice<CreateSlice>({
         state.user = payload.data;
         state.token = payload.token;
         state.isLoggedIn = true;
+        console.log(state.user);
+
       })
       .addCase(logout.rejected, (state, action) => {
         state.isLoggedIn = false;
@@ -64,10 +66,11 @@ const authSlice = createSlice<CreateSlice>({
         state.token = null;
       })
       .addCase(refreshUser.fulfilled, (state, { payload }) => {
-        console.log(payload);
         state.user = payload.data;
         state.token = payload.token;
         state.isLoggedIn = true;
+        
+        
       });
   },
 });

@@ -13,6 +13,7 @@
 .transparent {
   @extend .common-styles;
   background: transparent;
+  border-color: var(--label);
 }
 
 .light-yellow {

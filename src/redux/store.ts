@@ -18,7 +18,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["token"],
+  // whitelist: ["token"],
 };
 
 const persistedAuthReducer = persistReducer(persistConfig, authReducer);

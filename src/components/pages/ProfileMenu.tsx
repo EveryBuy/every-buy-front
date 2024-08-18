@@ -1,6 +1,7 @@
 import { FC } from "react";
 import Link from "next/link";
 import style from "./ProfileMenu.module.scss";
+import Logout from "../auth/Logout/Logout";
 
 const ProfileMenu: FC = () => {
   return (
@@ -24,6 +25,10 @@ const ProfileMenu: FC = () => {
               </Link>
             </li>
           </ul>
+        </li>
+        <li>
+          {/* <Link href="/user/selected-goods">Вихід</Link> */}
+          <Logout>Вихід</Logout>
         </li>
       </ul>
     </nav>

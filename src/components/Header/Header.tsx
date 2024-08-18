@@ -1,3 +1,5 @@
+'use client';
+
 import { FC } from "react";
 import Image from "next/image";
 import { CommonIcon, CommonButton } from "@/components";
@@ -13,8 +15,12 @@ import {
 } from "./Header.styled";
 import styles from "./Header.module.scss";
 import Link from "next/link";
+import { useAppSelector } from "@/redux/store";
+import { selectIsLoggedIn } from "@/redux/auth/selectors";
 
 const Header: FC = () => {
+
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
   return (
     <HeaderTag>
       <NavBar>
@@ -39,7 +45,7 @@ const Header: FC = () => {
           <RegisterContainer>
             <Link href="/login">
               <CommonIcon id="icon-user" width="20" height="20" />
-              <button>Вхід|Реєстрація</button>
+              {!isLoggedIn && <button>Вхід|Реєстрація</button>}
             </Link>
           </RegisterContainer>
         </AddAdvertisingContainer>

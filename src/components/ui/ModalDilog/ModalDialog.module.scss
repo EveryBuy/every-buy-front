@@ -1,0 +1,54 @@
+.box {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 854px;
+  height: 571px;
+  background-color: #ffffff;
+  border-radius: 20px;
+  border: 4px solid #e5ff46;
+  opacity: 0px;
+  gap: 36px;
+}
+
+.text {
+  width: 420px;
+  height: 88px;
+  font-size: 36px;
+  color: black;
+  text-align: center;
+}
+
+.buttonWrapper {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  width: 366px;
+  height: 51px;
+  gap: 50px;
+}
+
+.button {
+  width: 164px;
+  height: 51px;
+  padding: 16px 40px 16px 40px;
+  gap: 10px;
+  border-radius: 10px;
+  opacity: 0px;
+  font-size: 16px;
+}
+
+.button:active {
+  opacity: 0px;
+}
+
+.closeButton {
+position: absolute;
+  top: 28px;
+  right: 28px;
+  width: 28px;
+  height: 28px;
+}
