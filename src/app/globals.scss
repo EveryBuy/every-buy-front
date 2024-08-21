@@ -41,7 +41,7 @@ body {
   max-width: 1440px;
   margin: 0 auto;
   padding: 0 20px;
-  // min-height: 100vh;
+  min-height: calc(100vh - 168px - 162px);
   @include media-min($breakpoint-tablet) {
     padding: 0 60px;
   }
@@ -114,4 +114,8 @@ body {
   @media screen and (min-width: 769px) {
     display: block;
   }
+}
+
+.hidden {
+  display: none;
 }

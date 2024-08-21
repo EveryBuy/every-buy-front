@@ -80,6 +80,7 @@ export const AddAdvertisingButton = styled.button`
 
 export const RegisterContainer = styled.div`
   display: flex;
+  position: relative;
   align-items: center;
   gap: 10px;
   margin-left: 16px;
