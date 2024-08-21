@@ -1,0 +1,186 @@
+.sectionContainer {
+ display: flex;
+ justify-content: center;
+ flex-direction: column;
+ gap: 40px;
+ padding: 154px 60px 0px;
+
+ @media (max-width: 768px) {
+  padding: 76px 20px 0px;
+ }
+}
+
+.titleContainer {
+ max-width: 1320px;
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+}
+
+.title {
+ color: #000;
+ font-size: 36px;
+ font-weight: 400;
+
+ @media (min-width: 768px) {
+  font-size: 30px;
+
+  &::before {
+   content: "Розподіл на категорії";
+  }
+ }
+
+ @media (max-width: 767px) {
+  &::before {
+   content: "Категорії";
+  }
+ }
+
+ @media (max-width: 600px) {
+  font-size: 24px;
+ }
+}
+
+.buttonsContainer {
+ display: flex;
+ align-items: center;
+}
+
+.buyButton {
+ padding: 10px 29px;
+ /* font-size: 32px; */
+ border-radius: 10px;
+ border-bottom: 2px solid #000;
+ background: var(--button, #e5ff46);
+
+ @media (max-width: 600px) {
+  padding: 4px 16px;
+ }
+
+ @media (min-width: 768px) {
+  font-size: 30px;
+ }
+}
+
+.sellButton {
+ padding: 10px 13px;
+ font-size: 32px;
+
+ @media (max-width: 600px) {
+  padding: 4px 11px;
+  font-size: 16px;
+ }
+
+ @media (min-width: 768px) {
+  font-size: 30px;
+ }
+}
+
+.list {
+ display: flex;
+ /* max-width: 1320px; */
+ gap: 19px 31px;
+ flex-wrap: wrap;
+ justify-content: center;
+
+ @media (max-width: 600px) {
+  flex-wrap: nowrap;
+  overflow-x: scroll;
+  column-gap: 0px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+   display: none;
+  }
+ }
+}
+
+.listItem {
+ position: relative;
+ width: 160px;
+ height: 185px;
+
+ @media (max-width: 600px) {
+  width: 97px;
+  height: 103px;
+ }
+}
+
+.foldImg {
+ position: absolute;
+ top: 0px;
+ right: -5px;
+ z-index: 1;
+
+ @media (max-width: 600px) {
+  height: 45px;
+  top: 1px;
+  right: -20px;
+ }
+}
+
+.listItemWrapper {
+ height: 100%;
+ background-image: url("../../assets/icons/base.svg");
+ background-repeat: no-repeat;
+ background-size: cover;
+ display: flex;
+ flex-direction: column;
+ justify-content: flex-start;
+ align-items: center;
+ row-gap: 8px;
+ padding: 36px 0px 5px;
+
+ @media (max-width: 600px) {
+  width: 93px;
+  padding: 23px 0px 5px;
+  background-image: url("../../assets/icons/MobileBase.svg");
+ }
+}
+
+.listItemImage {
+ width: 98px;
+ height: 98px;
+ border-radius: 6px;
+
+ @media (max-width: 600px) {
+  width: 59px;
+  height: 59px;
+ }
+}
+
+.listItemText {
+ width: 100%;
+ text-align: center;
+
+ /* font-size: 16px; */
+ @media (max-width: 600px) {
+  font-size: 10px;
+  padding: 0px 5px;
+ }
+}
+
+.loading {
+ width: 100%;
+ padding: 160px 0 50px;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+
+ @media (max-width: 600px) {
+  padding: 110px 0 50px;
+ }
+}
+
+.error {
+ width: 100%;
+ padding: 160px 0 50px;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+
+ @media (max-width: 600px) {
+  padding: 110px 0 50px;
+ }
+}
