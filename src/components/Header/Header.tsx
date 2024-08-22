@@ -1,10 +1,9 @@
-'use client';
-
 import { FC } from "react";
 import Image from "next/image";
 import { CommonIcon, CommonButton } from "@/components";
 import { headerItems } from "@/mock-data/headerItems";
 import Logo from "@/assets/Svg/logo.svg";
+import DropdownMenu from "./DropdownMenu";
 import {
   HeaderContainer,
   HeaderTag,
@@ -19,8 +18,6 @@ import { useAppSelector } from "@/redux/store";
 import { selectIsLoggedIn } from "@/redux/auth/selectors";
 
 const Header: FC = () => {
-
-  const isLoggedIn = useAppSelector(selectIsLoggedIn);
   return (
     <HeaderTag>
       <NavBar>
@@ -32,9 +29,9 @@ const Header: FC = () => {
           ))}
         </List>
       </NavBar>
-      <HeaderContainer className={styles.headerContainer}>
+      <HeaderContainer>
         <Image priority src={Logo} alt="Logo" width={104} height={77} />
-        <AddAdvertisingContainer className={styles.addAdvertisingContainer}>
+        <AddAdvertisingContainer>
           <CommonButton
             type="button"
             title="Додати оголошення"
@@ -43,11 +40,15 @@ const Header: FC = () => {
           />
           <CommonIcon id="icon-chat" width="20" height="20" />
           <CommonIcon id="icon-heart" width="20" height="20" />
-          <RegisterContainer>
-            <Link href="/login">
+          <RegisterContainer ref={dropdownMenuRef}>
+            <div onClick={dropdownMenuHandle}>
               <CommonIcon id="icon-user" width="20" height="20" />
-              {!isLoggedIn && <button>Вхід|Реєстрація</button>}
+              <button>Вхід|Реєстрація</button>
             </Link>
+            <DropdownMenu
+              status={isDropdownMenuVisiable}
+              changeStatus={dropdownMenuHandle}
+            />
           </RegisterContainer>
         </AddAdvertisingContainer>
       </HeaderContainer>
