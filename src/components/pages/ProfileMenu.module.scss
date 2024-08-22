@@ -5,10 +5,11 @@
   width: 100%;
   @include media-min($breakpoint-tablet) {
     width: 225px;
+    padding-top: 48px;
   }
 }
 
-.itemWrapper {
+.profileList {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -39,5 +40,13 @@
     flex-direction: column;
     row-gap: 12px;
     padding: 20px 0px 0px 40px;
+    font-size: 16px;
   }
+}
+
+.exitItem {
+  @include media-min($breakpoint-tablet) {
+      margin-top: 88px;
+      
+    }
 }

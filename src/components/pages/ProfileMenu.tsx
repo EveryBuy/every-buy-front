@@ -6,7 +6,7 @@ import Logout from "../auth/Logout/Logout";
 const ProfileMenu: FC = () => {
   return (
     <nav className={style.profileMenu}>
-      <ul className={style.itemWrapper}>
+      <ul className={style.profileList}>
         <li>
           <Link href="/user/about-me">Про мене</Link>
         </li>
@@ -26,9 +26,9 @@ const ProfileMenu: FC = () => {
             </li>
           </ul>
         </li>
-        <li>
+        <li className={style.exitItem}>
           {/* <Link href="/user/selected-goods">Вихід</Link> */}
-          <Logout>Вихід</Logout>
+          <Logout >Вихід</Logout>
         </li>
       </ul>
     </nav>

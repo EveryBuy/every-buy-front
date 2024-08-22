@@ -1,7 +1,7 @@
 import CommonButton from "../CommonButton/CommonButton";
 import style from "./ModalDialog.module.scss";
 
-export const ModalDialog = ({ text, submitOk }: { text: string }) => {
+export const ModalDialog = ({ text, submitOk }: { text: string, submitOk: ()=>void }) => {
   return (
     <div className={style.box}>
       <button className={style.closeButton} type="button">

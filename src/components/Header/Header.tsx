@@ -32,15 +32,16 @@ const Header: FC = () => {
           ))}
         </List>
       </NavBar>
-      <HeaderContainer>
+      <HeaderContainer className={styles.headerContainer}>
         <Image priority src={Logo} alt="Logo" width={104} height={77} />
-        <AddAdvertisingContainer>
+        <AddAdvertisingContainer className={styles.addAdvertisingContainer}>
           <CommonButton
             type="button"
             title="Додати оголошення"
-            color="light-yellow"
+            color="yellow"
             className={styles.headerButton}
           />
+          <CommonIcon id="icon-chat" width="20" height="20" />
           <CommonIcon id="icon-heart" width="20" height="20" />
           <RegisterContainer>
             <Link href="/login">

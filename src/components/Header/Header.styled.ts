@@ -19,22 +19,7 @@ export const HeaderTag = styled.header`
 `;
 
 export const HeaderContainer = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  padding: 16px 60px;
-
-  @media (max-width: 1000px) {
-    gap: 10px;
-    padding: 16px 30px;
-  }
-  @media (max-width: 600px) {
-    padding: 10px 20px;
-  }
-  @media (max-width: 480px) {
-    padding: 30px 0px 26px;
-    justify-content: center;
-  }
+  
 `;
 
 export const NavBar = styled.nav`
@@ -82,5 +67,5 @@ export const RegisterContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-left: 16px;
+  // margin-left: 16px;
 `;

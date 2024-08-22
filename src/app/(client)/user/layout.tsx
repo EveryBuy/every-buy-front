@@ -10,7 +10,7 @@ export default async function UserLayout({
       <div className="title">
         <h1>Профіль користувача</h1>
       </div>
-      <div style={{ display: "flex", width: "100%" }}>
+      <div style={{ display: "flex", width: "100%"}}>
         <ProfileMenu />
         <section className="profileSectionWrapper">{children}</section>
       </div>
