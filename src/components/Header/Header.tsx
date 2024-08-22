@@ -1,4 +1,6 @@
-import { FC } from "react";
+"use client";
+
+import { useState, useEffect, useRef, FC } from "react";
 import Image from "next/image";
 import { CommonIcon, CommonButton } from "@/components";
 import { headerItems } from "@/mock-data/headerItems";
@@ -18,6 +20,29 @@ import { useAppSelector } from "@/redux/store";
 import { selectIsLoggedIn } from "@/redux/auth/selectors";
 
 const Header: FC = () => {
+  const [isDropdownMenuVisiable, setDropdownMenuVisiable] = useState(false);
+  const dropdownMenuRef = useRef<HTMLDivElement>(null);
+  const dropdownMenuHandle = () => {
+    setDropdownMenuVisiable((prev) => !prev);
+  };
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownMenuRef.current &&
+        !dropdownMenuRef.current.contains(event.target as Node)
+      ) {
+        setDropdownMenuVisiable(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <HeaderTag>
       <NavBar>
@@ -30,12 +55,14 @@ const Header: FC = () => {
         </List>
       </NavBar>
       <HeaderContainer>
-        <Image priority src={Logo} alt="Logo" width={104} height={77} />
+        <Link href="/">
+          <Image priority src={Logo} alt="Logo" width={104} height={77} />
+        </Link>
         <AddAdvertisingContainer>
           <CommonButton
             type="button"
             title="Додати оголошення"
-            color="yellow"
+            color="light-yellow"
             className={styles.headerButton}
           />
           <CommonIcon id="icon-chat" width="20" height="20" />
@@ -43,7 +70,9 @@ const Header: FC = () => {
           <RegisterContainer ref={dropdownMenuRef}>
             <div onClick={dropdownMenuHandle}>
               <CommonIcon id="icon-user" width="20" height="20" />
-              <button>Вхід|Реєстрація</button>
+            </div>
+            <Link href="/login">
+            {!isLoggedIn && <button>Вхід|Реєстрація</button>}
             </Link>
             <DropdownMenu
               status={isDropdownMenuVisiable}
