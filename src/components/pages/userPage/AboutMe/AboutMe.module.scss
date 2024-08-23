@@ -2,8 +2,8 @@
 @import "../../../../styles/breakpoints";
 
 .box {
-    width: 427px;
-    height: 421px;;
+    width: 100%;
+    height: 421px;
 }
 
 .headline {
@@ -13,6 +13,10 @@
 
 
 .wrapper {
+    display: flex;
+    flex-direction: column;
+        gap: 33px;
+    
     @include media-min($breakpoint-laptop) {
         display: flex;
         flex-direction: row-reverse;
@@ -22,6 +26,7 @@
 }
 
 .userImageBox {
+    font-size: 14px;
     @include media-min($breakpoint-laptop) {
                 display: flex;
                     flex-direction: column;
@@ -31,6 +36,9 @@
 
 
 .list {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
     @include media-min($breakpoint-laptop) {
         display: flex;
         flex-direction: column;
@@ -38,7 +46,14 @@
     }
 }
 
+.listItemName {
+    font-size: var(--f-size-h3);
+    font-weight: 700;
+}
+
 .listItem {
+    font-size: 20px;
+        font-weight: 400;
     @include media-min($breakpoint-laptop) {
             width: 427px;
         }
@@ -56,6 +71,10 @@
 }
 
 .changePassBtn {
+    width: 186px;
+        height: 44px;
+    border-radius: 10px;
+    align-self: flex-end;
 @include media-min($breakpoint-tablet) {
         width: 214px;
         height: 48px;

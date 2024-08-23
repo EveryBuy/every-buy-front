@@ -3,11 +3,21 @@
 
 .profileMenu {
   width: 100%;
+  // transform: translateX(0);
   @include media-min($breakpoint-tablet) {
     width: 225px;
     padding-top: 48px;
   }
 }
+
+@media only screen and (max-width: $breakpoint-tablet) 
+   {
+     .hidden {
+       transform: translateX(-100%);
+       display: none;
+     }
+  }
+
 
 .profileList {
   display: flex;

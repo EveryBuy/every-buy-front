@@ -1,12 +1,14 @@
 import { FC } from "react";
 import Link from "next/link";
-import style from "./ProfileMenu.module.scss";
+import styles from "./ProfileMenu.module.scss";
 import Logout from "../auth/Logout/Logout";
-
+import clsx from "clsx";
 const ProfileMenu: FC = () => {
   return (
-    <nav className={style.profileMenu}>
-      <ul className={style.profileList}>
+
+    <nav className={clsx(styles.profileMenu, styles.hidden)}>
+      
+      <ul className={styles.profileList}>
         <li>
           <Link href="/user/about-me">Про мене</Link>
         </li>
@@ -15,7 +17,7 @@ const ProfileMenu: FC = () => {
         </li>
         <li>
           <Link href="/user/my-ads">Мої оголошення</Link>
-          <ul className={style.subMenuWrapper}>
+          <ul className={styles.subMenuWrapper}>
             <li>
               <Link href="/user/my-ads/active-ads">Активні оголошення</Link>
             </li>
@@ -26,7 +28,7 @@ const ProfileMenu: FC = () => {
             </li>
           </ul>
         </li>
-        <li className={style.exitItem}>
+        <li className={styles.exitItem}>
           {/* <Link href="/user/selected-goods">Вихід</Link> */}
           <Logout >Вихід</Logout>
         </li>
