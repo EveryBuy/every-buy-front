@@ -33,6 +33,11 @@ const AboutMe: FC = () => {
             className={styles.changePassBtn}
             />
           </ul>
+          <div>
+            <p>Небезпечна зона</p>
+            <p>Ваш профіль на EveryBuy буде видалено назавжди.</p>
+            <a>Видалити мій акаунт</a>
+          </div>
         </div>
       </div>
     </div>
