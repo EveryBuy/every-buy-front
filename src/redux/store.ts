@@ -14,6 +14,7 @@ import {
 } from "redux-persist";
 import persistStore from "redux-persist/es/persistStore";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import { uiStateReducer } from "./ui/slice";
 
 const persistConfig = {
   key: "root",
@@ -26,6 +27,7 @@ const persistedAuthReducer = persistReducer(persistConfig, authReducer);
 export const store = configureStore({
   reducer: {
     auth: persistedAuthReducer,
+    ui: uiStateReducer,
     // products: productsReducer,
     // filters: filtersReducer,
   },

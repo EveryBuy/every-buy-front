@@ -22,9 +22,7 @@ export const Logout: React.FC = ({ children }) => {
 
   const onLogout = () => {
     dispatch(logout());
-    // console.log(router);
     router.replace("/");
-    // console.log("ok");
   };
 
   return (

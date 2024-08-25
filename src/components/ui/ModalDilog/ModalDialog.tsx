@@ -1,10 +1,10 @@
 import CommonButton from "../CommonButton/CommonButton";
-import style from "./ModalDialog.module.scss";
+import styles from "./ModalDialog.module.scss";
 
 export const ModalDialog = ({ text, submitOk }: { text: string, submitOk: ()=>void }) => {
   return (
-    <div className={style.box}>
-      <button className={style.closeButton} type="button">
+    <div className={styles.box}>
+      <button className={styles.closeButton} type="button">
         <svg width="17" height="18" viewBox="0 0 17 18" fill="none">
           <line
             y1="-0.5"
@@ -23,11 +23,11 @@ export const ModalDialog = ({ text, submitOk }: { text: string, submitOk: ()=>vo
         </svg>
       </button>
 
-      <h3 className={style.text}>{text}</h3>
+      <h3 className={styles.text}>{text}</h3>
 
-      <div className={style.buttonWrapper}>
+      <div className={styles.buttonWrapper}>
         <CommonButton
-          className={style.button}
+          className={styles.button}
           type="button"
           title=""
           color="yellow"
@@ -35,7 +35,7 @@ export const ModalDialog = ({ text, submitOk }: { text: string, submitOk: ()=>vo
           Ні
         </CommonButton>
         <CommonButton
-          className={style.button}
+          className={styles.button}
           type="button"
           title=""
           color="transparent"
