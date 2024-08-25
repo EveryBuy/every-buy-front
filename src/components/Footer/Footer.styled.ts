@@ -5,7 +5,7 @@ import styled from "@emotion/styled";
 export const FooterTag = styled.footer`
   display: flex;
   flex-direction: column;
-  margin-top: 76px;
+  margin-top: 0px;
   border-top: 5px solid #f5ffb6;
 
   @media (min-width: 1200px) {

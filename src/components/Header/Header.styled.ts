@@ -19,7 +19,8 @@ export const HeaderTag = styled.header`
 `;
 
 export const HeaderContainer = styled.div`
-  
+  display: flex;
+
 `;
 
 export const NavBar = styled.nav`
