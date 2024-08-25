@@ -8,6 +8,7 @@ import styles from "./AboutMe.module.scss";
 import Image from "next/image";
 import CommonButton from "@/components/ui/CommonButton/CommonButton";
 import { FiEdit2 } from "react-icons/fi";
+import Link from "next/link";
 
 const AboutMe: FC = () => {
   const user = useAppSelector(selectUser);
@@ -17,7 +18,7 @@ const AboutMe: FC = () => {
       <div className={styles.wrapper}>
         <div className={styles.userImageBox}>
           <img className={styles.userImage} alt="alt" src="/images/user.png" />
-          <p>Редагувати фото</p>
+          <p className={styles.editText}>Редагувати фото</p>
         </div>
         <div className={styles.listBox}>
           <ul className={styles.list}>
@@ -33,10 +34,10 @@ const AboutMe: FC = () => {
             className={styles.changePassBtn}
             />
           </ul>
-          <div>
+          <div className={styles.deleteBox}>
             <p>Небезпечна зона</p>
             <p>Ваш профіль на EveryBuy буде видалено назавжди.</p>
-            <a>Видалити мій акаунт</a>
+            <Link href={"/"} className={styles.deleteLink}>Видалити мій акаунт</Link>
           </div>
         </div>
       </div>
