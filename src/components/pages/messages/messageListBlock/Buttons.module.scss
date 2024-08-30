@@ -1,0 +1,12 @@
+.buttonsWrapper {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 8px;
+
+  @media screen and (min-width: 768px) {
+    justify-content: center;
+  }
+  @media screen and (min-width: 1280px) {
+    justify-content: space-between;
+  }
+}

@@ -20,6 +20,7 @@
   --label: #000000;
   --input-text: #9d9d9d;
   --bg-header-footer: #b4b4b4;
+  --border: #9d9d9d;
 
   --color-yellow: rgb(229, 255, 70);
 
@@ -51,7 +52,7 @@ body {
   padding-bottom: 30px;
   font-size: var(--f-size-h4);
   @include media-min($breakpoint-tablet) {
-    ppadding: 60px 0px 50px;
+    padding: 60px 0px 26px;
     font-size: 40px;
     font-weight: 700;
   }
