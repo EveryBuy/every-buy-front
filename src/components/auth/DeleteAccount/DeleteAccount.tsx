@@ -2,12 +2,12 @@
 import { ModalDialog } from "@/components/ui/ModalDilog/ModalDialog";
 import { Backdrop, Button, CircularProgress } from "@mui/material";
 import React, { useState } from "react";
-import style from "./Logout.module.scss";
+import style from "./DeleteAccount.module.scss";
 import { useAppDispatch } from "@/redux/store";
 import { logout } from "@/redux/auth/operations";
 import { useRouter } from "next/navigation";
 
-export const Logout = ({ children }: {children: string}) => {
+export const DeleteAccount = ({ children }: {children: string}) => {
   const [open, setOpen] = useState(false);
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -20,7 +20,7 @@ export const Logout = ({ children }: {children: string}) => {
   };
 
   const onLogout = () => {
-    dispatch(logout());
+    // dispatch(logout());
     router.replace("/");
   };
 
@@ -36,7 +36,7 @@ export const Logout = ({ children }: {children: string}) => {
       >
         {/* <CircularProgress color="inherit" /> */}
         <ModalDialog
-          text="Ви дійсно хочете вийти зі свого облікового запису?"
+          text="Ви дійсно хочете видалити свій обліковий запис?"
           submitOk={onLogout}
         />
       </Backdrop>
@@ -44,4 +44,4 @@ export const Logout = ({ children }: {children: string}) => {
   );
 };
 
-export default Logout;
+export default DeleteAccount;

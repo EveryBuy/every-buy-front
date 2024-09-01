@@ -6,16 +6,15 @@ import styles from "./ProfileMenu.module.scss";
 import Logout from "../auth/Logout/Logout";
 import clsx from "clsx";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
-import {isActiveProfileMenu} from '@/redux/ui/selectors.js'
-import { toggleProfileMenu } from "@/redux/ui/slice";
+import { toggleProfileMenu, isHiddenProfileMenu } from "@/redux/ui/slice";
 
 const ProfileMenu: FC = () => {
-  const isActive = useAppSelector(isActiveProfileMenu);
+  const isHidden = useAppSelector(isHiddenProfileMenu);
   const dispatch = useAppDispatch();
   
   useEffect(() => {
     dispatch(toggleProfileMenu(false))
-  },[])
+  }, [])
 
     const handleClick = () => {
       dispatch(toggleProfileMenu(true));
@@ -23,7 +22,7 @@ const ProfileMenu: FC = () => {
 
   return (
 
-    <nav className={clsx(styles.profileMenu, isActive && styles.hidden)}>
+    <nav className={clsx(styles.profileMenu, isHidden && styles.hidden)}>
       
       <ul className={styles.profileList} onClick={handleClick}>
         <li>

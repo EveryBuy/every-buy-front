@@ -1,9 +1,6 @@
 import { ReactNode } from "react";
 import { ProfileMenu } from "@/components";
 import '@/app/globals.scss'
-import { useAppSelector } from "@/redux/store";
-import { isActiveProfileMenu } from "@/redux/ui/selectors";
-import { selectIsLoggedIn } from "@/redux/auth/selectors";
 
 export default async function UserLayout({
   children,

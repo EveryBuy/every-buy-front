@@ -18,6 +18,7 @@ import styles from "./Header.module.scss";
 import Link from "next/link";
 import { useAppSelector } from "@/redux/store";
 import { selectIsLoggedIn } from "@/redux/auth/selectors";
+import clsx from "clsx";
 
 const Header: FC = () => {
   const [isDropdownMenuVisiable, setDropdownMenuVisiable] = useState(false);
@@ -70,13 +71,13 @@ const Header: FC = () => {
             <div onClick={dropdownMenuHandle}>
               <CommonIcon id="icon-user" width="20" height="20" />
             </div>
-            <Link href="/login">
-            {!isLoggedIn && <button>Вхід|Реєстрація</button>}
-            </Link>
             <DropdownMenu
               status={isDropdownMenuVisiable}
               changeStatus={dropdownMenuHandle}
-            />
+              />
+            <Link href="/login"
+              // className={clsx(isLoggedIn && styles.hidden)}
+            >Вхід|Реєстрація</Link>
           </RegisterContainer>
         </AddAdvertisingContainer>
       </HeaderContainer>

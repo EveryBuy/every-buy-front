@@ -31,6 +31,9 @@
   font-size: 16px;
   @include media-min($breakpoint-tablet) {
   display: flex;
-      // background-color: #b4b4b4;
     }
+}
+
+.hidden {
+  display: none;
 }

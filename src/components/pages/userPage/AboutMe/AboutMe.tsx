@@ -5,12 +5,15 @@ import { selectUser } from "@/redux/auth/selectors";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import styles from "./AboutMe.module.scss";
 import CommonButton from "@/components/ui/CommonButton/CommonButton";
-import { FiEdit2 } from "react-icons/fi";
 import Image from "next/image";
 import ArrowBack from "@/assets/Svg/arrowBack.svg";
+import pencil from "@/assets/Svg/pencil.svg";
+import separeteLine from "@/assets/Svg/separeteLine.svg";
+
 import { useRouter } from "next/navigation";
 import { toggleProfileMenu } from "@/redux/ui/slice";
 import Link from "next/link";
+import DeleteAccount from "@/components/auth/DeleteAccount/DeleteAccount";
 
 const AboutMe: FC = () => {
   const user = useAppSelector(selectUser);
@@ -19,7 +22,7 @@ const AboutMe: FC = () => {
 
   const handleClick = () => {
     router.replace("/user/");
-    dispatch(toggleProfileMenu(false))
+    dispatch(toggleProfileMenu(false));
   };
   return (
     <div className={styles.box}>
@@ -46,17 +49,35 @@ const AboutMe: FC = () => {
           <ul className={styles.list}>
             <li className={styles.listItemName}>
               {"Ім'я Прізвище" || user.name}
-              <FiEdit2 className={styles.editSvg} />
+              <Image
+                className={styles.pencil}
+                src={pencil}
+                alt="back"
+                width={26}
+                height={26}
+              />
             </li>
             <li className={styles.listItem}>
               <p className="listItemText">Телефон</p>
               {user.phone}
-              <FiEdit2 className={styles.editSvg} />
+              <Image
+                className={styles.pencil}
+                src={pencil}
+                alt="back"
+                width={26}
+                height={26}
+              />
             </li>
             <li className={styles.listItem}>
               <p className="listItemText">E-mail</p>
               {user.email}
-              <FiEdit2 className={styles.editSvg} />
+              <Image
+                className={styles.pencil}
+                src={pencil}
+                alt="back"
+                width={26}
+                height={26}
+              />
             </li>
             <CommonButton
               type="button"
@@ -68,9 +89,14 @@ const AboutMe: FC = () => {
           <div className={styles.deleteBox}>
             <p>Небезпечна зона</p>
             <p>Ваш профіль на EveryBuy буде видалено назавжди.</p>
-            <Link href={"/"} className={styles.deleteLink}>
-              Видалити мій акаунт
-            </Link>
+            <Image
+              className={styles.separeteLine}
+              src={separeteLine}
+              alt="separete"
+            />
+            {/* <Link href={"/"} className={styles.deleteLink}>
+            </Link> */}
+            <DeleteAccount>Видалити мій акаунт</DeleteAccount>
           </div>
         </div>
       </div>

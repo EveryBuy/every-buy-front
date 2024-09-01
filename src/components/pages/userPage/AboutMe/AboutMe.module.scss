@@ -120,10 +120,18 @@
 }
 
 .deleteLink {
-  color: #6735F4;
+  color: #FF5656;
 }
 
 .editSvg {
   width: 26px;
   height: 26px;
+}
+
+.separeteLine {
+  width: 335px;
+  fill: #9D9D9D;
+  @include media-min($breakpoint-tablet) {
+  width: 427px;
+  }
 }
