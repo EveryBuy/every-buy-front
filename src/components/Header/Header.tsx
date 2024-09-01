@@ -65,7 +65,6 @@ const Header: FC = () => {
             color="light-yellow"
             className={styles.headerButton}
           />
-          {/* <CommonIcon id="icon-chat" width="20" height="20" /> */}
           <CommonIcon id="icon-heart" width="20" height="20" />
           <RegisterContainer ref={dropdownMenuRef}>
             <div onClick={dropdownMenuHandle}>

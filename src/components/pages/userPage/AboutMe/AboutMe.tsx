@@ -10,6 +10,7 @@ import Image from "next/image";
 import ArrowBack from "@/assets/Svg/arrowBack.svg";
 import { useRouter } from "next/navigation";
 import { toggleProfileMenu } from "@/redux/ui/slice";
+import Link from "next/link";
 
 const AboutMe: FC = () => {
   const user = useAppSelector(selectUser);
@@ -67,9 +68,9 @@ const AboutMe: FC = () => {
           <div className={styles.deleteBox}>
             <p>Небезпечна зона</p>
             <p>Ваш профіль на EveryBuy буде видалено назавжди.</p>
-            <a href={"/"} className={styles.deleteLink}>
+            <Link href={"/"} className={styles.deleteLink}>
               Видалити мій акаунт
-            </a>
+            </Link>
           </div>
         </div>
       </div>
