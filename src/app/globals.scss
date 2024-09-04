@@ -16,7 +16,7 @@
 
   // colors
   --main-background: #f6f6f6;
-  --background: #ffffff;
+  --background: #f6f6f6;
   --label: #000000;
   --input-text: #9d9d9d;
   --bg-header-footer: #b4b4b4;
@@ -34,6 +34,7 @@
 
 body {
   font-family: var(--font-family);
+  background-color: var(--background);
 }
 
 .container {

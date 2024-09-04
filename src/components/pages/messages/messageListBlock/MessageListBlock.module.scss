@@ -6,6 +6,10 @@
 
 .buttonsWrapper {
   display: flex;
+  padding: 14px 8px;
+  background-color: #ffffff;
+  border-radius: 10px;
+
   @media screen and (min-width: 768px) {
     flex-direction: column;
     align-items: center;
@@ -19,7 +23,7 @@
 
 .listWrapper {
   border: 1px solid var(--border);
-  border-right: none;
+  // border-right: none;
   border-radius: 10px;
   flex-grow: 1;
 }
@@ -28,5 +32,43 @@
   display: flex;
   justify-content: space-between;
   column-gap: 16px;
-  width: 84px;
+  width: 85px;
 }
+
+.savedMessagesHeaderBlock {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 11.5px 0px;
+
+  & .arrow {
+    width: 20px;
+    height: 15px;
+    margin: 0px 20px 0px 12px;
+  }
+
+  & .text {
+    display: flex;
+    align-items: center;
+    font-size: var(--f-size-h4);
+  }
+}
+
+.iconHeart,
+.iconFolder {
+  cursor: auto;
+  margin-right: 21px;
+  width: 24px;
+  height: 24px;
+}
+
+// .iconHeart {
+//   width: 24px;
+//   height: 24px;
+// }
+
+// .iconFolder {
+//   width: 24px;
+//   height: 24px;
+// }

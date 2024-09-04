@@ -3,4 +3,5 @@ export default interface CommonIconProps {
   className?: string;
   width?: string;
   height?: string;
+  onClick?: () => void;
 }
