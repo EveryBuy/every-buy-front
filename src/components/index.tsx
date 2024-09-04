@@ -21,8 +21,12 @@ export { default as ProtectedRoute } from "./auth/ProtectedRoute/ProtectedRoute"
 export { default as Login } from "./auth/Login/Login";
 export { default as AuthButtons } from "./auth/AuthButtons/AuthButtons";
 export { default as MessageListBlock } from "./pages/messages/messageListBlock/MessageListBlock";
-export { default as MessagesBlock } from "./pages/messages/messagesBlock/MessagesBlock";
-export { default as List } from "./pages/messages/messageListBlock/List";
-export { default as Buttons } from "./pages/messages/messageListBlock/Buttons";
-export { default as Button } from "./pages/messages/messageListBlock/Button";
-export { default as Icons } from "./pages/messages/messageListBlock/Icons";
+export { default as DialogueBlock } from "./pages/messages/dialogueBlock/DialogueBlock";
+export { default as ListMessages } from "./pages/messages/messageListBlock/list/ListMessages";
+export { default as ItemMessage } from "./pages/messages/messageListBlock/list/item/ItemMessage";
+export { default as MessageData } from "./pages/messages/messageListBlock/list/item/data/MessageData";
+export { default as TimeData } from "./pages/messages/messageListBlock/list/item/data/TimeData";
+export { default as IconsData } from "./pages/messages/messageListBlock/list/item/data/IconsData";
+export { default as Buttons } from "./pages/messages/messageListBlock/Buttons/Buttons";
+export { default as Button } from "./pages/messages/messageListBlock/Buttons/Button";
+export { default as Icons } from "./pages/messages/messageListBlock/Icons/Icons";

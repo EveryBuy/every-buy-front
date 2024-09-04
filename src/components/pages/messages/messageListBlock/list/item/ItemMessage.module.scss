@@ -1,0 +1,24 @@
+.blockWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 10px;
+}
+
+.textWrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+  width: 228px;
+  height: 55px;
+}
+
+.title {
+  font-size: var(--large-body-medium);
+}
+
+.text {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

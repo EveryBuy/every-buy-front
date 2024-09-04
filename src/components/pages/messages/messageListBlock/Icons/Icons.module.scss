@@ -1,0 +1,23 @@
+.iconsWrapper {
+  // @media screen and (min-width: 1280px) {
+  //   justify-content: space-between;
+  // }
+  & > div:first-of-type .icon {
+    width: 31px;
+    & :last-of-type .icon {
+      width: 30px;
+    }
+  }
+  & > div:first-of-type .iconsData,
+  & > div:last-of-type .iconsData {
+    width: 20px;
+  }
+}
+
+.icon {
+  height: 32px;
+}
+
+.iconsData {
+  height: 20px;
+}

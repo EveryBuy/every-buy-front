@@ -19,6 +19,14 @@
 
 .listWrapper {
   border: 1px solid var(--border);
+  border-right: none;
   border-radius: 10px;
   flex-grow: 1;
+}
+
+.iconsWrapper {
+  display: flex;
+  justify-content: space-between;
+  column-gap: 16px;
+  width: 84px;
 }
