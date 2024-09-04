@@ -1,3 +1,46 @@
+.headerTag{
+  display: flex;
+   flex-direction: column;
+   align-items: center;
+   font-size: var(--f-size-small);
+   background: #B4B4B4;
+   border-bottom: 2px solid #000000;
+  
+   @media (max-width: 480px) {
+    border-bottom: none;
+   }
+}
+
+.headerContainer{
+  width: 100%;
+   display: flex;
+   justify-content: space-between;
+   padding: 16px 60px;
+  
+   @media (max-width: 1000px) {
+    gap: 10px;
+    padding: 16px 30px;
+   }
+  
+   @media (max-width: 600px) {
+    padding: 10px 20px;
+   }
+  
+   @media (max-width: 480px) {
+    padding: 30px 0px 26px;
+    justify-content: center;
+   }
+  }
+
+  .addAdvertisingContainer{
+   display: flex;
+   align-items: center;
+  
+   @media (max-width: 480px) {
+    display: none;
+   }
+  }
+
 .headerButton {
   border-radius: 10px;
   padding: 10px;
@@ -5,4 +48,11 @@
   margin-right: 32px;
 
   font-size: 16px;
+}
+
+.registerContainer{
+   display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: 16px;
 }

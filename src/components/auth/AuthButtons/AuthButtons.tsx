@@ -2,8 +2,7 @@
 
 import React from "react";
 import { useRouter, usePathname } from "next/navigation";
-// import styled from '@emotion/styled';
-import { ButtonContainer, HandleButton } from "./AuthButtons.styled";
+import styles from './AuthButtons.module.scss'
 
 const RegisterLoginButtons: React.FC = () => {
   const router = useRouter();
@@ -18,17 +17,20 @@ const RegisterLoginButtons: React.FC = () => {
   };
 
   return (
-    <ButtonContainer>
-      <HandleButton
-        onClick={handleRegister}
-        active={currentPath === "/register"}
-      >
-        Реєстрація
-      </HandleButton>
-      <HandleButton onClick={handleLogin} active={currentPath === "/login"}>
-        Вхід
-      </HandleButton>
-    </ButtonContainer>
+   <div className={styles.buttonContainer}>
+    <button
+     className={`handleButton ${currentPath === "/register" ? "handleButton--active" : ""}`}
+     onClick={handleRegister}
+    >
+     Реєстрація
+    </button>
+    <button
+     className={`handleButton ${currentPath === "/login" ? "handleButton--active" : ""}`}
+     onClick={handleRegister}
+    >
+     Вхід
+    </button>
+    </div>
   );
 };
 

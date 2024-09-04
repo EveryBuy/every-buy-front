@@ -3,8 +3,8 @@
 import { useState, useEffect, useRef, FC } from "react";
 import Image from "next/image";
 import { CommonIcon, CommonButton } from "@/components";
-import { headerItems } from "@/mock-data/headerItems";
 import Logo from "@/assets/Svg/logo.svg";
+<<<<<<< HEAD
 import DropdownMenu from "./DropdownMenu";
 import {
   HeaderContainer,
@@ -14,8 +14,10 @@ import {
   AddAdvertisingContainer,
   RegisterContainer,
 } from "./Header.styled";
+=======
+>>>>>>> module-scss
 import styles from "./Header.module.scss";
-import Link from "next/link";
+
 
 const Header: FC = () => {
   const [isDropdownMenuVisiable, setDropdownMenuVisiable] = useState(false);
@@ -41,6 +43,7 @@ const Header: FC = () => {
   }, []);
 
   return (
+<<<<<<< HEAD
     <HeaderTag>
       <NavBar>
         <List>
@@ -78,6 +81,25 @@ const Header: FC = () => {
         </AddAdvertisingContainer>
       </HeaderContainer>
     </HeaderTag>
+=======
+   <header className={styles.headerTag}>
+    <div className={styles.headerContainer}>
+     <Image priority src={Logo} alt="Logo" width={104} height={77} />
+     <div className={styles.addAdvertisingContainer}>
+      <CommonButton
+       type="button"
+       title="Додати оголошення"
+       color="yellow"
+       className={styles.headerButton}
+      />
+      <CommonIcon id="icon-chat" width="20" height="20" />
+      <CommonIcon id="icon-heart" width="20" height="20" />
+      <CommonIcon id="icon-user" width="20" height="20" />
+      <CommonIcon id="arrow-header" width="20" height="20" />
+     </div>
+      </div>
+    </header>
+>>>>>>> module-scss
   );
 };
 

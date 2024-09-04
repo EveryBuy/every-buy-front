@@ -1,14 +1,14 @@
 import React, { FC } from "react";
 import { CommonIcon } from "@/components";
 import ItemType from "@/types/footerItemType";
-import { MobilePaginationButton } from "./Item.styled";
+import styles from '../Footer.module.scss'
 
 const Item: FC<ItemType> = ({ id, text }) => {
   return (
-    <MobilePaginationButton>
+   <button className={styles.mobilePaginationButton}>
       <CommonIcon id={id} width="22" height="22" />
       <span>{text}</span>
-    </MobilePaginationButton>
+    </button>
   );
 };
 
