@@ -19,8 +19,8 @@ export const DeleteAccount = ({ children }: {children: string}) => {
     setOpen(false);
   };
 
-  const onLogout = () => {
-    // dispatch(logout());
+  const onDelete = () => {
+    // dispatch(delete());
     router.replace("/");
   };
 
@@ -37,7 +37,7 @@ export const DeleteAccount = ({ children }: {children: string}) => {
         {/* <CircularProgress color="inherit" /> */}
         <ModalDialog
           text="Ви дійсно хочете видалити свій обліковий запис?"
-          submitOk={onLogout}
+          submitOk={onDelete}
         />
       </Backdrop>
     </>

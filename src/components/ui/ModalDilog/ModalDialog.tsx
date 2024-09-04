@@ -1,31 +1,28 @@
 import CommonButton from "../CommonButton/CommonButton";
 import styles from "./ModalDialog.module.scss";
+import Image from "next/image";
+import xClose from '@/assets/Svg/xClose.svg';
 
-export const ModalDialog = ({ text, submitOk }: { text: string, submitOk: ()=>void }) => {
+export const ModalDialog = (
+  // { children }: { children: React.FC  }
+  { text, submitOk }: { text: string, submitOk: () => void }
+) => {
   return (
     <div className={styles.box}>
       <button className={styles.closeButton} type="button">
-        <svg width="17" height="18" viewBox="0 0 17 18" fill="none">
-          <line
-            y1="-0.5"
-            x2="22.6274"
-            y2="-0.5"
-            transform="matrix(0.707107 0.707107 -0.828445 0.56007 0 1)"
-            stroke="black"
-          />
-          <line
-            y1="-0.5"
-            x2="22.6274"
-            y2="-0.5"
-            transform="matrix(0.707107 -0.707107 -0.828445 -0.56007 0 17)"
-            stroke="black"
-          />
-        </svg>
+         <Image
+          className={styles.xClose}
+          src={xClose}
+          alt="close"
+          width={18}
+          height={18}
+        />
       </button>
 
       <h3 className={styles.text}>{text}</h3>
 
       <div className={styles.buttonWrapper}>
+        {/* { children } */}
         <CommonButton
           className={styles.button}
           type="button"

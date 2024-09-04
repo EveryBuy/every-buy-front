@@ -45,9 +45,7 @@ export const login = createAsyncThunk(
 );
 
 export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
-  try {
-    console.log("ok");
-    
+  try {  
     // await API.get("/auth/validate");
     clearHeaderAuthToken();
   } catch (error) {

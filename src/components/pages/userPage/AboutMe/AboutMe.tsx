@@ -1,6 +1,6 @@
 "use client";
 
-import { FC } from "react";
+import { FC, useState } from "react";
 import { selectUser } from "@/redux/auth/selectors";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import styles from "./AboutMe.module.scss";
@@ -12,18 +12,28 @@ import separeteLine from "@/assets/Svg/separeteLine.svg";
 
 import { useRouter } from "next/navigation";
 import { toggleProfileMenu } from "@/redux/ui/slice";
-import Link from "next/link";
-import DeleteAccount from "@/components/auth/DeleteAccount/DeleteAccount";
+import { DeleteAccount } from "@/components/auth/DeleteAccount/DeleteAccount";
+import { ChangePassword } from "@/components/auth/ChangePassword/ChangePassword";
 
 const AboutMe: FC = () => {
   const user = useAppSelector(selectUser);
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const [isOpenChangePass, setIsOpenChangePass] = useState(false);
 
   const handleClick = () => {
     router.replace("/user/");
     dispatch(toggleProfileMenu(false));
   };
+
+  const handleChangePass = () => {
+    setIsOpenChangePass(true);
+  };
+
+  // const handleClose = () => {
+  //   setIsOpenCangePass(false)
+  // }
+
   return (
     <div className={styles.box}>
       <button
@@ -84,7 +94,9 @@ const AboutMe: FC = () => {
               title="Змінити пароль"
               color="transparent"
               className={styles.changePassBtn}
+              onClick={handleChangePass}
             />
+            {isOpenChangePass && <ChangePassword onClose={setIsOpenChangePass} />}
           </ul>
           <div className={styles.deleteBox}>
             <p>Небезпечна зона</p>
