@@ -10,7 +10,7 @@ const CommonButton: FC<CommonButtonProps> = ({
   children,
 }) => {
   return (
-    <button type={type} className={`${styles[color]} ${className}`}>
+   <button type={type} className={`${styles[color]} ${className}`}>
       {title}
       {children}
     </button>

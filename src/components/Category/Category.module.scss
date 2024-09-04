@@ -76,6 +76,7 @@
  }
 }
 
+
 .list {
  display: flex;
  /* max-width: 1320px; */
@@ -84,9 +85,6 @@
  justify-content: center;
 
  @media (max-width: 600px) {
-  flex-wrap: nowrap;
-  overflow-x: scroll;
-  column-gap: 0px;
   scrollbar-width: none;
   -ms-overflow-style: none;
 
@@ -109,14 +107,15 @@
 
 .foldImg {
  position: absolute;
- top: 0px;
+ top: -5px;
  right: -5px;
  z-index: 1;
+ width: 70px;
 
  @media (max-width: 600px) {
   height: 45px;
-  top: 1px;
-  right: -20px;
+  top: 0px;
+  right: -15px;
  }
 }
 

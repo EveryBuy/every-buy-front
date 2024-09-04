@@ -1,14 +1,207 @@
-.facebookIcon,
+
+.footerTag{
+   display: flex;
+   flex-direction: column;
+   margin-top: 76px;
+   border-top: 5px solid #000000;
+   
+   @media (min-width: 1200px) {
+    margin-top: 49px;
+   }
+}
+
+.footerContainer{
+   width: 100%;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   padding: 16px 20px;
+   flex-wrap: wrap;
+   background: #B4B4B4;
+  
+   @media (max-width: 1000px) {
+    gap: 10px;
+    padding: 10px 30px;
+   }
+
+   @media(max-width:646px){
+    padding: 10px 10px;
+   }
+  
+   @media (max-width: 480px) {
+    display: none;
+   }
+}
+
+.wrapperContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  @media (max-width: 870px) {
+    display: block;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+}
+
+.hidenn{
+ display: none;
+ @media(max-width:870px){
+  display: block;
+ }
+}
+
+.contactText{
+  font-size: 19px;
+  @media (max-width: 870px){
+   font-size: 16px;
+  }
+ @media(max-width:646px){
+  font-size: 12px;
+ }
+}
+
+.footerText {
+   font-size: 19px;
+   margin-bottom: 20px;
+ @media (max-width: 870px) {
+   margin-left: 85px;
+   font-size: 16px;
+  }
+ @media(max-width:646px) {
+    font-size: 14px;
+    left: 30%;
+  }
+}
+
+.wrapperContent{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  @media(max-width:870px) {
+   display: block;
+  }
+}
+
+.contactContainer{
+   display: flex;
+   flex-direction: column;
+   order: 3;
+   gap: 16px;
+   
+   @media (max-width: 480px) {
+    order: 2;
+   }
+}
+
+.mailWrapper{
+ display: flex;
+}
+
+.sochial{
+ display: flex;
+ justify-content: space-between;
+ @media(max-width:870px) {
+  display: block;
+  margin-top: 10px;
+  margin-left: 54%;
+ }
+}
+
+.emailInput{
+  padding: 10px 0px 10px 10px;
+  width: 55%;
+  height: 41px;
+  border-radius: 10px;
+  border: 1px solid var(--not-active, #f5ffb6);
+  background: var(--background, #fff);
+  
+   @media (max-width: 1000px) {
+    padding: 0px;
+   }
+
+   @media(max-width:646px) {
+    width: 50%;
+    height: 35px;
+    font-size: 12px;
+   }
+}
+
+.buttonSubscribe{
+  border-radius: 10px;
+  padding: 10px 40px;
+  height: 41px;
+  font-size: 16px;
+  position: relative;
+  top: 0;
+  right: 20px;
+
+  @media(max-width:1000px){
+   padding: 10px 20px;
+   right:20px ;
+  }
+
+  @media(max-width: 870px) {
+   right: 17px;
+   padding: 10px 20px;
+  }
+
+  @media(max-width: 646px) {
+   right: 17px;
+   height: 35px;
+   font-size: 12px;
+   }
+}
+
+.facebookIcon{
+ margin: 0 16px 0 20px;
+}
+
 .instagramIcon {
+  margin: 0;
   fill: var(--button);
   stroke-width: 1px;
   stroke: var(--input-text);
 }
 
-.buttonSubscribe {
-  border-radius: 10px;
-  padding: 10px 40px;
-  height: 39px;
+.marketPlace{
+    width: 100%;
+    display: flex;
+    height: 39px;
+    justify-content: center;
+    align-items: center;
+    background-color: #000000;
+   
+    @media (max-width: 480px) {
+     display: none;
+    }
+}
 
-  font-size: 16px;
+.marketPlaceText{
+ font-size: 16px;
+ font-weight: 400;
+ color: #fff;
+}
+
+.footerContainerMobile{
+   width: 100%;
+   display: flex;
+   justify-content: space-between;
+   border: 1px solid var(--button, #e5ff46);
+   background: #fff;
+   padding: 12px 20px;
+   font-size: var(--f-size-small);
+  
+   @media (min-width: 481px) {
+    display: none;
+   }
+}
+
+.mobilePaginationButton{
+   display: flex;
+   align-items: center;
+   flex-direction: column;
+   gap: 8px;
 }
