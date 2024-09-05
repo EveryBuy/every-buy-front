@@ -19,8 +19,8 @@
     gap: 20px;
 
     @include media-min($breakpoint-tablet) {
-        width: 654px;
-        height: 371px;
+        width: 510px;
+        height: 571px;
     }
 
     @include media-min($breakpoint-laptop) {
