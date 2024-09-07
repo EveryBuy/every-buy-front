@@ -1,5 +1,6 @@
 export { default as CommonIcon } from "./ui/CommonIcon/CommonIcon";
 export { default as CommonButton } from "./ui/CommonButton/CommonButton";
+export { default as CommonInput } from "./ui/CommonInput/CommonInput";
 export { default as SliderContainer } from "./Slider/SliderContainer/SliderContainer";
 export { default as SliderComponent } from "./Slider/SliderComponent/SliderComponent";
 export { default as BannerBackground } from "./Slider/BannerBackground/BannerBackground";
@@ -22,6 +23,10 @@ export { default as Login } from "./auth/Login/Login";
 export { default as AuthButtons } from "./auth/AuthButtons/AuthButtons";
 export { default as MessageListBlock } from "./pages/messages/messageListBlock/MessageListBlock";
 export { default as DialogueBlock } from "./pages/messages/dialogueBlock/DialogueBlock";
+export { default as Companion } from "./pages/messages/dialogueBlock/companion/Companion";
+export { default as Dialogue } from "./pages/messages/dialogueBlock/dialogue/Dialogue";
+export { default as Product } from "./pages/messages/dialogueBlock/product/Product";
+export { default as Menu } from "./pages/messages/dialogueBlock/companion/Menu";
 export { default as ListMessages } from "./pages/messages/messageListBlock/list/ListMessages";
 export { default as ItemMessage } from "./pages/messages/messageListBlock/list/item/ItemMessage";
 export { default as MessageData } from "./pages/messages/messageListBlock/list/item/data/MessageData";

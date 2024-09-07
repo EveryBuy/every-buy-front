@@ -7,7 +7,7 @@ type CommonInputProps = {
   typeInput: boolean | string;
   value: string;
   id?: string;
-  setValue: (e: ChangeEvent<HTMLInputElement>) => void;
+  setValue?: (e: ChangeEvent<HTMLInputElement>) => void;
   className?: string;
   placeholder: string;
   required?: boolean;
