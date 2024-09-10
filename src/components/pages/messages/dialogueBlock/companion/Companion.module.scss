@@ -2,7 +2,7 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
-  padding: 14px 40px;
+  padding: 14px 30px 14px 40px;
   border-bottom: 1px solid var(--border);
 }
 
@@ -53,6 +53,7 @@
   align-items: center;
   row-gap: 4px;
   height: 32px;
+  width: 30px;
   cursor: pointer;
 
   & div {

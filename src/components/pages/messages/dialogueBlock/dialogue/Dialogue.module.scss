@@ -5,6 +5,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
+  height: 516px;
 }
 
 .dateWrapper {
@@ -42,4 +44,58 @@
   & p {
     text-align: center;
   }
+}
+
+.inputBlockWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 0px 20px;
+  & label::after {
+    content: "";
+  }
+
+  & .input {
+    width: 100%;
+    border: none;
+  }
+  & .input::placeholder {
+    color: #9d9d9d;
+  }
+}
+
+.inputWrapper {
+  width: 92%;
+  & div {
+    gap: 0px;
+  }
+}
+
+.inputIconsWrapper {
+  width: 8%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: 20px;
+}
+
+.iconPic {
+  width: 23px;
+  height: 18px;
+}
+.iconClip {
+  width: 22px;
+  height: 22px;
+}
+
+.sendIconWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.iconSend {
+  width: 24px;
+  height: 24px;
 }
