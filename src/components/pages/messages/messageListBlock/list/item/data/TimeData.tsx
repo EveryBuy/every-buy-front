@@ -7,7 +7,7 @@ const TimeData: FC = () => {
   return (
     <div className={style.blockWrapper}>
       <CommonIcon id="message-tick" className={style.icon} />
-      <Box>10:54</Box>
+      <Box className={style.time}>10:54</Box>
     </div>
   );
 };

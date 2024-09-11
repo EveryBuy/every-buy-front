@@ -1,5 +1,13 @@
+@import "@/styles/mixins";
+@import "@/styles/breakpoints";
+
 .blockWrapper {
-  width: 65%;
-  border: 1px solid var(--border);
-  border-radius: 10px;
+  display: none;
+
+  @include media-min($breakpoint-tablet) {
+    display: block;
+    width: 65%;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+  }
 }

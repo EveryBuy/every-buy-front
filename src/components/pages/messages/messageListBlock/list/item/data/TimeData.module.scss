@@ -1,10 +1,28 @@
+@import "@/styles/mixins";
+@import "@/styles/breakpoints";
+
 .blockWrapper {
-  width: 81px;
+  width: 55px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  @include media-min($breakpoint-tablet) {
+    width: 81px;
+  }
 }
 
 .icon {
-  width: 19px;
-  height: 12px;
+  width: 8px;
+  height: 6px;
+  @include media-min($breakpoint-tablet) {
+    width: 19px;
+    height: 12px;
+  }
+}
+
+.time {
+  font-size: var(--body-mobile-text-small);
+  @include media-min($breakpoint-tablet) {
+    font-size: var(--body-text);
+  }
 }

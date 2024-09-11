@@ -6,7 +6,15 @@ export default async function Page() {
   return (
     <>
       <h1 className="title">Повідомлення</h1>
-      <Box sx={{ display: "flex", columnGap: "35px", height: "720px" }}>
+      <Box
+        sx={{
+          display: "flex",
+          columnGap: "35px",
+          "@media (min-width: 768px)": {
+            height: "720px",
+          },
+        }}
+      >
         <MessageListBlock />
         <DialogueBlock />
       </Box>

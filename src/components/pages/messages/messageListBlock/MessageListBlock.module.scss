@@ -1,38 +1,53 @@
+@import "@/styles/mixins";
+@import "@/styles/breakpoints";
+
 .blockWrapper {
   display: flex;
   flex-direction: column;
-  width: 35%;
+  width: 100%;
+
+  @include media-min($breakpoint-tablet) {
+    width: 35%;
+  }
 }
 
 .buttonsWrapper {
   display: flex;
-  padding: 14px 8px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 11px;
   background-color: #ffffff;
-  border-radius: 10px;
 
-  @media screen and (min-width: 768px) {
+  @include media-min($breakpoint-tablet) {
     flex-direction: column;
-    align-items: center;
+    border-radius: 10px;
+    padding: 14px 8px;
   }
-  @media screen and (min-width: 1280px) {
+  @include media-min($breakpoint-laptop) {
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
   }
 }
 
 .listWrapper {
-  border: 1px solid var(--border);
-  // border-right: none;
-  border-radius: 10px;
-  flex-grow: 1;
+  // flex-grow: 1;
+  margin-top: 40px;
+
+  @include media-min($breakpoint-tablet) {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+  }
 }
 
 .iconsWrapper {
   display: flex;
   justify-content: space-between;
   column-gap: 16px;
-  width: 85px;
+  width: 80px;
+
+  @include media-min($breakpoint-tablet) {
+    width: 85px;
+  }
 }
 
 .savedMessagesHeaderBlock {
@@ -40,27 +55,41 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 11.5px 0px;
+  padding: 5.5px 0px;
+
+  @include media-min($breakpoint-tablet) {
+    padding: 11.5px 0px;
+  }
 
   & .arrow {
     width: 20px;
     height: 15px;
-    margin: 0px 20px 0px 12px;
+    margin-right: 10px;
+    @include media-min($breakpoint-tablet) {
+      margin: 0px 20px 0px 12px;
+    }
   }
 
   & .text {
     display: flex;
     align-items: center;
-    font-size: var(--f-size-h4);
+    font-size: var(--body-text);
+    @include media-min($breakpoint-tablet) {
+      font-size: var(--f-size-h4);
+    }
   }
 }
 
 .iconHeart,
 .iconFolder {
   cursor: auto;
-  margin-right: 21px;
-  width: 24px;
-  height: 24px;
+  width: 32px;
+  height: 32px;
+  @include media-min($breakpoint-tablet) {
+    margin-right: 21px;
+    width: 24px;
+    height: 24px;
+  }
 }
 
 // .iconHeart {

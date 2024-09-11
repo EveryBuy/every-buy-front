@@ -15,7 +15,13 @@ interface ItemMessageType {
 const ItemMessage: FC<ItemMessageType> = ({ picture, alt, title, text }) => {
   return (
     <Box className={style.blockWrapper}>
-      <Image alt={alt} src={picture} width={72} height={72} />
+      <Image
+        alt={alt}
+        src={picture}
+        width={40}
+        height={40}
+        className={style.image}
+      />
       <Box className={style.textWrapper}>
         <p className={style.title}>{title}:</p>
         <p className={style.text}>{text}</p>
