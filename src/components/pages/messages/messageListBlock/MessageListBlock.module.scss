@@ -36,6 +36,7 @@
   @include media-min($breakpoint-tablet) {
     border: 1px solid var(--border);
     border-radius: 10px;
+    margin-top: 0px;
   }
 }
 

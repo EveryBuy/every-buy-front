@@ -18,8 +18,8 @@ const ItemMessage: FC<ItemMessageType> = ({ picture, alt, title, text }) => {
       <Image
         alt={alt}
         src={picture}
-        width={40}
-        height={40}
+        width={72}
+        height={72}
         className={style.image}
       />
       <Box className={style.textWrapper}>

@@ -2,7 +2,12 @@
 import { FC, useState } from "react";
 import { Box } from "@mui/material";
 import { ListMessages, Buttons, Icons, CommonIcon } from "@/components";
+// import MessagesBuyType from "@/types/messages/messagesBuy";
 import style from "./MessageListBlock.module.scss";
+
+// interface MessageListBlockType {
+//   data: MessagesBuyType[];
+// }
 
 const mockMessagesDataBuy = [
   {

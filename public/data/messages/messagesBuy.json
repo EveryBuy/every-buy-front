@@ -1,0 +1,93 @@
+[
+  {
+    "id": 1,
+    "picture": "/images/user.png",
+    "alt": "icon",
+    "title": "Віктор",
+    "text": "Деякий текст від Віктора1"
+  },
+  {
+    "id": 2,
+    "picture": "/images/user.png",
+    "alt": "icon",
+    "title": "Кузьма",
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+  },
+  {
+    "id": 3,
+    "picture": "/images/user.png",
+    "alt": "icon",
+    "title": "Тетяна",
+    "text": "Lorem ipsum dolor sit amet"
+  },
+  {
+    "id": 4,
+    "picture": "/images/user.png",
+    "alt": "icon",
+    "title": "Ольга",
+    "text": "Деякий текст від Ольги"
+  },
+  {
+    "id": 5,
+    "picture": "/images/user.png",
+    "alt": "icon",
+    "title": "Іванна",
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+  },
+  {
+    "id": 6,
+    "picture": "/images/user.png",
+    "alt": "icon",
+    "title": "Петро",
+    "text": "Деякий текст від Петра"
+  },
+  {
+    "id": 7,
+    "picture": "/images/user.png",
+    "alt": "icon",
+    "title": "Вікторія",
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+  },
+  {
+    "id": 8,
+    "picture": "/images/user.png",
+    "alt": "icon",
+    "title": "Уляна",
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+  },
+  {
+    "id": 9,
+    "picture": "/images/user.png",
+    "alt": "icon",
+    "title": "Бобік",
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+  },
+  {
+    "id": 10,
+    "picture": "/images/user.png",
+    "alt": "icon",
+    "title": "Лана",
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+  },
+  {
+    "id": 11,
+    "picture": "/images/user.png",
+    "alt": "icon",
+    "title": "Ірина",
+    "text": "Деякий текст від Ірини"
+  },
+  {
+    "id": 12,
+    "picture": "/images/user.png",
+    "alt": "icon",
+    "title": "Семен",
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+  },
+  {
+    "id": 13,
+    "picture": "/images/user.png",
+    "alt": "icon",
+    "title": "Кристина",
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+  }
+]
