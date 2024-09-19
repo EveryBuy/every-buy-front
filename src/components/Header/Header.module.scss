@@ -1,13 +1,15 @@
 .headerTag{
-  display: flex;
+   display: flex;
    flex-direction: column;
    align-items: center;
    font-size: var(--f-size-small);
    background: #B4B4B4;
    border-bottom: 2px solid #000000;
+   margin-bottom: 28px;
   
    @media (max-width: 480px) {
     border-bottom: none;
+    background: #fff;
    }
 }
 
@@ -43,10 +45,9 @@
 
 .headerButton {
   border-radius: 10px;
-  padding: 10px;
+  padding: 25px 45px;
   height: 39px;
   margin-right: 32px;
-
   font-size: 16px;
 }
 

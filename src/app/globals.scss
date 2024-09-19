@@ -38,12 +38,12 @@ body {
 .container {
   display: flex;
   flex-direction: column;
-  max-width: 1440px;
+  min-width: 100%;
   margin: 0 auto;
-  padding: 0 20px;
+  // padding: 0 20px;
   min-height: calc(100vh - 168px - 162px);
   @include media-min($breakpoint-tablet) {
-    padding: 0 60px;
+    // padding: 0 60px;
   }
 }
 

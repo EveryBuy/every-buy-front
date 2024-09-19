@@ -24,7 +24,7 @@ const Footer: FC = () => {
            <CommonButton
              type="button"
              title="Підписатись"
-             color="light-yellow"
+             color="yellow"
              className={styles.buttonSubscribe}
                />
        </div>
