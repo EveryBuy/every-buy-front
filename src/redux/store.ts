@@ -2,6 +2,7 @@
 
 import { configureStore } from "@reduxjs/toolkit";
 import { authReducer } from "./auth/slice";
+import { messagesReducer } from "./messages/slice";
 import { persistReducer } from "redux-persist";
 // we don't need it because created variable storage for
 // import storage from "redux-persist/lib/storage";
@@ -52,6 +53,7 @@ const persistedAuthReducer = persistReducer(persistConfig, authReducer);
 export const store = configureStore({
   reducer: {
     auth: persistedAuthReducer,
+    messages: messagesReducer,
     // products: productsReducer,
     // filters: filtersReducer,
   },

@@ -1,4 +1,6 @@
-export default async function getData(url: string) {
+import MessagesBuyType from "@/types/messages/messagesBuy";
+
+export default async function getData(url: string): Promise<MessagesBuyType[]> {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
   const response = await fetch(`${baseUrl}${url}`, {
     cache: "no-store",
@@ -6,5 +8,5 @@ export default async function getData(url: string) {
   if (!response.ok) {
     throw new Error("Failed to fetch data");
   }
-  return response;
+  return response.json();
 }
