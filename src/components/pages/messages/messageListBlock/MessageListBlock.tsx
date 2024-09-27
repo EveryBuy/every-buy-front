@@ -198,7 +198,9 @@ const useAppDispatch = () => useDispatch<AppDispatch>();
 const MessageListBlock: FC = () => {
   const dispatch = useAppDispatch();
   const messages = useSelector((state: RootState) => state.messages);
-  console.log(messages);
+  // if (messages) {
+  //   console.log(messages);
+  // }
 
   const [activeButton, setActiveButton] = useState<number | null>(1);
   const [isHeartSelected, setHeardSelected] = useState<boolean>(false);
@@ -301,6 +303,7 @@ const MessageListBlock: FC = () => {
         )}
       </Box>
       <Box className={style.listWrapper}>
+        {/* {messages && <ListMessages messages={messages} />} */}
         <ListMessages messages={messages} />
       </Box>
     </Box>

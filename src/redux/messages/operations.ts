@@ -3,11 +3,18 @@ import getData from "@/actions/getData";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const API = axios.create({
-  baseURL: "https://api-everybuy.onrender.com",
-});
-const setHeaderAuthToken = (token: string | null) => {
-  API.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+// const API = axios.create({
+//   baseURL: "https://service-chat-t47s.onrender.com",
+// });
+// const setHeaderAuthToken = (token: string | null) => {
+//   API.defaults.headers.common["Authorization"] = `${token}`;
+// };
+const setAuthToken = (token: string | null) => {
+  if (token) {
+    axios.defaults.headers.common["Authorization"] = token;
+  } else {
+    delete axios.defaults.headers.common["Authorization"];
+  }
 };
 
 // const clearHeaderAuthToken = () => {
@@ -16,24 +23,21 @@ const setHeaderAuthToken = (token: string | null) => {
 
 export const getAllMessages = createAsyncThunk("/messages", async () => {
   try {
-    const token = localStorage.getItem("token");
+    const token =
+      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxNTYsInBob25lIjoiNjMwNjMwNjMwIiwicm9sZXMiOlsiVVNFUiJdLCJzdWIiOiJleGFtcGxlNzc3QGV4YW1wbGUuY29tIiwiaWF0IjoxNzI3NDUwNjY0LCJleHAiOjE3Mjc1MzcwNjR9.tIcSugTAa3oB4Vk9bFMH7OPC3N-QdDa8SDwzfX6skMg";
     if (token) {
-      setHeaderAuthToken(token);
-      const messages: MessagesBuyType[] = await getData(
-        "/api/chat/get-all-users-chats"
+      // setHeaderAuthToken(token);
+      setAuthToken(token);
+      const messages: MessagesBuyType[] = await axios.get(
+        "https://service-chat-t47s.onrender.com/chat/get-all-users-chats"
       );
-      return messages;
+      console.log(token);
+
+      console.log(messages);
+
+      return messages.data;
     }
   } catch (error: any) {
     throw new Error(error.message);
   }
 });
-
-// export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
-//   try {
-//     await API.get("/auth/validate");
-//     clearHeaderAuthToken();
-//   } catch (error) {
-//     return thunkAPI.rejectWithValue(error);
-//   }
-// });
