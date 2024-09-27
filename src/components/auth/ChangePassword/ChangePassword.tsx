@@ -1,7 +1,6 @@
 "use client";
-import { Backdrop, Button } from "@mui/material";
-import React, { useState } from "react";
-import style from "./ChangePassword.module.scss";
+// import { Backdrop } from "@mui/material";
+import React, { use, useId, useState } from "react";
 import { useAppDispatch } from "@/redux/store";
 // import { logout } from "@/redux/auth/operations";
 import { useRouter } from "next/navigation";
@@ -19,6 +18,9 @@ export const ChangePassword: React.FC = ({ onClose }) => {
   const [showConfirmPwd, setShowConfirmPwd] = useState(false);
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const oldPwdId = useId();
+  const newPwdId = useId();
+  const newPwdConfirmId = useId();
 
   const handleOpen = () => {
     setOpen(true);
@@ -40,39 +42,33 @@ export const ChangePassword: React.FC = ({ onClose }) => {
     setShowConfirmPwd(!showConfirmPwd);
   };
 
+  const handleSubmit = (initialValues, actions) => {
+    console.log(initialValues);
+    
+    actions.resetForm();
+}
+
   return (
     <>
-      {/* <Button className={style.logoutBtn} onClick={handleOpen}>
-        {text}
-      </Button> */}
-      <Backdrop
-        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={open}
-        onClose={setOpen}
-      >
-        {/* <CircularProgress color="inherit" /> */}
         <CommonModal onClose={handleClose}>
-          <h3>Зміна паролю</h3>
-          <Formik>
+          <h3 className={styles.title}>Зміна паролю</h3>
+          <Formik
+            initialValues={{
+              oldPwd: '',
+              newPwd: '',
+              newPwdConfirm: ''
+            }}
+          onSubmit={handleSubmit}>
             <Form className={styles.form}>
               <div>
-                <label>Старий пароль</label>
+                <label id={oldPwdId}>Старий пароль<span className={styles.requiredMark}> *</span></label>
                 <div className={styles.inputWrapper}>
                   <Field
                     name="oldPwd"
-                    type="password"
-                    id=""
+                    type="text"
+                    id={oldPwdId}
                     placeholder="введіть свій пароль"
-                    required
-                  ></Field>
-                  {/* <Image
-                    className={styles.EyePassword}
-                    src={showPassword ? EyeInvisibleFilled : EyeFilled}
-                    alt="showPassword"
-                    width={24}
-                    height={24}
-                    onClick={toggleShowPassword}
-                  /> */}
+                    required></Field>
                 </div>
                 <ErrorMessage
                   className={styles.error}
@@ -82,12 +78,12 @@ export const ChangePassword: React.FC = ({ onClose }) => {
               </div>
 
               <div>
-                <label>Новий пароль</label>
+                <label id={newPwdId}>Новий пароль<span className={styles.requiredMark}> *</span></label>
                 <div className={styles.inputWrapper}>
                   <Field
-                    name="oldPwd"
+                    name="newPwd"
                     type={showNewPwd ? "text" : "password"}
-                    id=""
+                    id={newPwdId}
                     required
                   ></Field>
                   <Image
@@ -101,18 +97,18 @@ export const ChangePassword: React.FC = ({ onClose }) => {
                 </div>
                 <ErrorMessage
                   className={styles.error}
-                  name="oldPwd"
+                  name="newPwd"
                   component="span"
                 />
               </div>
 
               <div>
-                <label>Підтвердити новий пароль</label>
+                <label id={newPwdConfirmId}>Підтвердити новий пароль<span className={styles.requiredMark}> *</span></label>
                 <div className={styles.inputWrapper}>
                   <Field className={styles.input}
-                    name="oldPwd"
+                    name="newPwdConfirm"
                     type={showConfirmPwd ? "text" : "password"}
-                    id=""
+                    id={newPwdConfirmId}
                     required
                   ></Field>
                   <Image
@@ -126,12 +122,12 @@ export const ChangePassword: React.FC = ({ onClose }) => {
                 </div>
                 <ErrorMessage
                   className={styles.error}
-                  name="oldPwd"
+                  name="newPwdConfirm"
                   component="span"
                 />
               </div>
               <CommonButton
-                type="button"
+                type="submit"
                 title="Зберегти пароль"
                 color="yellow"
                 className={styles.submitBtn}
@@ -140,7 +136,7 @@ export const ChangePassword: React.FC = ({ onClose }) => {
             </Form>
           </Formik>
         </CommonModal>
-      </Backdrop>
+      {/* </Backdrop> */}
     </>
   );
 };
