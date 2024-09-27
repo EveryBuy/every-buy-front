@@ -1,7 +1,7 @@
 "use client";
 
 import { createSlice } from "@reduxjs/toolkit";
-import { getAllMessages } from "./operations";
+import { getAllMessages } from "../../redux/messages/operations";
 import MessagesBuyType from "@/types/messages/messagesBuy";
 
 const initialState: MessagesBuyType[] | [] = [];

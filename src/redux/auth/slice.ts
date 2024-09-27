@@ -1,8 +1,6 @@
 "use client";
 
-import {
-  createSlice,
-} from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { register, login, logout, refreshUser } from "./operations";
 import { AuthState } from "@/types/stateType";
 
@@ -18,9 +16,10 @@ const initialState: AuthState = {
   isLoggedIn: false,
 };
 
-const authSlice = createSlice<CreateSlice>({
+const authSlice = createSlice({
   name: "auth",
   initialState,
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(register.rejected, (state, action) => {
