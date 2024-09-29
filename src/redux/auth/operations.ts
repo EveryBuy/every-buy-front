@@ -75,3 +75,40 @@ export const refreshUser = createAsyncThunk(
     },
   }
 );
+
+export const getDeleteCode = createAsyncThunk(
+  "auth/getDeleteCode",
+  async (_, thunkApi) => {
+    try {
+      const { data } = await API.get("/auth/get-code-to-del");
+      return data;
+    } catch (error: any) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const deleteUser = createAsyncThunk(
+  "auth/deleteUser",
+  async (deleteData, thunkAPI) => {
+    try {
+      // receive { code, password }
+      const { data } = await API.delete("/auth/delete", deleteData);
+      return data;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const changePassword = createAsyncThunk(
+  "auth/changePassword",
+  async (changeData, thunkAPI) => {
+    try {
+      const { data } = await API.put("/auth/change-password", changeData);
+      return data;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+)
