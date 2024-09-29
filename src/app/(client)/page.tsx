@@ -1,4 +1,4 @@
-'use client';
+// 'use client';
 
 import "../globals.scss";
 import { Search, SliderContainer, Category } from "@/components";
