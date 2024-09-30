@@ -23,7 +23,7 @@ const AboutMe: FC = () => {
 
   const handleClick = () => {
     router.replace("/user/");
-    dispatch(toggleProfileMenu(false));
+    // dispatch(toggleProfileMenu(false));
   };
 
   const handleChangePass = () => {

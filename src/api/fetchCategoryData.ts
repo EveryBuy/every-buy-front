@@ -8,5 +8,5 @@ export const fetchCategoryData = async (): Promise<CategoryItem[]> => {
     throw new Error("Network response was not ok");
   }
   const result: ApiResponse = await response.json();
-  return result.data;
+  return result;
 };

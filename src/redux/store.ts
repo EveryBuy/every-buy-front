@@ -3,7 +3,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { authReducer } from "./auth/slice";
 import { persistReducer } from "redux-persist";
-import storage from "redux-persist/lib/storage";
+// import storage from "redux-persist/lib/storage";
 import {
   FLUSH,
   REHYDRATE,
@@ -14,7 +14,24 @@ import {
 } from "redux-persist";
 import persistStore from "redux-persist/es/persistStore";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 import { uiStateReducer } from "./ui/slice";
+
+const createNoopStorage = () => {
+  return {
+    getItem(_key: any) {
+      return Promise.resolve(null);
+    },
+    setItem(_key: any, value: any) {
+      return Promise.resolve(value);
+    },
+    removeItem(_key: any) {
+      return Promise.resolve();
+    },
+  };
+}
+
+const storage = typeof window !== "undefined" ? createWebStorage("local") : createNoopStorage();
 
 const persistConfig = {
   key: "root",
@@ -23,13 +40,13 @@ const persistConfig = {
 };
 
 const persistedAuthReducer = persistReducer(persistConfig, authReducer);
-const persistedUiReducer = persistReducer(persistConfig, uiStateReducer)
+// const persistedUiReducer = persistReducer(persistConfig, uiStateReducer);
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
       auth: persistedAuthReducer,
-      ui: persistedUiReducer,
+      // ui: persistedUiReducer,
       // products: productsReducer,
       // filters: filtersReducer,
     },

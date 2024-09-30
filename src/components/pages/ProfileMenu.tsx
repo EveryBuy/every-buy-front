@@ -9,7 +9,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { toggleProfileMenu, isHiddenProfileMenu } from "@/redux/ui/slice";
 
 const ProfileMenu: FC = () => {
-  const isHidden = useAppSelector(isHiddenProfileMenu);
+  // const isHidden = useAppSelector(isHiddenProfileMenu);
   const dispatch = useAppDispatch();
   
   useEffect(() => {
@@ -22,7 +22,9 @@ const ProfileMenu: FC = () => {
 
   return (
 
-    <nav className={clsx(styles.profileMenu, isHidden && styles.hidden)}>
+    <nav className={clsx(styles.profileMenu
+      // , isHidden && styles.hidden
+    )}>
       
       <ul className={styles.profileList} onClick={handleClick}>
         <li>

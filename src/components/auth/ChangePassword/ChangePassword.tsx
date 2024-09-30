@@ -1,18 +1,28 @@
 "use client";
 // import { Backdrop } from "@mui/material";
+// import { logout } from "@/redux/auth/operations";
 import React, { use, useId, useState } from "react";
 import { useAppDispatch } from "@/redux/store";
-// import { logout } from "@/redux/auth/operations";
 import { useRouter } from "next/navigation";
 import CommonModal from "@/components/ui/CommonModal/CommonModal";
 import CommonButton from "@/components/ui/CommonButton/CommonButton";
 import styles from "@/components/auth/ChangePassword/ChangePassword.module.scss";
-import { ErrorMessage, Field, Form, Formik } from "formik";
+import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik";
 import Image from "next/image";
 import EyeFilled from "@/assets/Svg/EyeFilled.svg";
 import EyeInvisibleFilled from "@/assets/Svg/EyeInvisibleFilled.svg";
 
-export const ChangePassword: React.FC = ({ onClose }) => {
+type Props = {
+  onClose: (props: boolean)=> void,
+}
+
+type InitialValues = {
+              oldPwd: string,
+              newPwd: string,
+              newPwdConfirm: string,
+            }
+
+export const ChangePassword: React.FC<Props> = ({ onClose }: Props) => {
   const [open, setOpen] = useState(true);
   const [showNewPwd, setShowPassword] = useState(false);
   const [showConfirmPwd, setShowConfirmPwd] = useState(false);
@@ -22,29 +32,27 @@ export const ChangePassword: React.FC = ({ onClose }) => {
   const newPwdId = useId();
   const newPwdConfirmId = useId();
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
+  // const handleOpen = () => {
+  //   setOpen(true);
+  // };
+
   const handleClose = () => {
     setOpen(false);
     onClose(false);
   };
 
-  const handleChangePwd = () => {
-    // dispatch(changePassword);
-    router.replace("/");
-  };
-
   const toggleShowNewPwd = () => {
     setShowPassword(!showNewPwd);
   };
+
   const toggleShowConfirmPwd = () => {
     setShowConfirmPwd(!showConfirmPwd);
   };
 
-  const handleSubmit = (initialValues, actions) => {
-    console.log(initialValues);
-    
+  const handleSubmit = (initialValues: InitialValues, actions: FormikHelpers<InitialValues>) => {
+    // console.log(initialValues);
+    // dispatch(changePassword);
+    router.replace("/");
     actions.resetForm();
 }
 
@@ -131,12 +139,11 @@ export const ChangePassword: React.FC = ({ onClose }) => {
                 title="Зберегти пароль"
                 color="yellow"
                 className={styles.submitBtn}
-                onClick={handleChangePwd}
+                // onClick={handleChangePwd}
               />
             </Form>
           </Formik>
         </CommonModal>
-      {/* </Backdrop> */}
     </>
   );
 };
