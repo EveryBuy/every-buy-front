@@ -6,7 +6,7 @@ import style from "./ItemMessage.module.scss";
 
 interface ItemMessageType {
   id?: number;
-  picture: string;
+  picture?: string;
   alt: string;
   title: string;
   text: string;
@@ -17,7 +17,8 @@ const ItemMessage: FC<ItemMessageType> = ({ picture, alt, title, text }) => {
     <Box className={style.blockWrapper}>
       <Image
         alt={alt}
-        src={picture}
+        // src={picture}
+        src="/images/user.png"
         width={72}
         height={72}
         className={style.image}

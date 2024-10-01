@@ -4,8 +4,8 @@ import { Box } from "@mui/material";
 import { ListMessages, Buttons, Icons, CommonIcon } from "@/components";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../../../../redux/store";
-import { getAllMessages } from "../../../../redux/messages/operations";
-import MessagesBuyType from "@/types/messages/messagesBuy";
+import { getAllChats } from "../../../../redux/messages/operations";
+// import MessagesBuyType from "@/types/messages/messagesBuy";
 import style from "./MessageListBlock.module.scss";
 
 // interface MessageListBlockType {
@@ -225,7 +225,7 @@ const MessageListBlock: FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await dispatch(getAllMessages());
+        await dispatch(getAllChats());
       } catch (error) {
         console.log(error);
       }
@@ -256,6 +256,10 @@ const MessageListBlock: FC = () => {
   //       isFolderSelected === true
   //     ? mockArchSellMessages
   //     : mockSavedSellMessages;
+
+  if (!messages) {
+    return "Завантажується";
+  }
 
   return (
     <Box className={style.blockWrapper}>

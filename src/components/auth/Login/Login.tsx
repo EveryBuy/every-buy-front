@@ -10,7 +10,7 @@ import Image from "next/image";
 import { login } from "@/redux/auth/operations";
 import { selectIsLoggedIn } from "@/redux/auth/selectors";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
-import axios from "axios";
+// import axios from "axios";
 
 const Login: React.FC = () => {
   const router = useRouter();
@@ -30,26 +30,26 @@ const Login: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const userRegisterData = {
-      login: emailOrPhone,
-      password: password,
-    };
+    // const userRegisterData = {
+    //   login: emailOrPhone,
+    //   password: password,
+    // };
 
-    try {
-      const response = await axios.post(
-        "https://service-authorization-b1jx.onrender.com/auth/auth",
-        userRegisterData
-      );
-      localStorage.setItem("token", `Bearer ${response.data.data.token}`);
-    } catch (error) {
-      console.error("Login failed", error);
-    }
-    // dispatch(
-    //   login({
-    //     login: emailOrPhone,
-    //     password: password,
-    //   })
-    // );
+    // try {
+    //   const response = await axios.post(
+    //     "https://service-authorization-b1jx.onrender.com/auth/auth",
+    //     userRegisterData
+    //   );
+    //   localStorage.setItem("token", `Bearer ${response.data.data.token}`);
+    // } catch (error) {
+    //   console.error("Login failed", error);
+    // }
+    dispatch(
+      login({
+        login: emailOrPhone,
+        password: password,
+      })
+    );
   };
 
   return (

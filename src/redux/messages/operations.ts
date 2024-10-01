@@ -1,43 +1,34 @@
-import MessagesBuyType from "@/types/messages/messagesBuy";
-import getData from "@/actions/getData";
+// import getData from "@/actions/getData";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import setAuthToken from "@/utils/setAuthToken";
+import { ChatType } from "@/types/messages/messages";
+import { RootState } from "@/redux/store";
 import axios from "axios";
 
-// const API = axios.create({
-//   baseURL: "https://service-chat-t47s.onrender.com",
-// });
-// const setHeaderAuthToken = (token: string | null) => {
-//   API.defaults.headers.common["Authorization"] = `${token}`;
-// };
-const setAuthToken = (token: string | null) => {
-  if (token) {
-    axios.defaults.headers.common["Authorization"] = token;
-  } else {
-    delete axios.defaults.headers.common["Authorization"];
-  }
-};
+interface ResponseType {
+  data: ChatType;
+}
 
-// const clearHeaderAuthToken = () => {
-//   delete API.defaults.headers.common["Authorization"];
-// };
+export const getAllChats = createAsyncThunk(
+  "/messages",
+  async (_, thunkAPI) => {
+    try {
+      const state = thunkAPI.getState() as RootState;
+      const token = state.auth.token;
+      console.log(state.auth.token);
 
-export const getAllMessages = createAsyncThunk("/messages", async () => {
-  try {
-    const token =
-      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxNTYsInBob25lIjoiNjMwNjMwNjMwIiwicm9sZXMiOlsiVVNFUiJdLCJzdWIiOiJleGFtcGxlNzc3QGV4YW1wbGUuY29tIiwiaWF0IjoxNzI3NDUwNjY0LCJleHAiOjE3Mjc1MzcwNjR9.tIcSugTAa3oB4Vk9bFMH7OPC3N-QdDa8SDwzfX6skMg";
-    if (token) {
-      // setHeaderAuthToken(token);
-      setAuthToken(token);
-      const messages: MessagesBuyType[] = await axios.get(
-        "https://service-chat-t47s.onrender.com/chat/get-all-users-chats"
-      );
-      console.log(token);
+      if (token) {
+        setAuthToken(token);
+        const messages: ResponseType = await axios.get(
+          "https://service-chat-t47s.onrender.com/chat/get-all-users-chats"
+        );
+        console.log(messages);
+        console.log(messages.data);
 
-      console.log(messages);
-
-      return messages.data;
+        return messages.data;
+      }
+    } catch (error: any) {
+      throw new Error(error.message);
     }
-  } catch (error: any) {
-    throw new Error(error.message);
   }
-});
+);

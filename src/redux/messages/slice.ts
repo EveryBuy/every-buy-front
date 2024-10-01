@@ -1,10 +1,10 @@
 "use client";
 
 import { createSlice } from "@reduxjs/toolkit";
-import { getAllMessages } from "../../redux/messages/operations";
-import MessagesBuyType from "@/types/messages/messagesBuy";
+import { getAllChats } from "../../redux/messages/operations";
+import { ChatType } from "@/types/messages/messages";
 
-const initialState: MessagesBuyType[] | [] = [];
+const initialState: ChatType | [] = [];
 
 const messagesSlice = createSlice({
   name: "messages",
@@ -12,12 +12,12 @@ const messagesSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getAllMessages.fulfilled, (state, action) => {
+      .addCase(getAllChats.fulfilled, (state, action) => {
         if (action.payload) {
-          return action.payload as MessagesBuyType[];
+          return action.payload as ChatType;
         }
       })
-      .addCase(getAllMessages.rejected, (state, action) => {
+      .addCase(getAllChats.rejected, (state, action) => {
         const errorMessage = action.payload as string;
         console.error(`Error: ${errorMessage}`);
       });

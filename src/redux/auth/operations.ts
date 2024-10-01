@@ -33,20 +33,19 @@ export const login = createAsyncThunk(
   "auth/login",
   async (userLogData: UserLogData, thunkAPI) => {
     try {
-      console.log(userLogData);
-
       const { data } = await API.post("/auth/auth", userLogData);
       setHeaderAuthToken(data.data.token);
       const userData = await API.get("/user");
       return { data: userData.data.data, token: data.data.token };
     } catch (error) {
+      console.log(error);
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
 
 export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
-  try {  
+  try {
     // await API.get("/auth/validate");
     clearHeaderAuthToken();
   } catch (error) {
@@ -112,4 +111,4 @@ export const changePassword = createAsyncThunk(
       return thunkAPI.rejectWithValue(error.message);
     }
   }
-)
+);
