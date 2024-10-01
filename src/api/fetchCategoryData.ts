@@ -7,6 +7,6 @@ export const fetchCategoryData = async (): Promise<CategoryItem[]> => {
   if (!response.ok) {
     throw new Error("Network response was not ok");
   }
-  const result: CategoryItem[] = await response.json();
+  const result = await response.json();
   return result;
 };

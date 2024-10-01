@@ -71,7 +71,7 @@ body {
 }
 
 .profileSectionWrapper {
-  display: none;
+  // display: none;
   @include media-min($breakpoint-tablet) {
     display: flex;
     padding-left: 110px;

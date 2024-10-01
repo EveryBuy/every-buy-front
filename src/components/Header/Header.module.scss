@@ -1,8 +1,39 @@
+@import "../../styles/mixins";
+@import "../../styles/breakpoints";
+
+.headerContainer {
+  width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 16px 60px;
+     
+  @include media-min($breakpoint-tablet) {
+    background-color: #b4b4b4;
+  }
+}
+
+.addAdvertisingContainer {
+  display: none;
+  @include media-min($breakpoint-tablet) {
+    background-color: #b4b4b4;
+    display: flex;
+    gap: 10px;
+    }
+  
+}
+
 .headerButton {
+  display: none;
   border-radius: 10px;
   padding: 10px;
   height: 39px;
   margin-right: 32px;
-
   font-size: 16px;
+  @include media-min($breakpoint-tablet) {
+  display: flex;
+    }
+}
+
+.hidden {
+  display: none;
 }

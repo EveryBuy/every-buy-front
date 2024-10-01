@@ -6,7 +6,7 @@ export { default as SliderComponent } from "./Slider/SliderComponent/SliderCompo
 export { default as BannerBackground } from "./Slider/BannerBackground/BannerBackground";
 export { default as Banner } from "./Slider/Banner/Banner";
 export { default as Search } from "./Search/Search";
-export { default as AboutMe } from "./pages/userPage/AboutMe";
+export { default as AboutMe } from "./pages/userPage/AboutMe/AboutMe";
 export { default as SelectedGoods } from "./pages/userPage/SelectedGoods";
 export { default as MyAds } from "./pages/userPage/MyAds";
 export { default as MyActiveAds } from "./pages/userPage/MyActiveAds";

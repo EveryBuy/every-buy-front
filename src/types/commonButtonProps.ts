@@ -6,4 +6,5 @@ export default interface CommonButtonProps {
   color: "transparent" | "light-yellow" | "yellow";
   className?: string;
   children?: ReactNode;
+  onClick?: () => void; 
 }
