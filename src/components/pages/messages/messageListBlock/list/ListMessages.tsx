@@ -6,17 +6,12 @@ import { ItemMessage } from "@/components";
 import { MessageType } from "@/types/messages/messages";
 import style from "./ListMessages.module.scss";
 
+// TODO create slice
+// TODO onclick => make request, take messages by id => save to redux
+
 interface ListMessagesType {
   messages: MessageType[];
 }
-
-// interface MessageType {
-//   id: number;
-//   picture: string;
-//   alt: string;
-//   title: string;
-//   text: string;
-// }
 
 const ListMessages: FC<ListMessagesType> = ({ messages }) => {
   if (!messages) {

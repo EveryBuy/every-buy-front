@@ -4,204 +4,17 @@ import { Box } from "@mui/material";
 import { ListMessages, Buttons, Icons, CommonIcon } from "@/components";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../../../../redux/store";
-import { getAllChats } from "../../../../redux/messages/operations";
-// import MessagesBuyType from "@/types/messages/messagesBuy";
+import {
+  getAllChats,
+  getAllMessagesById,
+} from "../../../../redux/messages/operations";
 import style from "./MessageListBlock.module.scss";
-
-// interface MessageListBlockType {
-//   data: MessagesBuyType[];
-// }
-
-// const mockMessagesDataBuy = [
-//   {
-//     id: 1,
-//     picture: "/images/user.png",
-//     alt: "icon",
-//     title: "Віктор",
-//     text: "Деякий текст від Віктора",
-//   },
-//   {
-//     id: 2,
-//     picture: "/images/user.png",
-//     alt: "icon",
-//     title: "Ксенія",
-//     text: "Деякий текст від Ксенії є занадто великим",
-//   },
-//   {
-//     id: 3,
-//     picture: "/images/user.png",
-//     alt: "icon",
-//     title: "Ви",
-//     text: "Деякий текст також завеликий",
-//   },
-//   {
-//     id: 4,
-//     picture: "/images/user.png",
-//     alt: "icon",
-//     title: "Віктор",
-//     text: "Деякий текст від Віктора",
-//   },
-//   {
-//     id: 5,
-//     picture: "/images/user.png",
-//     alt: "icon",
-//     title: "Ксенія",
-//     text: "Деякий текст від Ксенії",
-//   },
-//   {
-//     id: 6,
-//     picture: "/images/user.png",
-//     alt: "icon",
-//     title: "Ви",
-//     text: "Деякий текст",
-//   },
-//   {
-//     id: 7,
-//     picture: "/images/user.png",
-//     alt: "icon",
-//     title: "Ксенія",
-//     text: "Деякий текст від Ксенії",
-//   },
-//   {
-//     id: 8,
-//     picture: "/images/user.png",
-//     alt: "icon",
-//     title: "Ви",
-//     text: "Деякий текст",
-//   },
-// ];
-// const mockMessagesDataSell = [
-//   {
-//     id: 1,
-//     picture: "/images/user.png",
-//     alt: "icon",
-//     title: "Вікторія",
-//     text: "Деякий текст від Віктора",
-//   },
-//   {
-//     id: 2,
-//     picture: "/images/user.png",
-//     alt: "icon",
-//     title: "Ксеній",
-//     text: "Деякий текст від Ксенії є занадто великим",
-//   },
-//   {
-//     id: 3,
-//     picture: "/images/user.png",
-//     alt: "icon",
-//     title: "Я",
-//     text: "Деякий текст також завеликий",
-//   },
-//   {
-//     id: 4,
-//     picture: "/images/user.png",
-//     alt: "icon",
-//     title: "Вікторія",
-//     text: "Деякий текст від Віктора",
-//   },
-//   {
-//     id: 5,
-//     picture: "/images/user.png",
-//     alt: "icon",
-//     title: "Ксеній",
-//     text: "Деякий текст від Ксенії",
-//   },
-//   {
-//     id: 6,
-//     picture: "/images/user.png",
-//     alt: "icon",
-//     title: "Я",
-//     text: "Деякий текст",
-//   },
-//   {
-//     id: 7,
-//     picture: "/images/user.png",
-//     alt: "icon",
-//     title: "Ксеній",
-//     text: "Деякий текст від Ксенії",
-//   },
-//   {
-//     id: 8,
-//     picture: "/images/user.png",
-//     alt: "icon",
-//     title: "я",
-//     text: "Деякий текст",
-//   },
-// ];
-// const mockSavedBuyMessages = [
-//   {
-//     id: 1,
-//     picture: "/images/user.png",
-//     alt: "icon",
-//     title: "Вікторія",
-//     text: "Деякий текст від Вікторії",
-//   },
-//   {
-//     id: 2,
-//     picture: "/images/user.png",
-//     alt: "icon",
-//     title: "Костянтин",
-//     text: "Деякий текст від Костянтина",
-//   },
-// ];
-// const mockSavedSellMessages = [
-//   {
-//     id: 1,
-//     picture: "/images/user.png",
-//     alt: "icon",
-//     title: "Марина",
-//     text: "Деякий текст від Марини",
-//   },
-// ];
-// const mockArchBuyMessages = [
-//   {
-//     id: 1,
-//     picture: "/images/user.png",
-//     alt: "icon",
-//     title: "Ярослав",
-//     text: "Деякий текст від Ярослава",
-//   },
-//   {
-//     id: 2,
-//     picture: "/images/user.png",
-//     alt: "icon",
-//     title: "Ігор",
-//     text: "Деякий текст від Ігора",
-//   },
-// ];
-// const mockArchSellMessages = [
-//   {
-//     id: 1,
-//     picture: "/images/user.png",
-//     alt: "icon",
-//     title: "Нюня",
-//     text: "Деякий текст від Нюні",
-//   },
-//   {
-//     id: 2,
-//     picture: "/images/user.png",
-//     alt: "icon",
-//     title: "Зюня",
-//     text: "Деякий текст від Зюні",
-//   },
-//   {
-//     id: 3,
-//     picture: "/images/user.png",
-//     alt: "icon",
-//     title: "Тяпа",
-//     text: "Деякий текст від Тяпи",
-//   },
-// ];
 
 const useAppDispatch = () => useDispatch<AppDispatch>();
 
 const MessageListBlock: FC = () => {
   const dispatch = useAppDispatch();
-  const messages = useSelector((state: RootState) => state.messages);
-  // if (messages) {
-  //   console.log(messages);
-  // }
-
+  const messages = useSelector((state: RootState) => state.messages.chats);
   const [activeButton, setActiveButton] = useState<number | null>(1);
   const [isHeartSelected, setHeardSelected] = useState<boolean>(false);
   const [isFolderSelected, setFolderSelected] = useState<boolean>(false);
@@ -226,6 +39,7 @@ const MessageListBlock: FC = () => {
     const fetchData = async () => {
       try {
         await dispatch(getAllChats());
+        await dispatch(getAllMessagesById(10));
       } catch (error) {
         console.log(error);
       }
@@ -234,30 +48,9 @@ const MessageListBlock: FC = () => {
     fetchData();
   }, [dispatch]);
 
-  // const messages =
-  //   activeButton === 1 &&
-  //   isHeartSelected === false &&
-  //   isFolderSelected === false
-  //     ? mockMessagesDataBuy
-  //     : activeButton === 1 &&
-  //       isHeartSelected === true &&
-  //       isFolderSelected === false
-  //     ? mockSavedBuyMessages
-  //     : activeButton === 2 &&
-  //       isHeartSelected === false &&
-  //       isFolderSelected === false
-  //     ? mockMessagesDataSell
-  //     : activeButton === 2 &&
-  //       isHeartSelected === true &&
-  //       isFolderSelected === false
-  //     ? mockArchBuyMessages
-  //     : activeButton === 2 &&
-  //       isHeartSelected === false &&
-  //       isFolderSelected === true
-  //     ? mockArchSellMessages
-  //     : mockSavedSellMessages;
-
   if (!messages) {
+    console.log(messages);
+
     return "Завантажується";
   }
 
@@ -307,7 +100,6 @@ const MessageListBlock: FC = () => {
         )}
       </Box>
       <Box className={style.listWrapper}>
-        {/* {messages && <ListMessages messages={messages} />} */}
         <ListMessages messages={messages} />
       </Box>
     </Box>

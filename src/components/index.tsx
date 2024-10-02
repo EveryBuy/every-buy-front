@@ -21,6 +21,7 @@ export { default as Register } from "./auth/Register/Register";
 export { default as ProtectedRoute } from "./auth/ProtectedRoute/ProtectedRoute";
 export { default as Login } from "./auth/Login/Login";
 export { default as AuthButtons } from "./auth/AuthButtons/AuthButtons";
+export { default as MessagesWrapper } from "./pages/messages/MessagesWrapper";
 export { default as MessageListBlock } from "./pages/messages/messageListBlock/MessageListBlock";
 export { default as DialogueBlock } from "./pages/messages/dialogueBlock/DialogueBlock";
 export { default as Companion } from "./pages/messages/dialogueBlock/companion/Companion";

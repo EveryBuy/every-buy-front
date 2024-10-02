@@ -1,4 +1,4 @@
-type ChatType = MessageType[];
+type ChatsType = MessageType[];
 
 type UserDataType = {
   userId: number;
@@ -13,4 +13,4 @@ type MessageType = {
   userData: UserDataType;
 };
 
-export { ChatType, UserDataType, MessageType };
+export { ChatsType, UserDataType, MessageType };
