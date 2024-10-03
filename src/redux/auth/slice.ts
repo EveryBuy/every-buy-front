@@ -1,11 +1,16 @@
 "use client";
 
+import { createSlice } from "@reduxjs/toolkit";
 import {
-  createSlice,
-} from "@reduxjs/toolkit";
-import { register, login, logout, refreshUser, deleteUser, changePassword } from "./operations";
+  register,
+  login,
+  logout,
+  refreshUser,
+  deleteUser,
+  changePassword,
+} from "./operations";
 import { AuthState } from "@/types/stateType";
-import toast from 'react-hot-toast';
+import toast from "react-hot-toast";
 
 const initialState: AuthState = {
   user: {
@@ -19,9 +24,10 @@ const initialState: AuthState = {
   isLoggedIn: false,
 };
 
-const authSlice = createSlice<CreateSlice>({
+const authSlice = createSlice({
   name: "auth",
   initialState,
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(register.rejected, (state, action) => {
@@ -45,7 +51,6 @@ const authSlice = createSlice<CreateSlice>({
         state.token = payload.token;
         state.isLoggedIn = true;
         console.log(state.user);
-
       })
       .addCase(logout.rejected, (state, action) => {
         state.isLoggedIn = false;
@@ -71,20 +76,24 @@ const authSlice = createSlice<CreateSlice>({
         state.token = payload.token;
         state.isLoggedIn = true;
       })
-    .addCase(deleteUser.rejected, (state) => {
-        toast.error('Something went wrong! Try again late.')
+      .addCase(deleteUser.rejected, (state) => {
+        toast.error("Something went wrong! Try again late.");
+        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // @ts-ignore: Ignore type error for the Backdrop component
         state.isDeleted = false;
       })
       .addCase(deleteUser.fulfilled, (state, { payload }) => {
+        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // @ts-ignore: Ignore type error for the Backdrop component
         state.isDeleted = true;
-        toast.success(payload.data.message)
+        toast.success(payload.data.message);
       })
       .addCase(changePassword.rejected, (state, { payload }) => {
-        toast.error('Password not changed!');
+        toast.error("Password not changed!");
       })
       .addCase(changePassword.fulfilled, (state, { payload }) => {
         state.token = payload.token;
-        toast.success('Password successful changed!')
+        toast.success("Password successful changed!");
       });
   },
 });

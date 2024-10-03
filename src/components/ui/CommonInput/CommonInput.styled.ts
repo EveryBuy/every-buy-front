@@ -19,7 +19,7 @@ export const InputContainer = styled.div`
   flex-direction: column;
   align-items: flex-start;
   gap: 4px;
-  max-width: 420px;
+  /* max-width: 420px; */
 `;
 
 export const Input = styled.input`

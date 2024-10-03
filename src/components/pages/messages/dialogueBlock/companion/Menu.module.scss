@@ -1,0 +1,59 @@
+@import "@/styles/mixins";
+@import "@/styles/breakpoints";
+
+.menuWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 215px;
+  background-color: var(--background);
+  border: 1px solid var(--input-text);
+  // border-radius: 10px;
+  position: absolute;
+  top: 60px;
+  right: -30px;
+  // right: 0;
+  z-index: 1;
+  padding: 6px 10px;
+
+  & li {
+    padding: 6px 0px;
+    // border-bottom: 1px solid #9d9d9d;
+  }
+
+  & li:last-child {
+    border-bottom: none;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: -20px;
+    right: 17px;
+    width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 20px solid var(--input-text);
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: -19px;
+    right: 19px;
+    width: 0;
+    height: 0;
+    border-left: 13px solid transparent;
+    border-right: 13px solid transparent;
+    border-bottom: 19px solid var(--background);
+  }
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  & svg {
+    margin-right: 12px;
+  }
+}

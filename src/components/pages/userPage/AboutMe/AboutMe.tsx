@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
 import { selectUser } from "@/redux/auth/selectors";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import styles from "./AboutMe.module.scss";
@@ -20,6 +20,10 @@ const AboutMe: FC = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const [isOpenChangePass, setIsOpenChangePass] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const handleClick = () => {
     router.replace("/user/");
@@ -33,6 +37,10 @@ const AboutMe: FC = () => {
   // const handleClose = () => {
   //   setIsOpenCangePass(false)
   // }
+
+  if (!user || !isClient) {
+    return <p>Завантаження...</p>;
+  }
 
   return (
     <div className={styles.box}>
@@ -69,7 +77,7 @@ const AboutMe: FC = () => {
             </li>
             <li className={styles.listItem}>
               <p className="listItemText">Телефон</p>
-              {user.phone}
+              {`+380${user.phone}` || ""}
               <Image
                 className={styles.pencil}
                 src={pencil}
@@ -80,7 +88,7 @@ const AboutMe: FC = () => {
             </li>
             <li className={styles.listItem}>
               <p className="listItemText">E-mail</p>
-              {user.email}
+              {user.email || ""}
               <Image
                 className={styles.pencil}
                 src={pencil}
@@ -96,7 +104,9 @@ const AboutMe: FC = () => {
               className={styles.changePassBtn}
               onClick={handleChangePass}
             />
-            {isOpenChangePass && <ChangePassword onClose={setIsOpenChangePass} />}
+            {isOpenChangePass && (
+              <ChangePassword onClose={setIsOpenChangePass} />
+            )}
           </ul>
           <div className={styles.deleteBox}>
             <p>Небезпечна зона</p>
