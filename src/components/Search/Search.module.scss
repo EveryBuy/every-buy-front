@@ -1,86 +1,97 @@
 @import "../../styles/mixins";
 @import "../../styles/breakpoints";
 
-
-.searchContainer{
- display: flex;
- justify-content: center;
- width: 100%;
- padding: 0 10%;
+.searchContainer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 0 10%;
 }
 
-.searchForm{
- display: flex;
- justify-content: center;
- align-items: center;
- width: 100%;
- max-width: 1024px;
+.searchForm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 1024px;
 }
 
 .searchInputWrapper {
- display: flex;
- align-items: center;
- flex-grow: 1;
- margin-right: 10px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  margin-right: 10px;
+  @include media-max($breakpoint-mobile) {
+    margin-right: 0;
+  }
 }
 
 .searchInput {
- width: 100%;
- padding: 10px;
- font-size: 1rem;
- border: 1px solid #E5FF46;
- border-radius: 10px;
- transition: all 0.3s ease;
- @include media-min($breakpoint-mobile){
- border: none;
- background-color: #B4B4B4;
- color: #FFFFFF;
- padding: 10px;
-}
-@include media-min($breakpoint-tablet){
- padding: 15px;
-}
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #e5ff46;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  @include media-min($breakpoint-mobile) {
+    border: none;
+    background-color: #b4b4b4;
+    color: #ffffff;
+    padding: 10px;
+  }
+  @include media-min($breakpoint-tablet) {
+    padding: 15px;
+  }
 }
 .searchInput::placeholder {
- @include media-min($breakpoint-mobile) {
- color: #fff;
- font-size: 16px;
- }
- @include media-min($breakpoint-tablet) {
- font-size: 18px;
- }
+  @include media-min($breakpoint-mobile) {
+    color: #fff;
+    font-size: 16px;
+  }
+  @include media-min($breakpoint-tablet) {
+    font-size: 18px;
+  }
 }
 
 .searchButton {
- padding: 5px 15px;
- background-color: #E5FF46;
- border: 1px solid #E5FF46;
- border-radius: 10px;
- display: flex;
- justify-content: center;
- align-items: center;
- transition: all 0.3s ease;
+  padding: 7px 10px;
+  background-color: #e5ff46;
+  border: 1px solid #e5ff46;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
 
- @include media-min($breakpoint-mobile){
- background-color: #FFFFFF;
- border: 1px solid #000000;
- padding: 10px 15px;
- &::before {
-    content: "Знайти";
-   }
- }
- @include media-min($breakpoint-tablet) {
-  padding: 14px 20px;
- }
-
+  @include media-min($breakpoint-mobile) {
+    background-color: #ffffff;
+    border: 1px solid #000000;
+    padding: 10px 15px;
+    &::before {
+      content: "Знайти";
+    }
+  }
+  @include media-min($breakpoint-tablet) {
+    padding: 14px 40px;
+  }
 }
 
-@include media-min($breakpoint-mobile){
- .searchButtonIcon{
-  display: none;
- }
+.searchButtonIcon {
+  position: relative;
+  left: -5px;
 }
 
-.searchInputIcon{
- display: none;
+@include media-min($breakpoint-mobile) {
+  .searchButtonIcon {
+    display: none;
+  }
+}
+
+.searchInputIcon {
+  position: absolute;
+  right: 1%;
+  @media (max-width: 480px) {
+    display: none;
+  }
 }

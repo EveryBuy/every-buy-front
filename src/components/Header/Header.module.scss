@@ -12,15 +12,6 @@
 //   }
 // }
 
-// .addAdvertisingContainer {
-//   display: none;
-//   @include media-min($breakpoint-tablet) {
-//     background-color: #b4b4b4;
-//     display: flex;
-//     gap: 10px;
-//   }
-// }
-
 .headerTag {
   display: flex;
   flex-direction: column;
@@ -28,7 +19,7 @@
   font-size: var(--f-size-small);
   background: #b4b4b4;
   border-bottom: 2px solid #000000;
-  margin-bottom: 28px;
+  margin-bottom: 40px;
 
   @media (max-width: 480px) {
     border-bottom: none;
@@ -59,8 +50,10 @@
 }
 
 .addAdvertisingContainer {
+  background-color: #b4b4b4;
   display: flex;
   align-items: center;
+  gap: 10px;
 
   @media (max-width: 480px) {
     display: none;
@@ -68,20 +61,25 @@
 }
 
 .headerButton {
-  display: none;
   border-radius: 10px;
-  padding: 25px 45px;
+  padding: 28px 55px;
   height: 39px;
-  margin-right: 32px;
-  font-size: 16px;
+  margin-right: 50px;
+  font-size: 20px;
+  color: #6735f4;
+  @media (max-width: 480) {
+    font-size: 16px;
+    padding: 12px 20px;
+  }
 }
 
-.hidden {
-  display: none;
-}
 .registerContainer {
   display: flex;
   align-items: center;
   gap: 10px;
   margin-left: 16px;
+}
+
+.iconDropdown {
+  position: relative;
 }
