@@ -1,4 +1,4 @@
-import ApiResponse from "@/types/apiResponseType";
+// import ApiResponse from "@/types/apiResponseType";
 import CategoryItem from "@/types/categoryItemType";
 
 export const fetchCategoryData = async (): Promise<CategoryItem[]> => {
@@ -7,6 +7,6 @@ export const fetchCategoryData = async (): Promise<CategoryItem[]> => {
   if (!response.ok) {
     throw new Error("Network response was not ok");
   }
-  const result: ApiResponse = await response.json();
+  const result = await response.json();
   return result;
 };

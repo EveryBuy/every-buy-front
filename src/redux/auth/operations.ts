@@ -1,7 +1,7 @@
 import { AuthState, UserLogData, UserRegisterData } from "@/types/stateType";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
- 
+
 const API = axios.create({
   baseURL: "https://api-everybuy.onrender.com",
 });
@@ -13,7 +13,6 @@ const setHeaderAuthToken = (token: string | null) => {
 const clearHeaderAuthToken = () => {
   delete API.defaults.headers.common["Authorization"];
 };
-
 
 export const register = createAsyncThunk(
   "auth/register",
@@ -39,13 +38,14 @@ export const login = createAsyncThunk(
       const userData = await API.get("/user");
       return { data: userData.data.data, token: data.data.token };
     } catch (error) {
+      console.log(error);
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
 
 export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
-  try {  
+  try {
     // await API.get("/auth/validate");
     clearHeaderAuthToken();
   } catch (error) {
@@ -111,4 +111,4 @@ export const changePassword = createAsyncThunk(
       return thunkAPI.rejectWithValue(error.message);
     }
   }
-)
+);

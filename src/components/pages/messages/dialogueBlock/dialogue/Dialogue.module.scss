@@ -1,0 +1,101 @@
+.blockWrapper {
+  position: relative;
+  border-top: 1px solid var(--border);
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 516px;
+}
+
+.dateWrapper {
+  position: absolute;
+  width: 100%;
+  // height: 1px;
+  display: flex;
+  justify-content: center;
+  left: 0;
+  top: -14px;
+}
+
+.date {
+  text-align: center;
+  width: 145px;
+  background-color: var(--main-background);
+  font-size: var(--large-body-medium);
+}
+
+.noticeWrapper {
+  width: 263px;
+  height: 263px;
+  padding: 32px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 25px;
+  border: 1px solid var(--border);
+  position: absolute;
+  // top: 50%;
+  left: 50%;
+  transform: translate(-50%, 35%);
+
+  & p {
+    text-align: center;
+  }
+}
+
+.inputBlockWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 0px 20px;
+  & label::after {
+    content: "";
+  }
+
+  & .input {
+    width: 100%;
+    border: none;
+  }
+  & .input::placeholder {
+    color: #9d9d9d;
+  }
+}
+
+.inputWrapper {
+  width: 92%;
+  & div {
+    gap: 0px;
+  }
+}
+
+.inputIconsWrapper {
+  width: 8%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: 20px;
+}
+
+.iconPic {
+  width: 23px;
+  height: 18px;
+}
+.iconClip {
+  width: 22px;
+  height: 22px;
+}
+
+.sendIconWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.iconSend {
+  width: 24px;
+  height: 24px;
+}
