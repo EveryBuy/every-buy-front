@@ -9,9 +9,9 @@ import {
 const FooterMobile: FC = () => {
   return (
     <FooterContainerMobile>
-      {footerItems.map(({ id, alt, text }) => (
+      {footerItems.map(({ id, alt, text, link }) => (
         <MobilePaginationItem key={text}>
-          <Item id={id} alt={alt} text={text} />
+          <Item id={id} alt={alt} text={text} link={link} />
         </MobilePaginationItem>
       ))}
     </FooterContainerMobile>

@@ -18,6 +18,7 @@ import Image from "next/image";
 import { register } from "@/redux/auth/operations";
 import { selectIsLoggedIn } from "@/redux/auth/selectors";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { validatePhone, validateEmail, validatePassword } from "@/utils/validate";
 
 type ErrorsType = {
   phone: string;
@@ -47,22 +48,6 @@ const Register: React.FC = () => {
   useEffect(() => {
     isLoggedIn && router.push("/user");
   }, [isLoggedIn]);
-
-  const validatePhone = (phone: string) => {
-    const phoneRegex = /^\+?[0-9]{9,15}$/;
-    return phoneRegex.test(phone);
-  };
-
-  const validateEmail = (email: string) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
-
-  const validatePassword = (password: string) => {
-    const passwordRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[~`!@#$%^&*()_\-+={[}\]|\\:;"'<,>.?/]).{8,}$/;
-    return passwordRegex.test(password);
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

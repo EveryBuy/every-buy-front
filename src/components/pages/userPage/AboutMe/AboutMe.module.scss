@@ -1,0 +1,137 @@
+@import "../../../../styles/mixins";
+@import "../../../../styles/breakpoints";
+
+.box {
+  width: 100%;
+  height: auto;
+  position: relative;
+}
+
+.arrowBackBtn {
+  position: absolute;
+  top: -10%;
+  left: 0;
+  @include media-min($breakpoint-tablet) {
+    display: none;
+  }
+}
+.headline {
+  font-size: var(--f-size-h3);
+    margin-bottom: 38px;
+
+  @include media-min($breakpoint-tablet) {
+    margin-bottom: 20px;
+  }
+  @include media-min($breakpoint-laptop) {
+    margin-bottom: 66px;
+  }
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 33px;
+
+  @include media-min($breakpoint-laptop) {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    gap: 300px;
+  }
+}
+
+.userImageBox {
+  font-size: 14px;
+  @include media-min($breakpoint-laptop) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.editText {
+  color: #6735F4
+}
+
+.listBox {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  @include media-min($breakpoint-laptop) {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+  }
+}
+
+.listItemName {
+  display: flex;
+    justify-content: space-between;
+  font-size: var(--f-size-h3);
+  font-weight: 700;
+}
+
+.listItem {
+  display: flex;
+  justify-content: space-between;
+  font-size: 20px;
+  font-weight: 400;
+  @include media-min($breakpoint-laptop) {
+    width: 427px;
+  }
+}
+
+.userImage {
+  width: 142px;
+  height: 142px;
+
+  @include media-min($breakpoint-tablet) {
+    width: 258px;
+    height: 258px;
+    margin-bottom: 20px;
+  }
+}
+
+.changePassBtn {
+  width: 186px;
+  height: 44px;
+  border-radius: 10px;
+  align-self: flex-end;
+  
+  @include media-min($breakpoint-tablet) {
+    width: 214px;
+    height: 48px;
+    border-radius: 10px;
+    align-self: flex-start;
+    // margin-bottom: 20px;
+  }
+}
+
+.deleteBox {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.deleteLink {
+  color: #FF5656;
+}
+
+.editSvg {
+  width: 26px;
+  height: 26px;
+}
+
+.separeteLine {
+  width: 335px;
+  fill: #9D9D9D;
+  @include media-min($breakpoint-tablet) {
+  width: 427px;
+  }
+}

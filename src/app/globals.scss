@@ -51,10 +51,15 @@ body {
   padding-bottom: 30px;
   font-size: var(--f-size-h4);
   @include media-min($breakpoint-tablet) {
-    ppadding: 60px 0px 50px;
+    padding: 60px 0px 50px;
     font-size: 40px;
     font-weight: 700;
   }
+    @include media-min($breakpoint-laptop) {
+      padding: 60px 0px 50px;
+      font-size: 40px;
+      font-weight: 700;
+    }
 }
 
 //styles for slider
@@ -67,7 +72,7 @@ body {
 }
 
 .profileSectionWrapper {
-  display: none;
+  // display: none;
   @include media-min($breakpoint-tablet) {
     display: flex;
     padding-left: 110px;

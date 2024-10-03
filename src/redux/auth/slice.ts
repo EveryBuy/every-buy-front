@@ -3,8 +3,9 @@
 import {
   createSlice,
 } from "@reduxjs/toolkit";
-import { register, login, logout, refreshUser } from "./operations";
+import { register, login, logout, refreshUser, deleteUser, changePassword } from "./operations";
 import { AuthState } from "@/types/stateType";
+import toast from 'react-hot-toast';
 
 const initialState: AuthState = {
   user: {
@@ -43,6 +44,8 @@ const authSlice = createSlice<CreateSlice>({
         state.user = payload.data;
         state.token = payload.token;
         state.isLoggedIn = true;
+        console.log(state.user);
+
       })
       .addCase(logout.rejected, (state, action) => {
         state.isLoggedIn = false;
@@ -64,10 +67,24 @@ const authSlice = createSlice<CreateSlice>({
         state.token = null;
       })
       .addCase(refreshUser.fulfilled, (state, { payload }) => {
-        console.log(payload);
         state.user = payload.data;
         state.token = payload.token;
         state.isLoggedIn = true;
+      })
+    .addCase(deleteUser.rejected, (state) => {
+        toast.error('Something went wrong! Try again late.')
+        state.isDeleted = false;
+      })
+      .addCase(deleteUser.fulfilled, (state, { payload }) => {
+        state.isDeleted = true;
+        toast.success(payload.data.message)
+      })
+      .addCase(changePassword.rejected, (state, { payload }) => {
+        toast.error('Password not changed!');
+      })
+      .addCase(changePassword.fulfilled, (state, { payload }) => {
+        state.token = payload.token;
+        toast.success('Password successful changed!')
       });
   },
 });

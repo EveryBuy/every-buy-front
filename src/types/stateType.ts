@@ -22,3 +22,7 @@ export type UserLogData = {
         login: string,
         password: string
 }
+
+export type UserDeleteData = {
+  
+}
