@@ -5,7 +5,6 @@
 display: flex;
 justify-content: center;
 flex-direction: column;
-margin: 5%;
 }
 
 .titleContainer{
@@ -57,7 +56,7 @@ cursor: pointer;
 .wrapperHiddenText{
  display: flex;
  justify-content: end;
- margin: 10px 0 20px 0;
+ margin: 25px 0 20px 0;
 }
 
 .hiddenText{
@@ -97,14 +96,11 @@ cursor: pointer;
 }
 
 
-
-
 .list {
  display: flex;
- /* max-width: 1320px; */
  gap: 19px 31px;
  flex-wrap: wrap;
- justify-content: center;
+ justify-content: space-between;
 
  @media (max-width: 600px) {
   scrollbar-width: none;

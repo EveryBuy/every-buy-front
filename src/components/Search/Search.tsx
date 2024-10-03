@@ -9,7 +9,7 @@ const Search: FC = () => {
         <div className={styles.searchInputWrapper}>
           <input
             className={styles.searchInput}
-            placeholder="Що шукаєте ?"
+            placeholder="Що шукаєте?"
           />
           <CommonIcon
             id="icon-search"
@@ -26,8 +26,8 @@ const Search: FC = () => {
         >
           <CommonIcon
             id="icon-search"
-            width="20"
-            height="20"
+            width="25"
+            height="25"
             className={styles.searchButtonIcon}
           />
         </CommonButton>

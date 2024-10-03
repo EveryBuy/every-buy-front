@@ -10,7 +10,7 @@ const Footer: FC = () => {
    <div className={styles.footerTag}>
     <div className={styles.footerContainer}>
      <div className={styles.wrapperLogo}>
-      <Image priority src={Logo} alt="Logo" width={104} height={77} />
+      <Image className={styles.logo} priority src={Logo} alt="Logo" width={104} height={77} />
       <div className={styles.contactContainer}>
         <a href="tel:+380(63)0000000" className={styles.contactText}>+380(63)0000000</a>
        <a href="mailto:EveryBuymarket@gmail.com" className={styles.contactText}>EveryBuymarket@gmail.com</a>

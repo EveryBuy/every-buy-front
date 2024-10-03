@@ -7,7 +7,7 @@ const Item: FC<ItemType> = ({ id, text }) => {
   return (
    <button className={styles.mobilePaginationButton}>
       <CommonIcon id={id} width="22" height="22" />
-      <span>{text}</span>
+      <span className={styles.buttonTextModile} >{text}</span>
     </button>
   );
 };

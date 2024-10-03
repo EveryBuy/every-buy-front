@@ -8,7 +8,7 @@ const CommonIcon: FC<CommonIconProps> = ({ id, className, width, height }) => {
       className={`${styles.icon} ${className}`}
       width={width}
       height={height}
-      style={{ margin: '5px' }}
+      style={{ marginLeft: '12px' }}
     >
       <use href={`/icons.svg#${id}`} />
     </svg>

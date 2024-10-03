@@ -43,8 +43,8 @@ const Header: FC = () => {
       />
       <CommonIcon id="icon-chat" width="20" height="20" />
       <CommonIcon id="icon-heart" width="20" height="20" />
-      <CommonIcon id="icon-user" width="20" height="20" />
-      <CommonIcon id="arrow-header" width="20" height="20" />
+      <CommonIcon id="icon-user" width="20" height="20"/>
+      <CommonIcon id="arrow-header" width="17" height="17" />
      </div>
       </div>
     </header>
