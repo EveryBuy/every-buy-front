@@ -46,7 +46,6 @@ export const makeStore = () => {
   return configureStore({
     reducer: {
       auth: persistedAuthReducer,
-      // ui: persistedUiReducer,
       // products: productsReducer,
       // filters: filtersReducer,
     },
