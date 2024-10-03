@@ -7,49 +7,64 @@ import styles from "./Footer.module.scss";
 
 const Footer: FC = () => {
   return (
-   <div className={styles.footerTag}>
-    <div className={styles.footerContainer}>
-     <div className={styles.wrapperLogo}>
-      <Image priority src={Logo} alt="Logo" width={104} height={77} />
-      <div className={styles.contactContainer}>
-        <a href="tel:+380(63)0000000" className={styles.contactText}>+380(63)0000000</a>
-       <a href="mailto:EveryBuymarket@gmail.com" className={styles.contactText}>EveryBuymarket@gmail.com</a>
-       </div>
-     </div>
-     <div className={styles.wrapperSearch}>
-      <p className={styles.footerText}> Бажаєте отримувати <br className={styles.hidenn}/> повідомлення про новинки?</p>
-      <div className={styles.wrapperContent}>
-       <div className={styles.mailWrapper}>
-        <input type="text" placeholder="Введіть свій e-mail" className={styles.emailInput}/>
-           <CommonButton
-             type="button"
-             title="Підписатись"
-             color="yellow"
-             className={styles.buttonSubscribe}
-               />
-       </div>
-       <div className={styles.sochial}>
-         <CommonIcon
-         id="facebook-footer"
-           width="40"
-           height="40"
-           className={styles.facebookIcon}
-         />
-         <CommonIcon
-         id="instagram-footer"
-           width="40"
-           height="40"
-           className={styles.instagramIcon}
-         />
-       </div>
+    <footer className={`${styles.footerTag}`}>
+      <div className={styles.footerContainer}>
+        <div className={styles.wrapperLogo}>
+          <Image priority src={Logo} alt="Logo" width={104} height={77} />
+          <div className={styles.contactContainer}>
+            <a href="tel:+380(63)0000000" className={styles.contactText}>
+              +380(63)0000000
+            </a>
+            <a
+              href="mailto:EveryBuymarket@gmail.com"
+              className={styles.contactText}
+            >
+              EveryBuymarket@gmail.com
+            </a>
+          </div>
+        </div>
+        <div className={styles.wrapperSearch}>
+          <p className={styles.footerText}>
+            {" "}
+            Бажаєте отримувати <br className={styles.hidenn} /> повідомлення про
+            новинки?
+          </p>
+          <div className={styles.wrapperContent}>
+            <div className={styles.mailWrapper}>
+              <input
+                type="text"
+                placeholder="Введіть свій e-mail"
+                className={styles.emailInput}
+              />
+              <CommonButton
+                type="button"
+                title="Підписатись"
+                color="yellow"
+                className={styles.buttonSubscribe}
+              />
+            </div>
+            <div className={styles.sochial}>
+              <CommonIcon
+                id="facebook-footer"
+                width="40"
+                height="40"
+                className={styles.facebookIcon}
+              />
+              <CommonIcon
+                id="instagram-footer"
+                width="40"
+                height="40"
+                className={styles.instagramIcon}
+              />
+            </div>
+          </div>
+        </div>
       </div>
-     </div>
-    </div>
-    <div className={styles.marketPlace}>
-       <p className={styles.marketPlaceText}>Маркетплейс EveryBuy 2024</p>
+      <div className={styles.marketPlace}>
+        <p className={styles.marketPlaceText}>Маркетплейс EveryBuy 2024</p>
       </div>
-      <FooterMobile/>
-   </div>
+      <FooterMobile />
+    </footer>
   );
 };
 

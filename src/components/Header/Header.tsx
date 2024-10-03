@@ -35,7 +35,7 @@ const Header: FC = () => {
   }, []);
 
   return (
-    <header className={styles.headerTag}>
+    <header className={`${styles.headerTag}`}>
       <div className={styles.headerContainer}>
         <Link href="/">
           <Image priority src={Logo} alt="Logo" width={104} height={77} />

@@ -1,183 +1,180 @@
 @import "../../styles/breakpoints";
 @import "../../styles/mixins";
 
-.sectionContainer{
-display: flex;
-justify-content: center;
-flex-direction: column;
-margin: 5%;
+.sectionContainer {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin: 5%;
 }
 
-.titleContainer{
- display: flex;
- justify-content: space-between;
+.titleContainer {
+  display: flex;
+  justify-content: space-between;
 }
 
-.title{
-font-weight: 400;
-font-size: 20px;
- &::before {
-   content: "Категорії";
+.title {
+  font-weight: 400;
+  font-size: 20px;
+  &::before {
+    content: "Категорії";
   }
-    @include media-min($breakpoint-mobile){
-     &::before {
-       content: "Розподіл на категорії";
-      }
+  @include media-min($breakpoint-mobile) {
+    &::before {
+      content: "Розподіл на категорії";
     }
+  }
 }
 
-.buttonsContainer{
- display: flex;
- justify-content: space-between;
- gap: 10px;
+.buttonsContainer {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
 }
 
-.buyButton{
-font-weight: 400;
-font-size: 16px;
-border-bottom: 2px solid #9D9D9D;
-cursor: pointer;
+.buyButton {
+  font-weight: 400;
+  font-size: 16px;
+  border-bottom: 2px solid #9d9d9d;
+  cursor: pointer;
 }
 
-.buyButton:hover{
- border-bottom: 2px solid #E5FF46;
+.buyButton:hover {
+  border-bottom: 2px solid #e5ff46;
 }
 
-.sellButton{
- font-weight: 400;
- font-size: 16px;
- border-bottom: 2px solid #9D9D9D;
- cursor: pointer;
+.sellButton {
+  font-weight: 400;
+  font-size: 16px;
+  border-bottom: 2px solid #9d9d9d;
+  cursor: pointer;
 }
 
-.sellButton:hover{
- border-bottom: 2px solid #E5FF46;
+.sellButton:hover {
+  border-bottom: 2px solid #e5ff46;
 }
 
-.wrapperHiddenText{
- display: flex;
- justify-content: end;
- margin: 10px 0 20px 0;
+.wrapperHiddenText {
+  display: flex;
+  justify-content: flex-end;
+  margin: 10px 0 20px 0;
 }
 
-.hiddenText{
- @include media-min($breakpoint-mobile){
-  display: none;
- }
+.hiddenText {
+  @include media-min($breakpoint-mobile) {
+    display: none;
+  }
 }
 
-.textAvailable{
- display: flex;
- justify-content: center;
- margin-top: 10%;     
+.textAvailable {
+  display: flex;
+  justify-content: center;
+  margin-top: 10%;
 }
 
 .loading {
- width: 100%;
- padding: 160px 0 50px;
- display: flex;
- justify-content: center;
- align-items: center;
+  width: 100%;
+  padding: 160px 0 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
- @media (max-width: 600px) {
-  padding: 110px 0 50px;
- }
+  @media (max-width: 600px) {
+    padding: 110px 0 50px;
+  }
 }
 
 .error {
- width: 100%;
- padding: 160px 0 50px;
- display: flex;
- justify-content: center;
- align-items: center;
+  width: 100%;
+  padding: 160px 0 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
- @media (max-width: 600px) {
-  padding: 110px 0 50px;
- }
+  @media (max-width: 600px) {
+    padding: 110px 0 50px;
+  }
 }
 
-
-
-
 .list {
- display: flex;
- /* max-width: 1320px; */
- gap: 19px 31px;
- flex-wrap: wrap;
- justify-content: center;
+  display: flex;
+  /* max-width: 1320px; */
+  gap: 19px 31px;
+  flex-wrap: wrap;
+  justify-content: center;
 
- @media (max-width: 600px) {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+  @media (max-width: 600px) {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 
-  &::-webkit-scrollbar {
-   display: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
- }
 }
 
 .listItem {
- position: relative;
- width: 160px;
- height: 185px;
+  position: relative;
+  width: 160px;
+  height: 185px;
 
- @media (max-width: 600px) {
-  width: 97px;
-  height: 103px;
- }
+  @media (max-width: 600px) {
+    width: 97px;
+    height: 103px;
+  }
 }
 
 .foldImg {
- position: absolute;
- top: -5px;
- right: -5px;
- z-index: 1;
- width: 70px;
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  z-index: 1;
+  width: 70px;
 
- @media (max-width: 600px) {
-  height: 45px;
-  top: 0px;
-  right: -15px;
- }
+  @media (max-width: 600px) {
+    height: 45px;
+    top: 0px;
+    right: -15px;
+  }
 }
 
 .listItemWrapper {
- height: 100%;
- background-image: url("../../assets/icons/base.svg");
- background-repeat: no-repeat;
- background-size: cover;
- display: flex;
- flex-direction: column;
- justify-content: flex-start;
- align-items: center;
- row-gap: 8px;
- padding: 36px 0px 5px;
+  height: 100%;
+  background-image: url("../../assets/icons/base.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  row-gap: 8px;
+  padding: 36px 0px 5px;
 
- @media (max-width: 600px) {
-  width: 93px;
-  padding: 23px 0px 5px;
-  background-image: url("../../assets/icons/MobileBase.svg");
- }
+  @media (max-width: 600px) {
+    width: 93px;
+    padding: 23px 0px 5px;
+    background-image: url("../../assets/icons/MobileBase.svg");
+  }
 }
 
 .listItemImage {
- width: 98px;
- height: 98px;
- border-radius: 6px;
+  width: 98px;
+  height: 98px;
+  border-radius: 6px;
 
- @media (max-width: 600px) {
-  width: 59px;
-  height: 59px;
- }
+  @media (max-width: 600px) {
+    width: 59px;
+    height: 59px;
+  }
 }
 
 .listItemText {
- width: 100%;
- text-align: center;
+  width: 100%;
+  text-align: center;
 
- /* font-size: 16px; */
- @media (max-width: 600px) {
-  font-size: 10px;
-  padding: 0px 5px;
- }
+  /* font-size: 16px; */
+  @media (max-width: 600px) {
+    font-size: 10px;
+    padding: 0px 5px;
+  }
 }
