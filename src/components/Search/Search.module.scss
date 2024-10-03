@@ -1,109 +1,86 @@
 @import "../../styles/mixins";
 @import "../../styles/breakpoints";
 
-.searchContainer {
-  display: flex;
-  justify-content: center;
 
-  @include media-min($breakpoint-mobile + 1) {
-    padding-top: 26px;
-  }
-
-  @include media-min($breakpoint-tablet) {
-    padding-top: 41px;
-  }
+.searchContainer{
+ display: flex;
+ justify-content: center;
+ width: 100%;
+ padding: 0 10%;
 }
 
-.searchForm {
-  display: flex;
-
-  @include media-min($breakpoint-tablet) {
-    gap: 12px;
-  }
+.searchForm{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ width: 100%;
+ max-width: 1024px;
 }
 
 .searchInputWrapper {
-  position: relative;
+ display: flex;
+ align-items: center;
+ flex-grow: 1;
+ margin-right: 10px;
 }
 
 .searchInput {
-  border: 1px solid var(--button);
-  border-radius: 10px;
-  padding: 11px 8px;
-  // max-width: 275px;
-  width: 73vw;
-  height: 41px;
-  font-weight: 400;
-  font-size: 16px;
-  color: var(--input-text);
-  background: var(--background);
-  transition: border 0.25s, box-shadow 0.25s;
-
-  &:hover {
-    border: 1px solid var(--input-text);
-    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
-  }
-
-  &:focus {
-    border: 2px solid var(--accent);
-  }
-
-  @include media-min($breakpoint-tablet) {
-    padding: 20px 23px;
-    width: 60vw;
-    height: 60px;
-    background: var(--bg-header-footer);
-    border: none;
-  }
-
-  @include media-min($breakpoint-laptop) {
-    width: 873px;
-  }
+ width: 100%;
+ padding: 10px;
+ font-size: 1rem;
+ border: 1px solid #E5FF46;
+ border-radius: 10px;
+ transition: all 0.3s ease;
+ @include media-min($breakpoint-mobile){
+ border: none;
+ background-color: #B4B4B4;
+ color: #FFFFFF;
+ padding: 10px;
 }
-
-.searchInputIcon {
-  @extend .searchIcon;
-  display: none;
-
-  @include media-min($breakpoint-tablet) {
-    display: block;
-    top: 50%;
-    right: 23px;
-    transform: translateY(-50%);
-  }
+@include media-min($breakpoint-tablet){
+ padding: 15px;
+}
+}
+.searchInput::placeholder {
+ @include media-min($breakpoint-mobile) {
+ color: #fff;
+ font-size: 16px;
+ }
+ @include media-min($breakpoint-tablet) {
+ font-size: 18px;
+ }
 }
 
 .searchButton {
-  position: relative;
-  border-radius: 10px;
-  padding: 10px 20px;
-  width: 60px;
-  height: 41px;
+ padding: 5px 15px;
+ background-color: #E5FF46;
+ border: 1px solid #E5FF46;
+ border-radius: 10px;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ transition: all 0.3s ease;
 
-  @include media-min($breakpoint-tablet) {
-    position: static;
-    padding: 20px 40px;
-    min-width: 136px;
-    height: 59px;
-    background: var(--background);
+ @include media-min($breakpoint-mobile){
+ background-color: #FFFFFF;
+ border: 1px solid #000000;
+ padding: 10px 15px;
+ &::before {
+    content: "Знайти";
+   }
+ }
+ @include media-min($breakpoint-tablet) {
+  padding: 14px 20px;
+ }
 
-    &::before {
-      content: "Знайти";
-    }
-  }
 }
 
-.searchIcon {
-  position: absolute;
+@include media-min($breakpoint-mobile){
+ .searchButtonIcon{
+  display: none;
+ }
 }
 
-.searchButtonIcon {
-  @extend .searchIcon;
-  top: 50%;
-  left: 50%;
-  translate: -50% -50%;
-
-  @include media-min($breakpoint-tablet) {
-    display: none;
-  }
+.searchInputIcon{
+ display: none;
 }

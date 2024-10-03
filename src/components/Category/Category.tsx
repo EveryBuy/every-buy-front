@@ -1,27 +1,10 @@
 "use client";
-
-import React, { useState, useEffect } from "react";
-// import Image from "next/image";
-import Fold from "@/assets/Svg/fold.svg";
+import { useState, useEffect } from "react";
 import { fetchCategoryData } from "@/api/fetchCategoryData";
+import Image from "next/image";
+import Fold from "@/assets/Svg/fold.svg";
 import CategoryItem from "@/types/categoryItemType";
-import {
-  SectionContainer,
-  TitleContainer,
-  Title,
-  ButtonsContainer,
-  BuyButton,
-  SellButton,
-  List,
-  ListItem,
-  ListItemWrapper,
-  ListItemText,
-  ListItemImage,
-  FoldImg,
-  Loading,
-  Error,
-} from "./Category.styled";
-// import style from "./Category.module.scss";
+import styles from "./Category.module.scss";
 
 const Category: React.FC = () => {
   const [data, setData] = useState<CategoryItem[] | null>(null);
@@ -39,52 +22,59 @@ const Category: React.FC = () => {
       } finally {
         setLoading(false);
       }
+      
     };
 
     fetchData();
   }, []);
 
   if (loading) {
-    return <Loading>Loading...</Loading>;
+    return <div className={styles.loading}>Loading...</div>;
   }
 
   if (error) {
-    return <Error>Error: {error}</Error>;
+    return <div className={styles.error}>Error: {error}</div>;
   }
 
   return (
     <section>
-      <SectionContainer>
-        <TitleContainer>
-          <Title />
-          <ButtonsContainer>
-            <BuyButton>Куплю</BuyButton>
-            <SellButton>Продам</SellButton>
-          </ButtonsContainer>
-        </TitleContainer>
+      <div className={styles.sectionContainer}>
+        <div className={styles.titleContainer}>
+          <h2 className={styles.title}></h2>
+          <div className={styles.buttonsContainer}>
+            <div className={styles.buyButton}>Куплю</div>
+            <div className={styles.sellButton}>Продам</div>
+          </div>
+        </div>
+         <div className={styles.wrapperHiddenText}>
+          <h2 className={styles.hiddenText}>Дивитись усі</h2>
+         </div>
         {data && data.length > 0 ? (
-          <List>
+          <ul className={styles.list}>
             {data.map(({ id, nameUkr, photoUrl }) => (
-              <ListItem key={id}>
-                <FoldImg src={Fold} alt="Fold" />
-                <ListItemWrapper>
-                  <ListItemImage
+              <li className={styles.listItem} key={id}>
+                <Image className={styles.foldImg} src={Fold} alt="Fold" />
+                <div className={styles.listItemWrapper}>
+                  <Image
+                    className={styles.listItemImage}
                     src={photoUrl}
                     alt={nameUkr}
                     width={98}
                     height={98}
                     style={{ objectFit: "cover" }}
                   />
-                  <ListItemText>{nameUkr}</ListItemText>
-                </ListItemWrapper>
-              </ListItem>
+                  <p className={styles.listItemText}>{nameUkr}</p>
+                </div>
+              </li>
             ))}
-          </List>
+          </ul>
         ) : (
-          <p>No data available</p>
+          <p className={styles.textAvailable}>No data available</p>
         )}
-      </SectionContainer>
+      </div>
     </section>
+
+    
   );
 };
 

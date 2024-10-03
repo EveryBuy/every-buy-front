@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import EyePassword from "@/assets/Svg/EyePassword.svg";
 import EyeInvisibleFilled from "@/assets/Svg/EyeInvisibleFilled.svg";
 import CommonInput from "@/components/ui/CommonInput/CommonInput";
-import { Form, SubmitButton, TogglePasswordButton } from "./Login.styled";
+import styles from './Login.module.scss'
 import Image from "next/image";
 import { login } from "@/redux/auth/operations";
 import { selectIsLoggedIn } from "@/redux/auth/selectors";
@@ -54,7 +54,7 @@ const Login: React.FC = () => {
 
   return (
     <>
-      <Form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className={styles.form}>
         <CommonInput
           typeTitle="emailOrPhone"
           text="Телефон або e-mail"
@@ -75,25 +75,19 @@ const Login: React.FC = () => {
           setValue={(e) => setPassword(e.target.value)}
           placeholder="Введіть пароль"
         >
-          <TogglePasswordButton
+          <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            style={{
-              position: "absolute",
-              right: "0.5rem",
-              top: "50%",
-              transform: "translateY(-50%)",
-            }}
           >
             <Image
               src={showPassword ? EyePassword : EyeInvisibleFilled}
               alt="Toggle Password Visibility"
             />
-          </TogglePasswordButton>
+          </button>
         </CommonInput>
 
-        <SubmitButton type="submit">Увійти</SubmitButton>
-      </Form>
+        <button className={styles.submitButton} type="submit">Увійти</button>
+      </form>
     </>
   );
 };

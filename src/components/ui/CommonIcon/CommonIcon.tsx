@@ -18,6 +18,7 @@ const CommonIcon: FC<CommonIconProps> = ({
       width={width}
       height={height}
       onClick={onClick}
+      style={{ margin: "5px" }}
     >
       <use href={`/icons.svg#${id}`} />
     </svg>

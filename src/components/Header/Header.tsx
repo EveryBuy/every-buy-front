@@ -2,23 +2,13 @@
 
 import { useState, useEffect, useRef, FC } from "react";
 import Image from "next/image";
-import { CommonIcon, CommonButton } from "@/components";
-import { headerItems } from "@/mock-data/headerItems";
+import { CommonIcon, CommonButton, DropdownMenu } from "@/components";
 import Logo from "@/assets/Svg/logo.svg";
-import DropdownMenu from "./DropdownMenu";
-import {
-  HeaderContainer,
-  HeaderTag,
-  NavBar,
-  List,
-  AddAdvertisingContainer,
-  RegisterContainer,
-} from "./Header.styled";
 import styles from "./Header.module.scss";
 import Link from "next/link";
 import { useAppSelector } from "@/redux/store";
 import { selectIsLoggedIn } from "@/redux/auth/selectors";
-import clsx from "clsx";
+// import clsx from "clsx";
 
 const Header: FC = () => {
   const [isDropdownMenuVisiable, setDropdownMenuVisiable] = useState(false);
@@ -45,43 +35,38 @@ const Header: FC = () => {
   }, []);
 
   return (
-    <HeaderTag>
-      <NavBar>
-        <List>
-          {headerItems.map(({ text }) => (
-            <li key={text}>
-              <a href="">{text}</a>
-            </li>
-          ))}
-        </List>
-      </NavBar>
-      <HeaderContainer>
+    <header className={styles.headerTag}>
+      <div className={styles.headerContainer}>
         <Link href="/">
           <Image priority src={Logo} alt="Logo" width={104} height={77} />
         </Link>
-        <AddAdvertisingContainer>
+        <div className={styles.addAdvertisingContainer}>
           <CommonButton
             type="button"
             title="Додати оголошення"
-            color="light-yellow"
+            color="yellow"
             className={styles.headerButton}
           />
+          <CommonIcon id="icon-chat" width="20" height="20" />
           <CommonIcon id="icon-heart" width="20" height="20" />
-          <RegisterContainer ref={dropdownMenuRef}>
+          <Link
+            href="/user"
+            // className={clsx(isLoggedIn && styles.hidden)}
+          >
+            <CommonIcon id="icon-user" width="20" height="20" />
+          </Link>
+          <div ref={dropdownMenuRef}>
             <div onClick={dropdownMenuHandle}>
-              <CommonIcon id="icon-user" width="20" height="20" />
+              <CommonIcon id="arrow-header" width="20" height="20" />
             </div>
             <DropdownMenu
               status={isDropdownMenuVisiable}
               changeStatus={dropdownMenuHandle}
-              />
-            <Link href="/login"
-              // className={clsx(isLoggedIn && styles.hidden)}
-            >Вхід|Реєстрація</Link>
-          </RegisterContainer>
-        </AddAdvertisingContainer>
-      </HeaderContainer>
-    </HeaderTag>
+            />
+          </div>
+        </div>
+      </div>
+    </header>
   );
 };
 
