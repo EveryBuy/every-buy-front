@@ -43,15 +43,11 @@ export const getAllChats = createAsyncThunk(
     try {
       const state = thunkAPI.getState() as RootState;
       const token = state.auth.token;
-      console.log(state.auth.token);
-
       if (token) {
         setAuthToken(token);
         const chats: ResponseChatsType = await axios.get(
           "https://service-chat-t47s.onrender.com/chat/get-all-users-chats"
         );
-        console.log(chats);
-        console.log(chats.data);
 
         return chats.data;
       }
@@ -73,8 +69,6 @@ export const getAllMessagesById = createAsyncThunk(
         const chat: ResponseChatType = await axios.get(
           `https://service-chat-t47s.onrender.com/chat/${chatId}`
         );
-        console.log(chat);
-        console.log(chat.data.data.chatMessages);
 
         return chat.data.data.chatMessages;
       }

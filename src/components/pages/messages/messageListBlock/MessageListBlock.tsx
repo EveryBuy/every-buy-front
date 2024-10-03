@@ -49,8 +49,6 @@ const MessageListBlock: FC = () => {
   }, [dispatch]);
 
   if (!messages) {
-    console.log(messages);
-
     return "Завантажується";
   }
 

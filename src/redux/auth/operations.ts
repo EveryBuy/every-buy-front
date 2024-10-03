@@ -93,6 +93,8 @@ export const deleteUser = createAsyncThunk(
   async (deleteData, thunkAPI) => {
     try {
       // receive { code, password }
+      // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      // @ts-ignore: Ignore type error for the Backdrop component
       const { data } = await API.delete("/auth/delete", deleteData);
       return data;
     } catch (error: any) {

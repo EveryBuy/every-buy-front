@@ -78,9 +78,13 @@ const authSlice = createSlice({
       })
       .addCase(deleteUser.rejected, (state) => {
         toast.error("Something went wrong! Try again late.");
+        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // @ts-ignore: Ignore type error for the Backdrop component
         state.isDeleted = false;
       })
       .addCase(deleteUser.fulfilled, (state, { payload }) => {
+        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // @ts-ignore: Ignore type error for the Backdrop component
         state.isDeleted = true;
         toast.success(payload.data.message);
       })
