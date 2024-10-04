@@ -4,7 +4,8 @@
 .bannerBackground {
   font-family: var(--font-family);
   border-radius: 10px;
-  padding: 6px 10px 8px 10px;
+  // padding: 6px 10px 8px 10px;
+  padding: 9px 24px 16px;
   box-sizing: border-box;
 
   background-size: cover;
@@ -40,5 +41,8 @@
   @include media-min($breakpoint-tablet) {
     border-radius: 33px;
     // padding: 18px 32px;
+  }
+  @media (min-width: 1024px) {
+    padding: 18px 32px;
   }
 }

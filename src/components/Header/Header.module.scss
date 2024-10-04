@@ -19,11 +19,14 @@
   font-size: var(--f-size-small);
   background: #b4b4b4;
   border-bottom: 2px solid #000000;
-  margin-bottom: 40px;
+  margin-bottom: 28px;
 
   @media (max-width: 480px) {
     border-bottom: none;
     background: #fff;
+  }
+  @media (min-width: 1024px) {
+    margin-bottom: 40px;
   }
 }
 
@@ -53,23 +56,31 @@
   background-color: #b4b4b4;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 6px;
 
   @media (max-width: 480px) {
     display: none;
+  }
+  @media (min-width: 1024px) {
+    gap: 10px;
   }
 }
 
 .headerButton {
   border-radius: 10px;
-  padding: 28px 55px;
-  height: 39px;
-  margin-right: 50px;
-  font-size: 20px;
-  color: #6735f4;
+  padding: 12px 28px;
+  margin-right: 35px;
+  color: var(--label);
+  font-size: var(-body-text);
+
   @media (max-width: 480) {
     font-size: 16px;
     padding: 12px 20px;
+  }
+  @media (min-width: 1024px) {
+    padding: 28px 55px;
+    font-size: 20px;
+    margin-right: 50px;
   }
 }
 

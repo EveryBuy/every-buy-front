@@ -5,7 +5,11 @@
   display: flex;
   justify-content: center;
   width: 100%;
-  padding: 0 10%;
+  padding: 0 7%;
+
+  @media (min-width: 1024px) {
+    padding: 0 10%;
+  }
 }
 
 .searchForm {
@@ -41,9 +45,13 @@
     padding: 10px;
   }
   @include media-min($breakpoint-tablet) {
-    padding: 15px;
+    padding: 15.5px;
+  }
+  @media (min-width: 1024px) {
+    padding: 20px;
   }
 }
+
 .searchInput::placeholder {
   @include media-min($breakpoint-mobile) {
     color: #fff;
@@ -73,7 +81,10 @@
     }
   }
   @include media-min($breakpoint-tablet) {
-    padding: 14px 40px;
+    padding: 14px 31.5px;
+  }
+  @media (min-width: 1024px) {
+    padding: 18px 40px;
   }
 }
 
@@ -88,10 +99,20 @@
   }
 }
 
-.searchInputIcon {
+.searchInputIconWrapper {
   position: absolute;
   right: 1%;
+  display: flex;
+  align-items: center;
+  width: 28px;
+  height: 28px;
+  margin-right: 10px;
   @media (max-width: 480px) {
     display: none;
+  }
+
+  & svg {
+    width: 28px;
+    margin: 0px;
   }
 }

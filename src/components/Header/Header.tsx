@@ -53,7 +53,7 @@ const Header: FC = () => {
           </Link>
           <div ref={dropdownMenuRef} className={styles.iconDropdown}>
             <div onClick={dropdownMenuHandle}>
-              <CommonIcon id="arrow-header" width="20" height="20" />
+              <CommonIcon id="arrow-header" width="17" height="17" />
             </div>
             <DropdownMenu
               status={isDropdownMenuVisible}

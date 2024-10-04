@@ -3,11 +3,20 @@
   flex-direction: column;
   align-items: center;
   margin-top: 76px;
-  border-top: 5px solid #000000;
+  border-top: 3px solid #000000;
   background: #b4b4b4;
 
+  // @media (min-width: 1200px) {
+  //   margin-top: 183px;
+  // }
   @media (min-width: 1200px) {
-    margin-top: 49px;
+    margin-top: 183px;
+  }
+  @media (min-width: 320px) {
+    border-top: 2px solid #e5ff46;
+  }
+  @media (min-width: 481px) {
+    border-top: 3px solid #000000;
   }
 }
 
@@ -17,24 +26,24 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px 60px;
+  padding: 20px 40px 34px;
   flex-wrap: wrap;
 
-  @media (max-width: 1000px) {
-    gap: 10px;
-    padding: 10px 30px;
+  @media (min-width: 1024px) {
+    padding: 16px 60px 50px;
   }
 
-  @media (max-width: 646px) {
-    padding: 10px 10px;
-  }
+  // @media (max-width: 646px) {
+  //   padding: 10px 10px;
+  // }
 
-  @media (max-width: 480px) {
-    display: none;
-  }
+  // @media (max-width: 480px) {
+  //   display: none;
+  // }
 }
 
 .wrapperContent {
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -46,7 +55,7 @@
   }
 }
 
-.hidenn {
+.hidden {
   display: none;
   @media (max-width: 870px) {
     display: block;
@@ -63,27 +72,58 @@
   }
 }
 
-.footerText {
-  font-size: 19px;
-  margin-bottom: 20px;
-  @media (max-width: 870px) {
-    margin-left: 28%;
-    font-size: 16px;
+.wrapperSearch {
+  width: 62%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  @media (min-width: 1024px) {
+    display: block;
+    width: 635px;
   }
-  @media (max-width: 646px) {
-    margin-left: 15%;
-    font-size: 14px;
-    left: 30%;
+}
+
+.wrapperLogo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 150px;
+}
+
+.footerText {
+  font-size: var(--large-body-medium);
+  margin-bottom: 20px;
+  text-align: right;
+  width: 340px;
+
+  // @media (max-width: 870px) {
+  //   margin-left: 28%;
+  //   font-size: 16px;
+  // }
+  // @media (max-width: 646px) {
+  //   margin-left: 15%;
+  //   font-size: 14px;
+  //   left: 30%;
+  // }
+  @media (min-width: 1024px) {
+    width: 100%;
+    text-align: start;
+    font-size: var(--f-size-h4);
   }
 }
 
 .wrapperContent {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-end;
+  row-gap: 24px;
 
-  @media (max-width: 870px) {
-    display: block;
+  @media (min-width: 1024px) {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    row-gap: 0px;
   }
 }
 
@@ -100,61 +140,73 @@
 
 .mailWrapper {
   display: flex;
+  width: 100%;
+  @media (min-width: 1024px) {
+    width: auto;
+  }
 }
 
-.sochial {
+.social {
   display: flex;
   justify-content: space-between;
-  @media (max-width: 870px) {
-    display: block;
-    margin-top: 10px;
-    margin-left: 54%;
-  }
+  // @media (max-width: 870px) {
+  //   display: block;
+  //   margin-top: 10px;
+  //   margin-left: 58%;
+  // }
 }
 
 .emailInput {
   padding: 10px 0px 10px 10px;
-  width: 55%;
-  height: 41px;
-  border-radius: 10px;
+  width: 100%;
+  // width: 60%;
+  height: 43px;
+  border-radius: 10px 0px 0px 10px;
   border: 1px solid var(--not-active, #f5ffb6);
   background: var(--background, #fff);
 
-  @media (max-width: 1000px) {
-    padding: 0px;
-  }
+  // @media (max-width: 1000px) {
+  //   padding: 0px;
+  // }
 
-  @media (max-width: 646px) {
-    width: 50%;
-    height: 35px;
-    font-size: 12px;
+  // @media (max-width: 646px) {
+  //   width: 50%;
+  //   height: 35px;
+  //   font-size: 12px;
+  // }
+  @media (min-width: 1024px) {
+    width: 300px;
+    height: 55px;
   }
 }
 
 .buttonSubscribe {
-  border-radius: 10px;
-  padding: 10px 40px;
+  border-radius: 0px 10px 10px 0px;
+  padding: 20.5px 28px;
   height: 41px;
   font-size: 16px;
   position: relative;
-  top: 0;
-  right: 20px;
-
-  @media (max-width: 1000px) {
-    padding: 10px 20px;
-    right: 20px;
+  // top: 0;
+  // right: 14px;
+  @media (min-width: 1024px) {
+    padding: 26.5px 40px;
   }
 
-  @media (max-width: 870px) {
-    right: 17px;
-    padding: 10px 20px;
-  }
+  // @media (max-width: 1000px) {
+  //   padding: 10px 20px;
+  //   right: 20px;
+  // }
 
-  @media (max-width: 646px) {
-    right: 17px;
-    height: 35px;
-    font-size: 12px;
-  }
+  // @media (max-width: 870px) {
+  //   right: 17px;
+  //   padding: 10px 20px;
+  // }
+
+  // @media (max-width: 646px) {
+  //   right: 17px;
+  //   height: 35px;
+  //   font-size: 12px;
+  // }
 }
 
 .facebookIcon {

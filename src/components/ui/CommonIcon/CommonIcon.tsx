@@ -12,14 +12,7 @@ const CommonIcon: FC<CommonIconProps> = ({
 }) => {
   const style = `${styles.icon} ${className ? className : ""}`;
   return (
-    <svg
-      // className={`${styles.icon} ${className}`}
-      className={style}
-      width={width}
-      height={height}
-      onClick={onClick}
-      style={{ margin: "5px" }}
-    >
+    <svg className={style} width={width} height={height} onClick={onClick}>
       <use href={`/icons.svg#${id}`} />
     </svg>
   );

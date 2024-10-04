@@ -10,7 +10,14 @@ const Footer: FC = () => {
     <footer className={`${styles.footerTag}`}>
       <div className={styles.footerContainer}>
         <div className={styles.wrapperLogo}>
-          <Image priority src={Logo} alt="Logo" width={104} height={77} />
+          <Image
+            className={styles.logo}
+            priority
+            src={Logo}
+            alt="Logo"
+            width={104}
+            height={77}
+          />
           <div className={styles.contactContainer}>
             <a href="tel:+380(63)0000000" className={styles.contactText}>
               +380(63)0000000
@@ -26,7 +33,7 @@ const Footer: FC = () => {
         <div className={styles.wrapperSearch}>
           <p className={styles.footerText}>
             {" "}
-            Бажаєте отримувати <br className={styles.hidenn} /> повідомлення про
+            Бажаєте отримувати <br className={styles.hidden} /> повідомлення про
             новинки?
           </p>
           <div className={styles.wrapperContent}>
@@ -43,7 +50,7 @@ const Footer: FC = () => {
                 className={styles.buttonSubscribe}
               />
             </div>
-            <div className={styles.sochial}>
+            <div className={styles.social}>
               <CommonIcon
                 id="facebook-footer"
                 width="40"

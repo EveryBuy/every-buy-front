@@ -5,9 +5,18 @@
   position: relative;
   width: 100%;
   height: 20px;
-  display: inline-block;
+  // display: inline-block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 53px;
+  height: 34px;
 
-  @include media-min($breakpoint-tablet) {
+  // @include media-min($breakpoint-tablet) {
+  //   width: 68px;
+  //   height: 44px;
+  // }
+  @media (min-width: 1024px) {
     width: 68px;
     height: 44px;
   }
@@ -15,6 +24,7 @@
 
 .bannerIcon {
   fill: var(--not-active);
+  margin: 0;
 
   @include media-min($breakpoint-tablet) {
     width: 100%;
@@ -33,9 +43,9 @@
   translate: -50% -50%;
 
   font-weight: 400;
-  font-size: 6px;
+  font-size: 12px;
 
-  @include media-min($breakpoint-tablet) {
+  @media (min-width: 1024px) {
     font-size: 14px;
   }
 }
@@ -47,10 +57,13 @@
   color: var(--background);
 
   @include media-min($breakpoint-tablet) {
-    margin-top: 17px;
-
+    margin-top: 37px;
     font-weight: 400;
-    font-size: 28px;
+    font-size: 30px;
+  }
+  @media (min-width: 1024px) {
+    margin-top: 4px;
+    // font-size: 28px;
   }
 
   @include media-min($breakpoint-laptop) {
@@ -66,7 +79,9 @@
 
   @include media-min($breakpoint-tablet) {
     margin-top: 6px;
-
+    font-size: 12px;
+  }
+  @media (min-width: 1024px) {
     font-size: 16px;
   }
 }
@@ -93,11 +108,16 @@
 
   @include media-min($breakpoint-tablet) {
     margin-top: 10px;
-
     border-radius: 10px;
-    padding: 16px 40px;
-    height: 51px;
-
+    // padding: 12px 30px;
+    width: 113px;
+    height: 39px;
+    font-size: 12px;
+  }
+  @media (min-width: 1024px) {
+    // padding: 16px 40px;
     font-size: 16px;
+    height: 51px;
+    width: 147px;
   }
 }

@@ -22,7 +22,6 @@ const Category: React.FC = () => {
       } finally {
         setLoading(false);
       }
-      
     };
 
     fetchData();
@@ -37,7 +36,7 @@ const Category: React.FC = () => {
   }
 
   return (
-    <section>
+    <>
       <div className={styles.sectionContainer}>
         <div className={styles.titleContainer}>
           <h2 className={styles.title}></h2>
@@ -46,9 +45,9 @@ const Category: React.FC = () => {
             <div className={styles.sellButton}>Продам</div>
           </div>
         </div>
-         <div className={styles.wrapperHiddenText}>
+        <div className={styles.wrapperHiddenText}>
           <h2 className={styles.hiddenText}>Дивитись усі</h2>
-         </div>
+        </div>
         {data && data.length > 0 ? (
           <ul className={styles.list}>
             {data.map(({ id, nameUkr, photoUrl }) => (
@@ -72,9 +71,7 @@ const Category: React.FC = () => {
           <p className={styles.textAvailable}>No data available</p>
         )}
       </div>
-    </section>
-
-    
+    </>
   );
 };
 
