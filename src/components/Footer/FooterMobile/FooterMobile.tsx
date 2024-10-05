@@ -1,20 +1,17 @@
 import React, { FC } from "react";
 import { Item } from "@/components";
 import { footerItems } from "../../../mock-data/footerItems";
-import {
-  FooterContainerMobile,
-  MobilePaginationItem,
-} from "./FooterMobile.styled";
+import styles from "../Footer.module.scss";
 
 const FooterMobile: FC = () => {
   return (
-    <FooterContainerMobile>
+    <ul className={styles.footerContainerMobile}>
       {footerItems.map(({ id, alt, text, link }) => (
-        <MobilePaginationItem key={text}>
+        <li key={text}>
           <Item id={id} alt={alt} text={text} link={link} />
-        </MobilePaginationItem>
+        </li>
       ))}
-    </FooterContainerMobile>
+    </ul>
   );
 };
 
