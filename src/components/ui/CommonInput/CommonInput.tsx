@@ -2,7 +2,7 @@ import { FC, ReactNode, ChangeEvent } from "react";
 import styles from "./CommonInput.module.scss";
 
 type CommonInputProps = {
-  text: string;
+  text?: string;
   typeTitle: string;
   typeInput: boolean | string;
   value: string;
