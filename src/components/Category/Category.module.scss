@@ -1,0 +1,231 @@
+@import "../../styles/breakpoints";
+@import "../../styles/mixins";
+
+.sectionContainer {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin: 50px 20px 0px;
+  @media (min-width: 768px) {
+    margin: 100px 40px 0px;
+  }
+  @media (min-width: 1024px) {
+    margin: 100px 60px 0px;
+  }
+}
+
+.titleContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.title {
+  font-weight: 400;
+  font-size: var(--f-size-h4);
+  @media (min-width: 768px) {
+    font-size: var(--f-size-h3);
+  }
+  &::before {
+    content: "Категорії";
+  }
+  @include media-min($breakpoint-mobile) {
+    &::before {
+      content: "Розподіл на категорії";
+    }
+  }
+}
+
+.buttonsContainer {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  @media (min-width: 1024px) {
+    gap: 10px;
+  }
+}
+
+.buyButton {
+  font-weight: 400;
+  border-bottom: 2px solid #9d9d9d;
+  cursor: pointer;
+  @media (min-width: 768px) {
+    font-size: var(--f-size-h4);
+  }
+  @media (min-width: 1024px) {
+    font-size: var(--f-size-h3);
+  }
+}
+
+.buyButton:hover {
+  border-bottom: 2px solid #e5ff46;
+}
+
+.sellButton {
+  font-weight: 400;
+  border-bottom: 2px solid #9d9d9d;
+  cursor: pointer;
+  @media (min-width: 768px) {
+    font-size: var(--f-size-h4);
+  }
+  @media (min-width: 1024px) {
+    font-size: var(--f-size-h3);
+  }
+}
+
+.sellButton:hover {
+  border-bottom: 2px solid #e5ff46;
+}
+
+.wrapperHiddenText {
+  display: flex;
+  justify-content: flex-end;
+  margin: 25px 0 20px 0;
+  @include media-min($breakpoint-tablet) {
+    display: none;
+  }
+}
+
+.hiddenText {
+  font-size: 12px;
+  @include media-min($breakpoint-tablet) {
+    display: none;
+  }
+}
+
+.textAvailable {
+  display: flex;
+  justify-content: center;
+  margin-top: 10%;
+}
+
+.loading {
+  width: 100%;
+  padding: 160px 0 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media (max-width: 600px) {
+    padding: 110px 0 50px;
+  }
+}
+
+.error {
+  width: 100%;
+  padding: 160px 0 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media (max-width: 600px) {
+    padding: 110px 0 50px;
+  }
+}
+
+.list {
+  display: flex;
+  max-width: 1320px;
+  justify-content: flex-start;
+  column-gap: 8px;
+  flex-wrap: nowrap;
+  overflow-x: scroll;
+  @media (min-width: 768px) {
+    flex-wrap: wrap;
+    overflow-x: hidden;
+    gap: 12px 34px;
+    margin-top: 40px;
+  }
+  @media (min-width: 1024px) {
+    gap: 33px 33px;
+  }
+}
+.listAll {
+  max-width: 1320px;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+  overflow-x: hidden;
+  @media (min-width: 600px) {
+    justify-content: flex-start;
+  }
+}
+
+.listItem {
+  position: relative;
+  width: 75px;
+  height: 86px;
+  @media (min-width: 768px) {
+    width: 146px;
+    height: 169px;
+  }
+  @media (min-width: 1024px) {
+    width: 160px;
+    height: 185px;
+  }
+}
+
+.foldImg {
+  width: 30px;
+  position: absolute;
+  top: -24px;
+  right: -1px;
+  z-index: 1;
+  @media (min-width: 768px) {
+    width: 60px;
+    top: -10px;
+    right: -3px;
+  }
+  @media (min-width: 1024px) {
+    width: 70px;
+    top: -5px;
+    right: -5px;
+  }
+}
+
+.listItemWrapper {
+  width: 75px;
+  height: 100%;
+  padding: 23px 0px 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  row-gap: 3.75px;
+  background-image: url("../../assets/icons/MobileBase.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  @media (min-width: 768px) {
+    width: auto;
+    padding: 36px 0px 5px;
+    row-gap: 8px;
+    background-image: url("../../assets/icons/base.svg");
+  }
+}
+
+.listItemImage {
+  width: 46px;
+  height: 46px;
+  border-radius: 6px;
+  @media (min-width: 768px) {
+    width: 89.5px;
+    height: 89.5px;
+  }
+  @media (min-width: 1024px) {
+    width: 98px;
+    height: 98px;
+  }
+}
+
+.listItemText {
+  width: 100%;
+  text-align: center;
+  font-size: 8px;
+  @media (min-width: 768px) {
+    font-size: var(--body-mobile-text);
+  }
+  @media (min-width: 1024px) {
+    font-size: var(--body-text);
+  }
+}

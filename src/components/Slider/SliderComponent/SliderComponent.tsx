@@ -33,7 +33,7 @@ const SliderComponent: FC = () => {
       {
         breakpoint: 768,
         settings: {
-          dots: false,
+          dots: true,
           centerPadding: "16%",
         },
       },

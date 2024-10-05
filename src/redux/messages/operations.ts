@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-// import setAuthToken from "@/utils/setAuthToken";
+import setAuthToken from "@/utils/setAuthToken";
 import { ChatsType } from "@/types/messages/messages";
 import { RootState } from "@/redux/store";
 import axios from "axios";
@@ -28,14 +28,6 @@ interface ChatMessagesType {
   chatId: number;
   userPhotoUrl: null | string;
 }
-
-const setAuthToken = (token: string | null) => {
-  if (token) {
-    axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-  } else {
-    delete axios.defaults.headers.common["Authorization"];
-  }
-};
 
 export const getAllChats = createAsyncThunk(
   "/messages",

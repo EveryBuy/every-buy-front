@@ -1,5 +1,5 @@
 import { FC, ReactNode, ChangeEvent } from "react";
-import { Input, InputTitle, InputContainer } from "./CommonInput.styled";
+import styles from "./CommonInput.module.scss";
 
 type CommonInputProps = {
   text?: string;
@@ -7,9 +7,9 @@ type CommonInputProps = {
   typeInput: boolean | string;
   value: string;
   id?: string;
-  setValue?: (e: ChangeEvent<HTMLInputElement>) => void;
+  setValue: (e: ChangeEvent<HTMLInputElement>) => void;
   className?: string;
-  placeholder?: string;
+  placeholder: string;
   required?: boolean;
   children?: ReactNode;
   errorsMessage?: ReactNode;
@@ -21,29 +21,30 @@ const CommonInput: FC<CommonInputProps> = ({
   typeInput,
   value,
   setValue,
-  className,
   placeholder,
   required,
   children,
   errorsMessage,
 }) => {
   return (
-    <InputContainer>
-      <InputTitle htmlFor={typeTitle}>{text}</InputTitle>
-      <div style={{ position: "relative", width: "100%" }}>
-        <Input
+    <div className={styles.inputContainer}>
+      <label className={styles.inputTitle} htmlFor={typeTitle}>
+        {text}
+      </label>
+      <div style={{ position: "relative" }}>
+        <input
           type={typeInput ? "text" : "password"}
           id="password"
           value={value}
           onChange={setValue}
-          className={className}
+          className={styles.input}
           required={required}
           placeholder={placeholder}
         />
         {children}
       </div>
       {errorsMessage}
-    </InputContainer>
+    </div>
   );
 };
 

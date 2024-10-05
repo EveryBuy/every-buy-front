@@ -7,12 +7,9 @@ import EyeInvisibleFilled from "@/assets/Svg/EyeInvisibleFilled.svg";
 import FilledIconSrc from "@/assets/Svg/CircleFilled.svg";
 import ErrorIconSrc from "@/assets/Svg/CircleError.svg";
 import {
-  Form,
-  SubmitButton,
-  TogglePasswordButton,
-  ErrorMessage,
   ErrorIcon,
 } from "./Register.styled";
+import styles from './Register.module.scss'
 import CommonInput from "@/components/ui/CommonInput/CommonInput";
 import Image from "next/image";
 import { register } from "@/redux/auth/operations";
@@ -111,7 +108,7 @@ const Register: React.FC = () => {
 
   return (
     <>
-      <Form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className={styles.formRegister}>
         <CommonInput
           typeTitle="phone"
           text="Телефон"
@@ -139,7 +136,7 @@ const Register: React.FC = () => {
           className={getInputClass("email")}
           placeholder="Введіть email"
           errorsMessage={
-            errors.email && <ErrorMessage>{errors.email}</ErrorMessage>
+           errors.email && <span className={styles.errorMessage}>{errors.email}</span>
           }
         >
           {errors.email ? (
@@ -161,24 +158,19 @@ const Register: React.FC = () => {
           required={true}
           placeholder="Введіть пароль"
           errorsMessage={
-            errors.password && <ErrorMessage>{errors.password}</ErrorMessage>
+           errors.password && <span className={styles.errorMessage}>{errors.password}</span>
           }
         >
-          <TogglePasswordButton
+          <button
+       className={styles.togglePasswordButton}
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            style={{
-              position: "absolute",
-              right: "0.5rem",
-              top: "50%",
-              transform: "translateY(-50%)",
-            }}
           >
             <Image
               src={showPassword ? EyePassword : EyeInvisibleFilled}
               alt="Toggle Password Visibility"
             />
-          </TogglePasswordButton>
+          </button>
         </CommonInput>
 
         <CommonInput
@@ -192,28 +184,23 @@ const Register: React.FC = () => {
           placeholder="Введіть пароль ще раз"
           errorsMessage={
             errors.confirmPassword && (
-              <ErrorMessage>{errors.confirmPassword}</ErrorMessage>
+            <span className={styles.errorMessage}>{errors.confirmPassword}</span>
             )
           }
         >
-          <TogglePasswordButton
+          <button
+       className={styles.togglePasswordButton}
             type="button"
             onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-            style={{
-              position: "absolute",
-              right: "0.5rem",
-              top: "50%",
-              transform: "translateY(-50%)",
-            }}
           >
             <Image
               src={showConfirmPassword ? EyePassword : EyeInvisibleFilled}
               alt="Toggle Password Visibility"
             />
-          </TogglePasswordButton>
+          </button>
         </CommonInput>
-        <SubmitButton type="submit">Зареєструватися</SubmitButton>
-      </Form>
+     <button className={styles.submitButton} type="submit">Зареєструватися</button>
+      </form>
     </>
   );
 };

@@ -7,16 +7,16 @@ import { Menu } from "@/components";
 import style from "./Companion.module.scss";
 
 const Companion: FC = () => {
-  const [isMenuVisiable, setMenuVisiable] = useState(false);
+  const [isMenuVisible, setMenuVisible] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const menuHandle = () => {
-    setMenuVisiable((prev) => !prev);
+    setMenuVisible((prev) => !prev);
   };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        setMenuVisiable(false);
+        setMenuVisible(false);
       }
     };
 
@@ -46,7 +46,7 @@ const Companion: FC = () => {
           <Box></Box>
           <Box></Box>
           <Box></Box>
-          <Menu status={isMenuVisiable} changeStatus={menuHandle} />
+          <Menu status={isMenuVisible} changeStatus={menuHandle} />
         </Box>
       </Box>
     </Box>

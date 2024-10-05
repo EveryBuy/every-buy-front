@@ -3,11 +3,17 @@
 
 .bannerLabelContainer {
   position: relative;
-  width: 30px;
+  width: 100%;
   height: 20px;
-  display: inline-block;
-
-  @include media-min($breakpoint-tablet) {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 53px;
+  height: 34px;
+  @media (min-width: 768px) {
+    justify-content: center;
+  }
+  @media (min-width: 1024px) {
     width: 68px;
     height: 44px;
   }
@@ -15,6 +21,7 @@
 
 .bannerIcon {
   fill: var(--not-active);
+  margin: 0;
 
   @include media-min($breakpoint-tablet) {
     width: 100%;
@@ -28,14 +35,17 @@
 
 .bannerLabel {
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 46%;
+  left: 28%;
   translate: -50% -50%;
-
   font-weight: 400;
   font-size: 6px;
-
-  @include media-min($breakpoint-tablet) {
+  @media (min-width: 768px) {
+    font-size: 12px;
+    top: 50%;
+    left: 50%;
+  }
+  @media (min-width: 1024px) {
     font-size: 14px;
   }
 }
@@ -47,10 +57,12 @@
   color: var(--background);
 
   @include media-min($breakpoint-tablet) {
-    margin-top: 17px;
-
+    margin-top: 37px;
     font-weight: 400;
-    font-size: 28px;
+    font-size: 30px;
+  }
+  @media (min-width: 1024px) {
+    margin-top: 4px;
   }
 
   @include media-min($breakpoint-laptop) {
@@ -61,12 +73,14 @@
 .bannerAdditionalInfo {
   margin-top: 2px;
   font-weight: 400;
-  font-size: 6px;
+  font-size: 8px;
   color: var(--background);
 
   @include media-min($breakpoint-tablet) {
     margin-top: 6px;
-
+    font-size: 12px;
+  }
+  @media (min-width: 1024px) {
     font-size: 16px;
   }
 }
@@ -78,7 +92,6 @@
 
   @include media-min($breakpoint-tablet) {
     margin-top: 32px;
-
     font-size: 24px;
   }
 }
@@ -87,17 +100,20 @@
   border-radius: 4px;
   padding: 4px 10px;
   height: 14px;
-
+  margin-top: 5px;
   font-weight: 400;
   font-size: 5px;
 
   @include media-min($breakpoint-tablet) {
     margin-top: 10px;
-
     border-radius: 10px;
-    padding: 16px 40px;
-    height: 51px;
-
+    width: 113px;
+    height: 39px;
+    font-size: 12px;
+  }
+  @media (min-width: 1024px) {
     font-size: 16px;
+    height: 51px;
+    width: 147px;
   }
 }
