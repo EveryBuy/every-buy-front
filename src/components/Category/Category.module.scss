@@ -5,7 +5,10 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-  margin: 100px 40px 0px;
+  margin: 50px 20px 0px;
+  @media (min-width: 768px) {
+    margin: 100px 40px 0px;
+  }
   @media (min-width: 1024px) {
     margin: 100px 60px 0px;
   }
@@ -18,7 +21,10 @@
 
 .title {
   font-weight: 400;
-  font-size: var(--f-size-h3);
+  font-size: var(--f-size-h4);
+  @media (min-width: 768px) {
+    font-size: var(--f-size-h3);
+  }
   &::before {
     content: "Категорії";
   }
@@ -40,9 +46,11 @@
 
 .buyButton {
   font-weight: 400;
-  font-size: var(--f-size-h4);
   border-bottom: 2px solid #9d9d9d;
   cursor: pointer;
+  @media (min-width: 768px) {
+    font-size: var(--f-size-h4);
+  }
   @media (min-width: 1024px) {
     font-size: var(--f-size-h3);
   }
@@ -54,9 +62,11 @@
 
 .sellButton {
   font-weight: 400;
-  font-size: var(--f-size-h4);
   border-bottom: 2px solid #9d9d9d;
   cursor: pointer;
+  @media (min-width: 768px) {
+    font-size: var(--f-size-h4);
+  }
   @media (min-width: 1024px) {
     font-size: var(--f-size-h3);
   }
@@ -66,26 +76,21 @@
   border-bottom: 2px solid #e5ff46;
 }
 
-// .wrapperHiddenText {
-//   display: flex;
-//   justify-content: flex-end;
-//   margin: 10px 0 20px 0;
-// }
-
 .wrapperHiddenText {
   display: flex;
   justify-content: flex-end;
   margin: 25px 0 20px 0;
-  @include media-min($breakpoint-mobile) {
+  @include media-min($breakpoint-tablet) {
     display: none;
   }
 }
 
-// .hiddenText {
-//   @include media-min($breakpoint-mobile) {
-//     display: none;
-//   }
-// }
+.hiddenText {
+  font-size: 12px;
+  @include media-min($breakpoint-tablet) {
+    display: none;
+  }
+}
 
 .textAvailable {
   display: flex;
@@ -120,103 +125,107 @@
 .list {
   display: flex;
   max-width: 1320px;
-  gap: 12px 34px;
-  flex-wrap: wrap;
   justify-content: flex-start;
-  margin-top: 40px;
+  column-gap: 8px;
+  flex-wrap: nowrap;
+  overflow-x: scroll;
+  @media (min-width: 768px) {
+    flex-wrap: wrap;
+    overflow-x: hidden;
+    gap: 12px 34px;
+    margin-top: 40px;
+  }
   @media (min-width: 1024px) {
     gap: 33px 33px;
   }
-  // @media (max-width: 600px) {
-  //   scrollbar-width: none;
-  //   -ms-overflow-style: none;
-
-  //   &::-webkit-scrollbar {
-  //     display: none;
-  //   }
-  // }
+}
+.listAll {
+  max-width: 1320px;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+  overflow-x: hidden;
+  @media (min-width: 600px) {
+    justify-content: flex-start;
+  }
 }
 
 .listItem {
   position: relative;
-  width: 146px;
-  height: 169px;
+  width: 75px;
+  height: 86px;
+  @media (min-width: 768px) {
+    width: 146px;
+    height: 169px;
+  }
   @media (min-width: 1024px) {
     width: 160px;
     height: 185px;
   }
-
-  // @media (max-width: 600px) {
-  //   width: 97px;
-  //   height: 103px;
-  // }
 }
 
 .foldImg {
-  width: 60px;
+  width: 30px;
   position: absolute;
-  top: -10px;
-  right: -3px;
+  top: -24px;
+  right: -1px;
   z-index: 1;
+  @media (min-width: 768px) {
+    width: 60px;
+    top: -10px;
+    right: -3px;
+  }
   @media (min-width: 1024px) {
     width: 70px;
     top: -5px;
     right: -5px;
   }
-
-  // @media (max-width: 600px) {
-  //   height: 45px;
-  //   top: 0px;
-  //   right: -15px;
-  // }
 }
 
 .listItemWrapper {
+  width: 75px;
   height: 100%;
-  background-image: url("../../assets/icons/base.svg");
-  background-repeat: no-repeat;
-  background-size: cover;
+  padding: 23px 0px 5px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  row-gap: 8px;
-  padding: 36px 0px 5px;
+  row-gap: 3.75px;
+  background-image: url("../../assets/icons/MobileBase.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
 
-  @media (max-width: 600px) {
-    width: 93px;
-    padding: 23px 0px 5px;
-    background-image: url("../../assets/icons/MobileBase.svg");
+  @media (min-width: 768px) {
+    width: auto;
+    padding: 36px 0px 5px;
+    row-gap: 8px;
+    background-image: url("../../assets/icons/base.svg");
   }
 }
 
 .listItemImage {
-  width: 89.5px;
-  height: 89.5px;
+  width: 46px;
+  height: 46px;
   border-radius: 6px;
+  @media (min-width: 768px) {
+    width: 89.5px;
+    height: 89.5px;
+  }
   @media (min-width: 1024px) {
     width: 98px;
     height: 98px;
   }
-
-  // @media (max-width: 600px) {
-  //   width: 59px;
-  //   height: 59px;
-  // }
 }
 
 .listItemText {
   width: 100%;
   text-align: center;
-  font-size: var(--body-mobile-text);
-
+  font-size: 8px;
+  @media (min-width: 768px) {
+    font-size: var(--body-mobile-text);
+  }
   @media (min-width: 1024px) {
     font-size: var(--body-text);
   }
-
-  /* font-size: 16px; */
-  // @media (max-width: 600px) {
-  //   font-size: 10px;
-  //   padding: 0px 5px;
-  // }
 }

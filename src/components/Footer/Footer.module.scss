@@ -3,43 +3,32 @@
   flex-direction: column;
   align-items: center;
   margin-top: 76px;
-  border-top: 3px solid #000000;
+  border-top: 2px solid #e5ff46;
   background: #b4b4b4;
 
-  // @media (min-width: 1200px) {
-  //   margin-top: 183px;
-  // }
+  @media (min-width: 768px) {
+    border-top: 3px solid #000000;
+  }
   @media (min-width: 1200px) {
     margin-top: 183px;
-  }
-  @media (min-width: 320px) {
-    border-top: 2px solid #e5ff46;
-  }
-  @media (min-width: 481px) {
-    border-top: 3px solid #000000;
   }
 }
 
 .footerContainer {
   width: 100%;
   max-width: 1440px;
-  display: flex;
+  display: none;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 40px 34px;
+  padding: 20px 30px 34px;
   flex-wrap: wrap;
 
-  @media (min-width: 1024px) {
-    padding: 16px 60px 50px;
+  @media (min-width: 768px) {
+    display: flex;
   }
-
-  // @media (max-width: 646px) {
-  //   padding: 10px 10px;
-  // }
-
-  // @media (max-width: 480px) {
-  //   display: none;
-  // }
+  @media (min-width: 1024px) {
+    padding: 16px 30px 50px;
+  }
 }
 
 .wrapperContent {
@@ -96,16 +85,6 @@
   margin-bottom: 20px;
   text-align: right;
   width: 340px;
-
-  // @media (max-width: 870px) {
-  //   margin-left: 28%;
-  //   font-size: 16px;
-  // }
-  // @media (max-width: 646px) {
-  //   margin-left: 15%;
-  //   font-size: 14px;
-  //   left: 30%;
-  // }
   @media (min-width: 1024px) {
     width: 100%;
     text-align: start;
@@ -149,31 +128,15 @@
 .social {
   display: flex;
   justify-content: space-between;
-  // @media (max-width: 870px) {
-  //   display: block;
-  //   margin-top: 10px;
-  //   margin-left: 58%;
-  // }
 }
 
 .emailInput {
   padding: 10px 0px 10px 10px;
   width: 100%;
-  // width: 60%;
   height: 43px;
   border-radius: 10px 0px 0px 10px;
   border: 1px solid var(--not-active, #f5ffb6);
   background: var(--background, #fff);
-
-  // @media (max-width: 1000px) {
-  //   padding: 0px;
-  // }
-
-  // @media (max-width: 646px) {
-  //   width: 50%;
-  //   height: 35px;
-  //   font-size: 12px;
-  // }
   @media (min-width: 1024px) {
     width: 300px;
     height: 55px;
@@ -186,27 +149,9 @@
   height: 41px;
   font-size: 16px;
   position: relative;
-  // top: 0;
-  // right: 14px;
   @media (min-width: 1024px) {
-    padding: 26.5px 40px;
+    padding: 26px 40px;
   }
-
-  // @media (max-width: 1000px) {
-  //   padding: 10px 20px;
-  //   right: 20px;
-  // }
-
-  // @media (max-width: 870px) {
-  //   right: 17px;
-  //   padding: 10px 20px;
-  // }
-
-  // @media (max-width: 646px) {
-  //   right: 17px;
-  //   height: 35px;
-  //   font-size: 12px;
-  // }
 }
 
 .facebookIcon {
@@ -222,14 +167,15 @@
 
 .marketPlace {
   width: 100%;
-  display: flex;
+  display: none;
+
   height: 39px;
   justify-content: center;
   align-items: center;
   background-color: #000000;
 
-  @media (max-width: 480px) {
-    display: none;
+  @media (min-width: 768px) {
+    display: flex;
   }
 }
 
@@ -247,9 +193,19 @@
   background: #fff;
   padding: 12px 20px;
   font-size: var(--f-size-small);
-
-  @media (min-width: 481px) {
+  @media (min-width: 768px) {
     display: none;
+  }
+
+  & a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    & span {
+      font-size: 12px;
+    }
   }
 }
 

@@ -38,20 +38,18 @@ body {
   font-family: var(--font-family);
   background-color: var(--background);
 }
-main {
-  min-height: calc(100vh - 145px - 263px);
-}
 
 .container {
   display: flex;
   flex-direction: column;
-  // min-width: 100%;
   margin: 0 auto;
-  // padding: 0 20px;
-  // min-height: calc(100vh - 168px - 162px);
+  min-height: calc(100vh - 141px - 162px);
   @include media-min($breakpoint-tablet) {
     max-width: 1440px;
-    // padding: 0 60px;
+    min-height: auto;
+  }
+  @include media-min($breakpoint-tablet) {
+    min-height: calc(100vh - 181px - 444px);
   }
 }
 

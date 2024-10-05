@@ -10,6 +10,11 @@ const Category: React.FC = () => {
   const [data, setData] = useState<CategoryItem[] | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [isListOpen, setListOpen] = useState(false);
+
+  const makeLinkOpen = () => {
+    setListOpen((prev) => !prev);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -46,10 +51,12 @@ const Category: React.FC = () => {
           </div>
         </div>
         <div className={styles.wrapperHiddenText}>
-          <h2 className={styles.hiddenText}>Дивитись усі</h2>
+          <h2 className={styles.hiddenText} onClick={makeLinkOpen}>
+            {isListOpen ? "Сховати" : "Дивитись усі"}
+          </h2>
         </div>
         {data && data.length > 0 ? (
-          <ul className={styles.list}>
+          <ul className={isListOpen ? styles.listAll : styles.list}>
             {data.map(({ id, nameUkr, photoUrl }) => (
               <li className={styles.listItem} key={id}>
                 <Image className={styles.foldImg} src={Fold} alt="Fold" />

@@ -63,7 +63,7 @@
 }
 
 .searchButton {
-  padding: 7px 10px;
+  padding: 3px 14px 2px;
   background-color: #e5ff46;
   border: 1px solid #e5ff46;
   border-radius: 10px;
@@ -90,7 +90,10 @@
 
 .searchButtonIcon {
   position: relative;
-  left: -5px;
+
+  @include media-min($breakpoint-mobile) {
+    display: none;
+  }
 }
 
 @include media-min($breakpoint-mobile) {

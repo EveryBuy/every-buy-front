@@ -10,11 +10,6 @@ const Item: FC<ItemType> = ({ id, text, link }) => {
       <CommonIcon id={id} width="22" height="22" />
       <span>{text}</span>
     </Link>
-
-    // <button className={styles.mobilePaginationButton}>
-    //   <CommonIcon id={id} width="22" height="22" />
-    //   <span>{text}</span>
-    // </button>
   );
 };
 
