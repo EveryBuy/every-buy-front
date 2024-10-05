@@ -1,0 +1,38 @@
+@import "../../../styles/mixins";
+@import "../../../styles/breakpoints";
+
+.listBox {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    @include media-min($breakpoint-laptop) {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+    }
+}
+
+.listItemName {
+    display: flex;
+    justify-content: space-between;
+    font-size: var(--f-size-h3);
+    // font-weight: 700;
+}
+
+.listItem {
+    display: flex;
+    justify-content: space-between;
+    font-size: 20px;
+    font-weight: 400;
+
+    @include media-min($breakpoint-laptop) {
+        width: 427px;
+    }
+}

@@ -22,7 +22,7 @@ const Login: React.FC = () => {
 
   useEffect(() => {
     isLoggedIn && router.push("/user");
-  }, [isLoggedIn]);
+  }, [isLoggedIn, router]);
 
   // for testing
   // login: "mitskp11@gmail.com",

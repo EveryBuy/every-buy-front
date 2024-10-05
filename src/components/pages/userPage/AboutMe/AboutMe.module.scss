@@ -16,6 +16,13 @@
   }
 }
 
+.headline {
+  font-size: var(--f-size-h4);
+  @include media-min($breakpoint-laptop) {
+    font-size: var(--f-size-h3);
+  }
+}
+
 .wrapper {
   display: flex;
   flex-direction: column;
@@ -30,6 +37,9 @@
 }
 
 .userImageBox {
+  display: inline-flex;
+  flex-direction: column;
+  width: 142px;
   font-size: 14px;
   @include media-min($breakpoint-laptop) {
     display: flex;
@@ -39,41 +49,8 @@
 }
 
 .editText {
-  color: #6735F4
-}
-
-.listBox {
-  display: flex;
-  flex-direction: column;
-  gap: 60px;
-}
-
-.list {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  @include media-min($breakpoint-laptop) {
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-  }
-}
-
-.listItemName {
-  display: flex;
-    justify-content: space-between;
-  font-size: var(--f-size-h3);
-  font-weight: 700;
-}
-
-.listItem {
-  display: flex;
-  justify-content: space-between;
-  font-size: 20px;
-  font-weight: 400;
-  @include media-min($breakpoint-laptop) {
-    width: 427px;
-  }
+  align-self: center;
+  color: #6735f4;
 }
 
 .userImage {
@@ -87,12 +64,26 @@
   }
 }
 
+.listBox {
+  display: flex;
+  flex-direction: column;
+
+  @include media-min($breakpoint-laptop) {
+    margin-top: 50px;
+  }
+}
+
+.userData {
+  width: 100%;
+  margin-bottom: 50px;
+}
+
 .changePassBtn {
   width: 186px;
   height: 44px;
   border-radius: 10px;
   align-self: flex-end;
-  
+
   @include media-min($breakpoint-tablet) {
     width: 214px;
     height: 48px;
@@ -105,11 +96,12 @@
 .deleteBox {
   display: flex;
   flex-direction: column;
+  margin-top: 60px;
   gap: 20px;
 }
 
 .deleteLink {
-  color: #FF5656;
+  color: #ff5656;
 }
 
 .editSvg {
@@ -117,10 +109,15 @@
   height: 26px;
 }
 
+.dangerZone {
+  font-size: var(--large-body-medium);
+  font-weight: 500;
+}
+
 .separeteLine {
   width: 335px;
-  fill: #9D9D9D;
+  fill: #9d9d9d;
   @include media-min($breakpoint-tablet) {
-  width: 427px;
+    width: 427px;
   }
 }

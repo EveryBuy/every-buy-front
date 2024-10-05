@@ -44,7 +44,7 @@ const Register: React.FC = () => {
 
   useEffect(() => {
     isLoggedIn && router.push("/user");
-  }, [isLoggedIn]);
+  }, [isLoggedIn, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
