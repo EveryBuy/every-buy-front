@@ -5,7 +5,7 @@ import {
 } from "@reduxjs/toolkit";
 import { register, login, logout, refreshUser, deleteUser, changePassword } from "./operations";
 import toast from 'react-hot-toast';
-import { AuthResponse, AuthState } from "@/types/stateType";
+import { AuthResponse, AuthState } from "@/types/stateTypes";
 
 
 
@@ -20,8 +20,6 @@ const initialState: AuthState = {
   token: null,
   isLoggedIn: false,
 };
-
-
 
 const authSlice = createSlice({
   name: "auth",
@@ -64,7 +62,7 @@ const authSlice = createSlice({
           state.isLoggedIn = true;
           console.log(state.user);
         })
-        .addCase(logout.rejected, (state, action) => {
+        .addCase(logout.rejected, (state) => {
           state.isLoggedIn = false;
           // here can be error notification like
           // toast.error(`Holly shit happends! Error:${payload}`)

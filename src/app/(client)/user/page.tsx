@@ -1,10 +1,15 @@
-import { AboutMe } from "@/components";
 import "../../globals.scss";
+import { AboutMe } from "@/components";
+import MobileProfileMenu from "@/components/pages/MobileProfileMenu";
 
 export default function Page() {
   return (
-    <div className="mobileHidden">
-      <AboutMe />
-    </div>
+    <>
+      <div className="mobileHidden">
+        <p>Контактна інформація</p>
+        <AboutMe />
+      </div>
+      <MobileProfileMenu />
+    </>
   );
 }

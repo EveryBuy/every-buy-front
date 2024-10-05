@@ -36,10 +36,15 @@ export type UserRegData = {
 };
 
 export type UserDeleteData = {
-  code?: string | null;
+  code: string | null;
   password?: string | null;
-}
+};
 
 export type DeleteResponse = {
   message: string;
+};
+
+export type UserChgPwdData = {
+  oldPassword: "string";
+  newPassword: "string";
 };

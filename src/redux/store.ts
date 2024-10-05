@@ -2,6 +2,7 @@
 
 import { configureStore } from "@reduxjs/toolkit";
 import { authReducer } from "./auth/slice";
+import { messagesReducer } from "./messages/slice";
 import { persistReducer } from "redux-persist";
 // import storage from "redux-persist/lib/storage";
 import {
@@ -29,9 +30,12 @@ const createNoopStorage = () => {
       return Promise.resolve();
     },
   };
-}
+};
 
-const storage = typeof window !== "undefined" ? createWebStorage("local") : createNoopStorage();
+const storage =
+  typeof window !== "undefined"
+    ? createWebStorage("local")
+    : createNoopStorage();
 
 const persistConfig = {
   key: "root",
@@ -46,6 +50,8 @@ export const makeStore = () => {
   return configureStore({
     reducer: {
       auth: persistedAuthReducer,
+      messages: messagesReducer,
+      // ui: persistedUiReducer,
       // products: productsReducer,
       // filters: filtersReducer,
     },
@@ -55,16 +61,16 @@ export const makeStore = () => {
           ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
         },
       }),
-  })
-}
+  });
+};
 
 // export const persistor = persistStore(makeStore)
 // export type RootState = ReturnType<typeof store.getState>
 // export type AppDispatch = typeof store.dispatch;
 
-export type AppStore = ReturnType<typeof makeStore>
-export type RootState = ReturnType<AppStore['getState']>
-export type AppDispatch = AppStore['dispatch']
+export type AppStore = ReturnType<typeof makeStore>;
+export type RootState = ReturnType<AppStore["getState"]>;
+export type AppDispatch = AppStore["dispatch"];
 
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;

@@ -1,7 +1,7 @@
-import {  UserRegData, UserLogData, UserDeleteData } from "@/types/stateType";
+import {  UserRegData, UserLogData, UserDeleteData, UserChgPwdData } from "@/types/stateTypes";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { User } from "../../types/stateType";
+import { User } from "../../types/stateTypes";
  
 const API = axios.create({
   baseURL: "https://api-everybuy.onrender.com",
@@ -39,13 +39,14 @@ export const login = createAsyncThunk(
       const userData = await API.get("/user");
       return { data: userData.data.data, token: data.data.token };
     } catch (error) {
+      console.log(error);
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
 
 export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
-  try {  
+  try {
     // await API.get("/auth/validate");
     clearHeaderAuthToken();
   } catch (error) {
@@ -103,12 +104,13 @@ export const deleteUser = createAsyncThunk(
 
 export const changePassword = createAsyncThunk(
   "auth/changePassword",
-  async (changeData, thunkAPI) => {
+  async (changeData: UserChgPwdData, thunkAPI) => {
     try {
+      // receive {"oldPassword": "string", "newPassword": "string" }
       const { data } = await API.put("/auth/change-password", changeData);
       return data;
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.message);
     }
   }
-)
+);

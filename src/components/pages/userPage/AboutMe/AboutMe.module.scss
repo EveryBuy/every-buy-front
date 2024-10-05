@@ -15,17 +15,6 @@
     display: none;
   }
 }
-.headline {
-  font-size: var(--f-size-h3);
-    margin-bottom: 38px;
-
-  @include media-min($breakpoint-tablet) {
-    margin-bottom: 20px;
-  }
-  @include media-min($breakpoint-laptop) {
-    margin-bottom: 66px;
-  }
-}
 
 .wrapper {
   display: flex;
