@@ -6,10 +6,12 @@ export default function Page() {
   return (
     <>
       <div className="mobileHidden">
-        <p>Контактна інформація</p>
+        {/* <p>Контактна інформація</p> */}
         <AboutMe />
       </div>
-      <MobileProfileMenu />
+      <div className="laptopHidden">
+        <MobileProfileMenu />
+      </div>
     </>
   );
 }
