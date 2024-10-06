@@ -129,6 +129,18 @@
   column-gap: 8px;
   flex-wrap: nowrap;
   overflow-x: scroll;
+  // !!!
+  // scrollbar-width: none;
+  &::-webkit-scrollbar {
+    height: 5px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #e5ff46;
+  }
+  // !!!
   @media (min-width: 768px) {
     flex-wrap: wrap;
     overflow-x: hidden;
