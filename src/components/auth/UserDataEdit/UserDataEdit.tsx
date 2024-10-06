@@ -42,6 +42,7 @@ export const UserDataEdit: React.FC<Props> = ({onEdit}: Props) => {
         >
           <Image src={submit} alt="Submit changes button" />
         </button>
+
         <button
           type="button"
           onClick={handleCancel}
@@ -55,7 +56,7 @@ export const UserDataEdit: React.FC<Props> = ({onEdit}: Props) => {
           typeInput="text"
           id="name"
           value={user.name}
-          setValue={(e) => setName(e.target.value)}
+          setValue={(e) => setPhone(e.target.value)}
           required={false}
           placeholder="Введіть свій номер телефону"
         ></CommonInput>
@@ -78,7 +79,7 @@ export const UserDataEdit: React.FC<Props> = ({onEdit}: Props) => {
           typeInput="text"
           id="name"
           value={user.name}
-          setValue={(e) => setName(e.target.value)}
+          setValue={(e) => setEmail(e.target.value)}
           required={false}
           placeholder="Введіть свій email"
         ></CommonInput>
