@@ -5,26 +5,23 @@ import Link from "next/link";
 import styles from "./ProfileMenu.module.scss";
 import Logout from "../auth/Logout/Logout";
 import clsx from "clsx";
-import { useAppDispatch, useAppSelector } from "@/redux/store";
-import { toggleProfileMenu, isHiddenProfileMenu } from "@/redux/ui/slice";
+import { useRouter } from 'next/router';
 
 const ProfileMenu: FC = () => {
-  // const isHidden = useAppSelector(isHiddenProfileMenu);
-  const dispatch = useAppDispatch();
+  const [isMounted, setIsMounted] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   
   useEffect(() => {
-    dispatch(toggleProfileMenu(false))
-  }, [])
+    setIsOpen(true)
+  setIsMounted(true)
+  }, [isMounted]);
 
-    const handleClick = () => {
-      dispatch(toggleProfileMenu(true));
+  const handleClick = () => {
+    setIsOpen(!isOpen);
   }
 
   return (
-
-    <nav className={clsx(styles.profileMenu
-      // , isHidden && styles.hidden
-    )}>
+    <nav className={clsx(styles.profileMenu, styles.hidden)}>
       
       <ul className={styles.profileList} onClick={handleClick}>
         <li>
@@ -49,7 +46,7 @@ const ProfileMenu: FC = () => {
       </ul>
         <div className={styles.exitItem}>
           {/* <Link href="/user/selected-goods">Вихід</Link> */}
-          <Logout >Вихід</Logout>
+          <Logout>Вихід</Logout>
         </div>
     </nav>
   );

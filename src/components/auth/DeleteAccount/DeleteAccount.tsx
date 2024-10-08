@@ -2,7 +2,6 @@
 import { ModalDialog } from "@/components/ui/ModalDilog/ModalDialog";
 import { Backdrop, Button, CircularProgress } from "@mui/material";
 import React, { useState } from "react";
-import style from "./DeleteAccount.module.scss";
 import { useAppDispatch } from "@/redux/store";
 import { logout } from "@/redux/auth/operations";
 import { useRouter } from "next/navigation";
@@ -26,7 +25,9 @@ export const DeleteAccount = ({ children }: {children: string}) => {
 
   return (
     <>
-      <Button className={style.logoutBtn} onClick={handleOpen}>
+      <Button
+        color="error"
+        onClick={handleOpen}>
         {children}
       </Button>
       <Backdrop
