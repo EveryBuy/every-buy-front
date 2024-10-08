@@ -29,29 +29,3 @@ export const MobileProfileMenu = () => {
 
 export default MobileProfileMenu;
 
-{
-  /* <li>
-            <Link href="/user/about-me">Про мене</Link>
-          </li>
-          <li>
-            <Link href="/user/selected-goods">Обрані товари</Link>
-          </li>
-          <li>
-            <Link href="/user/my-ads">Мої оголошення</Link>
-            <ul className={styles.subMenuWrapper}>
-              <li>
-                <Link href="/user/my-ads/active-ads">Активні оголошення</Link>
-              </li>
-              <li>
-                <Link href="/user/my-ads/non-active-ads">
-                  Неактивні оголошення
-                </Link>
-              </li>
-            </ul>
-          </li> */
-}
-
-//   <div className={styles.exitItem}>
-//   {/* <Link href="/user/selected-goods">Вихід</Link> */}
-//   <Logout>Вихід</Logout>
-// </div>
