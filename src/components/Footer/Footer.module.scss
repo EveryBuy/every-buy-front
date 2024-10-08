@@ -2,12 +2,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 76px;
-  // border-top: 2px solid #e5ff46;
+  margin-top: 124px;
   background: #b4b4b4;
 
   @media (min-width: 768px) {
     border-top: 3px solid #000000;
+    margin-top: 165px;
   }
   @media (min-width: 1200px) {
     margin-top: 183px;
@@ -25,9 +25,10 @@
 
   @media (min-width: 768px) {
     display: flex;
+    padding: 16px 40px 50px;
   }
   @media (min-width: 1024px) {
-    padding: 16px 30px 50px;
+    padding: 16px 60px 50px;
   }
 }
 

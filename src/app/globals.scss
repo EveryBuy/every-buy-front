@@ -44,12 +44,8 @@ body {
   flex-direction: column;
   margin: 0 auto;
   min-height: calc(100vh - 141px - 162px);
-  padding: 0 30px;
   @include media-min($breakpoint-tablet) {
     max-width: 1440px;
-    min-height: auto;
-  }
-  @include media-min($breakpoint-tablet) {
     min-height: calc(100vh - 181px - 444px);
   }
 }
@@ -125,12 +121,12 @@ body {
 }
 
 .laptopHidden {
-    display: block;
+  display: block;
 
-    @media screen and (min-width: 769px) {
-      display: none;
-    }
+  @media screen and (min-width: 769px) {
+    display: none;
   }
+}
 
 .hidden {
   display: none;
