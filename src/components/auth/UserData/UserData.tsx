@@ -1,9 +1,11 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { selectUser } from "@/redux/auth/selectors";
 import { useAppSelector } from "@/redux/store";
 import styles from "./UserData.module.scss";
 import Image from "next/image";
 import pencil from "@/assets/Svg/pencil.svg";
+import { useDispatch } from "react-redux";
+import { refreshUser } from "@/redux/auth/operations";
 
 type Props = {
   onEdit: () => void;
@@ -11,7 +13,8 @@ type Props = {
 
 export const UserData: React.FC<Props> = ({ onEdit }: Props) => {
   const user = useAppSelector(selectUser);
-
+  const dispatch = useDispatch();
+  
   const handleClick = () => {
     onEdit();
   };
@@ -20,7 +23,7 @@ export const UserData: React.FC<Props> = ({ onEdit }: Props) => {
     <div className={styles.listBox}>
       <ul className={styles.list}>
         <li className={styles.listItemName}>
-          {user.name ? user.name : "Ім'я Прізвище"}
+          {user.fullName ? user.fullName : "Ім'я Прізвище"}
           <button type="button" aria-label="Edit button" onClick={handleClick}>
             <Image
               className={styles.pencil}
