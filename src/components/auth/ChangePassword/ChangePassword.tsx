@@ -1,6 +1,5 @@
 "use client";
-// import { Backdrop } from "@mui/material";
-// import { logout } from "@/redux/auth/operations";
+
 import React, { use, useId, useState } from "react";
 import { useAppDispatch } from "@/redux/store";
 import { useRouter } from "next/navigation";
@@ -32,10 +31,6 @@ export const ChangePassword: React.FC<Props> = ({ onClose }: Props) => {
   const newPwdId = useId();
   const newPwdConfirmId = useId();
 
-  // const handleOpen = () => {
-  //   setOpen(true);
-  // };
-
   const handleClose = () => {
     setOpen(false);
     onClose(false);
@@ -50,7 +45,6 @@ export const ChangePassword: React.FC<Props> = ({ onClose }: Props) => {
   };
 
   const handleSubmit = (initialValues: InitialValues, actions: FormikHelpers<InitialValues>) => {
-    // console.log(initialValues);
     // dispatch(changePassword);
     router.replace("/");
     actions.resetForm();
@@ -139,7 +133,6 @@ export const ChangePassword: React.FC<Props> = ({ onClose }: Props) => {
                 title="Зберегти пароль"
                 color="yellow"
                 className={styles.submitBtn}
-                // onClick={handleChangePwd}
               />
             </Form>
           </Formik>

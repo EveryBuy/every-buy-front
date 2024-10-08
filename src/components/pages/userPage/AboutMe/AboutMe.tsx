@@ -7,13 +7,13 @@ import styles from "./AboutMe.module.scss";
 import CommonButton from "@/components/ui/CommonButton/CommonButton";
 import Image from "next/image";
 import ArrowBack from "@/assets/Svg/arrowBack.svg";
-import pencil from "@/assets/Svg/pencil.svg";
 import separeteLine from "@/assets/Svg/separeteLine.svg";
 
 import { useRouter } from "next/navigation";
-import { toggleProfileMenu } from "@/redux/ui/slice";
 import { DeleteAccount } from "@/components/auth/DeleteAccount/DeleteAccount";
 import { ChangePassword } from "@/components/auth/ChangePassword/ChangePassword";
+import UserData from "@/components/auth/UserData/UserData";
+import UserDataEdit from "@/components/auth/UserDataEdit/UserDataEdit";
 
 const AboutMe: FC = () => {
   const user = useAppSelector(selectUser);
@@ -21,6 +21,8 @@ const AboutMe: FC = () => {
   const dispatch = useAppDispatch();
   const [isOpenChangePass, setIsOpenChangePass] = useState(false);
   const [isClient, setIsClient] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+
   useEffect(() => {
     setIsClient(true);
   }, []);
@@ -33,6 +35,10 @@ const AboutMe: FC = () => {
   const handleChangePass = () => {
     setIsOpenChangePass(true);
   };
+
+  const handleEdit = () => {
+    setIsEdit(!isEdit);
+  }
 
   // const handleClose = () => {
   //   setIsOpenCangePass(false)
@@ -57,46 +63,24 @@ const AboutMe: FC = () => {
           height={40}
         />
       </button>
-      <h1 className={styles.headline}>Контактна інформація</h1>
+      <h3 className={styles.headline}>Контактна інформація</h3>
       <div className={styles.wrapper}>
         <div className={styles.userImageBox}>
-          <img className={styles.userImage} alt="alt" src="/images/user.png" />
+          <Image
+            className={styles.userImage}
+            src="/images/user.png"
+            alt="User image"
+            width="142"
+            height="142"
+          />
           <p className={styles.editText}>Редагувати фото</p>
         </div>
+
         <div className={styles.listBox}>
-          <ul className={styles.list}>
-            <li className={styles.listItemName}>
-              {"Ім'я Прізвище" || user.name}
-              <Image
-                className={styles.pencil}
-                src={pencil}
-                alt="back"
-                width={26}
-                height={26}
-              />
-            </li>
-            <li className={styles.listItem}>
-              <p className="listItemText">Телефон</p>
-              {`+380${user.phone}` || ""}
-              <Image
-                className={styles.pencil}
-                src={pencil}
-                alt="back"
-                width={26}
-                height={26}
-              />
-            </li>
-            <li className={styles.listItem}>
-              <p className="listItemText">E-mail</p>
-              {user.email || ""}
-              <Image
-                className={styles.pencil}
-                src={pencil}
-                alt="back"
-                width={26}
-                height={26}
-              />
-            </li>
+          <div className={styles.userData}>
+            {!isEdit && <UserData onEdit={handleEdit} />}
+            {isEdit && <UserDataEdit onEdit={handleEdit} />}
+          </div>
             <CommonButton
               type="button"
               title="Змінити пароль"
@@ -107,17 +91,15 @@ const AboutMe: FC = () => {
             {isOpenChangePass && (
               <ChangePassword onClose={setIsOpenChangePass} />
             )}
-          </ul>
+
           <div className={styles.deleteBox}>
-            <p>Небезпечна зона</p>
+            <p className={styles.dangerZone}>Небезпечна зона</p>
             <p>Ваш профіль на EveryBuy буде видалено назавжди.</p>
             <Image
               className={styles.separeteLine}
               src={separeteLine}
-              alt="separete"
+              alt="separator"
             />
-            {/* <Link href={"/"} className={styles.deleteLink}>
-            </Link> */}
             <DeleteAccount>Видалити мій акаунт</DeleteAccount>
           </div>
         </div>

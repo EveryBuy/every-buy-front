@@ -44,6 +44,7 @@ body {
   flex-direction: column;
   margin: 0 auto;
   min-height: calc(100vh - 141px - 162px);
+  padding: 0 30px;
   @include media-min($breakpoint-tablet) {
     max-width: 1440px;
     min-height: auto;
@@ -54,10 +55,10 @@ body {
 }
 
 .title {
-  padding-bottom: 30px;
+  // padding-bottom: 30px;
   font-size: var(--f-size-h4);
   @include media-min($breakpoint-tablet) {
-    padding: 60px 0px 26px;
+    padding: 0px 26px;
     font-size: 40px;
     font-weight: 700;
   }
@@ -74,6 +75,7 @@ body {
 
 .profileSectionWrapper {
   // display: none;
+  width: 100%;
   @include media-min($breakpoint-tablet) {
     display: flex;
     padding-left: 110px;
@@ -121,6 +123,14 @@ body {
     display: block;
   }
 }
+
+.laptopHidden {
+    display: block;
+
+    @media screen and (min-width: 769px) {
+      display: none;
+    }
+  }
 
 .hidden {
   display: none;

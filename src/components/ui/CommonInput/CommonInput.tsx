@@ -3,7 +3,7 @@ import styles from "./CommonInput.module.scss";
 
 type CommonInputProps = {
   text?: string;
-  typeTitle: string;
+  typeTitle?: string;
   typeInput: boolean | string;
   value: string;
   id?: string;
@@ -28,10 +28,10 @@ const CommonInput: FC<CommonInputProps> = ({
 }) => {
   return (
     <div className={styles.inputContainer}>
-      <label className={styles.inputTitle} htmlFor={typeTitle}>
+      <label className={required ? styles.inputTitle : undefined} htmlFor={typeTitle}>
         {text}
       </label>
-      <div style={{ position: "relative" }}>
+      {/* <div className={styles.inputWrapper}> */}
         <input
           type={typeInput ? "text" : "password"}
           id="password"
@@ -42,7 +42,7 @@ const CommonInput: FC<CommonInputProps> = ({
           placeholder={placeholder}
         />
         {children}
-      </div>
+      {/* </div> */}
       {errorsMessage}
     </div>
   );
