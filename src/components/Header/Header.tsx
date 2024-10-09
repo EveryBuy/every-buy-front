@@ -46,10 +46,10 @@ const Header: FC = () => {
             color="yellow"
             className={styles.headerButton}
           />
-          <CommonIcon id="icon-chat" width="20" height="20" />
-          <CommonIcon id="icon-heart" width="20" height="20" />
-          <Link href="/user">
-            <CommonIcon id="icon-user" width="20" height="20" />
+          <CommonIcon id="icon-chat" width="21" height="20" />
+          <CommonIcon id="icon-heart" width="21" height="20" />
+          <Link href="/user" className={styles.linkToUserPage}>
+            <CommonIcon id="icon-user" width="21" height="20" />
           </Link>
           <div ref={dropdownMenuRef} className={styles.iconDropdown}>
             <div onClick={dropdownMenuHandle}>

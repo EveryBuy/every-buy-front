@@ -1,32 +1,53 @@
-.formRegister{
+.formRegister {
   display: flex;
-   flex-direction: column;
-   align-items: center;
-   gap: 24px;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  padding: 0px 20px;
+  @media (min-width: 768px) {
+  }
 }
 
-.togglePasswordButton{
- position: absolute;
-   right: 0.5rem;
-   top:50%;
-   transform: translateY(-50%);
+.togglePasswordButton {
+  position: absolute;
+  top: 36%;
+  right: 15px;
 }
 
-.togglePasswordButton:hover{
-   margin-left: 8px;
-   cursor: pointer;
+.toggleConfirmPasswordButton {
+  position: absolute;
+  top: 36%;
+  right: 15px;
 }
 
-.submitButton{
-  padding: 20px 185px;
-  gap: 10px;
+.togglePasswordButton:hover {
+  margin-left: 8px;
+  cursor: pointer;
+}
+
+.submitButton {
+  width: 260px;
+  padding: 20px 0px;
   border-radius: 10px;
-  margin-top: 36px;
+  margin-top: 8px;
   background: var(--not-active, #f5ffb6);
+  @media (min-width: 375px) {
+    width: 334px;
+  }
+  @media (min-width: 768px) {
+    width: 420px;
+    // padding: 20px 185px;
+  }
 }
 
-.errorMessage{
-   color: red;
-   font-size: 12px;
-   margin-top: 4px;
+.errorMessage {
+  color: red;
+  font-size: 12px;
+  //   margin-top: 4px;
+}
+
+.errorImage {
+  position: absolute;
+  top: 36%;
+  right: 15px;
 }
