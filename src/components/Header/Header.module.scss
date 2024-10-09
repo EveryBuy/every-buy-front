@@ -53,6 +53,12 @@
   }
 }
 
+.linkToUserPage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .headerButton {
   border-radius: 10px;
   padding: 12px 28px;
@@ -80,4 +86,10 @@
 
 .iconDropdown {
   position: relative;
+
+  & div:first-child {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }

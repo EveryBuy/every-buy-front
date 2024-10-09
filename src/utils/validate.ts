@@ -13,3 +13,8 @@ export const validatePassword = (password: string) => {
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[~`!@#$%^&*()_\-+={[}\]|\\:;"'<,>.?/]).{8,}$/;
   return passwordRegex.test(password);
 };
+
+export const validateInput = (input: string) => {
+  const isValid = input.trim().length > 0;
+  return isValid;
+};

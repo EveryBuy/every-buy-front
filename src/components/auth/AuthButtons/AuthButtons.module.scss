@@ -5,6 +5,7 @@
   margin: 0px 0px 40px;
   padding: 0px 63px;
   @media (min-width: 768px) {
+    margin: 125px 0px 35px;
   }
 }
 
@@ -21,10 +22,12 @@
   border-bottom: none;
 
   @media (min-width: 768px) {
-    font-size: var(--f-size-h3);
+    width: 207px;
     padding: 10px 0px;
+    font-size: var(--f-size-h4);
   }
   @media (min-width: 1024px) {
+    font-size: var(--f-size-h3);
   }
 }
 

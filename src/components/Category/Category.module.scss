@@ -129,7 +129,7 @@
   column-gap: 8px;
   flex-wrap: nowrap;
   overflow-x: scroll;
-  // !!!
+  // ?!
   // scrollbar-width: none;
   &::-webkit-scrollbar {
     height: 5px;
@@ -140,11 +140,11 @@
   &::-webkit-scrollbar-thumb {
     background-color: #e5ff46;
   }
-  // !!!
+  // ?!
   @media (min-width: 768px) {
     flex-wrap: wrap;
     overflow-x: hidden;
-    gap: 12px 34px;
+    gap: 12px 28px;
     margin-top: 40px;
   }
   @media (min-width: 1024px) {

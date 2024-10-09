@@ -13,8 +13,9 @@ import { login } from "@/redux/auth/operations";
 import { selectIsLoggedIn } from "@/redux/auth/selectors";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import {
-  validatePhone,
-  validateEmail,
+  // validatePhone,
+  // validateEmail,
+  validateInput,
   validatePassword,
 } from "@/utils/validate";
 
@@ -44,7 +45,6 @@ const Login: React.FC = () => {
   // login: "mitskp11@gmail.com",
   // password: "14fgGH7_er$$",
 
-  // check for submit
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -52,12 +52,12 @@ const Login: React.FC = () => {
       emailOrPhone: "",
       password: "",
     };
-    if (!validateEmail(emailOrPhone)) {
+    if (!validateInput(emailOrPhone)) {
       newErrors.emailOrPhone = "невірний формат телефону чи e-mail";
     }
     if (!validatePassword(password)) {
-      newErrors.password =
-        "Пароль повинен включати: Великі літери: A-Z. Маленькі літери: a-z. Цифри: 0-9. Символи: ~! @#$%^&*()_-+={[}]|\\:;\"'<,>.?/ ";
+      newErrors.password = "Невірний формат пароля";
+      // "Пароль повинен включати: Великі літери: A-Z. Маленькі літери: a-z. Цифри: 0-9. Символи: ~! @#$%^&*()_-+={[}]|\\:;\"'<,>.?/ ";
     }
     setErrors(newErrors);
     if (newErrors.emailOrPhone || newErrors.password) {
@@ -74,7 +74,7 @@ const Login: React.FC = () => {
   const getInputClass = (field: string) => {
     if (errors[field]) {
       return "invalid";
-    } else if (field === "email" && validateEmail(emailOrPhone)) {
+    } else if (field === "emailOrPhone" && validateInput(emailOrPhone)) {
       return "valid";
     } else if (field === "password" && validatePassword(password)) {
       return "valid";
@@ -97,7 +97,7 @@ const Login: React.FC = () => {
           setValue={(e) => setEmailOrPhone(e.target.value)}
           required={true}
           className={getInputClass("emailOrPhone")}
-          placeholder="введіть номер телефону або e-mail"
+          placeholder="введіть телефон або e-mail"
           errorsMessage={
             errors.emailOrPhone && (
               <span className={styles.errorMessage}>{errors.emailOrPhone}</span>
@@ -113,7 +113,7 @@ const Login: React.FC = () => {
               src={ErrorIconSrc}
             />
           ) : (
-            validatePhone(emailOrPhone) && (
+            validateInput(emailOrPhone) && (
               <Image
                 className={styles.errorImage}
                 alt=""
