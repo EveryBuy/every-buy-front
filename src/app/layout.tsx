@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { HeaderWrapper, Footer } from "../components";
+import { Header, Footer } from "../components";
 // import { AuthProvider } from "@/context/AuthContextType";
 import { Providers } from "../redux/provider";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
@@ -19,7 +19,7 @@ export default async function ClientLayout({
           <Providers>
             <ThemeProvider theme={theme}>
               {/* <AuthProvider> */}
-              <HeaderWrapper />
+              <Header />
               <main className="container">{children}</main>
               <Footer />
               {/* </AuthProvider> */}

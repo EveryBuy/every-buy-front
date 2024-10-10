@@ -8,11 +8,10 @@ import Image from "next/image";
 // import { selectIsLoggedIn } from "@/redux/auth/selectors";
 import { CommonIcon, CommonButton, DropdownMenu } from "@/components";
 import Logo from "@/assets/Svg/logo.svg";
-import styles from "./HeaderMainPage.module.scss";
+import styles from "./Header.module.scss";
 
-const HeaderMainPage: FC = () => {
+const Header: FC = () => {
   const path = usePathname();
-  console.log(path);
   const [isDropdownMenuVisible, setDropdownMenuVisible] = useState(false);
   const dropdownMenuRef = useRef<HTMLDivElement>(null);
   const dropdownMenuHandle = () => {
@@ -37,41 +36,21 @@ const HeaderMainPage: FC = () => {
   }, []);
 
   return (
-    <header
-      className={
-        path === "/messages" ? styles.headerMessagePage : styles.header
-      }
-    >
+    <header className={styles.header}>
       <div
         className={
           path === "/messages"
-            ? styles.headerMessagePageContainer
+            ? `${styles.headerContainer} ${styles.headerMessagePageContainer}`
             : styles.headerContainer
         }
       >
-        <Link href="/">
-          <Image
-            priority
-            src={Logo}
-            alt="Logo"
-            width={path === "/messages" ? 104 : 104}
-            height={path === "/messages" ? 77 : 77}
-          />
+        <Link href="/" className={path === "/messages" ? styles.logo : ""}>
+          <Image priority src={Logo} alt="Logo" width={104} height={77} />
         </Link>
 
         {path === "/messages" ? (
-          <CommonButton
-            type="submit"
-            title=""
-            color="white"
-            className={styles.searchButton}
-          >
-            <CommonIcon
-              id="icon-search"
-              width="25"
-              height="25"
-              className={styles.searchButtonIcon}
-            />
+          <CommonButton type="submit" title="" className={styles.searchButton}>
+            <CommonIcon id="icon-search" width="25" height="25" />
           </CommonButton>
         ) : null}
 
@@ -102,4 +81,4 @@ const HeaderMainPage: FC = () => {
   );
 };
 
-export default HeaderMainPage;
+export default Header;
