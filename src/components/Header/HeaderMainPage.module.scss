@@ -1,7 +1,26 @@
 @import "../../styles/mixins";
 @import "../../styles/breakpoints";
 
-.headerTag {
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: var(--f-size-small);
+  background-color: var(--background);
+
+  @media (min-width: 768px) {
+    margin-bottom: 28px;
+    background: #b4b4b4;
+    border-bottom: none;
+    border-bottom: 2px solid #000000;
+  }
+  @media (min-width: 1024px) {
+    margin-bottom: 40px;
+  }
+}
+
+// !!!
+.headerMessagePage {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -38,15 +57,72 @@
   }
 }
 
-.addAdvertisingContainer {
-  background-color: #b4b4b4;
+// !!!
+.headerMessagePageContainer {
+  width: 100%;
+  max-width: 1440px;
   display: flex;
+  justify-content: center;
+  padding: 20px 30px 40px;
+
+  @media (min-width: 768px) {
+    justify-content: space-between;
+    gap: 10px;
+    padding: 30px 40px 26px;
+  }
+  @media (min-width: 1024px) {
+    justify-content: space-between;
+    gap: 10px;
+    padding: 30px 60px 26px;
+  }
+}
+
+// !!!
+.searchButton {
+  padding: 3px 14px 2px;
+  background-color: #e5ff46;
+  border: 1px solid #e5ff46;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
   align-items: center;
-  gap: 6px;
+  transition: all 0.3s ease;
+  @include media-min($breakpoint-mobile) {
+    background-color: #ffffff;
+    border: 1px solid #000000;
+    padding: 10px 15px;
+    &::before {
+      content: "Знайти";
+    }
+  }
+  @include media-min($breakpoint-tablet) {
+    padding: 14px 31.5px;
+  }
+  @media (min-width: 1024px) {
+    padding: 18px 40px;
+  }
+}
+
+.searchButtonIcon {
+  position: relative;
+  @include media-min($breakpoint-mobile) {
+    display: none;
+  }
+}
+@include media-min($breakpoint-mobile) {
+  .searchButtonIcon {
+    display: none;
+  }
+}
+
+.addAdvertisingContainer {
   display: none;
 
   @media (min-width: 768px) {
     display: flex;
+    align-items: center;
+    gap: 6px;
+    background-color: #b4b4b4;
   }
   @media (min-width: 1024px) {
     gap: 10px;

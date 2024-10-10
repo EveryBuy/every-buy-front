@@ -12,7 +12,10 @@ export { default as MyAds } from "./pages/userPage/MyAds";
 export { default as MyActiveAds } from "./pages/userPage/MyActiveAds";
 export { default as MyNonActiveAds } from "./pages/userPage/MyNonActiveAds";
 export { default as ProfileMenu } from "./pages/ProfileMenu";
-export { default as Header } from "./Header/Header";
+export { default as HeaderWrapper } from "./Header/HeaderWrapper";
+// ! rename!
+export { default as HeaderMainPage } from "./Header/HeaderMainPage";
+// export { default as HeaderMessages } from "./Header/HeaderMessages";
 export { default as DropdownMenu } from "./Header/DropdownMenu";
 export { default as Footer } from "./Footer/Footer";
 export { default as Item } from "./Footer/Item/Item";

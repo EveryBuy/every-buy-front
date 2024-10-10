@@ -1,21 +1,24 @@
 "use client";
 
 import { useState, useEffect, useRef, FC } from "react";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
 import Image from "next/image";
+// import { useAppSelector } from "@/redux/store";
+// import { selectIsLoggedIn } from "@/redux/auth/selectors";
 import { CommonIcon, CommonButton, DropdownMenu } from "@/components";
 import Logo from "@/assets/Svg/logo.svg";
-import styles from "./Header.module.scss";
-import Link from "next/link";
-import { useAppSelector } from "@/redux/store";
-import { selectIsLoggedIn } from "@/redux/auth/selectors";
+import styles from "./HeaderMainPage.module.scss";
 
-const Header: FC = () => {
+const HeaderMainPage: FC = () => {
+  const path = usePathname();
+  console.log(path);
   const [isDropdownMenuVisible, setDropdownMenuVisible] = useState(false);
   const dropdownMenuRef = useRef<HTMLDivElement>(null);
   const dropdownMenuHandle = () => {
     setDropdownMenuVisible((prev) => !prev);
   };
-  const isLoggedIn = useAppSelector(selectIsLoggedIn);
+  // const isLoggedIn = useAppSelector(selectIsLoggedIn);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -34,11 +37,44 @@ const Header: FC = () => {
   }, []);
 
   return (
-    <header className={`${styles.headerTag}`}>
-      <div className={styles.headerContainer}>
+    <header
+      className={
+        path === "/messages" ? styles.headerMessagePage : styles.header
+      }
+    >
+      <div
+        className={
+          path === "/messages"
+            ? styles.headerMessagePageContainer
+            : styles.headerContainer
+        }
+      >
         <Link href="/">
-          <Image priority src={Logo} alt="Logo" width={104} height={77} />
+          <Image
+            priority
+            src={Logo}
+            alt="Logo"
+            width={path === "/messages" ? 104 : 104}
+            height={path === "/messages" ? 77 : 77}
+          />
         </Link>
+
+        {path === "/messages" ? (
+          <CommonButton
+            type="submit"
+            title=""
+            color="white"
+            className={styles.searchButton}
+          >
+            <CommonIcon
+              id="icon-search"
+              width="25"
+              height="25"
+              className={styles.searchButtonIcon}
+            />
+          </CommonButton>
+        ) : null}
+
         <div className={styles.addAdvertisingContainer}>
           <CommonButton
             type="button"
@@ -66,4 +102,4 @@ const Header: FC = () => {
   );
 };
 
-export default Header;
+export default HeaderMainPage;
