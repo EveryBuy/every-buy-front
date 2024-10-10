@@ -54,7 +54,7 @@ body {
   // padding-bottom: 30px;
   font-size: var(--f-size-h4);
   @include media-min($breakpoint-tablet) {
-    padding: 0px 26px;
+    padding: 0px 60px;
     font-size: 40px;
     font-weight: 700;
   }

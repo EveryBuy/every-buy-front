@@ -6,7 +6,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  height: 516px;
+  min-height: 516px;
 }
 
 .dateWrapper {
@@ -46,8 +46,14 @@
   }
 }
 
+.dialogue {
+  height: 90%;
+}
+
 .inputBlockWrapper {
   width: 100%;
+  // height: 54px;
+  min-height: 10%;
   display: flex;
   justify-content: space-between;
   background-color: #ffffff;
@@ -56,20 +62,30 @@
   & label::after {
     content: "";
   }
-
-  & .input {
-    width: 100%;
-    border: none;
-  }
-  & .input::placeholder {
-    color: #9d9d9d;
-  }
 }
 
 .inputWrapper {
   width: 92%;
+  // display: flex;
+  // align-items: center;
   & div {
     gap: 0px;
+    max-width: 100%;
+  }
+  // & input {
+  //   min-height: 54px;
+  //   max-height: fit-content;
+  //   border: none;
+  //   &:focus {
+  //     border: none;
+  //   }
+  // }
+}
+
+.input {
+  & fieldset {
+    border: 0px;
+    padding-right: 15px;
   }
 }
 
@@ -78,7 +94,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-right: 20px;
+  margin-right: 10px;
 }
 
 .iconPic {

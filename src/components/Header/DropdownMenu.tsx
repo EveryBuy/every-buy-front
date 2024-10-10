@@ -27,7 +27,7 @@ const DropdownMenu: FC<DropdownMenuType> = ({ status, changeStatus }) => {
         <Link href="/user/my-ads">Оголошення</Link>
       </li>
       <li>
-        <Link href="#">Повідомлення</Link>
+        <Link href="/messages">Повідомлення</Link>
       </li>
       <li>
         <Link href="/user/selected-goods">Обрані</Link>

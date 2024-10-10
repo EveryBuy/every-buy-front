@@ -52,6 +52,91 @@ const MessageListBlock: FC = () => {
     return "Завантажується";
   }
 
+  // !mock-data
+  const mockMessages = [
+    {
+      chatId: 1,
+      lastMessage: "no messages yet",
+      lastMessageDate: "none",
+      userData: {
+        userId: 111,
+        fullName: "olesia",
+        photoUrl: "",
+      },
+    },
+    {
+      chatId: 2,
+      lastMessage: "no messages yet",
+      lastMessageDate: "none",
+      userData: {
+        userId: 111,
+        fullName: "olesia",
+        photoUrl: "",
+      },
+    },
+    {
+      chatId: 3,
+      lastMessage: "no messages yet",
+      lastMessageDate: "none",
+      userData: {
+        userId: 111,
+        fullName: "olesia",
+        photoUrl: "",
+      },
+    },
+    {
+      chatId: 4,
+      lastMessage: "no messages yet",
+      lastMessageDate: "none",
+      userData: {
+        userId: 111,
+        fullName: "olesia",
+        photoUrl: "",
+      },
+    },
+    {
+      chatId: 5,
+      lastMessage: "no messages yet",
+      lastMessageDate: "none",
+      userData: {
+        userId: 111,
+        fullName: "olesia",
+        photoUrl: "",
+      },
+    },
+    {
+      chatId: 6,
+      lastMessage: "no messages yet",
+      lastMessageDate: "none",
+      userData: {
+        userId: 111,
+        fullName: "olesia",
+        photoUrl: "",
+      },
+    },
+    {
+      chatId: 7,
+      lastMessage: "no messages yet",
+      lastMessageDate: "none",
+      userData: {
+        userId: 111,
+        fullName: "olesia",
+        photoUrl: "",
+      },
+    },
+    {
+      chatId: 8,
+      lastMessage: "no messages yet",
+      lastMessageDate: "none",
+      userData: {
+        userId: 111,
+        fullName: "olesia",
+        photoUrl: "",
+      },
+    },
+  ];
+  // !mock-data
+
   return (
     <Box className={style.blockWrapper}>
       <Box className={style.buttonsWrapper}>
@@ -98,7 +183,8 @@ const MessageListBlock: FC = () => {
         )}
       </Box>
       <Box className={style.listWrapper}>
-        <ListMessages messages={messages} />
+        {/* <ListMessages messages={messages} /> */}
+        <ListMessages messages={mockMessages} />
       </Box>
     </Box>
   );

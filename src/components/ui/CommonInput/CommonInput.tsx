@@ -30,9 +30,15 @@ const CommonInput: FC<CommonInputProps> = ({
 }) => {
   return (
     <div className={styles.inputContainer}>
-      <label className={required ? styles.inputTitle : ""} htmlFor={typeTitle}>
-        {text}
-      </label>
+      {text && (
+        <label
+          className={required ? styles.inputTitle : ""}
+          htmlFor={typeTitle}
+        >
+          {text}
+        </label>
+      )}
+
       {/* <div className={styles.inputWrapper}> */}
       <input
         type={typeInput ? "text" : "password"}
@@ -46,7 +52,9 @@ const CommonInput: FC<CommonInputProps> = ({
       />
       {children}
       {/* </div> */}
-      <div className={styles.errorMessageWrapper}>{errorsMessage}</div>
+      {errorsMessage && (
+        <div className={styles.errorMessageWrapper}>{errorsMessage}</div>
+      )}
     </div>
   );
 };
