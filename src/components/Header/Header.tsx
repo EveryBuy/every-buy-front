@@ -39,20 +39,20 @@ const Header: FC = () => {
     <header className={styles.header}>
       <div
         className={
-          path === "/messages"
-            ? `${styles.headerContainer} ${styles.headerMessagePageContainer}`
-            : styles.headerContainer
+          path === "/"
+            ? styles.headerContainer
+            : `${styles.headerContainer} ${styles.headerMessagePageContainer}`
         }
       >
-        <Link href="/" className={path === "/messages" ? styles.logo : ""}>
+        <Link href="/" className={path === "/" ? "" : styles.logo}>
           <Image priority src={Logo} alt="Logo" width={104} height={77} />
         </Link>
 
-        {path === "/messages" ? (
+        {path === "/" ? null : (
           <CommonButton type="submit" title="" className={styles.searchButton}>
             <CommonIcon id="icon-search" width="25" height="25" />
           </CommonButton>
-        ) : null}
+        )}
 
         <div className={styles.addAdvertisingContainer}>
           <CommonButton
