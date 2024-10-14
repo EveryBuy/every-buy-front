@@ -138,6 +138,7 @@
   border: 1px solid var(--not-active, #f5ffb6);
   background: var(--background, #fff);
   @media (min-width: 1024px) {
+    width: 300px;
     // width: 300px;
     // height: 55px;
   }

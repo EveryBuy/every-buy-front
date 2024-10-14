@@ -1,7 +1,7 @@
 @import "../../styles/mixins";
 @import "../../styles/breakpoints";
 
-.headerTag {
+.header {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -38,15 +38,51 @@
   }
 }
 
-.addAdvertisingContainer {
-  background-color: #b4b4b4;
+.headerMessagePageContainer {
+  justify-content: space-between;
+}
+
+.logo {
+  width: 45px;
+  height: 33px;
+  @media (min-width: 768px) {
+    width: 104px;
+    height: 77px;
+  }
+  & img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.searchButton {
+  width: 45px;
+  height: 31px;
+  background-color: #e5ff46;
+  border: 1px solid #e5ff46;
+  border-radius: 10px;
   display: flex;
+  justify-content: center;
   align-items: center;
-  gap: 6px;
+  transition: all 0.3s ease;
+  & svg {
+    margin: 0px;
+    width: 15px;
+    height: 15px;
+  }
+  @include media-min($breakpoint-tablet) {
+    display: none;
+  }
+}
+
+.addAdvertisingContainer {
   display: none;
 
   @media (min-width: 768px) {
     display: flex;
+    align-items: center;
+    gap: 6px;
+    background-color: #b4b4b4;
   }
   @media (min-width: 1024px) {
     gap: 10px;
@@ -74,6 +110,20 @@
     padding: 18px 59px;
     font-size: 20px;
     margin-right: 50px;
+  }
+}
+
+.iconsWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 16px;
+  @media (min-width: 1024px) {
+    gap: 20px;
+  }
+
+  & svg {
+    margin: 0px;
   }
 }
 

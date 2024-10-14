@@ -98,14 +98,15 @@ const Register: React.FC = () => {
       confirmPassword: "",
     };
     if (!validatePhone(phone)) {
-      newErrors.phone = "невірний формат телефону";
+      newErrors.phone = "Невірний формат телефону";
     }
     if (!validateEmail(email)) {
-      newErrors.email = "невірний формат e-mail";
+      newErrors.email = "Невірний формат e-mail";
     }
     if (!validatePassword(password)) {
       newErrors.password =
-        "Пароль повинен включати: Великі літери: A-Z. Маленькі літери: a-z. Цифри: 0-9. Символи: ~! @#$%^&*()_-+={[}]|\\:;\"'<,>.?/ ";
+        // "Пароль повинен включати: Великі літери: A-Z. Маленькі літери: a-z. Цифри: 0-9. Символи: ~! @#$%^&*()_-+={[}]|\\:;\"'<,>.?/ ";
+        "Невірний формат пароля";
     }
     if (password !== confirmPassword) {
       newErrors.confirmPassword = "Паролі не співпадають";

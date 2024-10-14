@@ -13,7 +13,7 @@ const CommonButton: FC<CommonButtonProps> = ({
   return (
     <button
       type={type}
-      className={`${styles[color]} ${className}`}
+      className={color ? `${styles[color]} ${className}` : `${className}`}
       onClick={onClick}
     >
       {title}
