@@ -113,6 +113,20 @@
   }
 }
 
+.iconsWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 16px;
+  @media (min-width: 1024px) {
+    gap: 20px;
+  }
+
+  & svg {
+    margin: 0px;
+  }
+}
+
 .registerContainer {
   display: flex;
   align-items: center;

@@ -52,9 +52,12 @@ const CommonInput: FC<CommonInputProps> = ({
       />
       {children}
       {/* </div> */}
-      {errorsMessage && (
+      <div className={styles.errorMessageWrapper}>
+        {errorsMessage && errorsMessage}
+      </div>
+      {/* {errorsMessage && (
         <div className={styles.errorMessageWrapper}>{errorsMessage}</div>
-      )}
+      )} */}
     </div>
   );
 };
