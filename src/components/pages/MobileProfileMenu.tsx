@@ -4,7 +4,7 @@ import Link from "next/link";
 import styles from "@/components/pages/MobileProfileMenu.module.scss";
 import Logout from "../auth/Logout/Logout";
 import { useId } from "react";
-import { MOBPROFMENU_ITEMS } from "@/constants/constants";
+import { PROFMENU_ITEMS } from "@/constants/constants";
 
 export const MobileProfileMenu = () => {
   
@@ -13,10 +13,10 @@ export const MobileProfileMenu = () => {
       <h4 className={styles.title}>Профіль користувача</h4>
       <nav className={styles.profileMenu}>
         <ul className={styles.profileList}>
-          {MOBPROFMENU_ITEMS.map((el, idx) => {
+          {PROFMENU_ITEMS.map((elem, idx) => {
             return (
               <li key={idx}>
-                <Link href={el.href}>{el.title}</Link>
+                <Link href={elem.href}>{elem.title}</Link>
               </li>
             );
           })}

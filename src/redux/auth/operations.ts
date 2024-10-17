@@ -97,7 +97,6 @@ export const deleteUser = createAsyncThunk(
     try {
       // receive { code, password }
       const { data } = await API.delete("/auth/delete", { data: deleteData });
-      const { data } = await API.delete("/auth/delete", { data: deleteData });
       return data;
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.message);
@@ -148,5 +147,17 @@ export const changeUserPhone = createAsyncThunk(
     } catch (error: any) {
       rejectWithValue(error.message);
     }
+  }
+)
+
+export const changeUserEmail = createAsyncThunk(
+  "user/changeEmail",
+  async (emailData, thunkAPI) => {
+try {
+  const response = await API.post("/user/photo-upload", emailData)
+  return response.data;
+} catch (error: any) {
+  return thunkAPI.rejectWithValue(error.message);
+}
   }
 )
