@@ -31,7 +31,7 @@ const Dialogue: FC = () => {
         <Box className={style.date}>20 трав 2024</Box>
       </Box>
 
-      <Box>
+      <Box className={style.dialogue}>
         <EmptyDialogueMessage />
       </Box>
 
@@ -48,19 +48,23 @@ const Dialogue: FC = () => {
             // onClick={handleIconHeartClick}
           />
         </Box>
-        <Box className={style.inputWrapper}>
-          <CommonInput
+        {/* <Box className={style.inputWrapper}> */}
+        {/* <CommonInput
             typeTitle="inputNewMessageValue"
-            // text="Напишіть повідомлення..."
             typeInput="text"
-            id="inputNewMessageValue"
             value={inputNewMessageValue}
             setValue={(e) => setInputNewMessageValue(e.target.value)}
-            // required={true}
             placeholder="Напишіть повідомлення..."
             className={style.input}
-          />
-        </Box>
+          /> */}
+        <TextField
+          multiline
+          maxRows={4}
+          fullWidth
+          className={style.input}
+          placeholder="напишіть повідомлення..."
+        />
+        {/* </Box> */}
         <Box className={style.sendIconWrapper}>
           <CommonIcon
             id="message-send"

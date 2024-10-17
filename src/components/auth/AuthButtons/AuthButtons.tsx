@@ -1,35 +1,33 @@
 "use client";
-
-import React from "react";
 import { useRouter, usePathname } from "next/navigation";
-import styles from './AuthButtons.module.scss'
+import styles from "./AuthButtons.module.scss";
 
 const RegisterLoginButtons: React.FC = () => {
   const router = useRouter();
   const currentPath = usePathname();
 
-  const handleRegister = () => {
-    router.push("/register");
-  };
-
-  const handleLogin = () => {
-    router.push("/login");
+  const handleButtonClick = (path: string) => {
+    router.push(path);
   };
 
   return (
-   <div className={styles.buttonContainer}>
-    <button
-     className={`handleButton ${currentPath === "/register" ? "handleButton--active" : ""}`}
-     onClick={handleRegister}
-    >
-     Реєстрація
-    </button>
-    <button
-     className={`handleButton ${currentPath === "/login" ? "handleButton--active" : ""}`}
-     onClick={handleRegister}
-    >
-     Вхід
-    </button>
+    <div className={styles.buttonContainer}>
+      <button
+        onClick={() => handleButtonClick("/login")}
+        className={`${styles.button} ${
+          currentPath === "/login" ? styles.buttonActive : ""
+        }`}
+      >
+        Вхід
+      </button>
+      <button
+        onClick={() => handleButtonClick("/register")}
+        className={`${styles.button} ${
+          currentPath === "/register" ? styles.buttonActive : ""
+        }`}
+      >
+        Реєстрація
+      </button>
     </div>
   );
 };

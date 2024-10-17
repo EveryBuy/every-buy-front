@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { Box } from "@mui/material";
 import CommonIcon from "@/components/ui/CommonIcon/CommonIcon";
 import style from "./Icons.module.scss";
 

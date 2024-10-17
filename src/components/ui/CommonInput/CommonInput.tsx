@@ -8,6 +8,7 @@ type CommonInputProps = {
   value?: string;
   id?: string;
   setValue: (e: ChangeEvent<HTMLInputElement>) => void;
+  setOnBlur?: () => void;
   className?: string;
   placeholder?: string;
   required?: boolean;
@@ -21,6 +22,7 @@ const CommonInput: FC<CommonInputProps> = ({
   typeInput,
   value,
   setValue,
+  setOnBlur,
   placeholder,
   required,
   children,
@@ -28,22 +30,34 @@ const CommonInput: FC<CommonInputProps> = ({
 }) => {
   return (
     <div className={styles.inputContainer}>
-      <label className={required ? styles.inputTitle : undefined} htmlFor={typeTitle}>
-        {text}
-      </label>
+      {text && (
+        <label
+          className={required ? styles.inputTitle : ""}
+          htmlFor={typeTitle}
+        >
+          {text}
+        </label>
+      )}
+
       {/* <div className={styles.inputWrapper}> */}
-        <input
-          type={typeInput ? "text" : "password"}
-          id="password"
-          value={value}
-          onChange={setValue}
-          className={styles.input}
-          required={required}
-          placeholder={placeholder}
-        />
-        {children}
+      <input
+        type={typeInput ? "text" : "password"}
+        // id="password"
+        value={value}
+        onChange={setValue}
+        onBlur={setOnBlur}
+        className={styles.input}
+        required={required}
+        placeholder={placeholder}
+      />
+      {children}
       {/* </div> */}
-      {errorsMessage}
+      <div className={styles.errorMessageWrapper}>
+        {errorsMessage && errorsMessage}
+      </div>
+      {/* {errorsMessage && (
+        <div className={styles.errorMessageWrapper}>{errorsMessage}</div>
+      )} */}
     </div>
   );
 };

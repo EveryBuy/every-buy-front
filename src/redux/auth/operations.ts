@@ -17,10 +17,12 @@ export const register = createAsyncThunk(
   async (userRegisterData: UserRegData, thunkAPI) => {
     try {
       const { data } = await API.post("/auth/registration", userRegisterData);
+      console.log(data);
       setHeaderAuthToken(data.data.token);
       const userData = await API.get("/user");
       return { data: userData.data.data, token: data.data.token };
     } catch (error: any) {
+      console.log(error.response.data.error);
       return thunkAPI.rejectWithValue(error.message);
     }
   }
@@ -94,6 +96,7 @@ export const deleteUser = createAsyncThunk(
   async (deleteData: UserDeleteData, thunkAPI) => {
     try {
       // receive { code, password }
+      const { data } = await API.delete("/auth/delete", { data: deleteData });
       const { data } = await API.delete("/auth/delete", { data: deleteData });
       return data;
     } catch (error: any) {
