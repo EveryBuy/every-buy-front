@@ -51,10 +51,10 @@ body {
 }
 
 .title {
-  // padding-bottom: 30px;
+  padding-bottom: 30px;
   font-size: var(--f-size-h4);
   @include media-min($breakpoint-tablet) {
-    padding: 0px 60px;
+    padding: 60px 60px 52px;
     font-size: 40px;
     font-weight: 700;
   }
@@ -117,6 +117,7 @@ body {
   display: none;
   @media screen and (min-width: 769px) {
     display: block;
+
   }
 }
 

@@ -14,7 +14,7 @@ export default async function UserLayout({
       <div className="title">
         <h1 className="mobileHidden">Профіль користувача</h1>
       </div>
-      <div style={{ display: "flex", width: "100%"}}>
+      <div style={{ display: "flex", width: "100%", padding: "0 60px"}}>
         <ProfileMenu />
         <section className="profileSectionWrapper">{children}</section>
       </div>

@@ -3,22 +3,14 @@ import {
   UserLogData,
   UserDeleteData,
   UserChgPwdData,
+  ChangePhoneData,
+  UserFullName,
 } from "@/types/stateTypes";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-import { User } from "../../types/stateTypes";
-
-const API = axios.create({
-  baseURL: "https://api-everybuy.onrender.com",
-});
-
-const setHeaderAuthToken = (token: string | null) => {
-  API.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-};
-
-const clearHeaderAuthToken = () => {
-  delete API.defaults.headers.common["Authorization"];
-};
+import { API } from "@/utils/axios";
+import { setHeaderAuthToken } from "@/utils/axios";
+import { clearHeaderAuthToken } from "@/utils/axios";
+import { RootState } from "../store";
 
 export const register = createAsyncThunk(
   "auth/register",
@@ -43,6 +35,7 @@ export const login = createAsyncThunk(
     try {
       const { data } = await API.post("/auth/auth", userLogData);
       setHeaderAuthToken(data.data.token);
+      console.log(API.defaults.headers.common["Authorization"]);
       const userData = await API.get("/user");
       return { data: userData.data.data, token: data.data.token };
     } catch (error) {
@@ -68,6 +61,8 @@ export const refreshUser = createAsyncThunk(
       const { auth }: any = getState();
       setHeaderAuthToken(auth.token);
       const { data } = await API.get("/user");
+      console.log(data.data);
+      
       return data.data;
     } catch (error: any) {
       clearHeaderAuthToken();
@@ -121,3 +116,48 @@ export const changePassword = createAsyncThunk(
     }
   }
 );
+
+export const changeUserName = createAsyncThunk(
+  "user/changeName",
+  async (fullName: UserFullName, { getState, rejectWithValue }) => {
+    try {
+      const state = getState() as RootState;
+      setHeaderAuthToken(state.auth.token);
+      const responce = await API.put("/user/update-full-name", fullName);
+      return responce.data.data;
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const changeUserPhone = createAsyncThunk(
+  "user/changePhone",
+  async (changePhoneData: ChangePhoneData, { getState, rejectWithValue }) => {
+    try {
+      const state = getState() as RootState;
+      setHeaderAuthToken(state.auth.token);
+      const { data } = await API.put("/auth/change-phone-number", changePhoneData);
+      const token = data.data.token;
+      setHeaderAuthToken(token);
+      const response = await API.get("/user");
+      console.log(response.data.data);
+      
+      return response.data.data;
+    } catch (error: any) {
+      rejectWithValue(error.message);
+    }
+  }
+)
+
+export const changeUserEmail = createAsyncThunk(
+  "user/changeEmail",
+  async (emailData, thunkAPI) => {
+try {
+  const response = await API.post("/user/photo-upload", emailData)
+  return response.data;
+} catch (error: any) {
+  return thunkAPI.rejectWithValue(error.message);
+}
+  }
+)

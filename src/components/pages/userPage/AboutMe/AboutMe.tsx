@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useState, useEffect } from "react";
+import { FC, useState, useEffect, useCallback } from "react";
 import { selectUser } from "@/redux/auth/selectors";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import styles from "./AboutMe.module.scss";
@@ -14,6 +14,7 @@ import { DeleteAccount } from "@/components/auth/DeleteAccount/DeleteAccount";
 import { ChangePassword } from "@/components/auth/ChangePassword/ChangePassword";
 import UserData from "@/components/auth/UserData/UserData";
 import UserDataEdit from "@/components/auth/UserDataEdit/UserDataEdit";
+import CommonModal from "@/components/ui/CommonModal/CommonModal";
 
 const AboutMe: FC = () => {
   const user = useAppSelector(selectUser);
@@ -22,6 +23,8 @@ const AboutMe: FC = () => {
   const [isOpenChangePass, setIsOpenChangePass] = useState(false);
   const [isClient, setIsClient] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const [previewImage, setPreviewImage] = useState<string>("images/user.png");
 
   useEffect(() => {
     setIsClient(true);
@@ -40,12 +43,17 @@ const AboutMe: FC = () => {
     setIsEdit(!isEdit);
   }
 
-  // const handleClose = () => {
-  //   setIsOpenCangePass(false)
-  // }
-
-  if (!user || !isClient) {
-    return <p>Завантаження...</p>;
+  const handleChangePhoto = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const file = event.target.files?.[0]
+      if (file) {
+        setSelectedImage(file);
+        setPreviewImage(URL.createObjectURL(file));
+      }
+    }
+  
+    
+    if (!user || !isClient) {
+      return <p>Завантаження...</p>;
   }
 
   return (
@@ -73,7 +81,23 @@ const AboutMe: FC = () => {
             width="142"
             height="142"
           />
-          <p className={styles.editText}>Редагувати фото</p>
+          {/* <p className={styles.editText}>Редагувати фото</p> */}
+          <label className={styles.editText}>
+            Редагувати фото
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleChangePhoto}
+              className={styles.fileInput}
+            />
+            
+          </label>
+          {previewImage && <CommonModal
+          onClose={()=>setPreviewImage(null)}
+          >
+            <img src={previewImage}
+              alt="Image Preview" />
+          </CommonModal>}
         </div>
 
         <div className={styles.listBox}>
@@ -95,11 +119,7 @@ const AboutMe: FC = () => {
           <div className={styles.deleteBox}>
             <p className={styles.dangerZone}>Небезпечна зона</p>
             <p>Ваш профіль на EveryBuy буде видалено назавжди.</p>
-            <Image
-              className={styles.separeteLine}
-              src={separeteLine}
-              alt="separator"
-            />
+            <div className={styles.devider}></div>
             <DeleteAccount>Видалити мій акаунт</DeleteAccount>
           </div>
         </div>

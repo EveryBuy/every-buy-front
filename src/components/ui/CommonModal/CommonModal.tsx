@@ -4,12 +4,8 @@ import xClose from "@/assets/Svg/xClose.svg";
 import CommonModalProps from "@/types/commonModalProps";
 import { Backdrop } from "@mui/material";
 
-type Props = {
-  onClose: (prop: boolean) => void;
-  children: React.ReactNode;
-};
-
 export const CommonModal: React.FC<CommonModalProps> = ({
+  contentClassName,
   onClose,
   children,
 }) => {
@@ -30,7 +26,7 @@ export const CommonModal: React.FC<CommonModalProps> = ({
         >
           <Image src={xClose} alt="close" width={18} height={18} />
         </button>
-        <div className={styles.contentWrapper}>{children}</div>
+        <div className={`${styles.contentWrapper} ${contentClassName}`}>{children}</div>
       </div>
     </Backdrop>
   );
