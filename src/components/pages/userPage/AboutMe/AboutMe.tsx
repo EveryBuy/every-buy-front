@@ -15,6 +15,7 @@ import { ChangePassword } from "@/components/auth/ChangePassword/ChangePassword"
 import UserData from "@/components/auth/UserData/UserData";
 import UserDataEdit from "@/components/auth/UserDataEdit/UserDataEdit";
 import CommonModal from "@/components/ui/CommonModal/CommonModal";
+import { changeUserPhoto } from "@/redux/auth/operations";
 
 const AboutMe: FC = () => {
   const user = useAppSelector(selectUser);
@@ -24,8 +25,10 @@ const AboutMe: FC = () => {
   const [isClient, setIsClient] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
-  const [previewImage, setPreviewImage] = useState<string>("images/user.png");
+  const [previewImage, setPreviewImage] = useState<string>("");
 
+  console.log("in component",user.userPhotoUrl);
+  
   useEffect(() => {
     setIsClient(true);
   }, []);
@@ -49,9 +52,22 @@ const AboutMe: FC = () => {
         setSelectedImage(file);
         setPreviewImage(URL.createObjectURL(file));
       }
-    }
+    event.target.value = '';
+  }
+
+  const acceptNewPhoto = async () => {
+try {
+  const formData = new FormData();
+    formData.append("photo", selectedImage)
+  const result = await dispatch(changeUserPhoto(formData)).unwrap();
+  console.log("Фото успішно змінено", result);
+  setPreviewImage('');
+  setSelectedImage(null);
+} catch (error) {
+  console.log("Не вдалось змінити фото", error);
+}
+  }
   
-    
     if (!user || !isClient) {
       return <p>Завантаження...</p>;
   }
@@ -76,14 +92,14 @@ const AboutMe: FC = () => {
         <div className={styles.userImageBox}>
           <Image
             className={styles.userImage}
-            src="/images/user.png"
+            src={`${user.userPhotoUrl || '/images/user.png'}?t=${new Date().getTime()}`}
             alt="User image"
-            width="142"
-            height="142"
+            width="258"
+            height="258"
+            // layout="responsive"
           />
-          {/* <p className={styles.editText}>Редагувати фото</p> */}
           <label className={styles.editText}>
-            Редагувати фото
+            Змінити свою фотографію
             <input
               type="file"
               accept="image/*"
@@ -93,10 +109,27 @@ const AboutMe: FC = () => {
             
           </label>
           {previewImage && <CommonModal
-          onClose={()=>setPreviewImage(null)}
+          onClose={()=>setPreviewImage('')}
           >
-            <img src={previewImage}
+            <Image src={previewImage}
+              width={258}
+              height={258}
+              layout="responsive"
               alt="Image Preview" />
+            <CommonButton
+              type="button"
+              title="Підтвердити"
+              color="yellow"
+              className={styles.button}
+              onClick={acceptNewPhoto}
+            />
+            <CommonButton
+              type="button"
+              title="Відмінити"
+              color="yellow"
+              className={styles.button}
+              onClick={()=>setPreviewImage('')}
+            />
           </CommonModal>}
         </div>
 

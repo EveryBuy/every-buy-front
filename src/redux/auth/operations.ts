@@ -161,3 +161,21 @@ try {
 }
   }
 )
+
+export const changeUserPhoto = createAsyncThunk(
+  "user/changePhoto",
+  async (formData, {getState, rejectWithValue}) => {
+    try {
+      const state = getState() as RootState
+      setHeaderAuthToken(state.auth.token)
+      const response = await API.post("/user/photo-upload", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      })
+      return response.data
+    } catch (error: any) {
+      return rejectWithValue(error.message)
+    }
+  }
+)

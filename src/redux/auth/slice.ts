@@ -10,6 +10,7 @@ import {
   changePassword,
   changeUserName,
   changeUserPhone,
+  changeUserPhoto,
 } from "./operations";
 import toast from "react-hot-toast";
 import { AuthResponse, AuthState, User, UserFullName } from "@/types/stateTypes";
@@ -118,6 +119,10 @@ const authSlice = createSlice({
       })
       .addCase(changeUserPhone.fulfilled, (state, action: PayloadAction<User>) => {
         state.user = action.payload;
+      })
+      .addCase(changeUserPhoto.fulfilled, (state, action) => {
+        console.log(action.payload);
+        state.user.userPhotoUrl = action.payload.data.userPhotoUrl
       })
       ;
   },
