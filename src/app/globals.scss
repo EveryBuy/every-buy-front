@@ -131,3 +131,18 @@ body {
 .hidden {
   display: none;
 }
+
+.notFoundMessage {
+  font-size: 2rem;
+  color: #333;
+  padding: 30px;
+
+  @media (max-width: $breakpoint-tablet) {
+    font-size: 1.7rem;
+  }
+
+  @media (max-width: $breakpoint-mobile) {
+    font-size: 1.5rem;
+  }
+}
+
