@@ -26,62 +26,110 @@
 .wrapper {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  padding: 33px 0 0 0;
   gap: 33px;
 
   @include media-min($breakpoint-laptop) {
     display: flex;
     flex-direction: row-reverse;
-    justify-content: flex-end;
-    gap: 300px;
+    justify-content: space-between;
+    // gap: 300px;
   }
 }
 
 .userImageBox {
   display: inline-flex;
   flex-direction: column;
-
-  width: 100%;
-    height: 100%;
-    // layout="responsive"
+  width: 140px;
+  height: 100%;
   font-size: 14px;
-  @include media-min($breakpoint-laptop) {
+  @include media-min($breakpoint-tablet) {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 16px;
     align-items: center;
+    width: 258px;
+  }
+}
+
+.userImage {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  overflow: hidden;
+  
+  @include media-min($breakpoint-tablet) {
+    width: 258px;
+    height: 258px;
   }
 }
 
 .editText {
-  align-self: center;
+  display: flex;
+  flex-direction: column;
   color: #6735f4;
-  
-}
-
-.userImage {
-  width: 258px;
-  height: 258px;
-  border-radius: 50%;
-  object-fit: cover;
-  overflow: hidden;
+  cursor: pointer;
 
   @include media-min($breakpoint-tablet) {
-   
+    align-self: center;
   }
 }
 
-.listBox {
+.photoChangeText {
+  margin-top: 4px;
+  text-align: center;
+}
+
+.fileInput {
+  position: absolute;
+  display: none;
+  cursor: pointer;
+}
+
+.changeImgModalContainer {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}
 
+.previewText {
+  font-size: larger;
+}
+
+.previewImg {
+  width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    object-fit: cover;
+    overflow: hidden;
+
+    @include media-min($breakpoint-laptop) {
+      width: 258px;
+        height: 258px;
+    }
+}
+
+.listBox {
+    width: 335px;
+  display: flex;
+  flex-direction: column;
+  
   @include media-min($breakpoint-laptop) {
+    width: 427px;
     margin-top: 50px;
   }
 }
 
 .userData {
   width: 100%;
-  margin-bottom: 50px;
+  margin-bottom: 41px;
+  @include media-min($breakpoint-tablet) {
+    margin-bottom: 20px;
+  }
 }
 
 .changePassBtn {
@@ -104,6 +152,14 @@
   flex-direction: column;
   margin-top: 60px;
   gap: 20px;
+
+  @include media-min($breakpoint-tablet) {
+    margin-top: 70px;
+  }
+
+  @include media-min($breakpoint-laptop) {
+    margin-top: 90px;
+  }
 }
 
 .deleteLink {
@@ -123,7 +179,7 @@
 .devider {
   width: 100%;
   height: 1px;
-  border: 1px solid var(--input-text)
+  border: 1px solid var(--input-text);
 }
 
 .separeteLine {
@@ -134,15 +190,9 @@
   }
 }
 
-.fileInput {
-  position: absolute;  
-  width: 0;  
-  height: 0;  
-  opacity: 0;
-}
 
 .button {
   width: 186px;
-    height: 44px;
-    border-radius: 10px;
+  height: 44px;
+  border-radius: 10px;
 }

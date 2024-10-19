@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useState, useEffect, useCallback } from "react";
+import { FC, useState, useEffect } from "react";
 import { selectUser } from "@/redux/auth/selectors";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import styles from "./AboutMe.module.scss";
@@ -26,8 +26,6 @@ const AboutMe: FC = () => {
   const [isEdit, setIsEdit] = useState(false);
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [previewImage, setPreviewImage] = useState<string>("");
-
-  console.log("in component",user.userPhotoUrl);
   
   useEffect(() => {
     setIsClient(true);
@@ -35,7 +33,6 @@ const AboutMe: FC = () => {
 
   const handleClick = () => {
     router.replace("/user/");
-    // dispatch(toggleProfileMenu(false));
   };
 
   const handleChangePass = () => {
@@ -56,16 +53,19 @@ const AboutMe: FC = () => {
   }
 
   const acceptNewPhoto = async () => {
-try {
+  if (selectedImage)  {
+    try {
   const formData = new FormData();
-    formData.append("photo", selectedImage)
+  formData.append("photo", selectedImage)
   const result = await dispatch(changeUserPhoto(formData)).unwrap();
   console.log("Фото успішно змінено", result);
   setPreviewImage('');
   setSelectedImage(null);
 } catch (error) {
   console.log("Не вдалось змінити фото", error);
-}
+    }
+  }
+    
   }
   
     if (!user || !isClient) {
@@ -92,29 +92,30 @@ try {
         <div className={styles.userImageBox}>
           <Image
             className={styles.userImage}
-            src={`${user.userPhotoUrl || '/images/user.png'}?t=${new Date().getTime()}`}
+            // додав унікальний параметр для уникнення кешування. Фото завантажується при кожному рендері
+            src={`${user.userPhotoUrl || '/images/user.png'}?t=${new Date().getTime()}`}  
             alt="User image"
             width="258"
             height="258"
-            // layout="responsive"
           />
           <label className={styles.editText}>
-            Змінити свою фотографію
+            <p className={styles.photoChangeText}>Змінити свою фотографію</p>
             <input
               type="file"
               accept="image/*"
               onChange={handleChangePhoto}
               className={styles.fileInput}
             />
-            
           </label>
           {previewImage && <CommonModal
+            contentClassName={styles.changeImgModalContainer}
           onClose={()=>setPreviewImage('')}
           >
+            <p className={styles.previewText}>Попередній перегляд</p>
             <Image src={previewImage}
+              className={styles.previewImg}
               width={258}
               height={258}
-              layout="responsive"
               alt="Image Preview" />
             <CommonButton
               type="button"

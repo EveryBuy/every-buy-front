@@ -57,3 +57,8 @@ export type ChangePhoneData = {
   password: string,
   newPhoneNumber: string
 }
+
+export type ChangeEmailData = {
+  password: string,
+  newEmail: string
+}

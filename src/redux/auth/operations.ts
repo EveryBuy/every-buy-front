@@ -5,6 +5,7 @@ import {
   UserChgPwdData,
   ChangePhoneData,
   UserFullName,
+  ChangeEmailData,
 } from "@/types/stateTypes";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { API } from "@/utils/axios";
@@ -152,19 +153,21 @@ export const changeUserPhone = createAsyncThunk(
 
 export const changeUserEmail = createAsyncThunk(
   "user/changeEmail",
-  async (emailData, thunkAPI) => {
-try {
-  const response = await API.post("/user/photo-upload", emailData)
+  async (changeEmailData: ChangeEmailData, {getState, rejectWithValue}) => {
+    try {
+  const state = getState() as RootState;
+      setHeaderAuthToken(state.auth.token);
+  const response = await API.put("/auth/change-email", changeEmailData)
   return response.data;
 } catch (error: any) {
-  return thunkAPI.rejectWithValue(error.message);
+  return rejectWithValue(error.message);
 }
   }
 )
 
 export const changeUserPhoto = createAsyncThunk(
   "user/changePhoto",
-  async (formData, {getState, rejectWithValue}) => {
+  async (formData: FormData, {getState, rejectWithValue}) => {
     try {
       const state = getState() as RootState
       setHeaderAuthToken(state.auth.token)
