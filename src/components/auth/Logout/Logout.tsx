@@ -6,6 +6,7 @@ import style from "./Logout.module.scss";
 import { useAppDispatch } from "@/redux/store";
 import { logout } from "@/redux/auth/operations";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export const Logout = ({ children }: {children: string}) => {
   const [open, setOpen] = useState(false);
@@ -26,9 +27,9 @@ export const Logout = ({ children }: {children: string}) => {
 
   return (
     <>
-      <Button className={style.logoutBtn} onClick={handleOpen}>
+      <Link href='#' className={style.logoutBtn} onClick={handleOpen}>
         {children}
-      </Button>
+      </Link>
       <Backdrop
         sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={open}

@@ -2,22 +2,30 @@
 @import "../../styles/breakpoints";
 
 .profileMenu {
-  width: 100%;
-  // transform: translateX(0);
+  display: flex;
+  width: 225px;
+
   @include media-min($breakpoint-tablet) {
     width: 225px;
+    height: 361px;
     padding-top: 48px;
   }
 }
 
-@media only screen and (max-width: $breakpoint-tablet) 
-   {
-     .hidden {
-       transform: translateX(-100%);
-       display: none;
-     }
+@media only screen and (max-width: $breakpoint-tablet) {
+  .hidden {
+    transform: translateX(-100%);
+    display: none;
   }
+}
 
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 225px;
+  height: 361px;
+}
 
 .profileList {
   display: flex;
@@ -28,18 +36,27 @@
 
   @include media-min($breakpoint-tablet) {
     row-gap: 20px;
-    padding: 8px 12px 0px 0px;
     font-size: var(--large-body-medium);
-    border-right: 1px solid #9d9d9d;
   }
+}
 
-  & li {
-    padding: 10px;
-    border-bottom: 1px solid #9d9d9d;
-    @include media-min($breakpoint-tablet) {
-      padding: 0px;
-      border-bottom: 0px;
-    }
+.profileListItem {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.itemLink {
+  width: 100%;
+  display: flex;
+  position: relative;
+  padding: 10px;
+  border-bottom: 1px solid #9d9d9d;
+
+  @include media-min($breakpoint-tablet) {
+    padding: 0px;
+    border-bottom: 0px;
   }
 }
 
@@ -54,9 +71,33 @@
   }
 }
 
-.exitItem {
-  @include media-min($breakpoint-tablet) {
-      margin-top: 88px;
-      
-    }
+.subMenu {
+  display: flex;
+  flex-direction: column;
+  align-self: flex-end;
+  gap: 12px;
+}
+
+.subItemLink {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  font-size: 16px;
+  padding-right: 16px;
+}
+
+.devider {
+  border: 1px solid #9d9d9d;
+  width: 1px;
+  height: 358px;
+  rotate: 180;
+}
+
+.marker {
+  position: absolute;
+  width: 3px;
+  height: 29px;
+  border: 1px solid var(--button);
+  background-color: var(--button);
+  right: -2px;
 }
