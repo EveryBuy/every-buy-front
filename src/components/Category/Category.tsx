@@ -5,6 +5,7 @@ import Image from "next/image";
 import Fold from "@/assets/Svg/fold.svg";
 import CategoryItem from "@/types/categoryItemType";
 import styles from "./Category.module.scss";
+import CommonPreloader from "../ui/CommonPreloader/CommonPreloader";
 
 const Category: React.FC = () => {
   const [data, setData] = useState<CategoryItem[] | null>(null);
@@ -33,7 +34,7 @@ const Category: React.FC = () => {
   }, []);
 
   if (loading) {
-    return <div className={styles.loading}>Loading...</div>;
+    return <CommonPreloader size={40} sx={{ color: '#e5ff46' }} />;
   }
 
   if (error) {
