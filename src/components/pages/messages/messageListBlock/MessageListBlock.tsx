@@ -5,19 +5,35 @@ import { ListMessages, Buttons, Icons, CommonIcon } from "@/components";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../../../../redux/store";
 import {
-  getAllChats,
-  getAllMessagesById,
-} from "../../../../redux/messages/operations";
+  useGetAllChatsQuery,
+  useGetAllMessagesByIdQuery,
+} from "../../../../redux/messages/chatApi";
+
+// import {
+//   getAllChats,
+//   getAllMessagesById,
+// } from "../../../../redux/messages/operations";
+
 import style from "./MessageListBlock.module.scss";
 
 const useAppDispatch = () => useDispatch<AppDispatch>();
 
 const MessageListBlock: FC = () => {
   const dispatch = useAppDispatch();
-  const messages = useSelector((state: RootState) => state.messages.chats);
+  // const messages = useSelector((state: RootState) => state.messages.chats);
   const [activeButton, setActiveButton] = useState<number | null>(1);
   const [isHeartSelected, setHeardSelected] = useState<boolean>(false);
   const [isFolderSelected, setFolderSelected] = useState<boolean>(false);
+
+  // !!!
+  const { data: chats } = useGetAllChatsQuery();
+  const { data: messages } = useGetAllMessagesByIdQuery(16);
+  console.log(messages);
+  const allChats = useSelector((state: RootState) => state.messages.chats);
+  const allMessages = useSelector(
+    (state: RootState) => state.messages.messages
+  );
+  // !!!
 
   const handleButtonClick = (buttonId: number) => {
     setActiveButton(buttonId);
@@ -35,18 +51,18 @@ const MessageListBlock: FC = () => {
     };
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        await dispatch(getAllChats());
-        await dispatch(getAllMessagesById(10));
-      } catch (error) {
-        console.log(error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       await dispatch(getAllChats());
+  //       await dispatch(getAllMessagesById(10));
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
 
-    fetchData();
-  }, [dispatch]);
+  //   fetchData();
+  // }, [dispatch]);
 
   if (!messages) {
     return "Завантажується";
@@ -184,7 +200,8 @@ const MessageListBlock: FC = () => {
       </Box>
       <Box className={style.listWrapper}>
         {/* <ListMessages messages={messages} /> */}
-        <ListMessages messages={mockMessages} />
+        {/* <ListMessages messages={mockMessages} /> */}
+        <ListMessages messages={messages} />
       </Box>
     </Box>
   );

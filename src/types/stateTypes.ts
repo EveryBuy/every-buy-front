@@ -1,6 +1,6 @@
 export type User = {
   userId: string | null;
-  userName: string | null;
+  fullName: string | null;
   email: string | null;
   phone: string | null;
   userPhotoUrl: string | null;
@@ -45,6 +45,20 @@ export type DeleteResponse = {
 };
 
 export type UserChgPwdData = {
-  oldPassword: "string";
-  newPassword: "string";
+  oldPassword: string;
+  newPassword: string;
 };
+
+export type UserFullName = {
+  fullName: string;
+};
+
+export type ChangePhoneData = {
+  password: string,
+  newPhoneNumber: string
+}
+
+export type ChangeEmailData = {
+  password: string,
+  newEmail: string
+}

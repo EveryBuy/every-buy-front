@@ -1,10 +1,11 @@
 "use client";
 import { ModalDialog } from "@/components/ui/ModalDilog/ModalDialog";
-import { Backdrop, Button, CircularProgress } from "@mui/material";
+import { Backdrop, CircularProgress } from "@mui/material";
 import React, { useState } from "react";
 import { useAppDispatch } from "@/redux/store";
-import { logout } from "@/redux/auth/operations";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import styles from './DeleteAccount.module.css'
 
 export const DeleteAccount = ({ children }: {children: string}) => {
   const [open, setOpen] = useState(false);
@@ -25,11 +26,13 @@ export const DeleteAccount = ({ children }: {children: string}) => {
 
   return (
     <>
-      <Button
-        color="error"
-        onClick={handleOpen}>
+      <Link href='#'
+        className={styles.link}
+        onClick={handleOpen}
+        >
         {children}
-      </Button>
+
+      </Link>
       <Backdrop
         sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={open}

@@ -3,9 +3,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { authReducer } from "./auth/slice";
 import { messagesReducer } from "./messages/slice";
-import { persistReducer } from "redux-persist";
 // import storage from "redux-persist/lib/storage";
 import {
+  persistStore,
+  persistReducer,
   FLUSH,
   REHYDRATE,
   PAUSE,
@@ -13,10 +14,12 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
-import persistStore from "redux-persist/es/persistStore";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 import { uiStateReducer } from "./ui/slice";
+
+// !!!
+import { chatApi } from "./messages/chatApi";
 
 const createNoopStorage = () => {
   return {
@@ -39,6 +42,7 @@ const storage =
 
 const persistConfig = {
   key: "root",
+  version: 1,
   storage,
   // whitelist: ["token"],
 };
@@ -54,13 +58,15 @@ export const makeStore = () => {
       // ui: persistedUiReducer,
       // products: productsReducer,
       // filters: filtersReducer,
+      // !!!
+      [chatApi.reducerPath]: chatApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({
         serializableCheck: {
           ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
         },
-      }),
+      }).concat(chatApi.middleware),
   });
 };
 

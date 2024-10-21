@@ -20,12 +20,12 @@ const ListMessages: FC<ListMessagesType> = ({ messages }) => {
 
   return (
     <Box className={style.listWrapper}>
-      {messages.map(({ chatId, userData, lastMessage }) => (
+      {messages.map(({ chatId, userData, lastMessage, text }) => (
         <Box sx={{ borderBottom: "solid 1px gray" }} key={chatId}>
           <ItemMessage
-            // picture={userData.photoUrl}
-            title={userData.fullName}
-            text={lastMessage}
+            // title={userData.fullName}
+            // text={lastMessage}
+            text={text}
             alt=""
           />
         </Box>

@@ -1,7 +1,8 @@
 "use client";
 
 import { createSlice } from "@reduxjs/toolkit";
-import { getAllChats, getAllMessagesById } from "./operations";
+// import { getAllChats, getAllMessagesById } from "./operations";
+import { chatApi } from "./chatApi";
 import { ChatsType } from "@/types/messages/messages";
 
 // const initialState: ChatsType | [] = [];
@@ -30,31 +31,48 @@ const messagesSlice = createSlice({
   name: "messages",
   initialState,
   reducers: {},
+  // extraReducers: (builder) => {
+  //   builder
+  //     .addCase(getAllChats.pending, (state) => {
+  //       state.loading = true;
+  //       state.error = null;
+  //     })
+  //     .addCase(getAllChats.fulfilled, (state, action) => {
+  //       state.loading = false;
+  //       state.chats = action.payload || [];
+  //     })
+  //     .addCase(getAllChats.rejected, (state, action) => {
+  //       state.loading = false;
+  //       state.error = (action.payload as string) || "An error occurred";
+  //       console.error(`${state}`);
+  //       console.error(`Error: ${state.error}`);
+  //     })
+  //     //
+  //     .addCase(getAllMessagesById.pending, (state) => {
+  //       state.loading = true;
+  //       state.error = null;
+  //     })
+  //     .addCase(getAllMessagesById.fulfilled, (state, action) => {
+  //       state.loading = false;
+  //       state.messages = action.payload || [];
+  //     });
+  // },
   extraReducers: (builder) => {
     builder
-      .addCase(getAllChats.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(getAllChats.fulfilled, (state, action) => {
-        state.loading = false;
-        state.chats = action.payload || [];
-      })
-      .addCase(getAllChats.rejected, (state, action) => {
-        state.loading = false;
-        state.error = (action.payload as string) || "An error occurred";
-        console.error(`${state}`);
-        console.error(`Error: ${state.error}`);
-      })
-      //
-      .addCase(getAllMessagesById.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(getAllMessagesById.fulfilled, (state, action) => {
-        state.loading = false;
-        state.messages = action.payload || [];
-      });
+      // Об'єднуємо стан з RTK Query для кешування чатів
+      .addMatcher(
+        chatApi.endpoints.getAllChats.matchFulfilled,
+        (state, { payload }) => {
+          state.chats = payload;
+        }
+      )
+      // Об'єднуємо стан з RTK Query для кешування повідомлень
+      .addMatcher(
+        chatApi.endpoints.getAllMessagesById.matchFulfilled,
+        (state, { payload }) => {
+          state.messages = payload;
+        }
+      );
   },
 });
 

@@ -51,10 +51,10 @@ body {
 }
 
 .title {
-  // padding-bottom: 30px;
+  padding-bottom: 30px;
   font-size: var(--f-size-h4);
   @include media-min($breakpoint-tablet) {
-    padding: 0px 60px;
+    padding: 60px 60px 52px;
     font-size: 40px;
     font-weight: 700;
   }
@@ -69,14 +69,6 @@ body {
   }
 }
 
-.profileSectionWrapper {
-  // display: none;
-  width: 100%;
-  @include media-min($breakpoint-tablet) {
-    display: flex;
-    padding-left: 110px;
-  }
-}
 
 .slick-slider {
   width: 100%;
@@ -87,29 +79,46 @@ body {
   display: flex !important;
   justify-content: center;
   gap: 12px;
-
+  
   li {
     margin: 0 !important;
     width: 8px !important;
     height: 8px !important;
     border-radius: 50%;
     background: #d9d9d9;
-
+    
     button {
       padding: 0 !important;
       width: 8px !important;
       height: 8px !important;
       border-radius: 50%;
       background: #d9d9d9;
-
+      
       &:before {
         display: none;
       }
     }
-
+    
     &.slick-active button {
       background: var(--input-text);
     }
+  }
+}
+
+.userLayout {
+  padding: 0 20px;
+
+  @include media-min($breakpoint-tablet) {
+    padding: 0 60px;
+  }
+}
+
+.profileSectionWrapper {
+  // display: none;
+  width: 100%;
+  @include media-min($breakpoint-tablet) {
+    display: flex;
+    padding-left: 110px;
   }
 }
 
@@ -117,6 +126,7 @@ body {
   display: none;
   @media screen and (min-width: 769px) {
     display: block;
+
   }
 }
 
@@ -131,3 +141,18 @@ body {
 .hidden {
   display: none;
 }
+
+.notFoundMessage {
+  font-size: 2rem;
+  color: #333;
+  padding: 30px;
+
+  @media (max-width: $breakpoint-tablet) {
+    font-size: 1.7rem;
+  }
+
+  @media (max-width: $breakpoint-mobile) {
+    font-size: 1.5rem;
+  }
+}
+
