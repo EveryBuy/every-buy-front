@@ -4,13 +4,13 @@ import styles from "./CommonInput.module.scss";
 type CommonInputProps = {
   text?: string;
   typeTitle?: string;
-  typeInput: boolean | string;
-  value: string;
-  // id?: string;
+  typeInput?: boolean | string;
+  value?: string;
+  id?: string;
   setValue: (e: ChangeEvent<HTMLInputElement>) => void;
   setOnBlur?: () => void;
   className?: string;
-  placeholder: string;
+  placeholder?: string;
   required?: boolean;
   children?: ReactNode;
   errorsMessage?: ReactNode;

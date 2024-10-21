@@ -1,6 +1,6 @@
 import { useId } from "react";
 
-export const MOBPROFMENU_ITEMS = [
+export const PROFMENU_ITEMS = [
   {
     title: "Про мене",
     href: "/user/about-me",
