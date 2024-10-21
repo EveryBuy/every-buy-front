@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect, useRef} from "react";
 import { useRouter } from "next/navigation";
 import EyePassword from "@/assets/Svg/EyePassword.svg";
 import EyeInvisibleFilled from "@/assets/Svg/EyeInvisibleFilled.svg";
@@ -17,6 +17,8 @@ import {
   validateEmail,
   validatePassword,
 } from "@/utils/validate";
+import CommonModal from "@/components/ui/CommonModal/CommonModal";
+import { CommonButton } from "@/components";
 
 type ErrorsType = {
   phone: string;
@@ -41,10 +43,20 @@ const Register: React.FC = () => {
     password: "",
     confirmPassword: "",
   });
+  const [registerModalOpen, setRegisterModalOpen] = useState(false);
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
+  const showRegisterModal = useRef(false);
 
   useEffect(() => {
-    isLoggedIn && router.push("/user");
+    if (isLoggedIn && !showRegisterModal.current) {
+      router.push("/user");
+    } else {
+      showRegisterModal.current = true;
+    }
+
+    if (isLoggedIn && showRegisterModal.current) {
+      setRegisterModalOpen(true);
+    }
   }, [isLoggedIn, router]);
 
   // check before submit
@@ -155,6 +167,8 @@ const Register: React.FC = () => {
   const changeEyeShowConfirmPasswordStatus = () => {
     setShowConfirmPassword((prev) => !prev);
   };
+
+  const handleClose = () => router.push("/");
 
   return (
     <>
@@ -298,6 +312,27 @@ const Register: React.FC = () => {
           Зареєструватись
         </button>
       </form>
+
+      {registerModalOpen && (
+          <CommonModal onClose={handleClose}>
+            <h3 className={styles.registerModalTitle}>Вітаємо вас!</h3>
+            <p className={styles.registerModalText}>Ви успішно зареєструвалися і тепер можете насолоджуватися всіма перевагами нашого сервісу.</p>
+            <p className={styles.registerModalText}>Дякуємо за реєстрацію у нашому магазині. Бажаємо вам приємних покупок!</p>
+            <CommonButton
+                type="button"
+                title="Перейти до налаштувань профілю"
+                color="yellow"
+                className={styles.primaryButton}
+                onClick={() => router.push("/user")}
+            />
+            <CommonButton
+                type="button"
+                title="Повернутися на головну"
+                className={styles.secondaryButton}
+                onClick={handleClose}
+            />
+          </CommonModal>
+      )}
     </>
   );
 };

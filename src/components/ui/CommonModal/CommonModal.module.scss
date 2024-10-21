@@ -1,5 +1,5 @@
 @import '/src/styles/mixins';
-@import '/src//styles/breakpoints';
+@import '/src/styles/breakpoints';
 
 
 .box {
@@ -9,23 +9,23 @@
     align-items: center;
     justify-content: center;
     width: 345px;
-    height: 523px;
-    padding: 148px 16px 158px 16px;
+    min-height: 523px;
+    padding: 48px 16px;
 
     background-color: #ffffff;
     border-radius: 20px;
     border: 4px solid #e5ff46;
-    opacity: 0px;
     gap: 20px;
 
     @include media-min($breakpoint-tablet) {
         width: 510px;
-        height: 571px;
+        min-height: 571px;
+        padding-top: 74px;
+        padding-bottom: 80px;
     }
 
     @include media-min($breakpoint-laptop) {
         width: 854px;
-        height: 571px;
     }
 }
 
