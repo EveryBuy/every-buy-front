@@ -60,7 +60,7 @@ const Category: React.FC = () => {
 					<ul className={isListOpen ? styles.listAll : styles.list}>
 						{data.map(({ id, nameUkr, photoUrl }) => (
 							<li className={styles.listItem} key={id}>
-								{/* <Image className={styles.foldImg} src={Fold} alt="Fold" /> */}
+								{/* <Image className={styles.foldImg}  src={Fold} alt="Fold" /> */}
 								<div className={styles.listItemWrapper}>
 									<Image
 										className={styles.listItemImage}
