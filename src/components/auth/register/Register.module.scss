@@ -3,7 +3,7 @@
   flex-direction: column;
   align-items: center;
   gap: 15px;
-  padding: 0px 20px;
+  padding: 0 20px;
   @media (min-width: 768px) {
   }
 }
@@ -27,7 +27,7 @@
 
 .submitButton {
   width: 260px;
-  padding: 20px 0px;
+  padding: 20px 0;
   border-radius: 10px;
   margin-top: 8px;
   background: var(--not-active, #f5ffb6);

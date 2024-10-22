@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect, useRef} from "react";
 import { useRouter } from "next/navigation";
 import EyePassword from "@/assets/Svg/EyePassword.svg";
 import EyeInvisibleFilled from "@/assets/Svg/EyeInvisibleFilled.svg";
@@ -17,6 +17,7 @@ import {
   validateEmail,
   validatePassword,
 } from "@/utils/validate";
+import { SuccessRegisterModal } from "@/components";
 
 type ErrorsType = {
   phone: string;
@@ -41,10 +42,20 @@ const Register: React.FC = () => {
     password: "",
     confirmPassword: "",
   });
+  const [successRegisterModalOpen, setSuccessRegisterModalOpen] = useState(false);
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
+  const showSuccessRegisterModal = useRef(false);
 
   useEffect(() => {
-    isLoggedIn && router.push("/user");
+    if (isLoggedIn && !showSuccessRegisterModal.current) {
+      router.push("/user");
+    } else {
+      showSuccessRegisterModal.current = true;
+    }
+
+    if (isLoggedIn && showSuccessRegisterModal.current) {
+      setSuccessRegisterModalOpen(true);
+    }
   }, [isLoggedIn, router]);
 
   // check before submit
@@ -298,6 +309,8 @@ const Register: React.FC = () => {
           Зареєструватись
         </button>
       </form>
+
+      {successRegisterModalOpen && <SuccessRegisterModal />}
     </>
   );
 };
