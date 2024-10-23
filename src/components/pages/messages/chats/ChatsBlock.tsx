@@ -1,9 +1,9 @@
 "use client";
 import { FC, useState, useEffect } from "react";
 import { Box } from "@mui/material";
-import { ListMessages, Buttons, Icons, CommonIcon } from "@/components";
-import { useDispatch, useSelector } from "react-redux";
-import type { AppDispatch, RootState } from "../../../../redux/store";
+import { ChatsList, Buttons, Icons, CommonIcon } from "@/components";
+// import { useDispatch, useSelector } from "react-redux";
+// import type { AppDispatch, RootState } from "../../../../redux/store";
 import {
   useGetAllChatsQuery,
   useGetAllMessagesByIdQuery,
@@ -14,12 +14,12 @@ import {
 //   getAllMessagesById,
 // } from "../../../../redux/messages/operations";
 
-import style from "./MessageListBlock.module.scss";
+import style from "./ChatsBlock.module.scss";
 
-const useAppDispatch = () => useDispatch<AppDispatch>();
+// const useAppDispatch = () => useDispatch<AppDispatch>();
 
 const MessageListBlock: FC = () => {
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
   // const messages = useSelector((state: RootState) => state.messages.chats);
   const [activeButton, setActiveButton] = useState<number | null>(1);
   const [isHeartSelected, setHeardSelected] = useState<boolean>(false);
@@ -28,11 +28,12 @@ const MessageListBlock: FC = () => {
   // !!!
   const { data: chats } = useGetAllChatsQuery();
   const { data: messages } = useGetAllMessagesByIdQuery(16);
-  console.log(messages);
-  const allChats = useSelector((state: RootState) => state.messages.chats);
-  const allMessages = useSelector(
-    (state: RootState) => state.messages.messages
-  );
+  console.log(chats);
+  // console.log(messages);
+  // const allChats = useSelector((state: RootState) => state.messages.chats);
+  // const allMessages = useSelector(
+  //   (state: RootState) => state.messages.messages
+  // );
   // !!!
 
   const handleButtonClick = (buttonId: number) => {
@@ -69,88 +70,88 @@ const MessageListBlock: FC = () => {
   }
 
   // !mock-data
-  const mockMessages = [
-    {
-      chatId: 1,
-      lastMessage: "no messages yet",
-      lastMessageDate: "none",
-      userData: {
-        userId: 111,
-        fullName: "olesia",
-        photoUrl: "",
-      },
-    },
-    {
-      chatId: 2,
-      lastMessage: "no messages yet",
-      lastMessageDate: "none",
-      userData: {
-        userId: 111,
-        fullName: "olesia",
-        photoUrl: "",
-      },
-    },
-    {
-      chatId: 3,
-      lastMessage: "no messages yet",
-      lastMessageDate: "none",
-      userData: {
-        userId: 111,
-        fullName: "olesia",
-        photoUrl: "",
-      },
-    },
-    {
-      chatId: 4,
-      lastMessage: "no messages yet",
-      lastMessageDate: "none",
-      userData: {
-        userId: 111,
-        fullName: "olesia",
-        photoUrl: "",
-      },
-    },
-    {
-      chatId: 5,
-      lastMessage: "no messages yet",
-      lastMessageDate: "none",
-      userData: {
-        userId: 111,
-        fullName: "olesia",
-        photoUrl: "",
-      },
-    },
-    {
-      chatId: 6,
-      lastMessage: "no messages yet",
-      lastMessageDate: "none",
-      userData: {
-        userId: 111,
-        fullName: "olesia",
-        photoUrl: "",
-      },
-    },
-    {
-      chatId: 7,
-      lastMessage: "no messages yet",
-      lastMessageDate: "none",
-      userData: {
-        userId: 111,
-        fullName: "olesia",
-        photoUrl: "",
-      },
-    },
-    {
-      chatId: 8,
-      lastMessage: "no messages yet",
-      lastMessageDate: "none",
-      userData: {
-        userId: 111,
-        fullName: "olesia",
-        photoUrl: "",
-      },
-    },
-  ];
+  // const mockMessages = [
+  //   {
+  //     chatId: 1,
+  //     lastMessage: "no messages yet",
+  //     lastMessageDate: "none",
+  //     userData: {
+  //       userId: 111,
+  //       fullName: "olesia",
+  //       photoUrl: "",
+  //     },
+  //   },
+  //   {
+  //     chatId: 2,
+  //     lastMessage: "no messages yet",
+  //     lastMessageDate: "none",
+  //     userData: {
+  //       userId: 111,
+  //       fullName: "olesia",
+  //       photoUrl: "",
+  //     },
+  //   },
+  //   {
+  //     chatId: 3,
+  //     lastMessage: "no messages yet",
+  //     lastMessageDate: "none",
+  //     userData: {
+  //       userId: 111,
+  //       fullName: "olesia",
+  //       photoUrl: "",
+  //     },
+  //   },
+  //   {
+  //     chatId: 4,
+  //     lastMessage: "no messages yet",
+  //     lastMessageDate: "none",
+  //     userData: {
+  //       userId: 111,
+  //       fullName: "olesia",
+  //       photoUrl: "",
+  //     },
+  //   },
+  //   {
+  //     chatId: 5,
+  //     lastMessage: "no messages yet",
+  //     lastMessageDate: "none",
+  //     userData: {
+  //       userId: 111,
+  //       fullName: "olesia",
+  //       photoUrl: "",
+  //     },
+  //   },
+  //   {
+  //     chatId: 6,
+  //     lastMessage: "no messages yet",
+  //     lastMessageDate: "none",
+  //     userData: {
+  //       userId: 111,
+  //       fullName: "olesia",
+  //       photoUrl: "",
+  //     },
+  //   },
+  //   {
+  //     chatId: 7,
+  //     lastMessage: "no messages yet",
+  //     lastMessageDate: "none",
+  //     userData: {
+  //       userId: 111,
+  //       fullName: "olesia",
+  //       photoUrl: "",
+  //     },
+  //   },
+  //   {
+  //     chatId: 8,
+  //     lastMessage: "no messages yet",
+  //     lastMessageDate: "none",
+  //     userData: {
+  //       userId: 111,
+  //       fullName: "olesia",
+  //       photoUrl: "",
+  //     },
+  //   },
+  // ];
   // !mock-data
 
   return (
@@ -201,7 +202,7 @@ const MessageListBlock: FC = () => {
       <Box className={style.listWrapper}>
         {/* <ListMessages messages={messages} /> */}
         {/* <ListMessages messages={mockMessages} /> */}
-        <ListMessages messages={messages} />
+        <ChatsList chats={chats} />
       </Box>
     </Box>
   );

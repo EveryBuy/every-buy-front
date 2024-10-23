@@ -13,4 +13,13 @@ type MessageType = {
   userData: UserDataType;
 };
 
-export { ChatsType, UserDataType, MessageType };
+interface ChatMessagesType {
+  id: number;
+  text: string;
+  creationTime: string;
+  userId: number;
+  chatId: number;
+  userPhotoUrl: null | string;
+}
+
+export { ChatsType, UserDataType, MessageType, ChatMessagesType };

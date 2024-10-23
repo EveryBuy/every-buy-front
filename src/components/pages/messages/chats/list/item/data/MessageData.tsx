@@ -3,10 +3,14 @@ import { Box } from "@mui/material";
 import { IconsData, TimeData } from "@/components";
 import style from "./MessageData.module.scss";
 
-const MessageData: FC = () => {
+interface MessageDataType {
+  lastMessageDate: string;
+}
+
+const MessageData: FC<MessageDataType> = ({ lastMessageDate }) => {
   return (
     <Box className={style.blockWrapper}>
-      <TimeData />
+      <TimeData lastMessageDate={lastMessageDate} />
       <IconsData />
     </Box>
   );

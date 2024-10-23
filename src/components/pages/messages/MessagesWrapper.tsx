@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { Box } from "@mui/material";
-import { MessageListBlock, DialogueBlock } from "@/components";
+import { ChatsBlock, MessagesBlock } from "@/components";
 import styles from "./MessagesWrapper.module.scss";
 
 const MessagesWrapper: FC = () => {
@@ -8,8 +8,8 @@ const MessagesWrapper: FC = () => {
     <>
       <h1 className="title">Повідомлення</h1>
       <Box className={styles.wrapper}>
-        <MessageListBlock />
-        <DialogueBlock />
+        <ChatsBlock />
+        <MessagesBlock />
       </Box>
     </>
   );
