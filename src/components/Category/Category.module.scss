@@ -191,36 +191,47 @@
 	width: 75px;
 	height: 86px;
 
+	border: 1px solid #E5FF46;
+	border-top-right-radius: 35px;
+	transition: all 1s ease;
+
+	&:hover {
+		border-top-right-radius: 0;
+
+		&:before {
+			top: 0;
+			right: 0;
+			width: 0;
+			height: 0;
+		}
+	}
+
+	&:before {
+		content: '';
+		position: absolute;
+		top: 0px;
+		right: 3px;
+		width: 25px;
+		height: 30px;
+		background: linear-gradient(60deg, #CCE14D 1px, #E5FF46);
+		box-shadow: 0 0 0 1px #E5FF46 inset;
+		transform: skew(18deg, 5deg) rotate(0deg);
+		border-top-right-radius: 35px;
+		transition: all 1s ease;
+	}
+
 	@media (min-width: 768px) {
 		width: 146px;
 		height: 169px;
-		border: 1px solid #E5FF46;
 		border-top-right-radius: 60px;
-		transition: all 1s ease;
-
-		&:hover {
-			border-top-right-radius: 0;
-
-			&:before {
-				top: 0;
-				right: 0;
-				width: 0;
-				height: 0;
-			}
-		}
 
 		&:before {
-			content: '';
-			position: absolute;
 			top: -1px;
 			right: 6px;
 			width: 45px;
 			height: 45px;
-			background: linear-gradient(60deg, #CCE14D 1px, #E5FF46);
-			box-shadow: 0 0 0 1px #E5FF46 inset;
-			transform: skew(5deg, 5deg) rotate(-9deg);
 			border-top-right-radius: 60px;
-			transition: all 1s ease;
+			transform: skew(5deg, 5deg) rotate(-9deg);
 		}
 	}
 
@@ -230,25 +241,25 @@
 	}
 }
 
-.foldImg {
-	width: 30px;
-	position: absolute;
-	top: -24px;
-	right: -1px;
-	z-index: 1;
+// .foldImg {
+// 	width: 30px;
+// 	position: absolute;
+// 	top: -24px;
+// 	right: -1px;
+// 	z-index: 1;
 
-	@media (min-width: 768px) {
-		width: 60px;
-		top: -10px;
-		right: -3px;
-	}
+// 	@media (min-width: 768px) {
+// 		width: 60px;
+// 		top: -10px;
+// 		right: -3px;
+// 	}
 
-	@media (min-width: 1024px) {
-		width: 70px;
-		top: -5px;
-		right: -5px;
-	}
-}
+// 	@media (min-width: 1024px) {
+// 		width: 70px;
+// 		top: -5px;
+// 		right: -5px;
+// 	}
+// }
 
 .listItemWrapper {
 	width: 75px;
@@ -259,24 +270,21 @@
 	justify-content: flex-start;
 	align-items: center;
 	row-gap: 3.75px;
-	// background-image: url("../../assets/icons/MobileBase.svg"); НЕ ВИКОРИСТОВУЄТЬСЯ
-	// background-repeat: no-repeat;
-	// background-size: cover;
+	background-image: url("../../assets/icons/bg-paper.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	border-top-right-radius: 38px;
+	transition: all 1s ease;
+
+	&:hover {
+		border-top-right-radius: 0;
+	}
 
 	@media (min-width: 768px) {
 		width: auto;
 		padding: 36px 0px 5px;
 		row-gap: 8px;
-		background-image: url("../../assets/icons/bg-paper.jpg");
-		background-repeat: no-repeat;
-		background-size: cover;
-
 		border-top-right-radius: 60px;
-		transition: all 1s ease;
-
-		&:hover {
-			border-top-right-radius: 0;
-		}
 	}
 }
 
