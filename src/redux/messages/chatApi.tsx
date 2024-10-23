@@ -21,10 +21,10 @@ export const chatApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    getAllChats: builder.query<ChatsType, void>({
+    getChats: builder.query<ChatsType, void>({
       query: () => "/chat/get-all-users-chats",
     }),
-    getAllMessagesById: builder.query<ChatMessagesType[], number>({
+    getMessagesByChatId: builder.query<ChatMessagesType[], number>({
       query: (chatId) => `/chat/${chatId}`,
       transformResponse: (response: { data: ChatDataTypeInt }) =>
         response.data.chatMessages,
@@ -32,4 +32,4 @@ export const chatApi = createApi({
   }),
 });
 
-export const { useGetAllChatsQuery, useGetAllMessagesByIdQuery } = chatApi;
+export const { useGetChatsQuery, useGetMessagesByChatIdQuery } = chatApi;

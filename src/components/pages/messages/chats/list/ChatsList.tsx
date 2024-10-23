@@ -10,7 +10,7 @@ import style from "./ChatsList.module.scss";
 // TODO onclick => make request, take messages by id => save to redux
 
 interface ListChatsType {
-  chats: ChatType[];
+  chats?: ChatType[];
 }
 
 const ChatsList: FC<ListChatsType> = ({ chats }) => {

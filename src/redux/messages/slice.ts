@@ -24,13 +24,13 @@ const messagesSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addMatcher(
-        chatApi.endpoints.getAllChats.matchFulfilled,
+        chatApi.endpoints.getChats.matchFulfilled,
         (state, { payload }) => {
           state.chats = payload;
         }
       )
       .addMatcher(
-        chatApi.endpoints.getAllMessagesById.matchFulfilled,
+        chatApi.endpoints.getMessagesByChatId.matchFulfilled,
         (state, { payload }) => {
           state.messages = payload;
         }

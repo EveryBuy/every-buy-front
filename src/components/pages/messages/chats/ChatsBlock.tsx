@@ -5,8 +5,8 @@ import { ChatsList, Buttons, Icons, CommonIcon } from "@/components";
 // import { useDispatch, useSelector } from "react-redux";
 // import type { AppDispatch, RootState } from "../../../../redux/store";
 import {
-  useGetAllChatsQuery,
-  useGetAllMessagesByIdQuery,
+  useGetChatsQuery,
+  useGetMessagesByChatIdQuery,
 } from "../../../../redux/messages/chatApi";
 
 // import {
@@ -26,8 +26,8 @@ const MessageListBlock: FC = () => {
   const [isFolderSelected, setFolderSelected] = useState<boolean>(false);
 
   // !!!
-  const { data: chats } = useGetAllChatsQuery();
-  const { data: messages } = useGetAllMessagesByIdQuery(16);
+  const { data: chats, isLoading, isError } = useGetChatsQuery();
+  const { data: messages } = useGetMessagesByChatIdQuery(16);
   console.log(chats);
   // console.log(messages);
   // const allChats = useSelector((state: RootState) => state.messages.chats);
