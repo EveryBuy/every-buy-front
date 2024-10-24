@@ -7,12 +7,21 @@ import { ChatsType, ChatMessagesType } from "@/types/messages/messages";
 interface InitialStateType {
   chats: ChatsType | [];
   messages: ChatMessagesType[];
+  // message: ChatMessagesType;
   loading: boolean;
   error: null | string;
 }
 const initialState: InitialStateType = {
   chats: [],
   messages: [],
+  // message: {
+  //   id: 0,
+  //   text: "",
+  //   creationTime: "",
+  //   userId: 0,
+  //   chatId: 0,
+  //   userPhotoUrl: "",
+  // },
   loading: false,
   error: null,
 };

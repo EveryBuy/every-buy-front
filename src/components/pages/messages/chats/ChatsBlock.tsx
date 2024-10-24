@@ -2,39 +2,21 @@
 import { FC, useState, useEffect } from "react";
 import { Box } from "@mui/material";
 import { ChatsList, Buttons, Icons, CommonIcon } from "@/components";
-// import { useDispatch, useSelector } from "react-redux";
-// import type { AppDispatch, RootState } from "../../../../redux/store";
 import {
   useGetChatsQuery,
   useGetMessagesByChatIdQuery,
 } from "../../../../redux/messages/chatApi";
-
-// import {
-//   getAllChats,
-//   getAllMessagesById,
-// } from "../../../../redux/messages/operations";
-
 import style from "./ChatsBlock.module.scss";
 
-// const useAppDispatch = () => useDispatch<AppDispatch>();
+type MessageListBlockType = {
+  onclick: (selectedChatId: number) => void;
+};
 
-const MessageListBlock: FC = () => {
-  // const dispatch = useAppDispatch();
-  // const messages = useSelector((state: RootState) => state.messages.chats);
+const MessageListBlock: FC<MessageListBlockType> = ({ onclick }) => {
   const [activeButton, setActiveButton] = useState<number | null>(1);
   const [isHeartSelected, setHeardSelected] = useState<boolean>(false);
   const [isFolderSelected, setFolderSelected] = useState<boolean>(false);
-
-  // !!!
   const { data: chats, isLoading, isError } = useGetChatsQuery();
-  const { data: messages } = useGetMessagesByChatIdQuery(16);
-  console.log(chats);
-  // console.log(messages);
-  // const allChats = useSelector((state: RootState) => state.messages.chats);
-  // const allMessages = useSelector(
-  //   (state: RootState) => state.messages.messages
-  // );
-  // !!!
 
   const handleButtonClick = (buttonId: number) => {
     setActiveButton(buttonId);
@@ -52,107 +34,9 @@ const MessageListBlock: FC = () => {
     };
   };
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       await dispatch(getAllChats());
-  //       await dispatch(getAllMessagesById(10));
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, [dispatch]);
-
-  if (!messages) {
+  if (!chats) {
     return "Завантажується";
   }
-
-  // !mock-data
-  // const mockMessages = [
-  //   {
-  //     chatId: 1,
-  //     lastMessage: "no messages yet",
-  //     lastMessageDate: "none",
-  //     userData: {
-  //       userId: 111,
-  //       fullName: "olesia",
-  //       photoUrl: "",
-  //     },
-  //   },
-  //   {
-  //     chatId: 2,
-  //     lastMessage: "no messages yet",
-  //     lastMessageDate: "none",
-  //     userData: {
-  //       userId: 111,
-  //       fullName: "olesia",
-  //       photoUrl: "",
-  //     },
-  //   },
-  //   {
-  //     chatId: 3,
-  //     lastMessage: "no messages yet",
-  //     lastMessageDate: "none",
-  //     userData: {
-  //       userId: 111,
-  //       fullName: "olesia",
-  //       photoUrl: "",
-  //     },
-  //   },
-  //   {
-  //     chatId: 4,
-  //     lastMessage: "no messages yet",
-  //     lastMessageDate: "none",
-  //     userData: {
-  //       userId: 111,
-  //       fullName: "olesia",
-  //       photoUrl: "",
-  //     },
-  //   },
-  //   {
-  //     chatId: 5,
-  //     lastMessage: "no messages yet",
-  //     lastMessageDate: "none",
-  //     userData: {
-  //       userId: 111,
-  //       fullName: "olesia",
-  //       photoUrl: "",
-  //     },
-  //   },
-  //   {
-  //     chatId: 6,
-  //     lastMessage: "no messages yet",
-  //     lastMessageDate: "none",
-  //     userData: {
-  //       userId: 111,
-  //       fullName: "olesia",
-  //       photoUrl: "",
-  //     },
-  //   },
-  //   {
-  //     chatId: 7,
-  //     lastMessage: "no messages yet",
-  //     lastMessageDate: "none",
-  //     userData: {
-  //       userId: 111,
-  //       fullName: "olesia",
-  //       photoUrl: "",
-  //     },
-  //   },
-  //   {
-  //     chatId: 8,
-  //     lastMessage: "no messages yet",
-  //     lastMessageDate: "none",
-  //     userData: {
-  //       userId: 111,
-  //       fullName: "olesia",
-  //       photoUrl: "",
-  //     },
-  //   },
-  // ];
-  // !mock-data
 
   return (
     <Box className={style.blockWrapper}>
@@ -200,9 +84,7 @@ const MessageListBlock: FC = () => {
         )}
       </Box>
       <Box className={style.listWrapper}>
-        {/* <ListMessages messages={messages} /> */}
-        {/* <ListMessages messages={mockMessages} /> */}
-        <ChatsList chats={chats} />
+        <ChatsList chats={chats} onclick={onclick} />
       </Box>
     </Box>
   );

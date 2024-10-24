@@ -3,12 +3,17 @@ import { Box } from "@mui/material";
 import { Companion, Product, Dialogue } from "@/components";
 import style from "./MessagesBlock.module.scss";
 
-const MessagesBlock: FC = () => {
+type MessagesBlockType = {
+  chatId: number | null;
+  // setSelectedChatId: (chatId: number | null) => void;
+};
+
+const MessagesBlock: FC<MessagesBlockType> = ({ chatId }) => {
   return (
     <Box className={style.blockWrapper}>
       <Companion />
       <Product />
-      <Dialogue />
+      <Dialogue chatId={chatId} />
     </Box>
   );
 };
