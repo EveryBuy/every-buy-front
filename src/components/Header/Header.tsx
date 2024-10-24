@@ -55,12 +55,19 @@ const Header: FC = () => {
         )}
 
         <div className={styles.addAdvertisingContainer}>
-          <CommonButton
+          <Link
+            href="/advert"
+            className={`${styles.headerButton} ${styles.headerLink}`}
+          >
+            Додати оголошення
+          </Link>
+
+          {/* <CommonButton
             type="button"
             title="Додати оголошення"
             color="yellow"
             className={styles.headerButton}
-          />
+          /> */}
           <div className={styles.iconsWrapper}>
             <CommonIcon id="icon-chat" width="21" height="20" />
             <CommonIcon id="icon-heart" width="21" height="20" />

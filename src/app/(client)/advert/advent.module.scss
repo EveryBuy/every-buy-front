@@ -1,0 +1,333 @@
+.adWrapper {
+  width: 1440px;
+  // padding: 0px 60px 142px 60px;
+  padding-left: 60px;
+  padding-right: 60px;
+  margin-top: 20px;
+}
+
+.adHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 82px;
+
+  h1 {
+    font-size: var(--f-size-h1);
+  }
+}
+
+.adTitle {
+  margin-bottom: 24px;
+  font-size: var(--f-size-h3);
+  font-weight: 400;
+  line-height: 39px;
+  color: var(--label);
+}
+
+.linkHeader {
+  display: flex;
+  gap: 18px;
+  list-style: none;
+
+  // li {
+  //   font-size: var(--f-size-h4);
+  // }
+
+  // justify-content: space-between;
+}
+
+.linkItem {
+  font-size: var(--f-size-h4);
+}
+
+.linkItemText {
+  position: relative;
+}
+
+.linkItemText::after {
+  position: absolute;
+  display: flex;
+
+  content: "";
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  background-color: #9d9d9d;
+  // color: #d80027;
+}
+
+.formWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+
+  label {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+  }
+}
+.wrapperPassword {
+  position: relative;
+  width: 100%;
+}
+
+// .styledForm {
+//   // padding: 60px;
+//   // display: grid;
+//   // grid-template-columns: 1fr 1fr 1fr;
+//   // width: 364px;
+//   // height: 196px;
+
+//   // @media screen and (min-width: 768px) {
+//   //   // width: 364px;
+//   //   // height: 196px;
+
+//   //   width: auto;
+//   //   height: auto;
+//   // }
+// }
+
+.wrapperInput {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+
+  margin-bottom: 27px;
+}
+
+.fieldWrapper {
+  position: relative;
+}
+
+.styledField {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 335px;
+  height: 46px;
+  margin-top: 4px;
+  padding: 12px;
+  border-radius: 10px;
+  background-color: transparent;
+  border: 1px solid rgba(27, 27, 26, 0.3);
+
+  font-family: Roboto;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 128.571%;
+
+  color: rgba(129, 104, 39, 0.6);
+
+  &:focus {
+    outline: none;
+  }
+
+  &::placeholder {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19px;
+  }
+
+  @media screen and (min-width: 768px) {
+    width: 620px;
+    height: 60px;
+    font-size: 16px;
+    line-height: 150%;
+  }
+}
+
+.textareaText {
+  display: flex;
+  gap: 224px;
+  p {
+    margin-top: 4px;
+    font-size: var(--body-text);
+    font-weight: 400;
+    line-height: 19.5px;
+    color: var(--input-text);
+  }
+}
+
+.buttonInput {
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%);
+  right: 10px;
+}
+
+.styledTexterea {
+  width: 620px;
+  height: 280px;
+}
+
+.messageStyleError {
+  display: flex;
+  gap: 4px;
+
+  margin-top: 5px;
+  font-feature-settings: "clig" off, "liga" off;
+  font-family: Roboto;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+  letter-spacing: 0.12px;
+
+  color: #d80027;
+}
+
+.messageStyleSuccess {
+  display: flex;
+  gap: 4px;
+
+  margin-top: 5px;
+  font-feature-settings: "clig" off, "liga" off;
+  font-family: Roboto;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+  letter-spacing: 0.12px;
+
+  color: #3cbf61;
+}
+
+.buttonWrapper {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 55px;
+}
+
+.adventButtonAd {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+  padding: 12px 28px;
+  //   margin-right: 35px;
+  color: var(--label);
+  font-size: var(--body-text);
+
+  @media (max-width: 480) {
+    font-size: 16px;
+    padding: 12px 20px;
+  }
+  @media (min-width: 1024px) {
+    width: 347px;
+    height: 61px;
+    padding: 16px 94px;
+    font-size: 24px;
+    // margin-right: 50px;
+  }
+}
+
+.adventButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 12px 28px;
+  font-size: var(--body-text);
+
+  border: 1px solid;
+  border-radius: 10px;
+
+  color: var(--label);
+  background: var(--background) var(--label);
+
+  @media (max-width: 480) {
+    font-size: 16px;
+    padding: 12px 20px;
+  }
+  @media (min-width: 1024px) {
+    width: 347px;
+    height: 61px;
+    padding: 16px 94px;
+    font-size: 24px;
+  }
+}
+
+.checkboxWrapper {
+  display: flex;
+  gap: 160px;
+}
+
+.checkboxGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.checkboxInput {
+  margin-right: 16px;
+  width: 32px;
+  height: 32px;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+}
+
+.adventPhoto {
+  h3 {
+    font-size: var(--f-size-h3);
+    font-weight: 400;
+    line-height: 39px;
+    margin-bottom: 24px;
+  }
+
+  p {
+    font-size: var(--body-text);
+    font-weight: 400;
+    margin-bottom: 12px;
+
+    span {
+      font-weight: 600;
+      font-size: var(--body-text);
+    }
+  }
+}
+
+.adventPhotoList {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+
+  li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 240px;
+    height: 200px;
+    border: 1px solid var(--label);
+    border-radius: 8px;
+    background: #ffffff;
+  }
+}
+
+.adventPhotoListText {
+  margin-top: 12px;
+  margin-bottom: 0 !important;
+}
+
+.adventPhotoItem {
+  background: #f5ffb6 !important;
+
+  p {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+  }
+}
