@@ -74,7 +74,7 @@ const Dialogue: FC<DialogueType> = ({ chatId }) => {
     <>
       {/* {isFetching && <div>Updating...</div>} */}
       {displayedMessages.map((message) => (
-        <div key={message.id}>{message.text}</div> // Adjust based on your message structure
+        <div key={message.id}>{message.text}</div>
       ))}
     </>
   );
