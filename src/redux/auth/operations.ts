@@ -24,7 +24,7 @@ export const register = createAsyncThunk(
       return { data: userData.data.data, token: data.data.token };
     } catch (error: any) {
       console.log(error.response.data.error);
-      return thunkAPI.rejectWithValue(error.message);
+      return thunkAPI.rejectWithValue(error);
     }
   }
 );
@@ -63,7 +63,7 @@ export const refreshUser = createAsyncThunk(
       setHeaderAuthToken(auth.token);
       const { data } = await API.get("/user");
       console.log(data.data);
-      
+
       return data.data;
     } catch (error: any) {
       clearHeaderAuthToken();
@@ -143,7 +143,7 @@ export const changeUserPhone = createAsyncThunk(
       setHeaderAuthToken(token);
       const response = await API.get("/user");
       console.log(response.data.data);
-      
+
       return response.data.data;
     } catch (error: any) {
       rejectWithValue(error.message);
