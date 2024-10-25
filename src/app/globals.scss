@@ -1,133 +1,140 @@
-@import "../styles/reset";
-@import "../styles/fonts.scss";
-@import "../styles/mixins";
-@import "../styles/breakpoints";
-
-:root {
-  --font-family: "Inter", Arial, sans-serif;
-
-  // font size
-  --f-size-h1: 40px;
-  --f-size-h2: 36px;
-  --f-size-h3: 32px;
-  --f-size-h4: 24px;
-  --large-body-medium: 20px;
-  --body-text: 16px;
-  --body-mobile-text: 14px;
-  --body-mobile-text-small: 10px;
-
-  // colors
-  --main-background: #f6f6f6;
-  --background: #f6f6f6;
-  --label: #000000;
-  --input-text: #9d9d9d;
-  --bg-header-footer: #b4b4b4;
-  --border: #9d9d9d;
-
-  --color-yellow: #e5ff46;
-
-  --button: #e5ff46;
-  --not-active: #f5ffb6;
-
-  --accent: #6735f4;
-  --success: #29b126;
-  --error: #ff5656;
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
-body {
-  font-family: var(--font-family);
-  background-color: var(--background);
-}
+// // @import "../styles/reset";
+// // @import "../styles/fonts.scss";
+// // @import "../styles/mixins";
+// // @import "../styles/breakpoints";
 
-.container {
-  display: flex;
-  flex-direction: column;
-  margin: 0 auto;
-  min-height: calc(100vh - 141px - 162px);
-  @include media-min($breakpoint-tablet) {
-    max-width: 1440px;
-    min-height: calc(100vh - 181px - 444px);
-  }
-}
 
-.title {
-  // padding-bottom: 30px;
-  font-size: var(--f-size-h4);
-  @include media-min($breakpoint-tablet) {
-    padding: 0px 60px;
-    font-size: 40px;
-    font-weight: 700;
-  }
-}
+// :root {
+//   --font-family: "Inter", Arial, sans-serif;
 
-//styles for slider
-.slick-current {
-  padding: 0 20px;
+//   // font size
+//   --f-size-h1: 40px;
+//   --f-size-h2: 36px;
+//   --f-size-h3: 32px;
+//   --f-size-h4: 24px;
+//   --large-body-medium: 20px;
+//   --body-text: 16px;
+//   --body-mobile-text: 14px;
+//   --body-mobile-text-small: 10px;
 
-  @include media-min($breakpoint-tablet) {
-    padding: 0 32px;
-  }
-}
+//   // colors
+//   --main-background: #f6f6f6;
+//   --background: #f6f6f6;
+//   --label: #000000;
+//   --input-text: #9d9d9d;
+//   --bg-header-footer: #b4b4b4;
+//   --border: #9d9d9d;
 
-.profileSectionWrapper {
-  // display: none;
-  width: 100%;
-  @include media-min($breakpoint-tablet) {
-    display: flex;
-    padding-left: 110px;
-  }
-}
+//   --color-yellow: #e5ff46;
 
-.slick-slider {
-  width: 100%;
-}
+//   --button: #e5ff46;
+//   --not-active: #f5ffb6;
 
-.slick-dots {
-  bottom: -40px !important;
-  display: flex !important;
-  justify-content: center;
-  gap: 12px;
+//   --accent: #6735f4;
+//   --success: #29b126;
+//   --error: #ff5656;
+// }
 
-  li {
-    margin: 0 !important;
-    width: 8px !important;
-    height: 8px !important;
-    border-radius: 50%;
-    background: #d9d9d9;
+// body {
+//   font-family: var(--font-family);
+//   background-color: var(--background);
+// }
 
-    button {
-      padding: 0 !important;
-      width: 8px !important;
-      height: 8px !important;
-      border-radius: 50%;
-      background: #d9d9d9;
+// .container {
+//   display: flex;
+//   flex-direction: column;
+//   margin: 0 auto;
+//   min-height: calc(100vh - 141px - 162px);
+//   @include media-min($breakpoint-tablet) {
+//     max-width: 1440px;
+//     min-height: calc(100vh - 181px - 444px);
+//   }
+// }
 
-      &:before {
-        display: none;
-      }
-    }
+// .title {
+//   // padding-bottom: 30px;
+//   font-size: var(--f-size-h4);
+//   @include media-min($breakpoint-tablet) {
+//     padding: 0px 60px;
+//     font-size: 40px;
+//     font-weight: 700;
+//   }
+// }
 
-    &.slick-active button {
-      background: var(--input-text);
-    }
-  }
-}
+// //styles for slider
+// .slick-current {
+//   padding: 0 20px;
 
-.mobileHidden {
-  display: none;
-  @media screen and (min-width: 769px) {
-    display: block;
-  }
-}
+//   @include media-min($breakpoint-tablet) {
+//     padding: 0 32px;
+//   }
+// }
 
-.laptopHidden {
-  display: block;
+// .profileSectionWrapper {
+//   // display: none;
+//   width: 100%;
+//   @include media-min($breakpoint-tablet) {
+//     display: flex;
+//     padding-left: 110px;
+//   }
+// }
 
-  @media screen and (min-width: 769px) {
-    display: none;
-  }
-}
+// .slick-slider {
+//   width: 100%;
+// }
 
-.hidden {
-  display: none;
-}
+// .slick-dots {
+//   bottom: -40px !important;
+//   display: flex !important;
+//   justify-content: center;
+//   gap: 12px;
+
+//   li {
+//     margin: 0 !important;
+//     width: 8px !important;
+//     height: 8px !important;
+//     border-radius: 50%;
+//     background: #d9d9d9;
+
+//     button {
+//       padding: 0 !important;
+//       width: 8px !important;
+//       height: 8px !important;
+//       border-radius: 50%;
+//       background: #d9d9d9;
+
+//       &:before {
+//         display: none;
+//       }
+//     }
+
+//     &.slick-active button {
+//       background: var(--input-text);
+//     }
+//   }
+// }
+
+// .mobileHidden {
+//   display: none;
+//   @media screen and (min-width: 769px) {
+//     display: block;
+//   }
+// }
+
+// .laptopHidden {
+//   display: block;
+
+//   @media screen and (min-width: 769px) {
+//     display: none;
+//   }
+// }
+
+// .hidden {
+//   display: none;
+// }

@@ -1,27 +1,41 @@
 "use client";
 import { createTheme } from "@mui/material/styles";
+import { Inter } from "next/font/google";
+
+const inter = Inter({
+  weight: ["200", "300", "400", "500", "700"],
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-inter",
+});
 
 const theme = createTheme({
   palette: {
-    // as an example
+    mode: 'light',
     primary: {
-      main: "#00b1d0",
-      dark: "#00869b",
-      contrastText: "#FFFFFF",
+      main: "#E5FF46",
+      dark: "#F5FFB6",
+      contrastText: "#000000",
     },
     secondary: {
-      main: "#184d92",
-      light: "#337fdd",
-      contrastText: "#FFFFFF",
+      main: "#F5FFB6",
+      light: "#eef7b0",
+      contrastText: "#000000",
     },
   },
-  // typography: {
-  //   h1: {
-  //     fontSize: 20,
-  //     color: "#184d93",
-  //     fontWeight: 700,
-  //   },
-  // },
+  typography: {
+    fontFamily: inter.style.fontFamily,
+  },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 960,
+      lg: 1280,
+      xl: 1920,
+    },
+  },
+  spacing: 8,
 });
 
 export default theme;

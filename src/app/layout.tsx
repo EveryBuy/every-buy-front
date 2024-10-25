@@ -1,11 +1,16 @@
 import { ReactNode } from "react";
-import { Header, Footer } from "../components";
-// import { AuthProvider } from "@/context/AuthContextType";
-import { Providers } from "../redux/provider";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
+
+import { Providers } from "../redux/provider";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "../styles/mui/theme";
+
 import "./globals.scss";
+
+// import { AuthProvider } from "@/context/AuthContextType";
+// import { Header, Footer } from "../components";
+import { Header } from "@components/shared";
+import { Container } from "@mui/material";
 
 export default async function ClientLayout({
   children,
@@ -18,11 +23,16 @@ export default async function ClientLayout({
         <AppRouterCacheProvider>
           <Providers>
             <ThemeProvider theme={theme}>
-              {/* <AuthProvider> */}
               <Header />
-              <main className="container">{children}</main>
-              <Footer />
-              {/* </AuthProvider> */}
+              <main>
+                <Container
+                  maxWidth="lg"
+                  sx={{ display: "flex", flexDirection: "column" }}
+                >
+                  {children}
+                </Container>
+              </main>
+              {/* <Footer /> */}
             </ThemeProvider>
           </Providers>
         </AppRouterCacheProvider>
