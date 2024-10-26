@@ -9,7 +9,6 @@ import "./globals.scss";
 
 // import { AuthProvider } from "@/context/AuthContextType";
 // import { Header, Footer } from "../components";
-import { Header } from "@components/shared";
 import { Container } from "@mui/material";
 
 export default async function ClientLayout({
@@ -22,18 +21,7 @@ export default async function ClientLayout({
       <body>
         <AppRouterCacheProvider>
           <Providers>
-            <ThemeProvider theme={theme}>
-              <Header />
-              <main>
-                <Container
-                  maxWidth="lg"
-                  sx={{ display: "flex", flexDirection: "column" }}
-                >
-                  {children}
-                </Container>
-              </main>
-              {/* <Footer /> */}
-            </ThemeProvider>
+            <ThemeProvider theme={theme}>{children}</ThemeProvider>
           </Providers>
         </AppRouterCacheProvider>
       </body>

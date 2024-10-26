@@ -12,6 +12,7 @@ import HeaderNavigation from "./headerNavigation";
 export function Header() {
   return (
     <header>
+      <Paper elevation={1}>
       <Box
         sx={{
           display: "flex",
@@ -26,7 +27,6 @@ export function Header() {
           <HeaderNavigation />
         </nav>
       </Box>
-      <Paper elevation={1}>
         <Container
           sx={{
             padding: ".5rem 0",

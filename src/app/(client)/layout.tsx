@@ -1,5 +1,13 @@
+import { Container } from "@mui/material";
+import { Header } from "@components/shared";
+
 import LayoutProps from "@/types/layoutProp";
 
 export default function RootLayout({ children }: LayoutProps) {
-  return children;
+  return (
+    <Container id="root" disableGutters maxWidth={false}>
+      <Header />
+      <main>{children}</main>
+    </Container>
+  );
 }
