@@ -1,5 +1,5 @@
 import { Container } from "@mui/material";
-import { Header } from "@/components/shared/header";
+import { Header } from "@components/header";
 
 import LayoutProps from "@/types/layoutProp";
 

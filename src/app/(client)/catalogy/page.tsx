@@ -8,21 +8,17 @@
 // import { CatalogyFilter } from "@components/features/catalogyFilter";
 
 import { CatalogyCard } from "@components/widgets/card";
-import { CatalogyFilter } from "@components/features/catalogyFilter";
 
 import styles from "./Catalogy.module.scss";
 
-function Catalogy() {
+function CatalogyPage() {
   return (
-    <>
-      <CatalogyFilter />
-      <section className={styles["catalog-container"]}>
-        <CatalogyCard />
-        <CatalogyCard />
-        <CatalogyCard />
-      </section>
-    </>
+    <section className={styles["catalog-container"]}>
+      <CatalogyCard />
+      <CatalogyCard />
+      <CatalogyCard />
+    </section>
   );
 }
 
-export default Catalogy;
+export default CatalogyPage;
