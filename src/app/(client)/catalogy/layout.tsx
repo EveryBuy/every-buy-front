@@ -5,6 +5,7 @@ import LayoutProps from "@/types/layoutProp";
 import { Container, Box, Typography } from "@mui/material";
 import { CustomSeparator } from "@components/shared";
 import { FilterCatalogySearch } from "@components/filterCatalogy";
+import { CategoryList } from "@components/categoryList";
 
 const styles = {
   display: "flex",
@@ -22,8 +23,11 @@ const CatalogyLayout = ({ children }: LayoutProps) => {
           Фільтри
         </Typography>
         <FilterCatalogySearch />
+        <CategoryList />
       </Box>
-      <Typography variant="h3">Ми знайшли понад 1000 оголошень</Typography>
+      <Typography variant="h3" sx={{ margin: "1rem 0" }}>
+        Ми знайшли понад 1000 оголошень
+      </Typography>
       {children}
     </Container>
   );

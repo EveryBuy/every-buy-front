@@ -1,3 +1,7 @@
+/**
+ * Знайшов проблему при введені не числа буде NaN якщо після цього спробувати ввести інше число нічого не вийде.
+ */
+
 import React from "react";
 import {
   Grid2,
@@ -12,7 +16,7 @@ import { SliderProps } from "../types";
 const BootstrapInput = styled(TextField)(({ theme }) => ({
   "& .MuiInputBase-root": {
     borderRadius: 4,
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: theme.palette.background.default,
     border: "1px solid #ced4da",
     fontSize: 14,
     padding: "6px 12px",
@@ -43,6 +47,7 @@ export function Slider({ price, setPrice }: SliderProps) {
         <BootstrapInput
           variant="outlined"
           size="small"
+          color="info"
           value={price[0]}
           onChange={(e) => setPrice([+e.target.value, price[1]])}
           label="Мін"
@@ -50,6 +55,7 @@ export function Slider({ price, setPrice }: SliderProps) {
         <BootstrapInput
           variant="outlined"
           size="small"
+          color="info"
           value={price[1]}
           onChange={(e) => setPrice([price[0], +e.target.value])}
           label="Макс"

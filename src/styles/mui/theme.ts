@@ -22,9 +22,11 @@ const theme = createTheme({
       light: "#eef7b0",
       contrastText: "#000000",
     },
+    info: { main: "#0b152d" },
   },
   typography: {
     fontFamily: inter.style.fontFamily,
+    
   },
   breakpoints: {
     values: {

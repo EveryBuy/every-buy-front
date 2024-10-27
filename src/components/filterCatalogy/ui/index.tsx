@@ -76,7 +76,7 @@ export function FilterCatalogySearch() {
         size={{ xs: 12 }}
         sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}
       >
-        <Button variant="outlined" onClick={resetFilters}>
+        <Button variant="outlined" color="info" onClick={resetFilters}>
           Скинути фільтри
         </Button>
       </Grid2>

@@ -8,8 +8,10 @@ export const CustomSelect: React.FC<CustomSelectProps> = ({
   options,
 }) => (
   <FormControl fullWidth>
-    <InputLabel>{label}</InputLabel>
-    <Select value={value} onChange={onChange}>
+    <InputLabel color="info" sx={{ backgroundColor: "white" }}>
+      {label}
+    </InputLabel>
+    <Select value={value} onChange={onChange} color="info">
       {options.map((option, index) => (
         <MenuItem key={index} value={option.value}>
           {option.label}
