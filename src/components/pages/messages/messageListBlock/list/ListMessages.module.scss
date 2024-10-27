@@ -1,0 +1,26 @@
+@import "@/styles/mixins";
+@import "@/styles/breakpoints";
+
+.listWrapper {
+  height: 428px;
+  overflow-y: auto;
+
+  @include media-min($breakpoint-tablet) {
+    height: 635px;
+    padding: 10px 0px;
+    border-radius: 10px;
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+    &::-webkit-scrollbar-track {
+      background-color: #f1f1f1;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: #e5ff46;
+      border-radius: 4px;
+    }
+    &::-webkit-scrollbar-thumb:hover {
+      background-color: #b3c638;
+    }
+  }
+}

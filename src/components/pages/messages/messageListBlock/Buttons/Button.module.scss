@@ -1,0 +1,19 @@
+@import "@/styles/mixins";
+@import "@/styles/breakpoints";
+
+.buttonWrapper {
+  width: 83.5px;
+  padding: 10px 13px;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: center;
+
+  @include media-min($breakpoint-tablet) {
+    font-size: var(--f-size-h4);
+    width: 124px;
+  }
+}
+
+// .active {
+//   border-bottom: 1px solid gray;
+// }
