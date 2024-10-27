@@ -7,7 +7,7 @@ export default function NotFound() {
     router.replace(`/${nextLocal}`);
   };
   return (
-    <body
+    <div
       style={{
         backgroundColor: "#f0f0f0",
         display: "flex",
@@ -35,6 +35,6 @@ export default function NotFound() {
           Go Back Home
         </button>
       </div>
-    </body>
+    </div>
   );
 }

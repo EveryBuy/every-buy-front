@@ -7,10 +7,6 @@ import theme from "../styles/mui/theme";
 
 import "./globals.scss";
 
-// import { AuthProvider } from "@/context/AuthContextType";
-// import { Header, Footer } from "../components";
-import { Container } from "@mui/material";
-
 export default async function ClientLayout({
   children,
 }: {
@@ -18,7 +14,7 @@ export default async function ClientLayout({
 }) {
   return (
     <html lang="uk">
-      <body>
+      <body style={{ margin: "0" }}>
         <AppRouterCacheProvider>
           <Providers>
             <ThemeProvider theme={theme}>{children}</ThemeProvider>

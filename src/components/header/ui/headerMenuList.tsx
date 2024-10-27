@@ -51,7 +51,7 @@ export function HeaderMenuList({ anchorEl, open, handleClose }: Props) {
       </MenuItem>
       <MenuItem onClick={handleClose}>
         <ListItemText>
-          <Link href="/message/" style={{ color: "black" }}>
+          <Link href="/messages/" style={{ color: "black" }}>
             Повідомлення
           </Link>
         </ListItemText>
