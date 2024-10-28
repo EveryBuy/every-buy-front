@@ -3,11 +3,9 @@
 import Link from "next/link";
 import styles from "@/components/pages/MobileProfileMenu.module.scss";
 import Logout from "../auth/Logout/Logout";
-import { useId } from "react";
 import { PROFMENU_ITEMS } from "@/constants/constants";
 
 export const MobileProfileMenu = () => {
-  
   return (
     <>
       <h4 className={styles.title}>Профіль користувача</h4>
@@ -28,4 +26,3 @@ export const MobileProfileMenu = () => {
 };
 
 export default MobileProfileMenu;
-
