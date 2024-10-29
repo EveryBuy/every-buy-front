@@ -34,7 +34,11 @@ const Category: React.FC = () => {
 	}, []);
 
 	if (loading) {
-		return <CommonPreloader size={40} sx={{ color: '#e5ff46' }} />;
+		return (
+			<div style={{ padding: '160px 0 50px' }}>
+				<CommonPreloader size={40} sx={{ color: '#e5ff46' }} />
+			</div>
+		);
 	}
 
 	if (error) {
