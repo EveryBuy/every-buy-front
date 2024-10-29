@@ -1,0 +1,17 @@
+/* .commonSelectContainer {
+  height: 60px;
+  min-width: 280px;
+  border-radius: 10px;
+  font-size: var(--body-text);
+  padding: 18px 12px;
+  outline: none;
+  color: var(--input-text);
+} */
+
+.customSelect.Mui-active {
+  border-radius: 100px;
+}
+
+.customSelect.Mui-focused {
+  border-radius: 100px;
+}
