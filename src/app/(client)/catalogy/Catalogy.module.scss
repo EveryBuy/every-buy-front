@@ -1,0 +1,18 @@
+.catalog-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    padding: 0 10px;
+    gap: 10px;
+}
+
+@media (min-width: 768px) {
+    .catalog-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .catalog-container {
+        grid-template-columns: repeat(auto-fit, minmax(387px, 1fr))
+    }
+}
