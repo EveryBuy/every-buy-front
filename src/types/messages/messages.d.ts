@@ -8,9 +8,14 @@ type UserDataType = {
 
 type MessageType = {
   chatId: number;
-  lastMessage: string;
-  lastMessageDate: string;
-  userData: UserDataType;
+  creationTime: string;
+  id: number;
+  text: string;
+  userId: number;
+  userPhotoUrl: string | null;
+  // lastMessage: string;
+  // lastMessageDate: string;
+  // userData: UserDataType;
 };
 
 interface ChatMessagesType {

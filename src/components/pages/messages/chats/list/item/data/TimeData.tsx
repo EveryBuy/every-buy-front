@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Box } from "@mui/material";
 import { CommonIcon } from "@/components";
-import formatMessageDate from "@/utils/formatMessageDate";
+import {formatMessageTime} from "@/utils/formatMessageDate";
 import style from "./TimeData.module.scss";
 
 interface TimeDataType {
@@ -9,7 +9,7 @@ interface TimeDataType {
 }
 
 const TimeData: FC<TimeDataType> = ({ lastMessageDate }) => {
-  const formattedDate = formatMessageDate(lastMessageDate);
+  const formattedDate = formatMessageTime(lastMessageDate);
   return (
     <div className={style.blockWrapper}>
       <CommonIcon id="message-tick" className={style.icon} />

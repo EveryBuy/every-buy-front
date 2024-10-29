@@ -1,11 +1,11 @@
 "use client";
 import { FC, useState, useEffect } from "react";
 import { Box } from "@mui/material";
-import { ChatsList, Buttons, Icons, CommonIcon } from "@/components";
+import {ChatsList, Buttons, Icons, CommonIcon} from "@/components";
 import {
   useGetChatsQuery,
   useGetMessagesByChatIdQuery,
-} from "../../../../redux/messages/chatApi";
+} from "@/redux/messages/chatApi";
 import style from "./ChatsBlock.module.scss";
 
 type MessageListBlockType = {
@@ -33,10 +33,6 @@ const MessageListBlock: FC<MessageListBlockType> = ({ onclick }) => {
       borderBottom: activeButton === buttonId ? "3px solid #000000" : "",
     };
   };
-
-  if (!chats) {
-    return "Завантажується";
-  }
 
   return (
     <Box className={style.blockWrapper}>

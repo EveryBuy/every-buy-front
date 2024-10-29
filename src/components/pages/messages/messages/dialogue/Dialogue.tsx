@@ -3,7 +3,8 @@
 import { FC, useState, useEffect } from "react";
 import Image from "next/image";
 import { Box, TextField } from "@mui/material";
-import { CommonIcon, CommonInput } from "@/components";
+import { CommonIcon, CommonInput, CommonPreloader, Message } from "@/components";
+import {formatMessageDate} from "@/utils/formatMessageDate";
 import { skipToken } from "@reduxjs/toolkit/query";
 import { useGetMessagesByChatIdQuery } from "@/redux/messages/chatApi";
 import { ChatMessagesType } from "@/types/messages/messages";
@@ -59,78 +60,59 @@ const Dialogue: FC<DialogueType> = ({ chatId }) => {
   }, [messages, isLoading, isFetching]);
 
   if (isLoading || (isFetching && displayedMessages.length === 0)) {
-    return <div>Loading messages...</div>;
+    return <CommonPreloader sx={{ color: '#9d9d9d' }}/>;
   }
 
   if (error) {
     return <div>Error: {(error as any).message}</div>;
   }
 
-  if (!messages) {
-    return <div>No messages found.</div>;
-  }
-
   return (
-    <>
-      {/* {isFetching && <div>Updating...</div>} */}
-      {displayedMessages.map((message) => (
-        <div key={message.id}>{message.text}</div>
-      ))}
-    </>
+    <Box className={style.blockWrapper}>
+      <Box className={style.dateWrapper}>
+        {messages ? <Box className={style.date}>{formatMessageDate(messages[messages.length - 1].
+          creationTime)}</Box> : "data not found"}
+      </Box>
+
+      <Box className={style.dialogue}>
+        {!messages ? <EmptyDialogueMessage /> : displayedMessages.map((message) => (
+            <Message message={message}/>
+              // <div key={message.id}>{message.text}</div>
+          ))}
+      </Box>
+
+      <Box className={style.inputBlockWrapper}>
+        <Box className={style.inputIconsWrapper}>
+          <CommonIcon
+            id="picture"
+            className={style.iconPic}
+            // onClick={handleIconHeartClick}
+          />
+          <CommonIcon
+            id="paper-clip"
+            className={style.iconClip}
+            // onClick={handleIconHeartClick}
+          />
+        </Box>
+        {/* <Box className={style.inputWrapper}> */}
+        <TextField
+          multiline
+          maxRows={4}
+          fullWidth
+          className={style.input}
+          placeholder="напишіть повідомлення..."
+        />
+        {/* </Box> */}
+        <Box className={style.sendIconWrapper}>
+          <CommonIcon
+            id="message-send"
+            className={style.iconSend}
+            // onClick={handleIconHeartClick}
+          />
+        </Box>
+      </Box>
+    </Box>
   );
-
-  // console.log(isLoading === true ? "isLoading" : messages);
-
-  // return (
-  //   <Box className={style.blockWrapper}>
-  //     <Box className={style.dateWrapper}>
-  //       <Box className={style.date}>20 трав 2024</Box>
-  //     </Box>
-
-  //     {/* <Box className={style.dialogue}>
-  //       <EmptyDialogueMessage />
-  //     </Box> */}
-
-  //     <Box className={style.inputBlockWrapper}>
-  //       <Box className={style.inputIconsWrapper}>
-  //         <CommonIcon
-  //           id="picture"
-  //           className={style.iconPic}
-  //           // onClick={handleIconHeartClick}
-  //         />
-  //         <CommonIcon
-  //           id="paper-clip"
-  //           className={style.iconClip}
-  //           // onClick={handleIconHeartClick}
-  //         />
-  //       </Box>
-  //       {/* <Box className={style.inputWrapper}> */}
-  //       {/* <CommonInput
-  //           typeTitle="inputNewMessageValue"
-  //           typeInput="text"
-  //           value={inputNewMessageValue}
-  //           setValue={(e) => setInputNewMessageValue(e.target.value)}
-  //           placeholder="Напишіть повідомлення..."
-  //           className={style.input}
-  //         /> */}
-  //       <TextField
-  //         multiline
-  //         maxRows={4}
-  //         fullWidth
-  //         className={style.input}
-  //         placeholder="напишіть повідомлення..."
-  //       />
-  //       {/* </Box> */}
-  //       <Box className={style.sendIconWrapper}>
-  //         <CommonIcon
-  //           id="message-send"
-  //           className={style.iconSend}
-  //           // onClick={handleIconHeartClick}
-  //         />
-  //       </Box>
-  //     </Box>
-  //   </Box>
-  // );
 };
 
 export default Dialogue;

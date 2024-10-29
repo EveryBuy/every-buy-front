@@ -26,6 +26,7 @@ export { default as AuthButtons } from "./auth/AuthButtons/AuthButtons";
 export { default as MessagesWrapper } from "./pages/messages/MessagesWrapper";
 export { default as ChatsBlock } from "./pages/messages/chats/ChatsBlock";
 export { default as MessagesBlock } from "./pages/messages/messages/MessagesBlock";
+export { default as Message } from "./pages/messages/messages/dialogue/Message/Message";
 export { default as Companion } from "./pages/messages/messages/companion/Companion";
 export { default as Dialogue } from "./pages/messages/messages/dialogue/Dialogue";
 export { default as Product } from "./pages/messages/messages/product/Product";
@@ -38,3 +39,4 @@ export { default as IconsData } from "./pages/messages/chats/list/item/data/Icon
 export { default as Buttons } from "./pages/messages/chats/Buttons/Buttons";
 export { default as Button } from "./pages/messages/chats/Buttons/Button";
 export { default as Icons } from "./pages/messages/chats/Icons/Icons";
+export {default as CommonPreloader } from "./ui/CommonPreloader/CommonPreloader";

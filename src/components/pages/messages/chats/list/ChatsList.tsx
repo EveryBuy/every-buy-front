@@ -2,7 +2,7 @@
 
 import { FC, useState } from "react";
 import { Box } from "@mui/material";
-import { Chat } from "@/components";
+import { Chat, CommonPreloader } from "@/components";
 import { ChatType } from "@/types/messages/chats";
 import style from "./ChatsList.module.scss";
 
@@ -15,10 +15,6 @@ interface ListChatsType {
 }
 
 const ChatsList: FC<ListChatsType> = ({ chats, onclick }) => {
-  if (!chats) {
-    return <p>Завантажується...</p>;
-  }
-
   const handleChatClick = (chatId: number) => {
     // setSelectedChatId(chatId);
     onclick(chatId);
@@ -26,23 +22,23 @@ const ChatsList: FC<ListChatsType> = ({ chats, onclick }) => {
 
   return (
     <Box className={style.listWrapper}>
-      {chats.map(({ chatId, userData, lastMessage, lastMessageDate }) => (
-        <Box
-          sx={{ borderBottom: "solid 1px gray" }}
-          key={chatId}
-          onClick={() => {
-            if (chatId) {
-              handleChatClick(chatId);
-            }
-          }}
-        >
-          <Chat
-            lastMessage={lastMessage}
-            userData={userData}
-            lastMessageDate={lastMessageDate}
-          />
-        </Box>
-      ))}
+      {chats ? chats.map(({ chatId, userData, lastMessage, lastMessageDate }) => (
+            <Box
+                sx={{ borderBottom: "solid 1px gray" }}
+                key={chatId}
+                onClick={() => {
+                  if (chatId) {
+                    handleChatClick(chatId);
+                  }
+                }}
+            >
+              <Chat
+                  lastMessage={lastMessage}
+                  userData={userData}
+                  lastMessageDate={lastMessageDate}
+              />
+            </Box>
+        )) : <CommonPreloader sx={{ color: '#9d9d9d' }}/>}
     </Box>
   );
 };
