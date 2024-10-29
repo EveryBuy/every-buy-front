@@ -1,0 +1,75 @@
+@import '../../../styles/breakpoints';
+
+.card {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto;
+    gap: 10px;
+
+    border-radius: 20px !important;
+    box-shadow: none !important;
+    background-color: transparent !important;
+
+    padding: 5%;
+
+    &-details {
+        grid-column: 1 / 2;
+        grid-row: 1 / 2;
+
+        &-header {
+            display: flex;
+            gap: 5%;
+
+            @media (max-width: $breakpoint-mobile) {
+                flex-wrap: wrap;
+            }
+
+            &-title {
+                display: -webkit-box;
+
+                overflow-wrap: break-word;
+                word-break: break-all;
+                white-space: normal;
+                hyphens: manual;
+
+                margin: 0;
+
+                @media (max-width: $breakpoint-mobile) {
+                    font-size: 18px;
+                }
+            }
+
+            &-image {
+                border: 1px solid black;
+                border-radius: 10px;
+                width: clamp(6.5rem, 2vw, 1.5rem);
+                max-width: 10rem;
+            }
+        }
+
+        &-desc {
+            width: 100%;
+            display: -webkit-box;
+
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 1.5;
+            max-height: 3em;
+
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+    }
+
+    &-item-2 {
+        grid-column: 1 / 2;
+        grid-row: 2 / 3;
+    }
+
+    &-item-3 {
+        grid-row: 1 / 3;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+}
