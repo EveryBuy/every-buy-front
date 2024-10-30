@@ -10,14 +10,7 @@ import {
     Typography,
 } from '@mui/material';
 
-interface CatalogyCardProps {
-    imageUrl: string;
-    title: string;
-    status: string;
-    price: string;
-    description: string;
-    timestamp: string;
-}
+import { ICatalogyCardProps } from '../types';
 
 export function CatalogyCard({
     imageUrl,
@@ -26,7 +19,7 @@ export function CatalogyCard({
     price,
     description,
     timestamp,
-}: CatalogyCardProps) {
+}: ICatalogyCardProps) {
     return (
         <Card className={styles.card} variant='outlined'>
             <CardContent
