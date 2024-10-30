@@ -1,8 +1,8 @@
 .catalog-container {
     display: grid;
     grid-template-columns: 1fr;
-    padding: 0 10px;
-    gap: 10px;
+    
+    gap: 16px 22px;
 }
 
 @media (min-width: 768px) {

@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { ProfileMenu } from "@/components";
-import '@/app/globals.scss'
+// import '@/app/globals.scss'
 
 export default async function UserLayout({
   children,
