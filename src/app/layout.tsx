@@ -5,6 +5,7 @@ import { Providers } from "../redux/provider";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "../styles/mui/theme";
+// import Category from "../components/Category/Category"
 import "./globals.scss";
 
 export default async function ClientLayout({
