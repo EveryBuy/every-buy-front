@@ -18,6 +18,7 @@ import {
   validateInput,
   validatePassword,
 } from "@/utils/validate";
+import { LoginServerErrorModal, LoginUserErrorModal } from "@/components";
 
 type ErrorsType = {
   emailOrPhone: string;
@@ -34,6 +35,8 @@ const Login: React.FC = () => {
     emailOrPhone: "",
     password: "",
   });
+  const [loginServerErrorModal, setLoginServerErrorModal] = useState(false);
+  const [loginUserErrorModal, setLoginUserErrorModal] = useState(false);
   const dispatch = useAppDispatch();
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
 
@@ -63,12 +66,26 @@ const Login: React.FC = () => {
     if (newErrors.emailOrPhone || newErrors.password) {
       return;
     }
-    dispatch(
-      login({
-        login: emailOrPhone,
-        password: password,
-      })
-    );
+
+    try {
+      await dispatch(
+        login({
+          login: emailOrPhone,
+          password: password,
+        })
+      ).unwrap();
+    } catch (error: any) {
+      if (error.response) {
+        switch (error.response.status) {
+          case 500:
+            setLoginServerErrorModal(true);
+            break;
+          case 401:
+            setLoginUserErrorModal(true);
+            break;
+        }
+      }
+    }
   };
 
   const getInputClass = (field: string) => {
@@ -157,6 +174,9 @@ const Login: React.FC = () => {
           Увійти
         </button>
       </form>
+
+      {loginServerErrorModal && <LoginServerErrorModal onClose={() => setLoginServerErrorModal(false)} />}
+      {loginUserErrorModal && <LoginUserErrorModal onClose={() => setLoginUserErrorModal(false)} />}
     </>
   );
 };

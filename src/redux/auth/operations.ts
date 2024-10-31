@@ -36,8 +36,8 @@ export const login = createAsyncThunk(
     try {
       const { data } = await API.post("/auth/auth", userLogData);
       setHeaderAuthToken(data.data.token);
-      console.log(API.defaults.headers.common["Authorization"]);
       const userData = await API.get("/user");
+      console.log(API.defaults.headers.common["Authorization"]);
       return { data: userData.data.data, token: data.data.token };
     } catch (error) {
       console.log(error);
@@ -63,7 +63,7 @@ export const refreshUser = createAsyncThunk(
       setHeaderAuthToken(auth.token);
       const { data } = await API.get("/user");
       console.log(data.data);
-      
+
       return data.data;
     } catch (error: any) {
       clearHeaderAuthToken();
@@ -143,7 +143,7 @@ export const changeUserPhone = createAsyncThunk(
       setHeaderAuthToken(token);
       const response = await API.get("/user");
       console.log(response.data.data);
-      
+
       return response.data.data;
     } catch (error: any) {
       rejectWithValue(error.message);
