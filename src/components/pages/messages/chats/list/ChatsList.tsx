@@ -22,23 +22,33 @@ const ChatsList: FC<ListChatsType> = ({ chats, onclick }) => {
 
   return (
     <Box className={style.listWrapper}>
-      {chats ? chats.map(({ chatId, userData, lastMessage, lastMessageDate }) => (
-            <Box
-                sx={{ borderBottom: "solid 1px gray" }}
-                key={chatId}
-                onClick={() => {
-                  if (chatId) {
-                    handleChatClick(chatId);
-                  }
-                }}
-            >
-              <Chat
-                  lastMessage={lastMessage}
-                  userData={userData}
-                  lastMessageDate={lastMessageDate}
-              />
-            </Box>
-        )) : <CommonPreloader sx={{ color: '#9d9d9d' }}/>}
+      {chats ? (
+        chats.map(({ chatId, userData, lastMessage, lastMessageDate }) => (
+          <Box
+            sx={{ borderBottom: "solid 1px gray" }}
+            key={chatId}
+            onClick={() => {
+              if (chatId) {
+                handleChatClick(chatId);
+              }
+            }}
+          >
+            <Chat
+              lastMessage={lastMessage}
+              userData={userData}
+              lastMessageDate={lastMessageDate}
+            />
+          </Box>
+        ))
+      ) : (
+        <Box
+          sx={{
+            paddingTop: "50%",
+          }}
+        >
+          <CommonPreloader sx={{ color: "#9d9d9d" }} />
+        </Box>
+      )}
     </Box>
   );
 };

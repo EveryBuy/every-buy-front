@@ -1,3 +1,6 @@
+@import "@/styles/mixins";
+@import "@/styles/breakpoints";
+
 .blockWrapper {
   position: relative;
   border-top: 1px solid var(--border);
@@ -12,7 +15,6 @@
 .dateWrapper {
   position: absolute;
   width: 100%;
-  // height: 1px;
   display: flex;
   justify-content: center;
   left: 0;
@@ -46,72 +48,36 @@
   }
 }
 
-.dialogue {
-  height: 90%;
-}
-
-.inputBlockWrapper {
+.dialogueWrapper {
+  display: grid;
+  grid-auto-rows: 60px;
   width: 100%;
-  // height: 54px;
-  min-height: 10%;
-  display: flex;
-  justify-content: space-between;
-  background-color: #ffffff;
-  border-radius: 10px;
-  padding: 0px 20px;
-  & label::after {
-    content: "";
+  padding: 20px 40px 0px;
+  // height: 90%;
+  overflow-y: auto;
+
+  @include media-min($breakpoint-tablet) {
+    height: 455px;
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+    &::-webkit-scrollbar-track {
+      background-color: #f1f1f1;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: #e5ff46;
+      border-radius: 4px;
+    }
+    &::-webkit-scrollbar-thumb:hover {
+      background-color: #b3c638;
+    }
   }
 }
 
 .inputWrapper {
   width: 92%;
-  // display: flex;
-  // align-items: center;
   & div {
     gap: 0px;
     max-width: 100%;
   }
-  // & input {
-  //   min-height: 54px;
-  //   max-height: fit-content;
-  //   border: none;
-  //   &:focus {
-  //     border: none;
-  //   }
-  // }
-}
-
-.input {
-  & fieldset {
-    border: 0px;
-    padding-right: 15px;
-  }
-}
-
-.inputIconsWrapper {
-  width: 8%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-right: 10px;
-}
-
-.iconPic {
-  width: 23px;
-  height: 18px;
-}
-.iconClip {
-  width: 22px;
-  height: 22px;
-}
-
-.sendIconWrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.iconSend {
-  width: 24px;
-  height: 24px;
 }
