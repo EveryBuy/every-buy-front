@@ -2,12 +2,8 @@
 @import "@/styles/breakpoints";
 
 .preloaderContainer {
-    width: 100%;
-    padding: 160px 0 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    @media (max-width: 600px) {
-        padding: 110px 0 50px;
-    }
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
