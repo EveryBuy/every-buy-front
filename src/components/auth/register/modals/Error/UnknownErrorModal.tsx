@@ -6,7 +6,7 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import styles from "./ErrorModal.module.scss";
 
-const ServerErrorModal: React.FC = () => {
+const UnknownErrorModal: React.FC = () => {
     const router = useRouter();
 
     const handleClose = () => router.push("/");
@@ -25,4 +25,4 @@ const ServerErrorModal: React.FC = () => {
     )
 };
 
-export default ServerErrorModal;
+export default UnknownErrorModal;
