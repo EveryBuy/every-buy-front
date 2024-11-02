@@ -1,8 +1,10 @@
 "use client";
 
 import { FC, useState } from "react";
-import s from "./UserPage.module.scss";
+import s from "../UserPage.module.scss";
+import styles from "./SelectedGoods.module.css";
 import CommonSelect from "@/components/ui/CommonSelect/CommonSelect";
+import SelectedGoodsList from "./SelectedGoodsList/SelectedGoodsList";
 
 const ocupation = ["Businessman", "Employee", "Freelancer", "Retired"];
 const widthSize = {
@@ -11,11 +13,11 @@ const widthSize = {
   laptop: "280px",
 };
 
-const SelectedGoods: FC = () => {
+export const SelectedGoods: FC = () => {
   const [category, setCategory] = useState("");
 
   return (
-    <>
+    <div className={styles.SelectedGoodsContainer}>
       <h3 className={s.headline}>Мої обрані товари</h3>
       <CommonSelect
         label="Виберіть категорію"
@@ -25,7 +27,8 @@ const SelectedGoods: FC = () => {
         value={category}
         onChange={(evt) => setCategory(evt.target.value)}
       />
-    </>
+      <SelectedGoodsList />
+    </div>
   );
 };
 
