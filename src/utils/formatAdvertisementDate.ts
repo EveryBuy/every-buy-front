@@ -2,7 +2,7 @@ export const formatAdvertisementDate = (dateString: string) => {
     const date = new Date(dateString);
     const currentDate = new Date();
 
-    const differenceDays = Math.ceil((currentDate.getTime() - date.getTime()) / (1000 * 60 * 60))
+    const differenceHours = Math.ceil((currentDate.getTime() - date.getTime()) / (1000 * 60 * 60))
 
     const startOfDay = new Date();
     startOfDay.setHours(0, 0, 0, 0);
@@ -14,8 +14,8 @@ export const formatAdvertisementDate = (dateString: string) => {
     })
 
 
-    if (differenceDays < hoursInCurrentDay) { return `Сьогодні ${formattedTime}` }
-    if (differenceDays > hoursInCurrentDay && differenceDays < (hoursInCurrentDay + 24) ) { return `Вчора ${formattedTime}` }
+    if (differenceHours < hoursInCurrentDay) { return `Сьогодні ${formattedTime}` }
+    if (differenceHours > hoursInCurrentDay && differenceHours < (hoursInCurrentDay + 24) ) { return `Вчора ${formattedTime}` }
     
     return date.toLocaleDateString('uk-UA', {
         day: '2-digit',
