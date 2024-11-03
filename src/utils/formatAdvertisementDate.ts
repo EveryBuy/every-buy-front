@@ -13,14 +13,15 @@ export const formatAdvertisementDate = (dateString: string) => {
         minute: '2-digit',
     })
 
+
     if (differenceDays < hoursInCurrentDay) { return `Сьогодні ${formattedTime}` }
-    if (differenceDays > hoursInCurrentDay) { return `Вчора ${formattedTime}` }
+    if (differenceDays > hoursInCurrentDay && differenceDays < (hoursInCurrentDay + 24) ) { return `Вчора ${formattedTime}` }
     
     return date.toLocaleDateString('uk-UA', {
         day: '2-digit',
         month: '2-digit',
         year: '2-digit',
-    }) + `${formattedTime}`;
+    }) + ` ${formattedTime}.`;
 }
 
 export default formatAdvertisementDate;
