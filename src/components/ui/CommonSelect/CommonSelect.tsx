@@ -11,6 +11,7 @@ import {
 import * as React from "react";
 import { styled } from "@mui/material/styles";
 import styles from "./CommonSelect.module.css";
+import { nanoid } from "nanoid";
 
 type CommonSelectProps = {
   label: string;
@@ -85,8 +86,8 @@ export const CommonSelect = ({
         label={label}
         onChange={onChange}
       >
-        {options.map((elem, idx) => (
-          <MenuItem key={idx} value={elem}>
+        {options.map((elem) => (
+          <MenuItem key={nanoid()} value={elem}>
             {elem}
           </MenuItem>
         ))}
