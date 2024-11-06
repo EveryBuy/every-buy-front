@@ -1,1 +1,1 @@
-export { FilterCatalogySearch } from './ui';
+export { FilterCatalogySearch } from './ui/FilterCatalogy';
