@@ -42,3 +42,4 @@ export { FilterCatalogySearch } from './filterCatalogy';
 export { CustomSeparator } from './ui';
 export { CategoryList } from './categoryList';
 export { CatalogyCard } from './cardCatalogy';
+export { CatalogyPage } from './pages/Catalogy'
