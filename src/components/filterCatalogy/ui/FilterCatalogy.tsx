@@ -3,8 +3,8 @@
 import React, { useState } from 'react';
 import { Grid2, Button } from '@mui/material';
 import { FilterConfig } from '../types';
-import { CustomSelect } from './customSelect';
-import { Slider } from './slider';
+import { CustomSelect } from './CustomSelect';
+import { Slider } from './Slider';
 
 export function FilterCatalogySearch() {
     const [price, setPrice] = useState<number[]>([0, 100000]);
