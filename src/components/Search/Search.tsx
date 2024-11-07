@@ -1,18 +1,55 @@
 "use client";
 
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
 import { CommonIcon, CommonButton } from "@/components";
 import styles from "./Search.module.scss";
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { getSearchByWord } from '../../api/getSearchByWord';
 
 const Search: FC = (props) => {
-
-	const [search, setSearch] = useState<string>('');
+	const [word, setWord] = useState<string>('');
+	const [search, setSearch] = useState<[]>([]);
 	const router = useRouter();
 
 	const goToSearch = (): void => {
-		router.push(`/search?q=${search}`);
+		router.push(`/search?q=${word}`);
 	};
+
+	useEffect(() => {
+		const fetchForSearch = async () => {
+			try {
+				const result = await getSearchByWord(word);
+				setSearch(result);
+				// console.log(search);
+
+			} catch (error: any) {
+				console.error("Error fetching data:", error);
+			}
+		};
+
+		fetchForSearch();
+	}, [word]);
+
+	const SuggestItem = ({ item }) => {
+
+		// console.log(item.advertisementId);
+		return (
+			<li key={item.advertisementId} className={styles.searchSuggestItem}>
+				<Link href={`/products/${item.advertisementId}`}>
+					<span className={styles.searchLinkItem}>{item.title}</span>
+					<span className={styles.searchItemCategory}>{item.category.nameUkr}
+						/ {item.topSubCategory.subCategoryNameUkr}</span>
+				</Link>
+			</li>
+		)
+	}
+	// advertisementId
+	// category.nameUkr
+	// lowSubCategory.subCategoryNameUkr  
+	// topSubCategory.subCategoryNameUkr
+	// title  
+	// ? mainPhotoUrl
 
 	return (
 		<div className={styles.searchContainer}>
@@ -21,8 +58,8 @@ const Search: FC = (props) => {
 					<input
 						className={styles.searchInput}
 						placeholder="Що шукаєте?"
-						value={search}
-						onChange={e => setSearch(e.target.value)}
+						value={word}
+						onChange={e => setWord(e.target.value)}
 					/>
 					<div className={styles.searchInputIconWrapper}>
 						<CommonIcon
@@ -47,6 +84,18 @@ const Search: FC = (props) => {
 						className={styles.searchButtonIcon}
 					/>
 				</CommonButton>
+				{
+					search.length === 0
+						? null
+						: <div className={styles.searchSuggest}>
+							<ul className={styles.searchSuggestList}>
+								{
+									search.map(item => <SuggestItem item={item} />)
+								}
+							</ul>
+						</div>
+				}
+
 			</form>
 		</div>
 	);
