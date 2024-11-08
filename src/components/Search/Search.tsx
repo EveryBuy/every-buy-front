@@ -13,7 +13,7 @@ const Search: FC = (props) => {
 	const router = useRouter();
 
 	const goToSearch = (): void => {
-		router.push(`/search?q=${word}`);
+		router.push(`/search/${word}`);
 	};
 
 	useEffect(() => {
