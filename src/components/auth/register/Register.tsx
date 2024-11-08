@@ -17,7 +17,7 @@ import {
   validateEmail,
   validatePassword,
 } from "@/utils/validate";
-import { SuccessRegisterModal } from "@/components";
+import { SuccessRegisterModal, ErrorModal } from "@/components";
 
 type ErrorsType = {
   phone: string;
@@ -43,6 +43,9 @@ const Register: React.FC = () => {
     confirmPassword: "",
   });
   const [successRegisterModalOpen, setSuccessRegisterModalOpen] = useState(false);
+  const [serverErrorModalOpen, setServerErrorModalOpen] = useState(false);
+  const [unknownErrorModalOpen, setUnknownErrorModalOpen] = useState(false);
+  const [userErrorModalOpen, setUserErrorModalOpen] = useState(false);
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const showSuccessRegisterModal = useRef(false);
 
@@ -132,13 +135,30 @@ const Register: React.FC = () => {
       return;
     }
 
-    dispatch(
-      register({
-        email: email,
-        phone: phone,
-        password: password,
-      })
-    );
+    try {
+      await dispatch(
+          register({
+            email: email,
+            phone: phone,
+            password: password,
+          })
+      ).unwrap();
+    } catch (error: any) {
+      if (error.response) {
+        switch (error.response.status) {
+          case 500:
+            setServerErrorModalOpen(true);
+            break;
+          case 409:
+            setUserErrorModalOpen(true);
+            break;
+          default:
+            setUnknownErrorModalOpen(true);
+        }
+      } else {
+        setUnknownErrorModalOpen(true);
+      }
+    }
   };
 
   const getInputClass = (field: string) => {
@@ -311,6 +331,27 @@ const Register: React.FC = () => {
       </form>
 
       {successRegisterModalOpen && <SuccessRegisterModal />}
+      {
+        serverErrorModalOpen && <ErrorModal
+            onClose={() => { setServerErrorModalOpen(false); router.refresh();}}
+            title={"Упс! Проблеми на сервері!"}
+            buttonText={"Перезавантажити сторінку"}
+          />
+      }
+      {
+        userErrorModalOpen && <ErrorModal
+              onClose={() => router.push("/login")}
+              title={"Користувач з таким телефоном/імейлом вже зареєстрований!"}
+              buttonText={"Вхід"}
+          />
+      }
+      {
+        unknownErrorModalOpen && <ErrorModal
+              onClose={() => router.push("/")}
+              title={"Упс! Невідома помилка!"}
+              buttonText={"На головну"}
+          />
+      }
     </>
   );
 };
