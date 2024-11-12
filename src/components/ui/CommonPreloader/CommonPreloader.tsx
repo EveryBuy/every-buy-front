@@ -6,10 +6,11 @@ interface CommonPreloaderProps {
     size?: number;
     color?: string;
     sx?: SxProps;
+    className?: string;
 }
-const CommonPreloader: React.FC<CommonPreloaderProps> = ({ size = 40, sx }) => {
+const CommonPreloader: React.FC<CommonPreloaderProps> = ({ size = 40, sx, className }) => {
     return (
-        <div className={styles.preloaderContainer}>
+        <div className={`${styles.preloaderContainer} ${className}`}>
             <CircularProgress size={size} sx={sx} />
         </div>
     );

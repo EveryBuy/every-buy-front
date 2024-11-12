@@ -1,4 +1,3 @@
-import "../../globals.scss";
 import { AboutMe } from "@/components";
 import MobileProfileMenu from "@/components/pages/MobileProfileMenu";
 
