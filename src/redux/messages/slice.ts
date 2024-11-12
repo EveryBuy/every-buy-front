@@ -2,27 +2,20 @@
 
 import { createSlice } from "@reduxjs/toolkit";
 import { chatApi } from "./chatApi";
-import { ChatsType } from "@/types/messages/chats";
+import { ChatsType, FullChatType } from "@/types/messages/chats";
 import { MessageType } from "@/types/messages/messages";
 
 interface InitialStateType {
   chats: ChatsType | [];
   messages: MessageType[];
-  // message: ChatMessagesType;
+  chat: FullChatType | [];
   loading: boolean;
   error: null | string;
 }
 const initialState: InitialStateType = {
   chats: [],
+  chat: [],
   messages: [],
-  // message: {
-  //   id: 0,
-  //   text: "",
-  //   creationTime: "",
-  //   userId: 0,
-  //   chatId: 0,
-  //   userPhotoUrl: "",
-  // },
   loading: false,
   error: null,
 };
@@ -37,6 +30,12 @@ const messagesSlice = createSlice({
         chatApi.endpoints.getChats.matchFulfilled,
         (state, { payload }) => {
           state.chats = payload;
+        }
+      )
+      .addMatcher(
+        chatApi.endpoints.getChat.matchFulfilled,
+        (state, { payload }) => {
+          state.chat = payload;
         }
       )
       .addMatcher(
