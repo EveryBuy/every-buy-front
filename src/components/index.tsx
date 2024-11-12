@@ -7,7 +7,7 @@ export { default as BannerBackground } from "./Slider/BannerBackground/BannerBac
 export { default as Banner } from "./Slider/Banner/Banner";
 export { default as Search } from "./Search/Search";
 export { default as AboutMe } from "./pages/userPage/AboutMe/AboutMe";
-export { default as SelectedGoods } from "./pages/userPage/SelectedGoods";
+export { default as SelectedGoods } from "./pages/userPage/SelectedGoods/SelectedGoods";
 export { default as MyAds } from "./pages/userPage/MyAds";
 export { default as MyActiveAds } from "./pages/userPage/MyActiveAds";
 export { default as MyNonActiveAds } from "./pages/userPage/MyNonActiveAds";
@@ -38,3 +38,8 @@ export { default as IconsData } from "./pages/messages/messageListBlock/list/ite
 export { default as Buttons } from "./pages/messages/messageListBlock/Buttons/Buttons";
 export { default as Button } from "./pages/messages/messageListBlock/Buttons/Button";
 export { default as Icons } from "./pages/messages/messageListBlock/Icons/Icons";
+export { FilterCatalogySearch } from './filterCatalogy';
+export { CustomSeparator } from './ui';
+export { CategoryList } from './categoryList';
+export { CatalogyCard } from './cardCatalogy';
+export { CatalogyPage } from './pages/Catalogy'
