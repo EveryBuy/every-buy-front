@@ -1,7 +1,7 @@
 "use client";
 import { FC, useState, useEffect } from "react";
 import { Box } from "@mui/material";
-import {ChatsList, Buttons, Icons, CommonIcon} from "@/components";
+import { ChatsList, Buttons, Icons, CommonIcon } from "@/components";
 import {
   useGetChatsQuery,
   useGetMessagesByChatIdQuery,
@@ -80,7 +80,7 @@ const MessageListBlock: FC<MessageListBlockType> = ({ onclick }) => {
         )}
       </Box>
       <Box className={style.listWrapper}>
-        <ChatsList chats={chats} onclick={onclick} />
+        {/* <ChatsList chats={chats} onclick={onclick} /> */}
       </Box>
     </Box>
   );
