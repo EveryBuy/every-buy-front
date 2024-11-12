@@ -1,1 +1,0 @@
-export { CatalogyCard } from './ui';

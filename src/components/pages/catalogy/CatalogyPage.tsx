@@ -1,5 +1,5 @@
-import { CatalogyCard } from "@/components";
-import styles from "../../../Category/Category.module.scss";
+import { CatalogyCard } from "../../Category/cardCatalogy/CatalogyCard";
+import styles from "../../Category/Category.module.scss";
 
 const cardsData = [
 	{

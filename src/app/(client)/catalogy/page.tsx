@@ -1,7 +1,7 @@
-import { CatalogyPage } from "@/components/pages";
+import { CatalogyPage } from "../../../components/pages/catalogy/CatalogyPage";
 
 function Page() {
-  return <CatalogyPage />;
+	return <CatalogyPage />;
 }
 
 export default Page;

@@ -5,7 +5,7 @@ import { CommonIcon, CommonButton } from "@/components";
 import styles from "./Search.module.scss";
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { getSearchByWord } from '../../api/getSearchByWord';
+import { getSearchByWord } from '../../../api/getSearchByWord';
 
 const Search: FC = (props) => {
 	const [word, setWord] = useState<string>('');
