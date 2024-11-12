@@ -12,4 +12,6 @@ type ChatType = {
   userData: UserDataType;
 };
 
-export { UserDataType, ChatType };
+type ChatsType = ChatType[];
+
+export { UserDataType, ChatType, ChatsType };

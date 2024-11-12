@@ -2,11 +2,12 @@
 
 import { createSlice } from "@reduxjs/toolkit";
 import { chatApi } from "./chatApi";
-import { ChatsType, ChatMessagesType } from "@/types/messages/messages";
+import { ChatsType } from "@/types/messages/chats";
+import { MessageType } from "@/types/messages/messages";
 
 interface InitialStateType {
   chats: ChatsType | [];
-  messages: ChatMessagesType[];
+  messages: MessageType[];
   // message: ChatMessagesType;
   loading: boolean;
   error: null | string;

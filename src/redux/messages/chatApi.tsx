@@ -1,11 +1,12 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { RootState } from "@/redux/store";
-import { ChatsType, ChatMessagesType } from "@/types/messages/messages";
+import { ChatsType } from "@/types/messages/chats";
+import { MessageType } from "@/types/messages/messages";
 
 interface ChatDataTypeInt {
   id: number;
   advertisementId: number;
-  chatMessages: ChatMessagesType[];
+  chatMessages: MessageType[];
 }
 
 export const chatApi = createApi({
@@ -24,7 +25,7 @@ export const chatApi = createApi({
     getChats: builder.query<ChatsType, void>({
       query: () => "/chat/get-all-users-chats",
     }),
-    getMessagesByChatId: builder.query<ChatMessagesType[], number>({
+    getMessagesByChatId: builder.query<MessageType[], number>({
       query: (chatId) => `/chat/${chatId}`,
       transformResponse: (response: { data: ChatDataTypeInt }) =>
         response.data.chatMessages,
