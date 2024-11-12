@@ -3,7 +3,7 @@
 import React, { use, useId, useState } from "react";
 import { useAppDispatch } from "@/redux/store";
 import { useRouter } from "next/navigation";
-import CommonModal from "@/components/ui/CommonModal/CommonModal";
+import { CommonModal } from "@/components";
 import CommonButton from "@/components/ui/CommonButton/CommonButton";
 import styles from "@/components/auth/ChangePassword/ChangePassword.module.scss";
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik";

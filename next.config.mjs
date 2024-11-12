@@ -13,6 +13,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "everybuy-user-photos.s3.eu-north-1.amazonaws.com",
       },
+      {
+        protocol: "https",
+        hostname: "everybuy.s3.eu-north-1.amazonaws.com",
+      },
     ],
   },
   async rewrites() {

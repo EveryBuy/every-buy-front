@@ -7,7 +7,7 @@ export { default as BannerBackground } from "./Slider/BannerBackground/BannerBac
 export { default as Banner } from "./Slider/Banner/Banner";
 export { default as Search } from "./Search/Search";
 export { default as AboutMe } from "./pages/userPage/AboutMe/AboutMe";
-export { default as SelectedGoods } from "./pages/userPage/SelectedGoods";
+export { default as SelectedGoods } from "./pages/userPage/SelectedGoods/SelectedGoods";
 export { default as MyAds } from "./pages/userPage/MyAds";
 export { default as MyActiveAds } from "./pages/userPage/MyActiveAds";
 export { default as MyNonActiveAds } from "./pages/userPage/MyNonActiveAds";
@@ -20,6 +20,8 @@ export { default as FooterMobile } from "./Footer/FooterMobile/FooterMobile";
 export { default as Category } from "./Category/Category";
 export { default as Register } from "./auth/register/Register";
 export { default as SuccessRegisterModal } from "./auth/register/modals/Success/SuccessRegisterModal";
+export { default as ErrorModal } from "./ui/CommonModal/errorModal/ErrorModal";
+export { default as CommonModal } from "./ui/CommonModal/CommonModal";
 export { default as ProtectedRoute } from "./auth/ProtectedRoute/ProtectedRoute";
 export { default as Login } from "./auth/Login/Login";
 export { default as AuthButtons } from "./auth/AuthButtons/AuthButtons";
