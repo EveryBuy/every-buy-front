@@ -14,8 +14,13 @@ const SuccessRegisterModal: React.FC = () => {
   return (
     <CommonModal onClose={handleClose}>
       <h3 className={styles.registerModalTitle}>Вітаємо вас!</h3>
-      <p className={styles.registerModalText}>Ви успішно зареєструвалися і тепер можете насолоджуватися всіма перевагами нашого сервісу.</p>
-      <p className={styles.registerModalText}>Дякуємо за реєстрацію у нашому магазині. Бажаємо вам приємних покупок!</p>
+      <p className={styles.registerModalText}>
+        Ви успішно зареєструвалися і тепер можете насолоджуватися всіма
+        перевагами нашого сервісу.
+      </p>
+      <p className={styles.registerModalText}>
+        Дякуємо за реєстрацію у нашому магазині. Бажаємо вам приємних покупок!
+      </p>
       <CommonButton
         type="button"
         title="Перейти до налаштувань профілю"
@@ -30,7 +35,7 @@ const SuccessRegisterModal: React.FC = () => {
         onClick={handleClose}
       />
     </CommonModal>
-  )
+  );
 };
 
 export default SuccessRegisterModal;

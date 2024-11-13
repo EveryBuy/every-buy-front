@@ -1,6 +1,7 @@
 export { default as CommonIcon } from "./ui/CommonIcon/CommonIcon";
 export { default as CommonButton } from "./ui/CommonButton/CommonButton";
 export { default as CommonInput } from "./ui/CommonInput/CommonInput";
+export { default as CommonModal } from "./ui/CommonModal/CommonModal";
 export { default as SliderContainer } from "./Slider/SliderContainer/SliderContainer";
 export { default as SliderComponent } from "./Slider/SliderComponent/SliderComponent";
 export { default as BannerBackground } from "./Slider/BannerBackground/BannerBackground";

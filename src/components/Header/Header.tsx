@@ -4,9 +4,14 @@ import { useState, useEffect, useRef, FC } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-// import { useAppSelector } from "@/redux/store";
-// import { selectIsLoggedIn } from "@/redux/auth/selectors";
-import { CommonIcon, CommonButton, DropdownMenu } from "@/components";
+import { useAppSelector } from "@/redux/store";
+import { selectIsLoggedIn } from "@/redux/auth/selectors";
+import {
+  CommonIcon,
+  CommonButton,
+  DropdownMenu,
+  CommonModal,
+} from "@/components";
 import Logo from "@/assets/Svg/logo.svg";
 import styles from "./Header.module.scss";
 
@@ -17,7 +22,7 @@ const Header: FC = () => {
   const dropdownMenuHandle = () => {
     setDropdownMenuVisible((prev) => !prev);
   };
-  // const isLoggedIn = useAppSelector(selectIsLoggedIn);
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -62,7 +67,10 @@ const Header: FC = () => {
             className={styles.headerButton}
           />
           <div className={styles.iconsWrapper}>
-            <Link href="/messages" className={styles.linkToUserPage}>
+            <Link
+              href={`${isLoggedIn ? "/messages" : "#"}`}
+              className={styles.linkToUserPage}
+            >
               <CommonIcon id="icon-chat" width="21" height="20" />
             </Link>
             <CommonIcon id="icon-heart" width="21" height="20" />
