@@ -3,7 +3,7 @@ import { Box, Typography } from "@mui/material";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import Image from "next/image";
 import { selectUser } from "@/redux/auth/selectors";
-import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { useAppSelector } from "@/redux/store";
 import { formatMessageTime } from "@/utils/formatMessageDate";
 import { MessageType } from "@/types/messages/messages";
 import style from "./DialogueMessage.module.scss";
@@ -14,15 +14,11 @@ type MessageComponentType = {
 
 const DialogueMessages: FC<MessageComponentType> = ({ message }) => {
   const user = useAppSelector(selectUser);
-  // if (user) {
-  //   console.log(user.userId);
-  // }
   const messagePositionStyle =
     user.userId === message.userId ? "right" : "left";
   const messageBgStyle = user.userId === message.userId ? "#FFF" : "#F5FFB6";
   const picOrder = user.userId === message.userId ? "2" : "1";
   const textOrder = user.userId === message.userId ? "1" : "2";
-  // const picSign = user.userId === message.userId ? "1" : "2";
 
   const picture = message.userPhotoUrl ? (
     <Box className={style.picture}>

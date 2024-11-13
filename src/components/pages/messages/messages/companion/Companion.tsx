@@ -2,25 +2,27 @@
 
 import { useState, useEffect, useRef, FC } from "react";
 import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 import Image from "next/image";
 import { Box } from "@mui/material";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import { Menu } from "@/components";
-import { RootState } from "@/redux/store";
 import style from "./Companion.module.scss";
 
 const Companion: FC = () => {
   const [isMenuVisible, setMenuVisible] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
-  const pictureUrl = useSelector(
-    (state: RootState) => state.messages?.messages[0]?.userPhotoUrl
+  const companionPictureUrl = useSelector((state: RootState) =>
+    state.messages?.chat ? state.messages.chat.userData?.photoUrl : null
   );
-  console.log(pictureUrl);
+  const companionName = useSelector((state: RootState) =>
+    state.messages?.chat ? state.messages.chat.userData?.fullName : null
+  );
 
-  const picture = pictureUrl ? (
+  const picture = companionPictureUrl ? (
     <Image
       alt=""
-      src={pictureUrl}
+      src={companionPictureUrl}
       width={72}
       height={72}
       className={style.picture}
@@ -30,6 +32,7 @@ const Companion: FC = () => {
       <CameraAltIcon />
     </Box>
   );
+  const name = companionName ? companionName : "anonym";
 
   const menuHandle = () => {
     setMenuVisible((prev) => !prev);
@@ -52,16 +55,9 @@ const Companion: FC = () => {
     <Box className={style.companionWrapper}>
       <Box className={style.companion}>
         {picture}
-        {/* <Image
-          alt=""
-          src="/images/user.png"
-          width={72}
-          height={72}
-          className={style.picture}
-        /> */}
         <Box className={style.companionInfo}>
-          <p className={style.name}>Анна</p>
-          <p className={style.time}>У мережі 40 хв. тому</p>
+          <p className={style.name}>{name}</p>
+          <p className={style.time}>Як нам дізнатися час?</p>
         </Box>
       </Box>
       <Box className={style.companionMenuWrapper} ref={menuRef}>

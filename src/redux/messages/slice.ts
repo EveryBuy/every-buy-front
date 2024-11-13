@@ -2,20 +2,17 @@
 
 import { createSlice } from "@reduxjs/toolkit";
 import { chatApi } from "./chatApi";
-import { ChatsType, FullChatType } from "@/types/messages/chats";
-import { MessageType } from "@/types/messages/messages";
+import { FullChatType } from "@/types/messages/chats";
 
 interface InitialStateType {
-  chats: ChatsType | [];
-  messages: MessageType[];
-  chat: FullChatType | [];
+  chat: FullChatType | null;
   loading: boolean;
   error: null | string;
 }
 const initialState: InitialStateType = {
-  chats: [],
-  chat: [],
-  messages: [],
+  // chats: [],
+  chat: null,
+  // messages: [],
   loading: false,
   error: null,
 };
@@ -26,24 +23,24 @@ const messagesSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addMatcher(
-        chatApi.endpoints.getChats.matchFulfilled,
-        (state, { payload }) => {
-          state.chats = payload;
-        }
-      )
+      // .addMatcher(
+      //   chatApi.endpoints.getChats.matchFulfilled,
+      //   (state, { payload }) => {
+      //     state.chats = payload;
+      //   }
+      // )
       .addMatcher(
         chatApi.endpoints.getChat.matchFulfilled,
         (state, { payload }) => {
           state.chat = payload;
         }
-      )
-      .addMatcher(
-        chatApi.endpoints.getMessagesByChatId.matchFulfilled,
-        (state, { payload }) => {
-          state.messages = payload;
-        }
       );
+    // .addMatcher(
+    //   chatApi.endpoints.getMessagesByChatId.matchFulfilled,
+    //   (state, { payload }) => {
+    //     state.messages = payload;
+    //   }
+    // );
   },
 });
 

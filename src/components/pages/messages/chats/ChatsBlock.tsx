@@ -1,11 +1,8 @@
 "use client";
 import { FC, useState, useEffect } from "react";
 import { Box } from "@mui/material";
-import {ChatsList, Buttons, Icons, CommonIcon} from "@/components";
-import {
-  useGetChatsQuery,
-  useGetMessagesByChatIdQuery,
-} from "@/redux/messages/chatApi";
+import { ChatsList, Buttons, Icons, CommonIcon } from "@/components";
+import { useGetChatsQuery } from "@/redux/messages/chatApi";
 import style from "./ChatsBlock.module.scss";
 
 type MessageListBlockType = {

@@ -19,14 +19,10 @@ import style from "./Dialogue.module.scss";
 
 type DialogueType = {
   chatId: number | null;
-  // setSelectedChatId: (chatId: number | null) => void;
 };
 
 const Dialogue: FC<DialogueType> = ({ chatId }) => {
-  // const [inputNewMessageValue, setInputNewMessageValue] = useState<string>("");
-  // const { data: messages } = useGetMessagesByChatIdQuery(chatId);
   const [displayedMessages, setDisplayedMessages] = useState<MessageType[]>([]);
-  // const [isTransitioning, setIsTransitioning] = useState(false);
   const {
     data: messages,
     error,
@@ -38,7 +34,6 @@ const Dialogue: FC<DialogueType> = ({ chatId }) => {
   const { data: chat } = useGetChatQuery(chatId ?? skipToken, {
     refetchOnMountOrArgChange: true,
   });
-  console.log(chat);
 
   useEffect(() => {
     if (chatId !== null) {
