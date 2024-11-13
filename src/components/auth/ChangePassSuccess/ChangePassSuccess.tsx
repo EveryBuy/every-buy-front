@@ -1,4 +1,4 @@
-import CommonModal from "@/components/ui/CommonModal/CommonModal";
+import { CommonModal } from "@/components";
 import { Backdrop } from "@mui/material";
 import { useState } from "react";
 

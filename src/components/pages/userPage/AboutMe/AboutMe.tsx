@@ -14,7 +14,7 @@ import { DeleteAccount } from "@/components/auth/DeleteAccount/DeleteAccount";
 import { ChangePassword } from "@/components/auth/ChangePassword/ChangePassword";
 import UserData from "@/components/auth/UserData/UserData";
 import UserDataEdit from "@/components/auth/UserDataEdit/UserDataEdit";
-import CommonModal from "@/components/ui/CommonModal/CommonModal";
+import { CommonModal } from "@/components";
 import { changeUserPhoto } from "@/redux/auth/operations";
 
 const AboutMe: FC = () => {
@@ -26,7 +26,7 @@ const AboutMe: FC = () => {
   const [isEdit, setIsEdit] = useState(false);
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [previewImage, setPreviewImage] = useState<string>("");
-  
+
   useEffect(() => {
     setIsClient(true);
   }, []);
@@ -65,9 +65,9 @@ const AboutMe: FC = () => {
   console.log("Не вдалось змінити фото", error);
     }
   }
-    
+
   }
-  
+
     if (!user || !isClient) {
       return <p>Завантаження...</p>;
   }
@@ -93,7 +93,7 @@ const AboutMe: FC = () => {
           <Image
             className={styles.userImage}
             // додав унікальний параметр для уникнення кешування. Фото завантажується при кожному рендері
-            src={`${user.userPhotoUrl || '/images/user.png'}?t=${new Date().getTime()}`}  
+            src={`${user.userPhotoUrl || '/images/user.png'}?t=${new Date().getTime()}`}
             alt="User image"
             width="258"
             height="258"

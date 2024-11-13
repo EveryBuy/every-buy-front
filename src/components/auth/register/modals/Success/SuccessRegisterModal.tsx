@@ -1,7 +1,7 @@
 "use client";
 
 import CommonButton from "@/components/ui/CommonButton/CommonButton";
-import CommonModal from "@/components/ui/CommonModal/CommonModal";
+import { CommonModal } from "@/components";
 import React from "react";
 import { useRouter } from "next/navigation";
 import styles from "./SuccessRegisterModal.module.scss";

@@ -10,7 +10,7 @@ import {
   CommonIcon,
   CommonButton,
   DropdownMenu,
-  CommonModal,
+  DoLoginModal,
 } from "@/components";
 import Logo from "@/assets/Svg/logo.svg";
 import styles from "./Header.module.scss";
@@ -18,11 +18,18 @@ import styles from "./Header.module.scss";
 const Header: FC = () => {
   const path = usePathname();
   const [isDropdownMenuVisible, setDropdownMenuVisible] = useState(false);
+  const [successRegisterModalOpen, setSuccessRegisterModalOpen] =
+    useState(false);
+
   const dropdownMenuRef = useRef<HTMLDivElement>(null);
   const dropdownMenuHandle = () => {
     setDropdownMenuVisible((prev) => !prev);
   };
+
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
+  const openWindowHandle = () => {
+    !isLoggedIn ? setSuccessRegisterModalOpen((prev) => !prev) : null;
+  };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -67,16 +74,26 @@ const Header: FC = () => {
             className={styles.headerButton}
           />
           <div className={styles.iconsWrapper}>
-            <Link
-              href={`${isLoggedIn ? "/messages" : "#"}`}
-              className={styles.linkToUserPage}
-            >
-              <CommonIcon id="icon-chat" width="21" height="20" />
-            </Link>
+            <div onClick={openWindowHandle}>
+              <Link
+                href={`${isLoggedIn ? "/messages" : "#"}`}
+                className={styles.linkToUserPage}
+              >
+                <CommonIcon id="icon-chat" width="21" height="20" />
+              </Link>
+            </div>
             <CommonIcon id="icon-heart" width="21" height="20" />
             <Link href="/user" className={styles.linkToUserPage}>
               <CommonIcon id="icon-user" width="21" height="20" />
             </Link>
+
+            {successRegisterModalOpen && (
+              <DoLoginModal
+                doModalOpen={setSuccessRegisterModalOpen}
+                openWindowHandle={openWindowHandle}
+              />
+            )}
+
             <div ref={dropdownMenuRef} className={styles.iconDropdown}>
               <div onClick={dropdownMenuHandle}>
                 <CommonIcon id="arrow-header" width="17" height="17" />
