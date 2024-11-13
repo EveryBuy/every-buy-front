@@ -62,7 +62,9 @@ const Header: FC = () => {
             className={styles.headerButton}
           />
           <div className={styles.iconsWrapper}>
-            <CommonIcon id="icon-chat" width="21" height="20" />
+            <Link href="/messages" className={styles.linkToUserPage}>
+              <CommonIcon id="icon-chat" width="21" height="20" />
+            </Link>
             <CommonIcon id="icon-heart" width="21" height="20" />
             <Link href="/user" className={styles.linkToUserPage}>
               <CommonIcon id="icon-user" width="21" height="20" />

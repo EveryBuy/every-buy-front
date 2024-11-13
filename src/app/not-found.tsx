@@ -1,6 +1,5 @@
 "use client";
 import { useRouter } from "next/navigation";
-import "./globals.scss";
 
 export default function NotFound() {
   const router = useRouter();
@@ -21,10 +20,7 @@ export default function NotFound() {
     >
       <div>
         <h1 style={{ fontSize: "6rem", color: "#333" }}>404</h1>
-        <p
-          className={"notFoundMessage"}
-          style={{  }}
-        >
+        <p className={"notFoundMessage"} style={{}}>
           Oops! The page you are looking for does not exist.
         </p>
         <button

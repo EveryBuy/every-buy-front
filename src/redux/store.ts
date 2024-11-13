@@ -3,6 +3,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { authReducer } from "./auth/slice";
 import { messagesReducer } from "./messages/slice";
+import { advertisementReducer } from "./advertisement/slice";
 // import storage from "redux-persist/lib/storage";
 import {
   persistStore,
@@ -13,10 +14,12 @@ import {
   PERSIST,
   PURGE,
   REGISTER,
-} from 'redux-persist';
+} from "redux-persist";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
-import { uiStateReducer } from "./ui/slice";
+
+// !!!
+import { chatApi } from "./messages/chatApi";
 
 const createNoopStorage = () => {
   return {
@@ -45,23 +48,24 @@ const persistConfig = {
 };
 
 const persistedAuthReducer = persistReducer(persistConfig, authReducer);
-// const persistedUiReducer = persistReducer(persistConfig, uiStateReducer);
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
       auth: persistedAuthReducer,
       messages: messagesReducer,
+      advertisement: advertisementReducer,
       // ui: persistedUiReducer,
-      // products: productsReducer,
       // filters: filtersReducer,
+      // !!!
+      [chatApi.reducerPath]: chatApi.reducer,
     },
-   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      },
-    }),
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({
+        serializableCheck: {
+          ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+        },
+      }).concat(chatApi.middleware),
   });
 };
 
