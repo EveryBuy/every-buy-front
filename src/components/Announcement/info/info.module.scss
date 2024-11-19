@@ -2,6 +2,7 @@
 @import "../../../styles/breakpoints";
 
 .infoComp {
+  // width: 642px;
   padding: 20px 22px;
   border-radius: 10px;
   background-color: rgb(255, 255, 255);
@@ -90,11 +91,6 @@
 
 .locationInfo {
   display: flex;
-  gap: 14px;
+  gap: 8px;
   align-items: center;
-}
-
-.locationSvg {
-  width: 17.5px;
-  height: 25px;
 }

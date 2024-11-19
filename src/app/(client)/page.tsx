@@ -13,7 +13,7 @@ export default function HomePage() {
       <Search />
       <SliderContainer />
       <Category />
-      <Announcement />
+      {/* <Announcement /> */}
 
       {/* <Test /> */}
       {/* </ProtectedRoute> */}

@@ -6,6 +6,7 @@ import Seller from "@/components/Announcement/seller/seller";
 import { useState } from "react";
 import announcement from "@/mock-data/announcement";
 import AnnouncementSlider from "@/components/Announcement/slider/slider";
+import { SliderContainer } from "@/components";
 
 export default function Announcement() {
   // const [resData, setResData] = useState({});

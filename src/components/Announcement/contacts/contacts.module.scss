@@ -16,6 +16,7 @@
   padding: 10px 20px;
   background-color: rgb(255, 255, 255);
   border-radius: 10px;
+  position: relative;
 
   @include media-min($breakpoint-tablet) {
     display: flex;
@@ -29,7 +30,11 @@
     padding: 30px 40px;
   }
 }
-
+.publicBox {
+  display: flex;
+  justify-content: space-between;
+  max-width: 449px;
+}
 .public {
   font-size: 14px;
   color: var(--input-text);
@@ -164,4 +169,13 @@
 .buttonsItem > .yellowBorderButton:active {
   border: 2px solid transparent;
   background-color: var(--button);
+}
+
+.favoriteSvg {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  fill: #ff5656;
+  stroke: black;
+  // background-color: #FF5656;
 }

@@ -1,6 +1,8 @@
 import styles from "./info.module.scss";
 import Image from "next/image";
 import locationSvg from "../../../assets/Svg/location.svg";
+import { CommonIcon } from "@/components";
+import { FaLocationDot } from "react-icons/fa6";
 
 interface locationObj {
   city: string;
@@ -29,12 +31,19 @@ export default function Info({ articleInfo }: ArticleInfo) {
         <div>
           <p className={styles.locationTitle}>Місцезнаходження</p>
           <div className={styles.locationInfo}>
-            <Image
+            <CommonIcon
+              id="location"
+              width="25"
+              height="25"
+              className={styles.locationSvg}
+            />
+            {/* <FaLocationDot size={25} /> */}
+            {/* <Image
               src={locationSvg}
               priority
               alt="Location"
               className={styles.locationSvg}
-            />
+            /> */}
             <div>
               <p className={styles.city}>{location.city}</p>
               <p className={styles.region}>{location.region}</p>

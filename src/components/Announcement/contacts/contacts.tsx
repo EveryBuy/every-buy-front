@@ -1,3 +1,4 @@
+import CommonIcon from "@/components/ui/CommonIcon/CommonIcon";
 import styles from "./contacts.module.scss";
 import CommonButton from "@/components/ui/CommonButton/CommonButton";
 
@@ -21,10 +22,18 @@ export default function Contacts({ contactsInfo }: ContactsProps) {
   return (
     <div className={styles.list}>
       <div className={styles.titleItem}>
-        <div>
+        {" "}
+        <CommonIcon
+          id="heart"
+          width="30"
+          height="28"
+          className={styles.favoriteSvg}
+        />
+        <div className={styles.publicBox}>
           <p className={styles.public}>Опубліковано {publicDate}</p>
-          <h2 className={styles.title}>Стильна жіноча сукня</h2>
+          <p className={styles.public}>Продаж</p>
         </div>
+        <h2 className={styles.title}>Стильна жіноча сукня</h2>
         <div>
           <p className={styles.changeWidth}>Вартість</p>
           <p className={styles.price}>{cost} грн</p>
