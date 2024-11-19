@@ -2,7 +2,7 @@
 @import "@/styles/breakpoints";
 
 .listWrapper {
-  height: 428px;
+  //height: 428px;
   overflow-y: auto;
 
   @include media-min($breakpoint-tablet) {
