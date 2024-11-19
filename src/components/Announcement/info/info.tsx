@@ -3,6 +3,7 @@ import Image from "next/image";
 import locationSvg from "../../../assets/Svg/location.svg";
 import { CommonIcon } from "@/components";
 import { FaLocationDot } from "react-icons/fa6";
+import ComplaintModal from "@/components/ComplaintModal/ComplaintModal";
 
 interface locationObj {
   city: string;
@@ -55,9 +56,7 @@ export default function Info({ articleInfo }: ArticleInfo) {
           <p className={styles.text}>{delivery.join(", ")}</p>
         </div>
       </div>
-      <a href="#" className={styles.appeal}>
-        Поскаржитись
-      </a>
+        <ComplaintModal />
     </div>
   );
 }

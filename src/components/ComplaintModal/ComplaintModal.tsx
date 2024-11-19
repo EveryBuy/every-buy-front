@@ -55,7 +55,9 @@ const ComplaintModal: React.FC = () => {
 
     return (
         <div>
-            <CommonButton className={styles.reportButton} title="Поскаржитись" onClick={handleOpenModal} type="button" />
+            <div className={styles.reportButton}>
+            <CommonButton className={styles.reportBtn} title="Поскаржитись" onClick={handleOpenModal} type="button" />
+            </div>
 
             {isModalOpen && (
                 <Backdrop
