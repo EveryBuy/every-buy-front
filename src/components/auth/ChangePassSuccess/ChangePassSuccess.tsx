@@ -1,4 +1,4 @@
-import CommonModal from "@/components/ui/CommonModal/CommonModal";
+import { CommonModal } from "@/components";
 import { Backdrop } from "@mui/material";
 import { useState } from "react";
 
@@ -7,7 +7,6 @@ export const ChangePassSuccess = () => {
 
   const handleClose = () => {
     setOpen(false);
-    // onClose(false);
   };
 
   return (
@@ -15,16 +14,11 @@ export const ChangePassSuccess = () => {
       <Backdrop
         sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={open}
-        // onClose={setOpen}
         onClick={handleClose}
       >
         {/* <CircularProgress color="inherit" /> */}
         <CommonModal onClose={handleClose}>
-          <h3
-          //   className={styles.title}
-          >
-            Зміна паролю
-          </h3>
+          <h3>Зміна паролю</h3>
         </CommonModal>
       </Backdrop>
     </>

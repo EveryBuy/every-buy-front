@@ -1,0 +1,50 @@
+@import "@/styles/mixins";
+@import "@/styles/breakpoints";
+
+.inputBlockWrapper {
+  width: 100%;
+  // height: 54px;
+  min-height: 10%;
+  display: flex;
+  justify-content: space-between;
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 0px 20px;
+  & label::after {
+    content: "";
+  }
+}
+
+.inputIconsWrapper {
+  width: 8%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.iconPic {
+  width: 23px;
+  height: 18px;
+}
+.iconClip {
+  width: 22px;
+  height: 22px;
+}
+
+.input {
+  & fieldset {
+    border: 0px;
+    padding-right: 15px;
+  }
+}
+
+.sendIconWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.iconSend {
+  width: 24px;
+  height: 24px;
+}

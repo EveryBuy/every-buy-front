@@ -1,0 +1,15 @@
+.dateWrapper {
+  position: absolute;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  left: 0;
+  top: -14px;
+}
+
+.date {
+  text-align: center;
+  width: 145px;
+  background-color: var(--main-background);
+  font-size: var(--large-body-medium);
+}

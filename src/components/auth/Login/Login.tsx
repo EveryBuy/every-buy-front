@@ -12,6 +12,7 @@ import Image from "next/image";
 import { login } from "@/redux/auth/operations";
 import { selectIsLoggedIn } from "@/redux/auth/selectors";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { ErrorModal } from "@/components";
 import {
   // validatePhone,
   // validateEmail,
@@ -34,6 +35,9 @@ const Login: React.FC = () => {
     emailOrPhone: "",
     password: "",
   });
+  const [loginServerErrorModal, setLoginServerErrorModal] = useState(false);
+  const [loginUserErrorModal, setLoginUserErrorModal] = useState(false);
+  const [unknownErrorModalOpen, setUnknownErrorModalOpen] = useState(false);
   const dispatch = useAppDispatch();
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
 
@@ -63,12 +67,29 @@ const Login: React.FC = () => {
     if (newErrors.emailOrPhone || newErrors.password) {
       return;
     }
-    dispatch(
-      login({
-        login: emailOrPhone,
-        password: password,
-      })
-    );
+    try {
+      await dispatch(
+          login({
+            login: emailOrPhone,
+            password: password,
+          })
+      ).unwrap();
+    } catch (error: any) {
+      if (error.response) {
+        switch (error.response.status) {
+          case 500:
+            setLoginServerErrorModal(true);
+            break;
+          case 401:
+            setLoginUserErrorModal(true);
+            break;
+          default:
+            setUnknownErrorModalOpen(true);
+        }
+      } else {
+        setUnknownErrorModalOpen(true);
+      }
+    }
   };
 
   const getInputClass = (field: string) => {
@@ -157,6 +178,28 @@ const Login: React.FC = () => {
           Увійти
         </button>
       </form>
+
+      {
+        loginServerErrorModal && <ErrorModal
+              onClose={() => {setLoginServerErrorModal(false); router.refresh();}}
+              title={"Упс! Проблеми на сервері!"}
+              buttonText={"Перезавантажити сторінку"}
+          />
+      }
+      {
+        loginUserErrorModal && <ErrorModal
+              onClose={() => {setLoginUserErrorModal(false); router.refresh();}}
+              title={"Користувача з таким телефоном/імейлом та паролем не знайдено!"}
+              buttonText={"Повернутися"}
+          />
+      }
+      {
+          unknownErrorModalOpen && <ErrorModal
+              onClose={() => router.push("/")}
+              title={"Упс! Невідома помилка!"}
+              buttonText={"На головну"}
+          />
+      }
     </>
   );
 };
