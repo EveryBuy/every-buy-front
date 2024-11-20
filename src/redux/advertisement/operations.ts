@@ -1,6 +1,8 @@
-import { API } from "@/utils/axios";
+import { API, setHeaderAuthToken } from "@/utils/axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Advertisement } from "./slice";
+import { RootState } from "../store";
+
 
 export const getCategory = createAsyncThunk('advert/getCategory', async (_, thunkAPI) => {
     try {
@@ -124,10 +126,10 @@ export const addAdvertToFavourite = createAsyncThunk('advert/addToFavourite',
 );
 
 export const removeAdvertFromFavourite = createAsyncThunk('advert/removeFromFavourite',
-    async (id, thunkAPI) => {
+    async (id: number, thunkAPI) => {
         try {
             const response = await API.delete(`/ad/${id}/remove-from-favourite`);
-            return { response, id };
+            return id ;
         } catch (error: any) {
             return thunkAPI.rejectWithValue(error.message);
         }
@@ -135,13 +137,16 @@ export const removeAdvertFromFavourite = createAsyncThunk('advert/removeFromFavo
 );
 
 export const getAllFavouriteAdvert = createAsyncThunk('advert/getAllFavourite',
-    async (categoryId, thunkAPI) => {
+    async (params: {}, {rejectWithValue, getState}) => {
         try {
-            const endpoint = categoryId != null ? `/ad/favourite-ads/${categoryId}` : '/ad/favourite-ads';
-            const response = await API.get(endpoint);
+            const state = getState() as RootState;
+            const token = state.auth.token;
+            setHeaderAuthToken(token);
+            const endpoint = '/ad/favourite-ads';
+            const response = await API.get(endpoint, {params: { ...params }} );
             return response.data;
         } catch (error: any) {
-            return thunkAPI.rejectWithValue(error.message)
+            return rejectWithValue(error.message)
         }
     }
 );

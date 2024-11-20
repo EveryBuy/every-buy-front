@@ -51,6 +51,14 @@
   font-weight: 700;
 }
 
+.favouriteBtn {
+  transition: transform 250ms ease;
+}
+
+.favouriteBtn:hover {
+  transform: scale(1.2);
+}
+
 .dateText {
   font-size: var(--body-mobile-text-small);
   color: var(--input-text);

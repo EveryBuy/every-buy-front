@@ -5,17 +5,21 @@
 .selectedGoodsList {
   display: flex;
   flex-wrap: wrap;
-  gap: 9px;
+  gap: max(8px, calc((100% - (163px * 3)) / 2));
+
+  row-gap: 12px;
+  justify-content: flex-start;
 }
 
 @media only screen and (min-width: 768px) {
   .selectedGoodsList {
-    gap: 24px;
+    gap: max(8px, calc((100% - (163px * 4)) / 3));
+    row-gap: 12px;
   }
 }
 
 @media only screen and (min-width: 1440px) {
   .selectedGoodsList {
-    gap: 47px;
+    gap: max(8px, calc((100% - (163px * 5)) / 4));
   }
 }

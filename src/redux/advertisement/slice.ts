@@ -16,6 +16,7 @@ import {
     removeAdvertFromFavourite,
     updateAdvertisement
 } from "./operations";
+import { RootState } from "../store";
 
 export type Category = {
     id: number,
@@ -170,7 +171,6 @@ const advertisementSlice = createSlice({
             .addCase(deleteAdvertisement.pending, handlePending)
             .addCase(deleteAdvertisement.fulfilled, (state, {payload}: any) => {
                 state.isLoading = false;
-                // const index = state.myAdvertisements.findIndex((elem) => elem.id === payload.id);
                 state.myAdvertisements = state.myAdvertisements.filter(elem=> elem.id !== payload.id);
             })
             .addCase(deleteAdvertisement.rejected, (state) => {
@@ -195,10 +195,10 @@ const advertisementSlice = createSlice({
                 state.isLoading = false;
             })
             .addCase(removeAdvertFromFavourite.pending, handlePending)
-            .addCase(removeAdvertFromFavourite.fulfilled, (state, action: any) => {
-                const { id } = action.payload.id;
+            .addCase(removeAdvertFromFavourite.fulfilled, (state: RootState, action: any) => {
+                const id = action.payload;
                 state.isLoading = false;
-                state.favouriteAdvertisements = state.favouriteAdvertisements.filter(elem => elem.id !== id);
+                state.favouriteAdvertisements = state.favouriteAdvertisements.filter((elem: { advertisementId: any; }) => elem.advertisementId !== id);    
             })
             .addCase(removeAdvertFromFavourite.rejected, state => {
                 state.isLoading = false;
@@ -206,15 +206,16 @@ const advertisementSlice = createSlice({
             .addCase(getAllFavouriteAdvert.pending, handlePending)
             .addCase(getAllFavouriteAdvert.fulfilled, (state, action) => {
                 state.isLoading = false;
-                state.favouriteAdvertisements.push(action.payload)
+                state.favouriteAdvertisements = action.payload.data;
             })
             .addCase(getAllFavouriteAdvert.rejected, state => {
                 state.isLoading = false;
+                state.favouriteAdvertisements = [];
             })
             .addCase(getUserActiveAdverts.pending, handlePending)
             .addCase(getUserActiveAdverts.fulfilled, (state, action) => {
                 state.isLoading = false;
-                state.userActiveAdverts.push(action.payload.data);
+                state.userActiveAdverts = action.payload.data;
             })
             .addCase(getUserActiveAdverts.rejected, state => {
                 state.isLoading = false;
@@ -222,7 +223,7 @@ const advertisementSlice = createSlice({
             .addCase(getUserInactiveAdverts.pending, handlePending)
             .addCase(getUserInactiveAdverts.fulfilled, (state, action) => {
                 state.isLoading = false;
-                state.userInactiveAdverts.push(action.payload.data);
+                state.userInactiveAdverts = action.payload.data;
             })
             .addCase(getUserInactiveAdverts.rejected, state => {
                 state.isLoading = false;

@@ -5,9 +5,8 @@ import s from "../UserPage.module.scss";
 import styles from "./SelectedGoods.module.css";
 import CommonSelect from "@/components/ui/CommonSelect/CommonSelect";
 import SelectedGoodsList from "./SelectedGoodsList/SelectedGoodsList";
-import { useDispatch, useSelector } from "react-redux";
 import { getCategory } from "@/redux/advertisement/operations";
-import { selectCategory } from "@/redux/advertisement/selectors";
+import { selectCategories } from "@/redux/advertisement/selectors";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 
 const widthSize = {
@@ -19,31 +18,53 @@ const widthSize = {
 export const SelectedGoods: FC = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const dispatch = useAppDispatch();
-  const categories = useAppSelector(selectCategory);
-  const categoryNames = categories.map((elem) => elem.categoryName);
-  const categoryId = categories.filter(
-    (elem) => elem.categoryName === selectedCategory
+  const categories = useAppSelector(selectCategories);
+  const categoryNames = categories.map((elem: any) => elem.categoryName);
+  const [category] = categories.filter(
+    (elem: any) => elem.categoryName === selectedCategory
   );
+  const [section, setSection] = useState("");
 
   useEffect(() => {
     dispatch(getCategory());
   }, [dispatch]);
 
-  // console.log(categoryId[0].id);
+  const handleBuy = () => {
+    setSection("BUY");
+  };
+
+  const handleSell = () => {
+    setSection("SELL");
+  };
 
   return (
-    <div className={styles.SelectedGoodsContainer}>
+    <section className={styles.SelectedGoodsContainer}>
       <h3 className={s.headline}>Мої обрані товари</h3>
-      <CommonSelect
-        label="Виберіть категорію"
-        options={categoryNames}
-        size={widthSize}
-        outlineColor="var(--button)"
-        value={selectedCategory}
-        onChange={(evt) => setSelectedCategory(evt.target.value)}
-      />
-      <SelectedGoodsList />
-    </div>
+      <div className={styles.selectorBox}>
+        <CommonSelect
+          label="Виберіть категорію"
+          options={categoryNames}
+          size={widthSize}
+          outlineColor="var(--button)"
+          value={selectedCategory}
+          onChange={(evt) => setSelectedCategory(evt.target.value)}
+        />
+        <div className={styles.buttonBox}>
+          <ul className={styles.buttonList}>
+            <li>
+              <button onClick={handleBuy}>Куплю</button>
+              {section === "BUY" && <div className={styles.toggle}></div>}
+            </li>
+            <li>
+              <button onClick={handleSell}>Продам</button>
+              {section === "SELL" && <div className={styles.toggle}></div>}
+            </li>
+          </ul>
+          <div className={styles.separator}></div>
+        </div>
+      </div>
+      <SelectedGoodsList categoryFilter={category && category.id} />
+    </section>
   );
 };
 
