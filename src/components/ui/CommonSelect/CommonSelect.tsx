@@ -8,10 +8,9 @@ import {
   SelectProps,
   SelectChangeEvent,
 } from "@mui/material";
-import * as React from "react";
 import { styled } from "@mui/material/styles";
-import styles from "./CommonSelect.module.css";
 import { nanoid } from "nanoid";
+import styles from "./CommonSelect.module.scss";
 
 type CommonSelectProps = {
   label: string;

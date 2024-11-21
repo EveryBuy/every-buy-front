@@ -1,11 +1,9 @@
-import { AboutMe } from "@/components";
-import MobileProfileMenu from "@/components/pages/MobileProfileMenu";
+import { AboutMe, MobileProfileMenu } from "@/components";
 
 export default function Page() {
   return (
     <>
       <div className="mobileHidden">
-        {/* <p>Контактна інформація</p> */}
         <AboutMe />
       </div>
       <div className="laptopHidden">
