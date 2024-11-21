@@ -3,3 +3,38 @@
   flex-direction: column;
   gap: 32px;
 }
+
+.selectorBox {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.buttonBox {
+}
+
+.buttonList {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 24px;
+}
+
+.buttonList li {
+  position: relative;
+}
+
+.separator {
+  width: 100%;
+  height: 2px;
+  border: 1px solid var(--input-text);
+}
+
+.toggle {
+  position: absolute;
+  width: 100%;
+  height: 4px;
+  border: 2px solid var(--button);
+  z-index: 999;
+}

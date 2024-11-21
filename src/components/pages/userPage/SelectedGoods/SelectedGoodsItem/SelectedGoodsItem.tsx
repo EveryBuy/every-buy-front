@@ -1,16 +1,30 @@
-import { FC } from "react";
+"use client";
+
+import { FC, useState } from "react";
 import styles from "./SelectedGoodsItem.module.css";
-import { nanoid } from "nanoid";
 import Image from "next/image";
 import heartSelected from "@/assets/Svg/heartSelected.svg";
+import heart from "@/assets/Svg/heartDefault.svg";
+
 import formatAdvertisementDate from "@/utils/formatAdvertisementDate";
 import { favouriteAdvertisementItemType } from "@/types/favouriteAdvertisementItemType";
 
 type ItemProps = {
   item: favouriteAdvertisementItemType;
+  onRemove: (advertisementId: number) => void;
 };
 
-export const SelectedGoodsItem: FC<ItemProps> = ({ item }: ItemProps) => {
+export const SelectedGoodsItem: FC<ItemProps> = ({
+  item,
+  onRemove,
+}: ItemProps) => {
+  const [isFavourite, setIsFavourite] = useState(true);
+
+  const handleToggleFavourite = () => {
+    onRemove(item.advertisementId);
+    setIsFavourite(!isFavourite);
+  };
+
   return (
     <div className={styles.containerSelectedGoodsItem}>
       <div className={styles.imageWrapper}>
@@ -29,17 +43,30 @@ export const SelectedGoodsItem: FC<ItemProps> = ({ item }: ItemProps) => {
       </div>
       <div className={styles.priceWrapper}>
         <p className={styles.price}>{`${item.price} грн`}</p>
-        <Image
-          src={heartSelected}
-          alt="Description of the SVG"
-          width={24}
-          height={24}
-        />
+        <button className={styles.favouriteBtn} onClick={handleToggleFavourite}>
+          {isFavourite ? (
+            <Image
+              src={heartSelected}
+              alt="Description of the SVG"
+              width={24}
+              height={24}
+            />
+          ) : (
+            <Image
+              src={heart}
+              alt="Description of the SVG"
+              width={24}
+              height={24}
+            />
+          )}
+        </button>
       </div>
       <p className={styles.dateText}>
         {`${formatAdvertisementDate(item.updateDate)}`}
         <br />
-        {`${item.city.cityName}, ${item.city.region.regionName}`}
+        {`${item.city?.cityName || "Хз, яке місто"}, ${
+          item.city?.region.regionName || "Хз, яка область"
+        }`}
       </p>
     </div>
   );

@@ -1,8 +1,8 @@
 import { RootState } from '@/redux/store';
 
-export const selectCategory = (state: RootState) => state.advertisement.category;
-export const selectTopSubCategory = (state: RootState) => state.advertisement.topSubCategory;
-export const selectLowSubCategory = (state: RootState) => state.advertisement.lowSubCategory;
+export const selectCategories = (state: RootState) => state.advertisement.category;
+export const selectTopSubCategories = (state: RootState) => state.advertisement.topSubCategory;
+export const selectLowSubCategories = (state: RootState) => state.advertisement.lowSubCategory;
 export const selectCityList = (state: RootState) => state.advertisement.cityList;
 export const selectMyAdvertisements = (state: RootState) => state.advertisement.myAdvertisements;
 export const selectActiveAdvertisement = (state: RootState) => state.advertisement.activeAdvertisement;

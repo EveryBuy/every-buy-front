@@ -15,4 +15,6 @@ type MessageType = {
   userPhotoUrl: string | null;
 };
 
-export { ChatsType, UserDataType, MessageType };
+type ChatMessagesType = any;
+
+export { ChatsType, UserDataType, MessageType, ChatMessagesType };
