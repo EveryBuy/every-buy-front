@@ -26,7 +26,9 @@ export const CommonModal: React.FC<CommonModalProps> = ({
         >
           <Image src={xClose} alt="close" width={18} height={18} />
         </button>
-        <div className={`${styles.contentWrapper} ${contentClassName}`}>{children}</div>
+        <div className={`${styles.contentWrapper} ${contentClassName}`}>
+          {children}
+        </div>
       </div>
     </Backdrop>
   );

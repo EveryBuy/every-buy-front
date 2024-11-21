@@ -11,8 +11,20 @@
   align-items: center;
 }
 
-.picture {
+.picture,
+.noPicture {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background-color: var(--bg-header-footer);
   margin-right: 31px;
+}
+
+.picture {
+  object-fit: cover;
 }
 
 .companionInfo {
