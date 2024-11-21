@@ -1,5 +1,3 @@
-// type ChatsType = MessageType[];
-
 type UserDataType = {
   userId: number;
   fullName: string;
@@ -15,6 +13,4 @@ type MessageType = {
   userPhotoUrl: string | null;
 };
 
-type ChatMessagesType = any;
-
-export { ChatsType, UserDataType, MessageType, ChatMessagesType };
+export { ChatsType, UserDataType, MessageType };

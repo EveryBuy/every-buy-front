@@ -3,8 +3,10 @@
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
+import Image from "next/image";
 import Slider from "react-slick";
+import { Settings } from "react-slick";
 import { bannerItems } from "@/mock-data/bannerItems";
 import { nanoid } from "nanoid";
 import styles from "./Slider.module.scss";
@@ -115,21 +117,21 @@ import styles from "./Slider.module.scss";
 
 const AnnouncementSlider = () => {
   const [activeSlide, setActiveSlide] = useState(0);
-  const sliderRef = useRef(null);
+  const sliderRef = useRef<Slider>(null);
 
-  const handlePreviewClick = (index) => {
+  const handlePreviewClick = (index: number) => {
     setActiveSlide(index);
-    sliderRef.current.slickGoTo(index); // Перемикаємося на потрібний слайд
+    sliderRef.current?.slickGoTo(index);
   };
 
-  const sliderSettings = {
+  const sliderSettings: Settings = {
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: true,
     // dots: true,
     infinite: false,
     speed: 500,
-    beforeChange: (_, next) => setActiveSlide(next), // Оновлюємо активний слайд
+    beforeChange: (current, next) => setActiveSlide(next),
     responsive: [
       {
         breakpoint: 768,
@@ -148,10 +150,12 @@ const AnnouncementSlider = () => {
         <Slider {...sliderSettings} ref={sliderRef}>
           {bannerItems.map(({ backgroundImages }, index) => (
             <div key={nanoid()} className={styles.mainSlide}>
-              <img
+              <Image
                 className={styles.image}
                 src={backgroundImages.laptop2x}
                 alt={`Slide ${index}`}
+                width={375}
+                height={260}
               />
             </div>
           ))}
@@ -168,10 +172,12 @@ const AnnouncementSlider = () => {
             }`}
             onClick={() => handlePreviewClick(index)}
           >
-            <img
+            <Image
               className={styles.previewImage}
               src={backgroundImages.laptop2x}
               alt={`Preview ${index}`}
+              width={94}
+              height={105}
             />
           </div>
         ))}

@@ -24,14 +24,14 @@ export { default as Category } from "./pages/main/Category/Category";
 
 // User page
 export { default as AboutMe } from "./pages/user/AboutMe/AboutMe";
-export { default as SelectedGoods } from "./pages/user/SelectedGoods/SelectedGoods";
-export { default as MyAds } from "./pages/user/MyAds";
-export { default as MyActiveAds } from "./pages/user/MyActiveAds";
-export { default as MyNonActiveAds } from "./pages/user/MyNonActiveAds";
-export { default as ProfileMenu } from "./pages/user/ProfileMenu";
-export { default as MobileProfileMenu } from "./pages/user/MobileProfileMenu";
-export { default as SelectedGoodsList } from "./pages/user/SelectedGoods/SelectedGoodsList/SelectedGoodsList";
-export { default as SelectedGoodsItem } from "./pages/user/SelectedGoods/SelectedGoodsItem/SelectedGoodsItem";
+export { default as SelectedGoods } from "./pages/user/selectedGoods/SelectedGoods";
+export { default as MyAds } from "./pages/user/myAds/MyAds";
+export { default as MyActiveAds } from "./pages/user/myAds/MyActiveAds";
+export { default as MyNonActiveAds } from "./pages/user/myAds/MyNonActiveAds";
+export { default as ProfileMenu } from "./pages/user/ProfileMenu/ProfileMenu";
+export { default as MobileProfileMenu } from "./pages/user/MobileProfileMenu/MobileProfileMenu";
+export { default as SelectedGoodsList } from "./pages/user/selectedGoods/SelectedGoodsList/SelectedGoodsList";
+export { default as SelectedGoodsItem } from "./pages/user/selectedGoods/SelectedGoodsItem/SelectedGoodsItem";
 
 // Announcement page
 export { default as Announcement } from "./pages/announcement/Announcement";

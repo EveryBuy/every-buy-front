@@ -168,13 +168,15 @@
 .sliderContainer {
   margin-top: 20px;
   margin: auto;
+  @include media-min($breakpoint-tablet) {
+    width: calc((100% - 46px) / 2);
+  }
 
   :global(.slick-current) {
     padding: 0;
 
     @include media-min($breakpoint-tablet) {
       padding: 0;
-      width: calc((100% - 46px) / 2);
     }
   }
 
