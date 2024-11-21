@@ -17,8 +17,6 @@ import {
 } from "redux-persist";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
-
-// !!!
 import { chatApi } from "./messages/chatApi";
 
 const createNoopStorage = () => {
@@ -57,7 +55,6 @@ export const makeStore = () => {
       advertisement: advertisementReducer,
       // ui: persistedUiReducer,
       // filters: filtersReducer,
-      // !!!
       [chatApi.reducerPath]: chatApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>

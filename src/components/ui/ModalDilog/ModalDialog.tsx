@@ -1,16 +1,16 @@
-import CommonButton from "../CommonButton/CommonButton";
-import styles from "./ModalDialog.module.scss";
+import { CommonButton } from "@/components";
 import Image from "next/image";
-import xClose from '@/assets/Svg/xClose.svg';
+import xClose from "@/assets/Svg/xClose.svg";
+import styles from "./ModalDialog.module.scss";
 
 export const ModalDialog = (
   // { children }: { children: React.FC  }
-  { text, submitOk }: { text: string, submitOk: () => void }
+  { text, submitOk }: { text: string; submitOk: () => void }
 ) => {
   return (
     <div className={styles.box}>
       <button className={styles.closeButton} type="button">
-         <Image
+        <Image
           className={styles.xClose}
           src={xClose}
           alt="close"

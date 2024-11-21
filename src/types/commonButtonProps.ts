@@ -7,4 +7,5 @@ export default interface CommonButtonProps {
   className?: string;
   children?: ReactNode;
   onClick?: () => void;
+  disabled?: boolean;
 }

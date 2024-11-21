@@ -10,26 +10,28 @@ import {
   DialogueInput,
 } from "@/components";
 import { skipToken } from "@reduxjs/toolkit/query";
-import { useGetMessagesByChatIdQuery } from "@/redux/messages/chatApi";
+import {
+  useGetMessagesByChatIdQuery,
+  useGetChatQuery,
+} from "@/redux/messages/chatApi";
 import { MessageType } from "@/types/messages/messages";
 import style from "./Dialogue.module.scss";
 
 type DialogueType = {
   chatId: number | null;
-  // setSelectedChatId: (chatId: number | null) => void;
 };
 
 const Dialogue: FC<DialogueType> = ({ chatId }) => {
-  // const [inputNewMessageValue, setInputNewMessageValue] = useState<string>("");
-  // const { data: messages } = useGetMessagesByChatIdQuery(chatId);
   const [displayedMessages, setDisplayedMessages] = useState<MessageType[]>([]);
-  // const [isTransitioning, setIsTransitioning] = useState(false);
   const {
     data: messages,
     error,
     isLoading,
     isFetching,
   } = useGetMessagesByChatIdQuery(chatId ?? skipToken, {
+    refetchOnMountOrArgChange: true,
+  });
+  const { data: chat } = useGetChatQuery(chatId ?? skipToken, {
     refetchOnMountOrArgChange: true,
   });
 

@@ -1,0 +1,251 @@
+@import '/src/styles/mixins';
+@import '/src/styles/breakpoints';
+
+.box {
+    position: relative;
+    width: 345px;
+    height: 523px;
+    background-color: #ffffff;
+    border-radius: 20px;
+    border: 4px solid #e5ff46;
+    opacity: 0px;
+
+    @include media-min($breakpoint-tablet) {
+        width: 510px;
+        height: 571px;
+    }
+
+    @include media-min($breakpoint-laptop) {
+        width: 854px;
+        height: 571px;
+    }
+}
+
+.reportButton {
+    color: red;
+    display: block;
+    font-size: 16px;
+    text-align: end;
+    margin-top: 32px;
+
+    @include media-min($breakpoint-laptop) {
+        font-size: 16px;
+    }
+}
+
+.reportBtn {
+    color: red;
+}
+
+.closeButton {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 28px;
+    height: 28px;
+
+    @include media-min($breakpoint-tablet) {
+        top: 28px;
+        right: 28px;
+    }
+}
+
+.contentWrapper {
+    font-size: medium;
+    color: black;
+}
+
+.modalTitle,
+.confirmationTitle {
+    font-size: 32px;
+    margin-bottom: 35px;
+
+    @include media-max($breakpoint-mobile) {
+        font-size: 24px;
+    }
+
+    @include media-max($breakpoint-tablet) {
+        margin-left: 16px;
+    }
+}
+
+.modalTitle {
+    margin-top: 40px;
+    margin-bottom: 35px;
+
+    @include media-max($breakpoint-mobile) {
+        margin-left: 10px;
+    }
+}
+
+.confirmationTitle {
+    margin-top: 106px;
+    margin-left: 87px;
+
+    @include media-max($breakpoint-mobile) {
+        margin-top: 56px;
+        margin-left: 30px;
+    }
+
+    @include media-max($breakpoint-tablet) {
+        margin-top: 50px;
+        margin-left: 20px;
+    }
+
+}
+
+.submissionText,
+.reasonItem,
+.confirmationContent {
+    font-size: 24px;
+    margin-bottom: 16px;
+    margin-left: 87px;
+
+    @include media-max($breakpoint-mobile) {
+        margin: 0;
+    }
+}
+
+.confirmationContent {
+    @include media-max($breakpoint-mobile) {
+        margin-left: 26px;
+        margin-bottom: 10px;
+    }
+
+    @include media-max($breakpoint-tablet) {
+        margin: 26px;
+    }
+}
+
+.submissionText {
+    margin-top: 62px;
+    margin-bottom: 26px;
+
+    @include media-max($breakpoint-tablet) {
+        margin: 20px;
+    }
+}
+
+.reasonItem {
+    margin-left: 0;
+
+    @include media-max($breakpoint-tablet) {
+        margin-bottom: 5px;
+    }
+}
+
+.confirmReasons,
+.submissionPoints {
+    list-style-type: disc;
+    margin-left: 120px;
+
+    @include media-max($breakpoint-tablet) {
+        margin: 45px;
+    }
+}
+
+.submissionPoints {
+    @include media-max($breakpoint-tablet) {
+        margin-left: 40px;
+        margin-top: 2px;
+        margin-bottom: 2px;
+    }
+}
+
+.confirmReasons {
+    @include media-max($breakpoint-mobile) {
+        font-size: 16px;
+    }
+}
+
+.confirmReasons:last-child {
+    margin-bottom: 67px;
+}
+
+.reportReasons {
+    margin-left: 64px;
+
+    @include media-max($breakpoint-mobile) {
+        margin: 10px;
+        font-size: 24px;
+    }
+
+    @include media-max($breakpoint-tablet) {
+        margin-left: 26px;
+    }
+}
+
+.modalReasons {
+    margin-bottom: 83px;
+
+    input[type="checkbox"] {
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        outline: none;
+        cursor: pointer;
+        width: 20px;
+        height: 20px;
+        background-color: white;
+        border: 1px solid black;
+        border-radius: 50%;
+        transition: background-color 0.3s, border-color 0.3s;
+        display: inline-block;
+        position: relative;
+        margin-right: 12px;
+
+        &:checked {
+            background-color: #e5ff46;
+        }
+    }
+}
+
+.modalButton,
+.modalButtonConfirm,
+.modalButtonDecline {
+    border-radius: 10px;
+    font-size: var(--body-text);
+    padding: 12px 28px;
+    margin-right: 35px;
+    color: var(--label);
+
+    @include media-max($breakpoint-mobile) {
+        font-size: 16px;
+        padding: 12px 20px;
+    }
+
+    @include media-max($breakpoint-tablet) {
+        margin: 0;
+    }
+
+    @include media-min($breakpoint-laptop) {
+        padding: 18px 59px;
+        font-size: 20px;
+        margin-right: 50px;
+    }
+}
+
+.modalButtonDecline {
+    border: 1px solid black;
+    margin-left: 64px;
+
+    &:hover,
+    &:focus {
+        border-color: var(--input-text);
+        box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+    }
+
+    @include media-max($breakpoint-mobile) {
+        font-size: 16px;
+        padding: 12px 20px;
+        margin-left: 16px;
+    }
+
+    @include media-max($breakpoint-tablet) {
+        margin: 0;
+    }
+}
+
+.buttonContainer {
+    display: flex;
+}
