@@ -5,7 +5,7 @@ import { CommonIcon, CommonButton } from "@/components";
 import styles from "./Search.module.scss";
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { getSearchByWord } from '../../../api/getSearchByWord';
+import { getSearchByWord } from '@/api/getSearchByWord';
 
 const Search: FC = (props) => {
 	const [word, setWord] = useState<string>('');
@@ -13,7 +13,7 @@ const Search: FC = (props) => {
 	const router = useRouter();
 
 	const goToSearch = (): void => {
-		router.push(`/search/${word}`);
+		router.push(`/catalogy?search=${word}`);
 	};
 
 	useEffect(() => {
@@ -21,7 +21,7 @@ const Search: FC = (props) => {
 			try {
 				const result = await getSearchByWord(word);
 				setSearch(result);
-				// console.log(search);
+				console.log(search);
 
 			} catch (error: any) {
 				console.error("Error fetching data:", error);
@@ -85,7 +85,7 @@ const Search: FC = (props) => {
 					/>
 				</CommonButton>
 				{
-					search.length === 0
+					search.length === 0 || word === ""
 						? null
 						: <div className={styles.searchSuggest}>
 							<ul className={styles.searchSuggestList}>

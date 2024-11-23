@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from 'react';
-import { getSearchByWord } from '../../../api/getSearchByWord';
+import { getSearchByWord } from '@/api/getSearchByWord';
 import styles from "./Search.module.scss";
 
 import Card from '@mui/material/Card';

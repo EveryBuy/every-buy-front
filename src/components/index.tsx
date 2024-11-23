@@ -5,7 +5,7 @@ export { default as SliderContainer } from "./Slider/SliderContainer/SliderConta
 export { default as SliderComponent } from "./Slider/SliderComponent/SliderComponent";
 export { default as BannerBackground } from "./Slider/BannerBackground/BannerBackground";
 export { default as Banner } from "./Slider/Banner/Banner";
-export { default as Search } from "./Category/Search/Search";
+export { default as Search } from "./Catalogy/Search/Search";
 export { default as AboutMe } from "./pages/userPage/AboutMe/AboutMe";
 export { default as SelectedGoods } from "./pages/userPage/SelectedGoods/SelectedGoods";
 export { default as MyAds } from "./pages/userPage/MyAds";
@@ -38,8 +38,8 @@ export { default as IconsData } from "./pages/messages/messageListBlock/list/ite
 export { default as Buttons } from "./pages/messages/messageListBlock/Buttons/Buttons";
 export { default as Button } from "./pages/messages/messageListBlock/Buttons/Button";
 export { default as Icons } from "./pages/messages/messageListBlock/Icons/Icons";
-export { FilterCatalogySearch } from './Category/filterCatalogy/FilterCatalogy';
+export { FilterCatalogySearch } from './Catalogy/filterCatalogy/FilterCatalogy';
 export { CustomSeparator } from './ui';
-export { CategoryList } from './Category/CategoryList';
-export { CatalogyCard } from './Category/cardCatalogy/CatalogyCard';
+export { CategoryList } from './Catalogy/CategoryList';
+export { CatalogyCard } from './Catalogy/cardCatalogy/CatalogyCard';
 export { CatalogyPage } from './pages/catalogy/CatalogyPage';
