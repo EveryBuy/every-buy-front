@@ -75,8 +75,13 @@ const Header: FC = () => {
           />
           <div className={styles.iconsWrapper}>
             <div onClick={openWindowHandle}>
-              <Link
+              {/* <Link
                 href={`${isLoggedIn ? "/messages" : "#"}`}
+                className={styles.linkToUserPage}
+              > */}
+              <Link
+                href="/messages"
+                onClick={(e) => !isLoggedIn && e.preventDefault()}
                 className={styles.linkToUserPage}
               >
                 <CommonIcon id="icon-chat" width="21" height="20" />
