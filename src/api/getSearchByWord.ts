@@ -1,7 +1,9 @@
 import ListItemsForSearch from "@/types/listItemsForSearch";
-import { BASE_URL } from './endpoints';
 
-export const getSearchByWord = async (word): Promise<ListItemsForSearch[]> => {  // 
+const BASE_URL: string = "https://api-everybuy.onrender.com";
+
+export const getSearchByWord = async (word): Promise<ListItemsForSearch[]> => {
+
 	if (!word && word.length < 1) {
 		return [];
 	} else {
