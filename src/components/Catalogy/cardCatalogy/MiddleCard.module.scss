@@ -1,0 +1,89 @@
+@import "@/styles/breakpoints";
+@import "@/styles/mixins";
+
+.containerMiddleCard {
+	width: 163px;
+	min-height: 242px;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	position: relative;
+	padding: 12px 16px 8px;
+	margin: 0 auto;
+	border: 1px solid var(--border);
+	border-radius: 10px;
+	transition: transform 250ms ease;
+
+	@include media-min($breakpoint-tablet) {
+		width: 649px;
+		padding: 30px 20px;
+		justify-content: space-around;
+	}
+
+	@include media-min($breakpoint-laptop) {
+		width: 100%;
+	}
+
+}
+
+// .containerMiddleCard:hover {
+// 	transform: scale(1.02);
+// }
+
+.description {
+	padding-right: 70px;
+	margin-top: 12px;
+	display: none;
+
+	@include media-min($breakpoint-tablet) {
+		display: block;
+	}
+}
+
+.heart,
+.heartSelect {
+	position: absolute;
+	bottom: 65px;
+	left: 16px;
+	width: 24px;
+	height: 24px;
+
+	@include media-min($breakpoint-tablet) {
+		width: 28px;
+		height: 28px;
+		top: 30px;
+		left: auto;
+		right: 20px;
+	}
+}
+
+.heartSelect {}
+
+.arrowButton {
+	position: absolute;
+	bottom: 65px;
+	right: 16px;
+	width: 24px;
+	height: 24px;
+
+	@include media-min($breakpoint-tablet) {
+		width: 58px;
+		height: 58px;
+		right: 20px;
+		bottom: 40px;
+	}
+}
+
+.dateText {
+	margin-top: 15px;
+	font-size: var(--body-mobile-text-small);
+	color: var(--input-text);
+	position: relative;
+	left: -8px;
+
+	@include media-min($breakpoint-tablet) {
+		font-size: 14px;
+		font-weight: 700;
+		left: 0;
+	}
+}
