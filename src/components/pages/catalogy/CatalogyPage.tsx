@@ -11,14 +11,14 @@ import {
 	Search,
 } from '@/components';
 import { useSearchParams } from 'next/navigation';
-import { searchGoods } from '@/mock-data/searchGoods';
+// import { searchGoods } from '@/mock-data/searchGoods';
 
 const styles = {
 	display: 'flex',
 	flexDirection: 'column',
 };
 
-export const CatalogyPage = (props) => {
+export const CatalogyPage = () => {
 	const [isListOpen, setListOpen] = useState(false);
 	const [search, setSearch] = useState([]);
 	const [loading, setLoading] = useState(false);

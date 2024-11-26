@@ -1,6 +1,6 @@
 import { FC } from "react";
 import styles from "./CatalogyCard.module.scss";
-import MiddleCard from "./MiddleCard";
+import MiddleCard from "./MiddleCard/MiddleCard";
 import { goodsListSell } from "@/mock-data/catalogyCardsData";
 // import {middleCardType } from "@/types/middleCardType";
 

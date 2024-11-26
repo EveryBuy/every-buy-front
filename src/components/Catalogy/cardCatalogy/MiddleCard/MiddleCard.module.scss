@@ -59,6 +59,14 @@
 
 .heartSelect {}
 
+.link {
+	transition: opacity 0.2s ease;
+}
+
+.link:hover {
+	opacity: 70%;
+}
+
 .arrowButton {
 	position: absolute;
 	bottom: 65px;

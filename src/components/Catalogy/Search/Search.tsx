@@ -36,7 +36,7 @@ const Search: FC = (props) => {
 		// console.log(item.advertisementId);
 		return (
 			<li key={item.advertisementId} className={styles.searchSuggestItem}>
-				<Link href={`/products/${item.advertisementId}`}>
+				<Link href={`/announcement?id=${item.advertisementId}`}>
 					<span className={styles.searchLinkItem}>{item.title}</span>
 					<span className={styles.searchItemCategory}>{item.category.nameUkr}
 						/ {item.topSubCategory.subCategoryNameUkr}</span>

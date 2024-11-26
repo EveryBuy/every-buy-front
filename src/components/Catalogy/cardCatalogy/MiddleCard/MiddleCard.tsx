@@ -1,13 +1,13 @@
 import { FC } from "react";
 import styles from "./MiddleCard.module.scss";
-import MiniCard from "./MinCard";
+import MiniCard from "../MinCard/MinCard";
 import Image from "next/image";
+import Link from 'next/link'
 import { CommonButton } from "@/components";
 import arrowButton from "@/assets/svg/arrowButton.svg";
 import heart from "@/assets/svg/heart.svg";
 import formatAdvertisementDate from "@/utils/formatAdvertisementDate";
 import { middleCardType } from "@/types/middleCardType";
-// import { minCardType } from "@/types/minCardType";
 
 type ItemProps = {
 	item: middleCardType;
@@ -15,6 +15,13 @@ type ItemProps = {
 
 export const MiddleCard: FC<ItemProps> = ({ item }: ItemProps) => {
 	// console.log(item);
+
+	// const addSelectGood = (e: React.FormEvent<HTMLFormElement>): void => {
+	// 	e.preventDefault();
+	// 	console.log("select good");
+	// }
+
+	const linkHref = `/announcement?id=${item.advertisementId}`;
 
 	return (
 		<div className={styles.containerMiddleCard}>
@@ -28,7 +35,9 @@ export const MiddleCard: FC<ItemProps> = ({ item }: ItemProps) => {
 			<p className={styles.description}>{item.description}</p>
 
 			<CommonButton
-				type="button"
+				type="submit"
+				title=""
+			// onClick={addSelectGood}
 			>
 				<Image
 					className={styles.heart}
@@ -39,9 +48,7 @@ export const MiddleCard: FC<ItemProps> = ({ item }: ItemProps) => {
 					height={28}
 				/>
 			</CommonButton>
-			<CommonButton
-				type="button"
-			>
+			<Link className={styles.link} href={linkHref}>
 				<Image
 					className={styles.arrowButton}
 					src={arrowButton}
@@ -49,7 +56,7 @@ export const MiddleCard: FC<ItemProps> = ({ item }: ItemProps) => {
 					width={58}
 					height={58}
 				/>
-			</CommonButton>
+			</Link>
 
 			<p className={styles.dateText}>
 				{`${formatAdvertisementDate(item.updateDate)}`}
