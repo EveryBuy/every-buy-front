@@ -14,6 +14,7 @@ import {
 } from "@/components";
 import Logo from "@/assets/Svg/logo.svg";
 import styles from "./Header.module.scss";
+// import styles from "../../components/header/";
 
 const Header: FC = () => {
   const path = usePathname();
@@ -67,12 +68,20 @@ const Header: FC = () => {
         )}
 
         <div className={styles.addAdvertisingContainer}>
-          <CommonButton
+          {/* <CommonButton
             type="button"
             title="Додати оголошення"
             color="yellow"
             className={styles.headerButton}
-          />
+          /> */}
+
+          <Link
+            href="/adver"
+            className={`${styles.headerButton} ${styles.headerLink}`}
+          >
+            Додати оголошення
+          </Link>
+
           <div className={styles.iconsWrapper}>
             <div onClick={openWindowHandle}>
               <Link

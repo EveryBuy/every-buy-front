@@ -4,6 +4,9 @@ import { Header, Footer } from "../components";
 import { Providers } from "../redux/provider";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import { ThemeProvider } from "@mui/material/styles";
+import { ToastContainer } from "react-toastify";
+// import { Toaster } from "react-hot-toast";
+import "react-toastify/dist/ReactToastify.css";
 import theme from "../styles/mui/theme";
 import "./globals.scss";
 
@@ -23,6 +26,8 @@ export default async function ClientLayout({
               <main className="container">{children}</main>
               <Footer />
               {/* </AuthProvider> */}
+              {/* <Toaster /> */}
+              <ToastContainer />
             </ThemeProvider>
           </Providers>
         </AppRouterCacheProvider>
