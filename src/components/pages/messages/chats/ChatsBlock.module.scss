@@ -13,7 +13,7 @@
 }
 
 .buttonsWrapper {
-  height: 81px;
+  height: 67px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -21,6 +21,7 @@
   background-color: #ffffff;
 
   @include media-min($breakpoint-tablet) {
+    height: 81px;
     flex-direction: column;
     border-radius: 10px;
     padding: 0px 8px;
@@ -32,10 +33,7 @@
 }
 
 .listWrapper {
-  // flex-grow: 1;
-  margin-top: 40px;
-  // height: 639px;
-
+  margin-top: 20px;
   @include media-min($breakpoint-tablet) {
     border: 1px solid var(--border);
     border-radius: 10px;
@@ -109,3 +107,9 @@
 //   width: 24px;
 //   height: 24px;
 // }
+
+.hidden {
+  @media screen and (max-width: 767px) {
+    display: none;
+  }
+}

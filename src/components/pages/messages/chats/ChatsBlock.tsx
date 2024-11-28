@@ -1,5 +1,5 @@
 "use client";
-import { FC, useState, useEffect } from "react";
+import { FC, useState } from "react";
 import { Box } from "@mui/material";
 import { ChatsList, Buttons, Icons, CommonIcon } from "@/components";
 import {
@@ -10,13 +10,16 @@ import style from "./ChatsBlock.module.scss";
 
 type MessageListBlockType = {
   onclick: (selectedChatId: number) => void;
+  selectedChatId: number | null;
 };
 
-const MessageListBlock: FC<MessageListBlockType> = ({ onclick }) => {
+const MessageListBlock: FC<MessageListBlockType> = ({
+  onclick,
+  selectedChatId,
+}) => {
   const [activeButton, setActiveButton] = useState<number | null>(1);
   const [isHeartSelected, setHeardSelected] = useState<boolean>(false);
   const [isFolderSelected, setFolderSelected] = useState<boolean>(false);
-  // const { data: chats, isLoading, isError } = useGetBuyChatsQuery();
   const {
     data: buyChats,
     isLoading: isBuyChatsLoading,
@@ -47,7 +50,13 @@ const MessageListBlock: FC<MessageListBlockType> = ({ onclick }) => {
   };
 
   return (
-    <Box className={style.blockWrapper}>
+    <Box
+      className={
+        selectedChatId
+          ? `${style.blockWrapper} ${style.hidden}`
+          : style.blockWrapper
+      }
+    >
       <Box className={style.buttonsWrapper}>
         {isHeartSelected ? (
           <Box className={style.savedMessagesHeaderBlock}>

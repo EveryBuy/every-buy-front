@@ -53,7 +53,9 @@ const Header: FC = () => {
         className={
           path === "/"
             ? styles.headerContainer
-            : `${styles.headerContainer} ${styles.headerMessagePageContainer}`
+            : path === "/messages"
+            ? `${styles.headerContainer} ${styles.headerMessagePageContainer}`
+            : `${styles.headerContainer} ${styles.headerPageContainer}`
         }
       >
         <Link href="/" className={path === "/" ? "" : styles.logo}>
@@ -75,10 +77,6 @@ const Header: FC = () => {
           />
           <div className={styles.iconsWrapper}>
             <div onClick={openWindowHandle}>
-              {/* <Link
-                href={`${isLoggedIn ? "/messages" : "#"}`}
-                className={styles.linkToUserPage}
-              > */}
               <Link
                 href="/messages"
                 onClick={(e) => !isLoggedIn && e.preventDefault()}

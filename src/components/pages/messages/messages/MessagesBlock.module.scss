@@ -11,3 +11,12 @@
     border-radius: 10px;
   }
 }
+
+.visible {
+  @media screen and (max-width: 767px) {
+    display: block;
+
+    width: 100%;
+    // border-radius: 10px;
+  }
+}

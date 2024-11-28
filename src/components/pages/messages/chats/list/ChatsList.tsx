@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useState } from "react";
+import { FC } from "react";
 import { Box } from "@mui/material";
 import { Chat, CommonPreloader } from "@/components";
 import { ChatType } from "@/types/messages/chats";

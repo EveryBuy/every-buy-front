@@ -6,8 +6,13 @@
   justify-content: space-between;
   align-items: center;
   padding: 0px 10px 9px 10px;
+  column-gap: 10px;
+  @media (min-width: 425px) {
+    column-gap: 10px;
+  }
   @include media-min($breakpoint-tablet) {
     padding: 14px 10px;
+    column-gap: 14px;
   }
 }
 
@@ -26,8 +31,11 @@
   display: flex;
   flex-direction: column;
   row-gap: 8px;
-  width: 159px;
+  width: 140px;
   height: 55px;
+  @media (min-width: 375px) {
+    width: 65%;
+  }
   @include media-min($breakpoint-tablet) {
     width: 228px;
   }
