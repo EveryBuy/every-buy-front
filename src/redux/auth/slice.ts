@@ -13,7 +13,12 @@ import {
   changeUserPhoto,
 } from "./operations";
 import toast from "react-hot-toast";
-import { AuthResponse, AuthState, User, UserFullName } from "@/types/stateTypes";
+import {
+  AuthResponse,
+  AuthState,
+  User,
+  UserFullName,
+} from "@/types/stateTypes";
 
 const initialState: AuthState = {
   user: {
@@ -63,7 +68,7 @@ const authSlice = createSlice({
         state.user = payload.data;
         state.token = payload.token;
         state.isLoggedIn = true;
-        console.log(state.user);
+        // console.log(state.user);
       })
       .addCase(login.rejected, (state, action) => {
         state.isLoggedIn = false;
@@ -109,21 +114,29 @@ const authSlice = createSlice({
       .addCase(changePassword.rejected, (state, { payload }) => {
         toast.error("Password not changed!");
       })
-      .addCase(changeUserName.fulfilled, (state, action: PayloadAction<UserFullName>) => {
-        state.user.fullName = action.payload.fullName;
-        toast.success("Name successfully changed!");
-      })
-      .addCase(changeUserName.rejected, (_state, action: PayloadAction<any>) => {
-        toast.error(action.payload.error);
-      })
-      .addCase(changeUserPhone.fulfilled, (state, action: PayloadAction<User>) => {
-        state.user = action.payload;
-      })
+      .addCase(
+        changeUserName.fulfilled,
+        (state, action: PayloadAction<UserFullName>) => {
+          state.user.fullName = action.payload.fullName;
+          toast.success("Name successfully changed!");
+        }
+      )
+      .addCase(
+        changeUserName.rejected,
+        (_state, action: PayloadAction<any>) => {
+          toast.error(action.payload.error);
+        }
+      )
+      .addCase(
+        changeUserPhone.fulfilled,
+        (state, action: PayloadAction<User>) => {
+          state.user = action.payload;
+        }
+      )
       .addCase(changeUserPhoto.fulfilled, (state, action) => {
         console.log(action.payload);
-        state.user.userPhotoUrl = action.payload.data.userPhotoUrl
-      })
-      ;
+        state.user.userPhotoUrl = action.payload.data.userPhotoUrl;
+      });
   },
 });
 

@@ -2,7 +2,10 @@
 import { FC, useState, useEffect } from "react";
 import { Box } from "@mui/material";
 import { ChatsList, Buttons, Icons, CommonIcon } from "@/components";
-import { useGetChatsQuery } from "@/redux/messages/chatApi";
+import {
+  useGetBuyChatsQuery,
+  useGetSellChatsQuery,
+} from "@/redux/messages/chatApi";
 import style from "./ChatsBlock.module.scss";
 
 type MessageListBlockType = {
@@ -13,7 +16,19 @@ const MessageListBlock: FC<MessageListBlockType> = ({ onclick }) => {
   const [activeButton, setActiveButton] = useState<number | null>(1);
   const [isHeartSelected, setHeardSelected] = useState<boolean>(false);
   const [isFolderSelected, setFolderSelected] = useState<boolean>(false);
-  const { data: chats, isLoading, isError } = useGetChatsQuery();
+  // const { data: chats, isLoading, isError } = useGetBuyChatsQuery();
+  const {
+    data: buyChats,
+    isLoading: isBuyChatsLoading,
+    isError: isBuyChatsError,
+  } = useGetBuyChatsQuery();
+  const {
+    data: sellChats,
+    isLoading: isSellChatsLoading,
+    isError: isSellChatsError,
+  } = useGetSellChatsQuery();
+
+  const chats = activeButton === 1 ? buyChats : sellChats;
 
   const handleButtonClick = (buttonId: number) => {
     setActiveButton(buttonId);
