@@ -25,7 +25,7 @@ const ChatsList: FC<ListChatsType> = ({ chats, onclick }) => {
       {chats ? (
         chats.map(({ chatId, userData, lastMessage, lastMessageDate }) => (
           <Box
-            sx={{ borderBottom: "solid 1px gray" }}
+            className={style.listItem}
             key={chatId}
             onClick={() => {
               if (chatId) {

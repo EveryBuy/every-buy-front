@@ -3,7 +3,7 @@
 
 .blockWrapper {
   display: none;
-
+  // position: relative;
   @include media-min($breakpoint-tablet) {
     display: block;
     width: 65%;

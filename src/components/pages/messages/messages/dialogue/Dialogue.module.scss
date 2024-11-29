@@ -2,7 +2,7 @@
 @import "@/styles/breakpoints";
 
 .blockWrapper {
-  min-height: 515px;
+  height: calc(100vh - 275px);
   position: relative;
   display: flex;
   flex-direction: column;
@@ -10,6 +10,7 @@
   justify-content: space-between;
 
   @include media-min($breakpoint-tablet) {
+    height: 515px;
     margin-top: 18px;
     border-top: 1px solid var(--border);
   }

@@ -1,5 +1,10 @@
 .pageWrapper {
-  padding: 20px 0px;
+  padding: 20px 0px 0px;
+  margin-bottom: -54px;
+  @media (min-width: 768px) {
+    padding: 20px 0px;
+    margin-bottom: 0px;
+  }
 }
 
 .headline {

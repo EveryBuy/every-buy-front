@@ -100,9 +100,9 @@ const MessageListBlock: FC<MessageListBlockType> = ({
           </>
         )}
       </Box>
-      <Box className={style.listWrapper}>
-        <ChatsList chats={chats} onclick={onclick} />
-      </Box>
+      {/* <Box className={style.listWrapper}> */}
+      <ChatsList chats={chats} onclick={onclick} />
+      {/* </Box> */}
     </Box>
   );
 };
