@@ -1,16 +1,20 @@
 import styles from "./MinCard.module.scss";
 import Image from "next/image";
-import { minCardType } from "@/types/minCardType";
+import { MinCardType } from "@/types/minCardType";
 import nohPhotoCard from "@/assets/noPhotoCard.jpg";
 
-export const MinCard = ({ elem }): JSX.Element => {
+type ItemProps = {
+	item: MinCardType;
+};
+
+export const MinCard = (props: ItemProps): JSX.Element => {
 
 	const {
 		mainPhotoUrl,
 		title,
 		productType,
 		price,
-	}: minCardType = elem;
+	} = props.item;
 	return (
 		// add styles.minCardString for styles.containerMiniCard makes item inline
 		<div className={styles.containerMinCard}>

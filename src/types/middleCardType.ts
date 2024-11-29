@@ -1,29 +1,29 @@
 type Category = {
-      id: number,
-      categoryName: string,
-      nameUkr: string,
-      photoUrl: string,
+	id: number,
+	categoryName: string,
+	nameUkr: string,
+	photoUrl: string,
 }
-    
+
 type Region = {
-        id: number,
-        regionName: string,
-      }
+	id: number,
+	regionName: string,
+}
 
 type City = {
-      id: number,
-      cityName: string,
-      region: Region,
-    }
+	id: number,
+	cityName: string,
+	region: Region,
+}
 
-export type middleCardType = {
-    advertisementId: number,
-    mainPhotoUrl: string,
-    title: string,
-    productType: "NEW" | "USED" | "OTHER",
-    price: number,
-		description: string,
-    updateDate: string,
-    category: Category,
-    city: City,
+export type MiddleCardType = {
+	advertisementId: number,
+	mainPhotoUrl: string,
+	title: string,
+	productType: string,  //"NEW" | "USED" | "OTHER",
+	price: string,
+	description: string,
+	updateDate: string,
+	category: Category,
+	city: City,
 };

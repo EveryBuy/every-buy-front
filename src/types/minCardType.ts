@@ -1,6 +1,6 @@
-export type minCardType = {
+export type MinCardType = {
 	mainPhotoUrl: string;
 	title: string;
-	productType: "NEW" | "USED" | "OTHER",
+	productType: string //"NEW" | "USED" | "OTHER",
 	price: string;
 }

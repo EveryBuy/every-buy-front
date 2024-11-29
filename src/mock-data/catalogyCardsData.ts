@@ -1,5 +1,6 @@
 export const catalogyCardsData = [
 	{
+		advertisementId: 12,
 		imageUrl: "https://placehold.co/180x180",
 		title: "Картка 1",
 		status: "Нове",
@@ -10,6 +11,7 @@ export const catalogyCardsData = [
 		regionName: "Київська область"
 	},
 	{
+		advertisementId: 13,
 		imageUrl: "https://placehold.co/180x180",
 		title: "Картка 2",
 		status: "Нове",
@@ -20,6 +22,7 @@ export const catalogyCardsData = [
 		regionName: "Київська область"
 	},
 	{
+		advertisementId: 14,
 		imageUrl: "https://placehold.co/180x180",
 		title: "Картка 3",
 		status: "Вживане",
@@ -30,6 +33,7 @@ export const catalogyCardsData = [
 		regionName: "Львівська область"
 	},
 	{
+		advertisementId: 15,
 		imageUrl: "https://placehold.co/180x180",
 		title: "Картка 4",
 		status: "Нове",
@@ -40,6 +44,7 @@ export const catalogyCardsData = [
 		regionName: "Одеська область"
 	},
 	{
+		advertisementId: 16,
 		imageUrl: "https://placehold.co/180x180",
 		title: "Картка 5",
 		status: "Нове",
@@ -50,6 +55,7 @@ export const catalogyCardsData = [
 		regionName: "Харківська область"
 	},
 	{
+		advertisementId: 17,
 		imageUrl: "https://placehold.co/180x180",
 		title: "Картка 6",
 		status: "Вживане",
@@ -60,6 +66,7 @@ export const catalogyCardsData = [
 		regionName: "Дніпропетровська область"
 	},
 	{
+		advertisementId: 18,
 		imageUrl: "https://placehold.co/180x180",
 		title: "Картка 7",
 		status: "Нове",
@@ -70,6 +77,7 @@ export const catalogyCardsData = [
 		regionName: "Запорізька область"
 	},
 	{
+		advertisementId: 19,
 		imageUrl: "https://placehold.co/180x180",
 		title: "Картка 8",
 		status: "Нове",
@@ -80,6 +88,7 @@ export const catalogyCardsData = [
 		regionName: "Вінницька область"
 	},
 	{
+		advertisementId: 20,
 		imageUrl: "https://placehold.co/180x180",
 		title: "Картка 9",
 		status: "Вживане",
@@ -90,6 +99,7 @@ export const catalogyCardsData = [
 		regionName: "Полтавська область"
 	},
 	{
+		advertisementId: 21,
 		imageUrl: "https://placehold.co/180x180",
 		title: "Картка 10",
 		status: "Нове",
@@ -102,260 +112,260 @@ export const catalogyCardsData = [
 ];
 
 export const goodsListSell = [
-  {
-    "advertisementId": 51,
-    "userId": 127,
-    "mainPhotoUrl": "https://everybuy.s3.eu-north-1.amazonaws.com/PassengerCars76bac27d-c385-422c-9bba-86838de27655",
-    "title": "Авто Kia Rio 10",
-    "productType": "OTHER",
-    "section": "SELL",
-    "price": "35999.99",
-    "description": "Цей автомобіль поєднує в собі стильний дизайн і сучасні технології",
-    "updateDate": "2024-11-16T15:39:12.73201",
-    "city": {
-      "id": 148,
-      "cityName": "Нікополь",
-      "region": { "id": 6, "regionName": " Дніпропетровська область" }
-    },
-    "topSubCategory": {
-      "id": 34,
-      "subCategoryName": "Passenger Cars",
-      "subCategoryNameUkr": "Легкові авто"
-    },
-    "lowSubCategory": {
-      "id": 431,
-      "subCategoryName": "Automatic Transmission",
-      "subCategoryNameUkr": "Автомат"
-    },
-    "category": {
-      "id": 4,
-      "categoryName": "Transport",
-      "nameUkr": "Транспорт",
-      "photoUrl": "https://everybuy-category.s3.eu-north-1.amazonaws.com/Transport+Parts.jpeg"
-    }
-  },
-  {
-    "advertisementId": 50,
-    "userId": 127,
-    "mainPhotoUrl": "https://everybuy.s3.eu-north-1.amazonaws.com/PassengerCars65bd567d-ed69-492e-8243-9013ba6f1f89",
-    "title": "Авто Kia Rio 9",
-    "productType": "OTHER",
-    "section": "SELL",
-    "price": "35999.99",
-    "description": "Цей автомобіль поєднує в собі стильний дизайн і сучасні технології",
-    "updateDate": "2024-11-16T15:39:04.238617",
-    "city": {
-      "id": 148,
-      "cityName": "Нікополь",
-      "region": { "id": 6, "regionName": " Дніпропетровська область" }
-    },
-    "topSubCategory": {
-      "id": 34,
-      "subCategoryName": "Passenger Cars",
-      "subCategoryNameUkr": "Легкові авто"
-    },
-    "lowSubCategory": {
-      "id": 431,
-      "subCategoryName": "Automatic Transmission",
-      "subCategoryNameUkr": "Автомат"
-    },
-    "category": {
-      "id": 4,
-      "categoryName": "Transport",
-      "nameUkr": "Транспорт",
-      "photoUrl": "https://everybuy-category.s3.eu-north-1.amazonaws.com/Transport+Parts.jpeg"
-    }
-  },
-  {
-    "advertisementId": 49,
-    "userId": 127,
-    "mainPhotoUrl": "https://everybuy.s3.eu-north-1.amazonaws.com/PassengerCarscc4125ef-a356-4bc0-84c9-b8ac402452f3",
-    "title": "Авто Kia Rio 8",
-    "productType": "OTHER",
-    "section": "SELL",
-    "price": "35999.99",
-    "description": "Цей автомобіль поєднує в собі стильний дизайн і сучасні технології",
-    "updateDate": "2024-11-16T15:38:55.685797",
-    "city": {
-      "id": 148,
-      "cityName": "Нікополь",
-      "region": { "id": 6, "regionName": " Дніпропетровська область" }
-    },
-    "topSubCategory": {
-      "id": 34,
-      "subCategoryName": "Passenger Cars",
-      "subCategoryNameUkr": "Легкові авто"
-    },
-    "lowSubCategory": {
-      "id": 431,
-      "subCategoryName": "Automatic Transmission",
-      "subCategoryNameUkr": "Автомат"
-    },
-    "category": {
-      "id": 4,
-      "categoryName": "Transport",
-      "nameUkr": "Транспорт",
-      "photoUrl": "https://everybuy-category.s3.eu-north-1.amazonaws.com/Transport+Parts.jpeg"
-    }
-  },
-  {
-    "advertisementId": 48,
-    "userId": 127,
-    "mainPhotoUrl": "https://everybuy.s3.eu-north-1.amazonaws.com/PassengerCars699f582b-6d41-4d8b-bc19-63ad5575b557",
-    "title": "Авто Kia Rio 7",
-    "productType": "OTHER",
-    "section": "SELL",
-    "price": "35999.99",
-    "description": "Цей автомобіль поєднує в собі стильний дизайн і сучасні технології",
-    "updateDate": "2024-11-16T15:38:47.439866",
-    "city": {
-      "id": 148,
-      "cityName": "Нікополь",
-      "region": { "id": 6, "regionName": " Дніпропетровська область" }
-    },
-    "topSubCategory": {
-      "id": 34,
-      "subCategoryName": "Passenger Cars",
-      "subCategoryNameUkr": "Легкові авто"
-    },
-    "lowSubCategory": {
-      "id": 431,
-      "subCategoryName": "Automatic Transmission",
-      "subCategoryNameUkr": "Автомат"
-    },
-    "category": {
-      "id": 4,
-      "categoryName": "Transport",
-      "nameUkr": "Транспорт",
-      "photoUrl": "https://everybuy-category.s3.eu-north-1.amazonaws.com/Transport+Parts.jpeg"
-    }
-  },
-  {
-    "advertisementId": 47,
-    "userId": 127,
-    "mainPhotoUrl": "https://everybuy.s3.eu-north-1.amazonaws.com/PassengerCars92557954-98a5-4d1f-a253-c08503490d02",
-    "title": "Авто Kia Rio 6",
-    "productType": "OTHER",
-    "section": "SELL",
-    "price": "35999.99",
-    "description": "Цей автомобіль поєднує в собі стильний дизайн і сучасні технології",
-    "updateDate": "2024-11-16T15:38:38.64069",
-    "city": {
-      "id": 148,
-      "cityName": "Нікополь",
-      "region": { "id": 6, "regionName": " Дніпропетровська область" }
-    },
-    "topSubCategory": {
-      "id": 34,
-      "subCategoryName": "Passenger Cars",
-      "subCategoryNameUkr": "Легкові авто"
-    },
-    "lowSubCategory": {
-      "id": 431,
-      "subCategoryName": "Automatic Transmission",
-      "subCategoryNameUkr": "Автомат"
-    },
-    "category": {
-      "id": 4,
-      "categoryName": "Transport",
-      "nameUkr": "Транспорт",
-      "photoUrl": "https://everybuy-category.s3.eu-north-1.amazonaws.com/Transport+Parts.jpeg"
-    }
-  },
-  {
-    "advertisementId": 46,
-    "userId": 127,
-    "mainPhotoUrl": "https://everybuy.s3.eu-north-1.amazonaws.com/PassengerCars505645ca-c23d-4ff2-81b5-c138802da095",
-    "title": "Авто Kia Rio 5",
-    "productType": "OTHER",
-    "section": "SELL",
-    "price": "35999.99",
-    "description": "Цей автомобіль поєднує в собі стильний дизайн і сучасні технології",
-    "updateDate": "2024-11-16T14:55:14.267922",
-    "city": {
-      "id": 148,
-      "cityName": "Нікополь",
-      "region": { "id": 6, "regionName": " Дніпропетровська область" }
-    },
-    "topSubCategory": {
-      "id": 34,
-      "subCategoryName": "Passenger Cars",
-      "subCategoryNameUkr": "Легкові авто"
-    },
-    "lowSubCategory": {
-      "id": 431,
-      "subCategoryName": "Automatic Transmission",
-      "subCategoryNameUkr": "Автомат"
-    },
-    "category": {
-      "id": 4,
-      "categoryName": "Transport",
-      "nameUkr": "Транспорт",
-      "photoUrl": "https://everybuy-category.s3.eu-north-1.amazonaws.com/Transport+Parts.jpeg"
-    }
-  },
-  {
-    "advertisementId": 45,
-    "userId": 127,
-    "mainPhotoUrl": "https://everybuy.s3.eu-north-1.amazonaws.com/PassengerCars7eb9ef30-31aa-4f46-bc61-5ee70871ef8b",
-    "title": "Авто Kia Rio 4",
-    "productType": "OTHER",
-    "section": "SELL",
-    "price": "35999.99",
-    "description": "Цей автомобіль поєднує в собі стильний дизайн і сучасні технології",
-    "updateDate": "2024-11-16T14:55:04.440569",
-    "city": {
-      "id": 148,
-      "cityName": "Нікополь",
-      "region": { "id": 6, "regionName": " Дніпропетровська область" }
-    },
-    "topSubCategory": {
-      "id": 34,
-      "subCategoryName": "Passenger Cars",
-      "subCategoryNameUkr": "Легкові авто"
-    },
-    "lowSubCategory": {
-      "id": 431,
-      "subCategoryName": "Automatic Transmission",
-      "subCategoryNameUkr": "Автомат"
-    },
-    "category": {
-      "id": 4,
-      "categoryName": "Transport",
-      "nameUkr": "Транспорт",
-      "photoUrl": "https://everybuy-category.s3.eu-north-1.amazonaws.com/Transport+Parts.jpeg"
-    }
-  },
-  {
-    "advertisementId": 44,
-    "userId": 127,
-    "mainPhotoUrl": "https://everybuy.s3.eu-north-1.amazonaws.com/PassengerCars274f5dbe-2d08-40a8-bc17-e589087297fe",
-    "title": "Авто Kia Rio 3",
-    "productType": "OTHER",
-    "section": "SELL",
-    "price": "35999.99",
-    "description": "Цей автомобіль поєднує в собі стильний дизайн і сучасні технології",
-    "updateDate": "2024-11-16T14:54:53.927424",
-    "city": {
-      "id": 148,
-      "cityName": "Нікополь",
-      "region": { "id": 6, "regionName": " Дніпропетровська область" }
-    },
-    "topSubCategory": {
-      "id": 34,
-      "subCategoryName": "Passenger Cars",
-      "subCategoryNameUkr": "Легкові авто"
-    },
-    "lowSubCategory": {
-      "id": 431,
-      "subCategoryName": "Automatic Transmission",
-      "subCategoryNameUkr": "Автомат"
-    },
-    "category": {
-      "id": 4,
-      "categoryName": "Transport",
-      "nameUkr": "Транспорт",
-      "photoUrl": "https://everybuy-category.s3.eu-north-1.amazonaws.com/Transport+Parts.jpeg"
-    }
-  }
+	{
+		advertisementId: 51,
+		userId: 127,
+		mainPhotoUrl: "https://everybuy.s3.eu-north-1.amazonaws.com/PassengerCars76bac27d-c385-422c-9bba-86838de27655",
+		title: "Авто Kia Rio 10",
+		productType: "OTHER",
+		section: "SELL",
+		price: "35999.99",
+		description: "Цей автомобіль поєднує в собі стильний дизайн і сучасні технології",
+		updateDate: "2024-11-16T15:39:12.73201",
+		city: {
+			id: 148,
+			cityName: "Нікополь",
+			region: { id: 6, regionName: " Дніпропетровська область" }
+		},
+		topSubCategory: {
+			id: 34,
+			subCategoryName: "Passenger Cars",
+			subCategoryNameUkr: "Легкові авто"
+		},
+		lowSubCategory: {
+			id: 431,
+			subCategoryName: "Automatic Transmission",
+			subCategoryNameUkr: "Автомат"
+		},
+		category: {
+			id: 4,
+			categoryName: "Transport",
+			nameUkr: "Транспорт",
+			photoUrl: "https://everybuy-category.s3.eu-north-1.amazonaws.com/Transport+Parts.jpeg"
+		}
+	},
+	{
+		advertisementId: 50,
+		userId: 127,
+		mainPhotoUrl: "https://everybuy.s3.eu-north-1.amazonaws.com/PassengerCars65bd567d-ed69-492e-8243-9013ba6f1f89",
+		title: "Авто Kia Rio 9",
+		productType: "OTHER",
+		section: "SELL",
+		price: "35999.99",
+		description: "Цей автомобіль поєднує в собі стильний дизайн і сучасні технології",
+		updateDate: "2024-11-16T15:39:04.238617",
+		city: {
+			id: 148,
+			cityName: "Нікополь",
+			region: { id: 6, regionName: " Дніпропетровська область" }
+		},
+		topSubCategory: {
+			id: 34,
+			subCategoryName: "Passenger Cars",
+			subCategoryNameUkr: "Легкові авто"
+		},
+		lowSubCategory: {
+			id: 431,
+			subCategoryName: "Automatic Transmission",
+			subCategoryNameUkr: "Автомат"
+		},
+		category: {
+			id: 4,
+			categoryName: "Transport",
+			nameUkr: "Транспорт",
+			photoUrl: "https://everybuy-category.s3.eu-north-1.amazonaws.com/Transport+Parts.jpeg"
+		}
+	},
+	{
+		advertisementId: 49,
+		userId: 127,
+		mainPhotoUrl: "https://everybuy.s3.eu-north-1.amazonaws.com/PassengerCarscc4125ef-a356-4bc0-84c9-b8ac402452f3",
+		title: "Авто Kia Rio 8",
+		productType: "OTHER",
+		section: "SELL",
+		price: "35999.99",
+		description: "Цей автомобіль поєднує в собі стильний дизайн і сучасні технології",
+		updateDate: "2024-11-16T15:38:55.685797",
+		city: {
+			id: 148,
+			cityName: "Нікополь",
+			region: { id: 6, regionName: " Дніпропетровська область" }
+		},
+		topSubCategory: {
+			id: 34,
+			subCategoryName: "Passenger Cars",
+			subCategoryNameUkr: "Легкові авто"
+		},
+		lowSubCategory: {
+			id: 431,
+			subCategoryName: "Automatic Transmission",
+			subCategoryNameUkr: "Автомат"
+		},
+		category: {
+			id: 4,
+			categoryName: "Transport",
+			nameUkr: "Транспорт",
+			photoUrl: "https://everybuy-category.s3.eu-north-1.amazonaws.com/Transport+Parts.jpeg"
+		}
+	},
+	{
+		advertisementId: 48,
+		userId: 127,
+		mainPhotoUrl: "https://everybuy.s3.eu-north-1.amazonaws.com/PassengerCars699f582b-6d41-4d8b-bc19-63ad5575b557",
+		title: "Авто Kia Rio 7",
+		productType: "OTHER",
+		section: "SELL",
+		price: "35999.99",
+		description: "Цей автомобіль поєднує в собі стильний дизайн і сучасні технології",
+		updateDate: "2024-11-16T15:38:47.439866",
+		city: {
+			id: 148,
+			cityName: "Нікополь",
+			region: { id: 6, regionName: " Дніпропетровська область" }
+		},
+		topSubCategory: {
+			id: 34,
+			subCategoryName: "Passenger Cars",
+			subCategoryNameUkr: "Легкові авто"
+		},
+		lowSubCategory: {
+			id: 431,
+			subCategoryName: "Automatic Transmission",
+			subCategoryNameUkr: "Автомат"
+		},
+		category: {
+			id: 4,
+			categoryName: "Transport",
+			nameUkr: "Транспорт",
+			photoUrl: "https://everybuy-category.s3.eu-north-1.amazonaws.com/Transport+Parts.jpeg"
+		}
+	},
+	{
+		advertisementId: 47,
+		userId: 127,
+		mainPhotoUrl: "https://everybuy.s3.eu-north-1.amazonaws.com/PassengerCars92557954-98a5-4d1f-a253-c08503490d02",
+		title: "Авто Kia Rio 6",
+		productType: "OTHER",
+		section: "SELL",
+		price: "35999.99",
+		description: "Цей автомобіль поєднує в собі стильний дизайн і сучасні технології",
+		updateDate: "2024-11-16T15:38:38.64069",
+		city: {
+			id: 148,
+			cityName: "Нікополь",
+			region: { id: 6, regionName: " Дніпропетровська область" }
+		},
+		topSubCategory: {
+			id: 34,
+			subCategoryName: "Passenger Cars",
+			subCategoryNameUkr: "Легкові авто"
+		},
+		lowSubCategory: {
+			id: 431,
+			subCategoryName: "Automatic Transmission",
+			subCategoryNameUkr: "Автомат"
+		},
+		category: {
+			id: 4,
+			categoryName: "Transport",
+			nameUkr: "Транспорт",
+			photoUrl: "https://everybuy-category.s3.eu-north-1.amazonaws.com/Transport+Parts.jpeg"
+		}
+	},
+	{
+		advertisementId: 46,
+		userId: 127,
+		mainPhotoUrl: "https://everybuy.s3.eu-north-1.amazonaws.com/PassengerCars505645ca-c23d-4ff2-81b5-c138802da095",
+		title: "Авто Kia Rio 5",
+		productType: "OTHER",
+		section: "SELL",
+		price: "35999.99",
+		description: "Цей автомобіль поєднує в собі стильний дизайн і сучасні технології",
+		updateDate: "2024-11-16T14:55:14.267922",
+		city: {
+			id: 148,
+			cityName: "Нікополь",
+			region: { id: 6, regionName: " Дніпропетровська область" }
+		},
+		topSubCategory: {
+			id: 34,
+			subCategoryName: "Passenger Cars",
+			subCategoryNameUkr: "Легкові авто"
+		},
+		lowSubCategory: {
+			id: 431,
+			subCategoryName: "Automatic Transmission",
+			subCategoryNameUkr: "Автомат"
+		},
+		category: {
+			id: 4,
+			categoryName: "Transport",
+			nameUkr: "Транспорт",
+			photoUrl: "https://everybuy-category.s3.eu-north-1.amazonaws.com/Transport+Parts.jpeg"
+		}
+	},
+	{
+		advertisementId: 45,
+		userId: 127,
+		mainPhotoUrl: "https://everybuy.s3.eu-north-1.amazonaws.com/PassengerCars7eb9ef30-31aa-4f46-bc61-5ee70871ef8b",
+		title: "Авто Kia Rio 4",
+		productType: "OTHER",
+		section: "SELL",
+		price: "35999.99",
+		description: "Цей автомобіль поєднує в собі стильний дизайн і сучасні технології",
+		updateDate: "2024-11-16T14:55:04.440569",
+		city: {
+			id: 148,
+			cityName: "Нікополь",
+			region: { id: 6, regionName: " Дніпропетровська область" }
+		},
+		topSubCategory: {
+			id: 34,
+			subCategoryName: "Passenger Cars",
+			subCategoryNameUkr: "Легкові авто"
+		},
+		lowSubCategory: {
+			id: 431,
+			subCategoryName: "Automatic Transmission",
+			subCategoryNameUkr: "Автомат"
+		},
+		category: {
+			id: 4,
+			categoryName: "Transport",
+			nameUkr: "Транспорт",
+			photoUrl: "https://everybuy-category.s3.eu-north-1.amazonaws.com/Transport+Parts.jpeg"
+		}
+	},
+	{
+		advertisementId: 44,
+		userId: 127,
+		mainPhotoUrl: "https://everybuy.s3.eu-north-1.amazonaws.com/PassengerCars274f5dbe-2d08-40a8-bc17-e589087297fe",
+		title: "Авто Kia Rio 3",
+		productType: "OTHER",
+		section: "SELL",
+		price: "35999.99",
+		description: "Цей автомобіль поєднує в собі стильний дизайн і сучасні технології",
+		updateDate: "2024-11-16T14:54:53.927424",
+		city: {
+			id: 148,
+			cityName: "Нікополь",
+			region: { id: 6, regionName: " Дніпропетровська область" }
+		},
+		topSubCategory: {
+			id: 34,
+			subCategoryName: "Passenger Cars",
+			subCategoryNameUkr: "Легкові авто"
+		},
+		lowSubCategory: {
+			id: 431,
+			subCategoryName: "Automatic Transmission",
+			subCategoryNameUkr: "Автомат"
+		},
+		category: {
+			id: 4,
+			categoryName: "Transport",
+			nameUkr: "Транспорт",
+			photoUrl: "https://everybuy-category.s3.eu-north-1.amazonaws.com/Transport+Parts.jpeg"
+		}
+	}
 ]

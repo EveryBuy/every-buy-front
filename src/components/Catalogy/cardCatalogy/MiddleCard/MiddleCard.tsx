@@ -2,15 +2,16 @@ import { FC } from "react";
 import styles from "./MiddleCard.module.scss";
 import MiniCard from "../MinCard/MinCard";
 import Image from "next/image";
-import Link from 'next/link'
+import Link from 'next/link';
 import { CommonButton } from "@/components";
-import arrowButton from "@/assets/svg/arrowButton.svg";
-import heart from "@/assets/svg/heart.svg";
+import arrowButton from "@/assets/Svg/arrowButton.svg";
+import heart from "@/assets/Svg/heartDefault.svg";
 import formatAdvertisementDate from "@/utils/formatAdvertisementDate";
-import { middleCardType } from "@/types/middleCardType";
+import { MiddleCardType } from "@/types/middleCardType";
+import { MinCardType } from '@/types/minCardType';
 
 type ItemProps = {
-	item: middleCardType;
+	item: MiddleCardType;
 };
 
 export const MiddleCard: FC<ItemProps> = ({ item }: ItemProps) => {
@@ -23,14 +24,16 @@ export const MiddleCard: FC<ItemProps> = ({ item }: ItemProps) => {
 
 	const linkHref = `/announcement?id=${item.advertisementId}`;
 
+	const minCardProps: MinCardType = {
+		mainPhotoUrl: item.mainPhotoUrl,
+		title: item.title,
+		productType: item.productType,
+		price: item.price,
+	};
+
 	return (
 		<div className={styles.containerMiddleCard}>
-			<MiniCard elem={{
-				mainPhotoUrl: item.mainPhotoUrl,
-				title: item.title,
-				productType: item.productType,
-				price: item.price,
-			}} />
+			<MiniCard item={minCardProps} />
 
 			<p className={styles.description}>{item.description}</p>
 
