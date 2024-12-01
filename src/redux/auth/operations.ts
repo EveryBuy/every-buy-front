@@ -16,15 +16,20 @@ import { RootState } from "../store";
 export const register = createAsyncThunk(
   "auth/register",
   async (userRegisterData: UserRegData, thunkAPI) => {
+    console.log(userRegisterData);
+    
     try {
       const { data } = await API.post("/auth/registration", userRegisterData);
+      console.log(data);
       setHeaderAuthToken(data.data.token);
       const userData = await API.get("/user");
-      console.log(data);
       return { data: userData.data.data, token: data.data.token };
     } catch (error: any) {
-      console.log(error.response.data.error);
-      return thunkAPI.rejectWithValue(error);
+      // console.log(error.response.data.error);
+      return thunkAPI.rejectWithValue({
+        message: error.response?.data?.message || error.message,
+        status: error.response?.status,
+      });
     }
   }
 );
@@ -37,7 +42,7 @@ export const login = createAsyncThunk(
       const { data } = await API.post("/auth/auth", userLogData);
       setHeaderAuthToken(data.data.token);
       const userData = await API.get("/user");
-      console.log(API.defaults.headers.common["Authorization"]);
+
       return { data: userData.data.data, token: data.data.token };
     } catch (error) {
       console.log(error);
@@ -111,6 +116,8 @@ export const changePassword = createAsyncThunk(
     try {
       // receive {"oldPassword": "string", "newPassword": "string" }
       const { data } = await API.put("/auth/change-password", changeData);
+      console.log(data);
+      
       return data;
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.message);
@@ -127,7 +134,10 @@ export const changeUserName = createAsyncThunk(
       const responce = await API.put("/user/update-full-name", fullName);
       return responce.data.data;
     } catch (error: any) {
-      return rejectWithValue(error.message);
+      return rejectWithValue({
+        message: error.response?.data?.message || error.message,
+        status: error.response?.status,
+      });
     }
   }
 );

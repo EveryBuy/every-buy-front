@@ -25,6 +25,7 @@ const initialState: AuthState = {
   },
   token: null,
   isLoggedIn: false,
+  error: null,
 };
 
 const authSlice = createSlice({
@@ -43,6 +44,9 @@ const authSlice = createSlice({
       state.isLoggedIn = false;
       state.isDeleted = false;
     },
+    clearErrors: state => {
+      state.error = null;
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -54,8 +58,9 @@ const authSlice = createSlice({
           state.isLoggedIn = true;
         }
       )
-      .addCase(register.rejected, (state, _action: PayloadAction<any>) => {
+      .addCase(register.rejected, (state, action: PayloadAction<any>) => {
         state.isLoggedIn = false;
+        state.error = action.payload;
         // here can be error notification like
         // toast.error(`Holly shit happends! Error:${payload}`)
       })
@@ -109,12 +114,17 @@ const authSlice = createSlice({
       .addCase(changePassword.rejected, (state, { payload }) => {
         toast.error("Password not changed!");
       })
+      .addCase(changeUserName.pending, (state, _) => {
+        state.error = null;
+      })
       .addCase(changeUserName.fulfilled, (state, action: PayloadAction<UserFullName>) => {
+        state.error = null;
         state.user.fullName = action.payload.fullName;
         toast.success("Name successfully changed!");
       })
-      .addCase(changeUserName.rejected, (_state, action: PayloadAction<any>) => {
+      .addCase(changeUserName.rejected, (state, action: PayloadAction<any>) => {
         toast.error(action.payload.error);
+        state.error = action.payload;
       })
       .addCase(changeUserPhone.fulfilled, (state, action: PayloadAction<User>) => {
         state.user = action.payload;
@@ -128,3 +138,4 @@ const authSlice = createSlice({
 });
 
 export const authReducer = authSlice.reducer;
+export const {clearErrors} = authSlice.actions;

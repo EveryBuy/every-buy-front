@@ -2,8 +2,13 @@
 
 import { FC, useEffect, useState } from "react";
 import Image from "next/image";
-import { CommonInput, CommonModal, CommonButton } from "@/components";
-import { selectUser } from "@/redux/auth/selectors";
+import {
+  CommonInput,
+  CommonModal,
+  CommonButton,
+  ErrorModal,
+} from "@/components";
+import { selectError, selectUser } from "@/redux/auth/selectors";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import submit from "@/assets/Svg/CheckCircleFilled.svg";
 import cancel from "@/assets/Svg/CloseCircleFilled.svg";
@@ -12,8 +17,11 @@ import {
   changeUserName,
   changeUserPhone,
 } from "@/redux/auth/operations";
+
 import toast, { Toaster } from "react-hot-toast";
 import styles from "./UserDataEdit.module.scss";
+import { useSelector } from "react-redux";
+import { clearErrors } from "@/redux/auth/slice";
 
 type Props = {
   onEdit: () => void;
@@ -24,26 +32,40 @@ export const UserDataEdit: FC<Props> = ({ onEdit }: Props) => {
   const dispatch = useAppDispatch();
 
   const [name, setName] = useState(user.fullName || "");
-  const [phone, setPhone] = useState(user.phone || "");
+  const [phone, setPhone] = useState("+380" + user.phone || "");
   const [email, setEmail] = useState(user.email || "");
   const [password, setPassword] = useState("");
 
   const [isOpenPhoneModal, setIsOpenPhoneModal] = useState(false);
   const [isOpenEmailModal, setIsOpenEmailModal] = useState(false);
 
-  useEffect(() => {}, [user]);
+  const responseError = useSelector(selectError);
+  const [isError, setIsError] = useState(false);
+  const [messageText, setMessageText] = useState("");
 
-  const handleSubmitName = () => {
-    dispatch(changeUserName({ fullName: name }));
-    onEdit();
+  useEffect(() => {
+    if (responseError) {
+      setIsError(true);
+      if (responseError.status === 400)
+        setMessageText("Невірні дані. Виправте і спробуйте ще раз.");
+      if (responseError.status === 500)
+        setMessageText("Помилка сервера. Спробуйте пізніше.");
+    }
+  }, [user, responseError]);
+
+  const handleSubmitName = async () => {
+    await dispatch(changeUserName({ fullName: name }));
+    // onEdit();
   };
 
   const handleSubmitPhone = () => {
     if (user.phone === phone) {
-      toast.error("Enter a new phone number!");
+      setMessageText("Введіть новий номер телефону!");
       return;
     }
-    dispatch(changeUserPhone({ password: password, newPhoneNumber: phone }));
+    dispatch(
+      changeUserPhone({ password: password, newPhoneNumber: phone.slice(-9) })
+    );
     setIsOpenPhoneModal(false);
   };
 
@@ -58,6 +80,12 @@ export const UserDataEdit: FC<Props> = ({ onEdit }: Props) => {
 
   const handleCancel = () => {
     onEdit();
+  };
+
+  const closeModal = () => {
+    setMessageText("");
+    dispatch(clearErrors());
+    console.log(responseError);
   };
 
   return (
@@ -111,7 +139,13 @@ export const UserDataEdit: FC<Props> = ({ onEdit }: Props) => {
           />
         </CommonModal>
       )}
-
+      {messageText && (
+        <ErrorModal
+          onClose={() => closeModal()}
+          title={messageText}
+          buttonText="Ok"
+        />
+      )}
       <form>
         <div className={styles.inputWrapper}>
           <CommonInput
