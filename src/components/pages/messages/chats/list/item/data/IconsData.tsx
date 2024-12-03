@@ -1,13 +1,22 @@
 import { FC } from "react";
 import { Box } from "@mui/material";
-import { Icons } from "@/components";
+import { Icons, CommonIcon } from "@/components";
 import style from "./IconsData.module.scss";
 
 const IconsData: FC = () => {
   return (
-    <Box className={style.blockWrapper}>
-      <Icons scss="iconsData" />
-    </Box>
+    <>
+      <Box className={style.iconsDataWrapper}>
+        <CommonIcon
+          id="icon-heart"
+          className={`${style.icon} ${style.trash}`}
+          // onClick={statusFolderHandler}
+        />
+      </Box>
+      <Box className={style.iconsDataLaptopWrapper}>
+        <Icons scss="iconsData" />
+      </Box>
+    </>
   );
 };
 

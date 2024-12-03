@@ -1,10 +1,16 @@
+@import "@/styles/mixins";
+@import "@/styles/breakpoints";
+
 .blockWrapper {
   display: flex;
   justify-content: flex-start;
   align-items: center;
   background-color: #ffffff;
-  margin: 8px 0px;
   padding: 12px 40px;
+  @include media-min($breakpoint-tablet) {
+    margin: 8px 0px;
+    padding: 12px 40px;
+  }
 }
 
 .picture,
@@ -12,6 +18,15 @@
   margin-right: 8px;
   // object-fit: cover;
   border-radius: 10%;
+}
+
+.picture {
+  width: 40px;
+  height: 40px;
+  @include media-min($breakpoint-tablet) {
+    width: 50px;
+    height: 50px;
+  }
 }
 
 .noPicture {
@@ -26,8 +41,19 @@
 .textInfo {
   display: flex;
   flex-direction: column;
+  row-gap: 8px;
 }
 
 .name {
-  font-size: var(--large-body-medium);
+  // font-size: var(--large-body-medium);
+  @include media-min($breakpoint-tablet) {
+    font-size: var(--large-body-medium);
+  }
+}
+
+.sum {
+  font-size: 12px;
+  @include media-min($breakpoint-tablet) {
+    font-size: inherit;
+  }
 }

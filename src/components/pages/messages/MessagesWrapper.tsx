@@ -14,13 +14,19 @@ const MessagesWrapper: FC = () => {
   });
 
   return (
-    <>
-      <h1 className="title">Повідомлення</h1>
-      <Box className={styles.wrapper}>
-        <ChatsBlock onclick={setSelectedChatId} />
-        <MessagesBlock chatId={selectedChatId} />
+    <div className={styles.pageWrapper}>
+      <h1 className={`title ${styles.headline}`}>Повідомлення</h1>
+      <Box className={styles.chatBlockWrapper}>
+        <ChatsBlock
+          onclick={setSelectedChatId}
+          selectedChatId={selectedChatId}
+        />
+        <MessagesBlock
+          chatId={selectedChatId}
+          setSelectedChatId={setSelectedChatId}
+        />
       </Box>
-    </>
+    </div>
   );
 };
 

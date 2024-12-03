@@ -8,7 +8,7 @@ import { logout } from "@/redux/auth/operations";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-export const Logout = ({ children }: {children: string}) => {
+export const Logout = ({ children }: { children: string }) => {
   const [open, setOpen] = useState(false);
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -27,7 +27,7 @@ export const Logout = ({ children }: {children: string}) => {
 
   return (
     <>
-      <Link href='#' className={style.logoutBtn} onClick={handleOpen}>
+      <Link href="#" className={style.logoutBtn} onClick={handleOpen}>
         {children}
       </Link>
       <Backdrop

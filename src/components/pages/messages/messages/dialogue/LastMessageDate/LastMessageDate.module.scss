@@ -1,10 +1,16 @@
+@import "@/styles/mixins";
+@import "@/styles/breakpoints";
+
 .dateWrapper {
-  position: absolute;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  left: 0;
-  top: -14px;
+  display: none;
+  @include media-min($breakpoint-tablet) {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    left: 0;
+    top: -14px;
+  }
 }
 
 .date {
