@@ -16,16 +16,13 @@ import { RootState } from "../store";
 export const register = createAsyncThunk(
   "auth/register",
   async (userRegisterData: UserRegData, thunkAPI) => {
-    console.log(userRegisterData);
     
     try {
       const { data } = await API.post("/auth/registration", userRegisterData);
-      console.log(data);
       setHeaderAuthToken(data.data.token);
       const userData = await API.get("/user");
       return { data: userData.data.data, token: data.data.token };
     } catch (error: any) {
-      // console.log(error.response.data.error);
       return thunkAPI.rejectWithValue({
         message: error.response?.data?.message || error.message,
         status: error.response?.status,
@@ -42,10 +39,8 @@ export const login = createAsyncThunk(
       const { data } = await API.post("/auth/auth", userLogData);
       setHeaderAuthToken(data.data.token);
       const userData = await API.get("/user");
-
       return { data: userData.data.data, token: data.data.token };
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -67,8 +62,6 @@ export const refreshUser = createAsyncThunk(
       const { auth }: any = getState();
       setHeaderAuthToken(auth.token);
       const { data } = await API.get("/user");
-      console.log(data.data);
-
       return data.data;
     } catch (error: any) {
       clearHeaderAuthToken();
@@ -116,8 +109,6 @@ export const changePassword = createAsyncThunk(
     try {
       // receive {"oldPassword": "string", "newPassword": "string" }
       const { data } = await API.put("/auth/change-password", changeData);
-      console.log(data);
-      
       return data;
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.message);
@@ -152,11 +143,14 @@ export const changeUserPhone = createAsyncThunk(
       const token = data.data.token;
       setHeaderAuthToken(token);
       const response = await API.get("/user");
-      console.log(response.data.data);
-
       return response.data.data;
     } catch (error: any) {
-      rejectWithValue(error.message);
+      return rejectWithValue(
+        {
+        message: error.response?.data?.message || error.message,
+        status: error.response?.status,
+        }
+      );
     }
   }
 )

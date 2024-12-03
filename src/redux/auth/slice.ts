@@ -68,7 +68,7 @@ const authSlice = createSlice({
         state.user = payload.data;
         state.token = payload.token;
         state.isLoggedIn = true;
-        console.log(state.user);
+        console.log(state);
       })
       .addCase(login.rejected, (state, action) => {
         state.isLoggedIn = false;
@@ -123,14 +123,18 @@ const authSlice = createSlice({
         toast.success("Name successfully changed!");
       })
       .addCase(changeUserName.rejected, (state, action: PayloadAction<any>) => {
-        toast.error(action.payload.error);
         state.error = action.payload;
       })
       .addCase(changeUserPhone.fulfilled, (state, action: PayloadAction<User>) => {
         state.user = action.payload;
       })
-      .addCase(changeUserPhoto.fulfilled, (state, action) => {
+      .addCase(changeUserPhone.rejected, (state, action: PayloadAction<any>) => {
         console.log(action.payload);
+        
+        state.error = action.payload;
+      })
+      .addCase(changeUserPhoto.fulfilled, (state, action) => {
+        // console.log(action.payload);
         state.user.userPhotoUrl = action.payload.data.userPhotoUrl
       })
       ;
