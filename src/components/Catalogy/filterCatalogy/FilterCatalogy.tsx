@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
-import { Grid2, Button } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { Grid2, Button, SelectChangeEvent } from '@mui/material';
 import { FilterConfig } from './CustomSelectProps';
 import { CustomSelect } from './customSelect';
 import { Slider } from './slider';

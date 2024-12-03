@@ -6,40 +6,59 @@ import styles from "./Search.module.scss";
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { getSearchByWord } from '@/api/getSearchByWord';
+import ListItemsForSearch from '@/types/listItemsForSearch';
+
+type ItemProps = {
+	item: ListItemsForSearch[];
+};
+
+type FormEventType = React.FormEvent<HTMLFormElement>;
+// type MouseEventType = React.MouseEvent<HTMLButtonElement>;
+// type ChangeEventType = React.ChangeEvent<HTMLInputElement>;
 
 const Search: FC = (props) => {
 	const [word, setWord] = useState<string>('');
 	const [search, setSearch] = useState<[]>([]);
 	const router = useRouter();
 
-	const goToSearch = (): void => {
+	const goToSearch = (e: FormEventType) => {
+		e.preventDefault();
 		router.push(`/catalogy?search=${word}`);
 	};
 
 	useEffect(() => {
 		const fetchForSearch = async () => {
-			try {
-				const result = await getSearchByWord(word);
-				setSearch(result);
-				console.log(search);
+			if (word.length > 1) {
+				try {
+					const result: ListItemsForSearch[] = await getSearchByWord(word);
+					setSearch(result);
+					console.log(search);
 
-			} catch (error: any) {
-				console.error("Error fetching data:", error);
+				} catch (error: any) {
+					console.error("Error fetching data:", error);
+				}
 			}
 		};
 
 		fetchForSearch();
 	}, [word]);
 
-	const SuggestItem = ({ item }) => {
+	const SuggestItem = (props: ListItemsForSearch) => {
+
+		const {
+			advertisementId,
+			title,
+			category,
+			topSubCategory
+		} = props.item;
 
 		// console.log(item.advertisementId);
 		return (
-			<li key={item.advertisementId} className={styles.searchSuggestItem}>
-				<Link href={`/announcement?id=${item.advertisementId}`}>
-					<span className={styles.searchLinkItem}>{item.title}</span>
-					<span className={styles.searchItemCategory}>{item.category.nameUkr}
-						/ {item.topSubCategory.subCategoryNameUkr}</span>
+			<li key={advertisementId} className={styles.searchSuggestItem}>
+				<Link href={`/announcement?id=${advertisementId}`}>
+					<span className={styles.searchLinkItem}>{title}</span>
+					<span className={styles.searchItemCategory}>{category.nameUkr}
+						/ {topSubCategory.subCategoryNameUkr}</span>
 				</Link>
 			</li>
 		)
@@ -90,7 +109,7 @@ const Search: FC = (props) => {
 						: <div className={styles.searchSuggest}>
 							<ul className={styles.searchSuggestList}>
 								{
-									search.map(item => <SuggestItem item={item} />)
+									search.map(item => <SuggestItem key={item.advertisementId} item={item} />)
 								}
 							</ul>
 						</div>

@@ -8,4 +8,5 @@ export default interface ListItemsForSearch {
 		nameUkr: string;
 	};
 	section?: string;
+	[key: string]: any;
 }
