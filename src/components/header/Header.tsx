@@ -86,9 +86,18 @@ const Header: FC = () => {
               </Link>
             </div>
             <CommonIcon id="icon-heart" width="21" height="20" />
-            <Link href="/user" className={styles.linkToUserPage}>
+            {/* <Link href="/user" className={styles.linkToUserPage}>
               <CommonIcon id="icon-user" width="21" height="20" />
-            </Link>
+            </Link> */}
+            <div onClick={openWindowHandle}>
+              <Link
+                href="/user"
+                onClick={(e) => !isLoggedIn && e.preventDefault()}
+                className={styles.linkToUserPage}
+              >
+                <CommonIcon id="icon-user" width="21" height="20" />
+              </Link>
+            </div>
 
             {successRegisterModalOpen && (
               <DoLoginModal
@@ -104,6 +113,7 @@ const Header: FC = () => {
               <DropdownMenu
                 status={isDropdownMenuVisible}
                 changeStatus={dropdownMenuHandle}
+                isLoggedIn={isLoggedIn}
               />
             </div>
           </div>
