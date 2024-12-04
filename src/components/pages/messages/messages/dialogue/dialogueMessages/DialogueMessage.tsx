@@ -21,8 +21,8 @@ const DialogueMessages: FC<MessageComponentType> = ({ message }) => {
   const textOrder = user.userId === message.userId ? "1" : "2";
 
   const picture = message.userPhotoUrl ? (
-    <Box className={style.picture}>
-      <Image src={`${message.userPhotoUrl}`} width={48} height={48} alt="" />
+    <Box sx={{ order: `${picOrder}` }} className={style.picture}>
+      <Image src={`${message.userPhotoUrl}`} width={40} height={40} alt="" />
     </Box>
   ) : (
     <Box className={style.noPicture}>
@@ -35,7 +35,9 @@ const DialogueMessages: FC<MessageComponentType> = ({ message }) => {
       className={style.wrapper}
       sx={{ justifySelf: `${messagePositionStyle}` }}
     >
-      <Box sx={{ order: `${picOrder}` }}>{picture}</Box>
+      {/* <Box sx={{ order: `${picOrder}` }}> */}
+      {picture}
+      {/* </Box> */}
       <Box
         className={`${
           user.userId === message.userId

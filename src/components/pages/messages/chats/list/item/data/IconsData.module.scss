@@ -1,6 +1,23 @@
-.blockWrapper {
+.iconsDataWrapper {
+  width: 21px;
+  height: 20px;
   display: flex;
-  justify-content: space-between;
-  column-gap: 12px;
-  width: 54px;
+  justify-content: center;
+  @media (min-width: 768px) {
+    display: none;
+  }
+
+  & svg {
+    margin: 0;
+  }
+}
+
+.iconsDataLaptopWrapper {
+  display: none;
+  @media (min-width: 768px) {
+    display: flex;
+    justify-content: space-between;
+    column-gap: 12px;
+    width: 54px;
+  }
 }

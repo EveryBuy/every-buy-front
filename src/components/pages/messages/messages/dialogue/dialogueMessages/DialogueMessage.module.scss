@@ -5,9 +5,22 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  width: 410px;
-  margin-top: 25px;
+  width: 286px;
   height: fit-content;
+  margin-top: 16px;
+  @include media-min($breakpoint-tablet) {
+    width: 410px;
+    margin-top: 25px;
+  }
+}
+
+.picture {
+  width: 40px;
+  height: 40px;
+  @include media-min($breakpoint-tablet) {
+    width: 48px;
+    height: 48px;
+  }
 }
 
 .picture img {
@@ -19,10 +32,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 48px;
-  height: 48px;
+  width: 60px;
+  height: 40px;
   border-radius: 50%;
   background-color: var(--bg-header-footer);
+  @include media-min($breakpoint-tablet) {
+    width: 48px;
+    height: 48px;
+  }
 
   & svg {
     width: 30px;

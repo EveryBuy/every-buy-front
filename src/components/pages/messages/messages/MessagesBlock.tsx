@@ -5,13 +5,20 @@ import style from "./MessagesBlock.module.scss";
 
 type MessagesBlockType = {
   chatId: number | null;
-  // setSelectedChatId: (chatId: number | null) => void;
+  setSelectedChatId: (chatId: number | null) => void;
 };
 
-const MessagesBlock: FC<MessagesBlockType> = ({ chatId }) => {
+const MessagesBlock: FC<MessagesBlockType> = ({
+  chatId,
+  setSelectedChatId,
+}) => {
   return (
-    <Box className={style.blockWrapper}>
-      <Companion />
+    <Box
+      className={
+        chatId ? `${style.blockWrapper} ${style.visible}` : style.blockWrapper
+      }
+    >
+      <Companion setSelectedChatId={setSelectedChatId} />
       <Product />
       <Dialogue chatId={chatId} />
     </Box>

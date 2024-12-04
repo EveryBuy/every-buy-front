@@ -22,7 +22,7 @@ import toast, { Toaster } from "react-hot-toast";
 import styles from "./UserDataEdit.module.scss";
 import { useSelector } from "react-redux";
 import { clearErrors } from "@/redux/auth/slice";
-import { validateName, validatePhone } from "@/utils/validate";
+import { validateEmail, validateName, validatePhone } from "@/utils/validate";
 import { log } from "util";
 
 type Props = {
@@ -96,10 +96,19 @@ export const UserDataEdit: FC<Props> = ({ onEdit }: Props) => {
     setIsOpenPhoneModal(false);
   };
 
-  const handleSubmitEmail = () => {
+  const handleCheckEmail = () => {
     if (user.email === email) {
-      toast.error("Введіть новий email!");
+      setMessageText("Введіть новий email!");
+      return;
     }
+    if (!validateEmail(email)) {
+      setMessageText("Введено не коректний email!");
+      return;
+    }
+    setIsOpenEmailModal(true);
+  };
+
+  const handleSubmitEmail = () => {
     dispatch(changeUserEmail({ password: password, newEmail: email }));
     setIsOpenEmailModal(false);
   };
@@ -249,7 +258,7 @@ export const UserDataEdit: FC<Props> = ({ onEdit }: Props) => {
           <button
             className={styles.inputBtn}
             type="button"
-            onClick={() => setIsOpenEmailModal(true)}
+            onClick={handleCheckEmail}
           >
             <Image
               className={styles.buttonImg}

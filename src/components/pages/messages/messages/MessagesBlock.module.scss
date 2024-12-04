@@ -3,11 +3,20 @@
 
 .blockWrapper {
   display: none;
-
+  // position: relative;
   @include media-min($breakpoint-tablet) {
     display: block;
     width: 65%;
     border: 1px solid var(--border);
     border-radius: 10px;
+  }
+}
+
+.visible {
+  @media screen and (max-width: 767px) {
+    display: block;
+
+    width: 100%;
+    // border-radius: 10px;
   }
 }

@@ -11,9 +11,15 @@ import {
   changeUserName,
   changeUserPhone,
   changeUserPhoto,
+  changeUserEmail,
 } from "./operations";
 import toast from "react-hot-toast";
-import { AuthResponse, AuthState, User, UserFullName } from "@/types/stateTypes";
+import {
+  AuthResponse,
+  AuthState,
+  User,
+  UserFullName,
+} from "@/types/stateTypes";
 
 const initialState: AuthState = {
   user: {
@@ -125,17 +131,29 @@ const authSlice = createSlice({
       .addCase(changeUserName.rejected, (state, action: PayloadAction<any>) => {
         state.error = action.payload;
       })
+      .addCase(changeUserPhone.pending, (state, _) => {
+        state.error = null;
+      })
       .addCase(changeUserPhone.fulfilled, (state, action: PayloadAction<User>) => {
         state.user = action.payload;
       })
       .addCase(changeUserPhone.rejected, (state, action: PayloadAction<any>) => {
-        console.log(action.payload);
-        
+        state.error = action.payload;
+      })
+      .addCase(changeUserEmail.pending, (state, _) => {
+        state.error = null;
+      })
+      .addCase(changeUserEmail.fulfilled, (state, action: PayloadAction<any>) => {
+        state.user = action.payload;
+      })
+      .addCase(changeUserEmail.rejected, (state, action) => {
         state.error = action.payload;
       })
       .addCase(changeUserPhoto.fulfilled, (state, action) => {
-        // console.log(action.payload);
         state.user.userPhotoUrl = action.payload.data.userPhotoUrl
+      })
+      .addCase(changeUserPhoto.rejected, (state, action) => {
+        state.error = action.payload;
       })
       ;
   },

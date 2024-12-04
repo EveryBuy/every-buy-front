@@ -139,7 +139,10 @@ export const changeUserPhone = createAsyncThunk(
     try {
       const state = getState() as RootState;
       setHeaderAuthToken(state.auth.token);
-      const { data } = await API.put("/auth/change-phone-number", changePhoneData);
+      const { data } = await API.put(
+        "/auth/change-phone-number",
+        changePhoneData
+      );
       const token = data.data.token;
       setHeaderAuthToken(token);
       const response = await API.get("/user");
@@ -153,36 +156,39 @@ export const changeUserPhone = createAsyncThunk(
       );
     }
   }
-)
+);
 
 export const changeUserEmail = createAsyncThunk(
   "user/changeEmail",
-  async (changeEmailData: ChangeEmailData, {getState, rejectWithValue}) => {
+  async (changeEmailData: ChangeEmailData, { getState, rejectWithValue }) => {
     try {
-  const state = getState() as RootState;
+      const state = getState() as RootState;
       setHeaderAuthToken(state.auth.token);
-  const response = await API.put("/auth/change-email", changeEmailData)
-  return response.data;
-} catch (error: any) {
-  return rejectWithValue(error.message);
-}
+      const response = await API.put("/auth/change-email", changeEmailData);
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue( {
+        message: error.response?.data?.message || error.message,
+        status: error.response?.status,
+        });
+    }
   }
-)
+);
 
 export const changeUserPhoto = createAsyncThunk(
   "user/changePhoto",
-  async (formData: FormData, {getState, rejectWithValue}) => {
+  async (formData: FormData, { getState, rejectWithValue }) => {
     try {
-      const state = getState() as RootState
-      setHeaderAuthToken(state.auth.token)
+      const state = getState() as RootState;
+      setHeaderAuthToken(state.auth.token);
       const response = await API.post("/user/photo-upload", formData, {
         headers: {
-          "Content-Type": "multipart/form-data"
-        }
-      })
-      return response.data
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return response.data;
     } catch (error: any) {
-      return rejectWithValue(error.message)
+      return rejectWithValue(error.message);
     }
   }
-)
+);
