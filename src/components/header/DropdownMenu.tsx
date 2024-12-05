@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 // import { Logout } from "@/components";
 import style from "./DropdownMenu.module.scss";
+import Logout from "../auth/Logout/Logout";
 
 interface DropdownMenuType {
   status: boolean;
@@ -29,6 +30,10 @@ const DropdownMenu: FC<DropdownMenuType> = ({
     setHydrated(true);
   }, []);
   if (!hydrated) return null;
+
+  const handleLogout = (evt: React.MouseEvent) => {
+    evt.stopPropagation();
+  };
 
   return isLoggedIn ? (
     <ul
@@ -64,9 +69,8 @@ const DropdownMenu: FC<DropdownMenuType> = ({
       <li>
         <Link href="/user/selected-goods">Обрані</Link>
       </li>
-      <li>
-        {/* <Logout>Вихід</Logout> */}
-        <Link href="#">Вихід</Link>
+      <li onClick={handleLogout}>
+        <Logout>Вихід</Logout>
       </li>
     </ul>
   ) : (
