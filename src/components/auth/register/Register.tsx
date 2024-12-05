@@ -221,7 +221,7 @@ const Register: React.FC = () => {
           value={phone}
           setValue={(e) => setPhone(e.target.value)}
           className={getInputClass("phone")}
-          placeholder="введіть номер телефону"
+          placeholder="+380"
           setOnBlur={() => handleBlur("phone")}
           errorsMessage={
             errors.phone && (
