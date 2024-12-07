@@ -20,8 +20,8 @@ export const Logout = ({ children }: { children: string }) => {
     setOpen(false);
   };
 
-  const onLogout = () => {
-    dispatch(logout());
+  const onLogout = async () => {
+    await dispatch(logout());
     router.replace("/");
   };
 
