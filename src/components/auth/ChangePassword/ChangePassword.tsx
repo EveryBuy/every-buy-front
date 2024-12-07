@@ -19,9 +19,9 @@ type Props = {
 };
 
 type InitialValues = {
-  oldPwd: string | undefined;
-  newPwd: string | undefined;
-  newPwdConfirm: string | undefined;
+  oldPwd: string;
+  newPwd: string;
+  newPwdConfirm: string;
 };
 
 export const ChangePassword: React.FC<Props> = ({ onClose }: Props) => {
