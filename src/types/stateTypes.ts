@@ -6,11 +6,14 @@ export type User = {
   userPhotoUrl: string | null;
 };
 
+export type Error = any;
+
 export type AuthState = {
   user: User;
   token: string | null;
   isLoggedIn: boolean;
   isDeleted?: boolean;
+  error: Error | null;
 };
 
 export type UserRegisterData = {
@@ -45,8 +48,8 @@ export type DeleteResponse = {
 };
 
 export type UserChgPwdData = {
-  oldPassword: string;
-  newPassword: string;
+  oldPassword: string | undefined;
+  newPassword: string | undefined;
 };
 
 export type UserFullName = {

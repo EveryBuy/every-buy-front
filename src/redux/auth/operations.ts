@@ -16,15 +16,17 @@ import { RootState } from "../store";
 export const register = createAsyncThunk(
   "auth/register",
   async (userRegisterData: UserRegData, thunkAPI) => {
+    
     try {
       const { data } = await API.post("/auth/registration", userRegisterData);
       setHeaderAuthToken(data.data.token);
       const userData = await API.get("/user");
-      console.log(data);
       return { data: userData.data.data, token: data.data.token };
     } catch (error: any) {
-      console.log(error.response.data.error);
-      return thunkAPI.rejectWithValue(error);
+      return thunkAPI.rejectWithValue({
+        message: error.response?.data?.message || error.message,
+        status: error.response?.status,
+      });
     }
   }
 );
@@ -37,10 +39,8 @@ export const login = createAsyncThunk(
       const { data } = await API.post("/auth/auth", userLogData);
       setHeaderAuthToken(data.data.token);
       const userData = await API.get("/user");
-      // console.log(API.defaults.headers.common["Authorization"]);
       return { data: userData.data.data, token: data.data.token };
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -62,8 +62,6 @@ export const refreshUser = createAsyncThunk(
       const { auth }: any = getState();
       setHeaderAuthToken(auth.token);
       const { data } = await API.get("/user");
-      console.log(data.data);
-
       return data.data;
     } catch (error: any) {
       clearHeaderAuthToken();
@@ -127,7 +125,10 @@ export const changeUserName = createAsyncThunk(
       const responce = await API.put("/user/update-full-name", fullName);
       return responce.data.data;
     } catch (error: any) {
-      return rejectWithValue(error.message);
+      return rejectWithValue({
+        message: error.response?.data?.message || error.message,
+        status: error.response?.status,
+      });
     }
   }
 );
@@ -145,11 +146,14 @@ export const changeUserPhone = createAsyncThunk(
       const token = data.data.token;
       setHeaderAuthToken(token);
       const response = await API.get("/user");
-      console.log(response.data.data);
-
       return response.data.data;
     } catch (error: any) {
-      rejectWithValue(error.message);
+      return rejectWithValue(
+        {
+        message: error.response?.data?.message || error.message,
+        status: error.response?.status,
+        }
+      );
     }
   }
 );
@@ -163,7 +167,10 @@ export const changeUserEmail = createAsyncThunk(
       const response = await API.put("/auth/change-email", changeEmailData);
       return response.data;
     } catch (error: any) {
-      return rejectWithValue(error.message);
+      return rejectWithValue( {
+        message: error.response?.data?.message || error.message,
+        status: error.response?.status,
+        });
     }
   }
 );

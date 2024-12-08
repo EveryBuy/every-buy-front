@@ -18,3 +18,8 @@ export const validateInput = (input: string) => {
   const isValid = input.trim().length > 0;
   return isValid;
 };
+
+export const validateName = (name: string) => {
+  const nameRegex = /^[A-Za-zА-Яа-яЁёІіЇїЄєҐґ'’\-\s]{2,}$/u;
+  return nameRegex.test(name)
+}
