@@ -11,7 +11,7 @@
     padding: 10px 20px 10px 20px;
     border-bottom: 1px solid var(--border);
   }
-  @include media-min($breakpoint-laptop) {
+  @include media-min($breakpoint-laptop-large) {
     padding: 14px 30px 14px 40px;
     border-bottom: 1px solid var(--border);
   }
@@ -47,7 +47,7 @@
     height: 50px;
     margin-right: 20px;
   }
-  @include media-min($breakpoint-laptop) {
+  @include media-min($breakpoint-laptop-large) {
     width: 72px;
     height: 72px;
     margin-right: 31px;
@@ -88,7 +88,7 @@
   @include media-min($breakpoint-tablet) {
     font-size: var(--body-mobile-text);
   }
-  @include media-min($breakpoint-laptop) {
+  @include media-min($breakpoint-laptop-large) {
     font-size: var(--large-body-medium);
   }
 
@@ -127,7 +127,7 @@
       width: 4px;
       height: 4px;
     }
-    @include media-min($breakpoint-laptop) {
+    @include media-min($breakpoint-laptop-large) {
       width: 8px;
       height: 8px;
     }

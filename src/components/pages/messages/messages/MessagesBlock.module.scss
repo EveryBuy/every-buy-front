@@ -3,17 +3,14 @@
 
 .blockWrapper {
   display: none;
-  // position: relative;
   @include media-min($breakpoint-tablet) {
     width: 60%;
-    // height: 550px;
     display: flex;
     flex-direction: column;
-    // justify-content: space-between;
     border: 1px solid var(--border);
     border-radius: 10px;
   }
-  @include media-min($breakpoint-laptop) {
+  @include media-min($breakpoint-laptop-large) {
     width: 65%;
   }
 }
@@ -21,8 +18,6 @@
 .visible {
   @media screen and (max-width: 767px) {
     display: block;
-
     width: 100%;
-    // border-radius: 10px;
   }
 }

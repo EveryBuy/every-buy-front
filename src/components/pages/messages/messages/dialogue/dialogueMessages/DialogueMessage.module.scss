@@ -11,7 +11,7 @@
   @include media-min($breakpoint-tablet) {
     width: 285px;
   }
-  @include media-min($breakpoint-laptop) {
+  @include media-min($breakpoint-laptop-large) {
     width: 410px;
     margin-top: 25px;
   }
@@ -24,7 +24,7 @@
     width: 40px;
     height: 40px;
   }
-  @include media-min($breakpoint-laptop) {
+  @include media-min($breakpoint-laptop-large) {
     display: block;
     width: 48px;
     height: 48px;
@@ -38,7 +38,7 @@
     width: 40px;
     height: 40px;
   }
-  @include media-min($breakpoint-laptop) {
+  @include media-min($breakpoint-laptop-large) {
     width: 48px;
     height: 48px;
   }
@@ -55,7 +55,7 @@
     width: 60px;
     height: 40px;
   }
-  @include media-min($breakpoint-laptop) {
+  @include media-min($breakpoint-laptop-large) {
     width: 48px;
     height: 48px;
   }
@@ -69,7 +69,6 @@
 
 .textWrapperLeft,
 .textWrapperRight {
-  // width: 330px;
   width: 360px;
   position: relative;
   display: flex;
@@ -77,10 +76,8 @@
   justify-content: space-between;
   column-gap: 10px;
   padding: 11px 8px 11px 22px;
-  // height: 60px;
   border-radius: 0 10px 10px 0;
   & .text {
-    // display: flex;
     word-break: break-word;
   }
   & .time {
@@ -105,7 +102,6 @@
   height: 100%;
   background-color: var(--background);
   border-bottom-left-radius: 80%;
-  // transform: rotate(45deg);
 }
 .rightSign::before {
   content: "";
@@ -116,5 +112,4 @@
   height: 100%;
   background-color: var(--background);
   border-bottom-right-radius: 80%;
-  // transform: rotate(45deg);
 }

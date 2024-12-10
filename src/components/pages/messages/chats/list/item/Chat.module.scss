@@ -14,7 +14,7 @@
     padding: 6px 8px;
     column-gap: 8px;
   }
-  @include media-min($breakpoint-laptop) {
+  @include media-min($breakpoint-laptop-large) {
     padding: 14px 10px;
     column-gap: 14px;
   }
@@ -25,11 +25,7 @@
   height: 40px;
   border-radius: 50%;
   object-fit: cover;
-  // @include media-min($breakpoint-tablet) {
-  //   width: 72px;
-  //   height: 72px;
-  // }
-  @include media-min($breakpoint-laptop) {
+  @include media-min($breakpoint-laptop-large) {
     width: 72px;
     height: 72px;
   }
@@ -48,7 +44,7 @@
   @include media-min($breakpoint-tablet) {
     width: 50%;
   }
-  @include media-min($breakpoint-laptop) {
+  @include media-min($breakpoint-laptop-large) {
     height: 55px;
     width: 228px;
   }
@@ -58,7 +54,7 @@
   @include media-min($breakpoint-tablet) {
     font-size: var(--body-text);
   }
-  @include media-min($breakpoint-laptop) {
+  @include media-min($breakpoint-laptop-large) {
     font-size: var(--large-body-medium);
   }
 }
@@ -71,7 +67,7 @@
   @include media-min($breakpoint-tablet) {
     font-size: 12px;
   }
-  @include media-min($breakpoint-laptop) {
+  @include media-min($breakpoint-laptop-large) {
     font-size: var(--body-text);
   }
 }

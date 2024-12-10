@@ -23,7 +23,7 @@
     column-gap: 0px;
     width: 44px;
   }
-  @include media-min($breakpoint-laptop) {
+  @include media-min($breakpoint-laptop-large) {
     width: 52px;
   }
 }

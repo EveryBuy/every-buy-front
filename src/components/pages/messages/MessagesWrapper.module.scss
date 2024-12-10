@@ -8,7 +8,7 @@
     padding: 0px;
     margin-bottom: 0px;
   }
-  @include media-min($breakpoint-laptop) {
+  @include media-min($breakpoint-laptop-large) {
     padding: 20px 0px;
     margin-bottom: 0px;
   }
@@ -29,10 +29,16 @@
     height: 550px;
     padding: 0px 20px;
   }
-  @media (min-width: 1024px) {
+  @include media-min($breakpoint-laptop-large) {
     height: 720px;
     margin: 26px 0px 0px;
     padding: 0px 60px;
     column-gap: 35px;
   }
+  // @media (min-width: 1024px) {
+  //   height: 720px;
+  //   margin: 26px 0px 0px;
+  //   padding: 0px 60px;
+  //   column-gap: 35px;
+  // }
 }

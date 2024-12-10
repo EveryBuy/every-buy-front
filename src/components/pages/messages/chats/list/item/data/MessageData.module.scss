@@ -10,7 +10,7 @@
   @include media-min($breakpoint-tablet) {
     width: 60px;
   }
-  @include media-min($breakpoint-laptop) {
+  @include media-min($breakpoint-laptop-large) {
     width: 81px;
   }
 }

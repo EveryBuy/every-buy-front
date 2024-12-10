@@ -8,11 +8,9 @@
   width: 215px;
   background-color: var(--background);
   border: 1px solid var(--input-text);
-  // border-radius: 10px;
   position: absolute;
   top: 60px;
   right: -10px;
-  // right: 0;
   z-index: 2;
   padding: 6px 10px;
   @include media-min($breakpoint-tablet) {
@@ -20,14 +18,14 @@
     right: -31px;
     top: 50px;
   }
-  @include media-min($breakpoint-laptop) {
+  @include media-min($breakpoint-laptop-large) {
     width: 215px;
     right: -29px;
+    top: 60px;
   }
 
   & li {
     padding: 6px 0px;
-    // border-bottom: 1px solid #9d9d9d;
     @include media-min($breakpoint-tablet) {
       padding: 4px 0px;
     }

@@ -14,11 +14,10 @@
     border-radius: 25px;
     border: 1px solid var(--border);
     position: absolute;
-    // top: 50%;
     left: 50%;
     transform: translate(-50%, 5%);
   }
-  @include media-min($breakpoint-laptop) {
+  @include media-min($breakpoint-laptop-large) {
     transform: translate(-50%, 30%);
   }
 

@@ -22,7 +22,7 @@
   @include media-min($breakpoint-tablet) {
     font-size: var(--body-text);
   }
-  @include media-min($breakpoint-laptop) {
+  @include media-min($breakpoint-laptop-large) {
     font-size: var(--large-body-medium);
   }
 }

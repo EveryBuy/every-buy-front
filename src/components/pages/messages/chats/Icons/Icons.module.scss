@@ -9,7 +9,7 @@
     width: 24px;
     height: 22px;
   }
-  @include media-min($breakpoint-laptop) {
+  @include media-min($breakpoint-laptop-large) {
     width: 32px;
     height: 30px;
   }
