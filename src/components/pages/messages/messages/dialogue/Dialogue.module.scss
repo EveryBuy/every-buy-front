@@ -10,9 +10,12 @@
   justify-content: space-between;
 
   @include media-min($breakpoint-tablet) {
-    height: 515px;
-    margin-top: 18px;
+    height: 382px;
+    // margin-top: 18px;
     border-top: 1px solid var(--border);
+  }
+  @include media-min($breakpoint-laptop) {
+    height: 525px;
   }
 }
 
@@ -55,12 +58,13 @@
 .dialogueWrapper {
   display: grid;
   width: 100%;
-  padding: 20px 20px 0px;
+  padding: 20px 10px 0px;
   overflow-y: auto;
 
   @include media-min($breakpoint-tablet) {
-    height: 455px;
-    padding: 20px 40px 0px;
+    // height: 455px;
+    padding: 10px 20px 0px;
+    margin-top: 10px;
     &::-webkit-scrollbar {
       width: 8px;
     }
@@ -73,6 +77,16 @@
     }
     &::-webkit-scrollbar-thumb:hover {
       background-color: #b3c638;
+    }
+  }
+  @include media-min($breakpoint-laptop) {
+    height: 455px;
+    padding: 10px 40px 0px;
+  }
+
+  & div:first-child {
+    @include media-min($breakpoint-tablet) {
+      margin-top: 0px;
     }
   }
 }

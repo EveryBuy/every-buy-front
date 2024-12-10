@@ -8,6 +8,9 @@
   align-items: flex-end;
   row-gap: 16px;
   @include media-min($breakpoint-tablet) {
+    width: 60px;
+  }
+  @include media-min($breakpoint-laptop) {
     width: 81px;
   }
 }

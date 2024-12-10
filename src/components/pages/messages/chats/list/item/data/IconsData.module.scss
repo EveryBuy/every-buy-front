@@ -1,3 +1,6 @@
+@import "@/styles/mixins";
+@import "@/styles/breakpoints";
+
 .iconsDataWrapper {
   width: 21px;
   height: 20px;
@@ -14,10 +17,13 @@
 
 .iconsDataLaptopWrapper {
   display: none;
-  @media (min-width: 768px) {
+  @include media-min($breakpoint-tablet) {
     display: flex;
     justify-content: space-between;
-    column-gap: 12px;
-    width: 54px;
+    column-gap: 0px;
+    width: 44px;
+  }
+  @include media-min($breakpoint-laptop) {
+    width: 52px;
   }
 }

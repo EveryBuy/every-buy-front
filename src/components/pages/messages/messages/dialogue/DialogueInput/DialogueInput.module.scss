@@ -8,8 +8,10 @@
   width: 100%;
   background-color: var(--background);
   padding: 10px 0px 10px;
-  // @include media-min($breakpoint-tablet) {
-  // }
+  @include media-min($breakpoint-tablet) {
+    padding: 0px;
+    border-radius: 10px;
+  }
 }
 
 .inputBlockWrapper {
@@ -42,7 +44,11 @@
   align-items: center;
   margin-right: 10px;
   @include media-min($breakpoint-tablet) {
+    margin-right: 0px;
+  }
+  @include media-min($breakpoint-laptop) {
     width: 8%;
+    margin-right: 10px;
   }
 }
 

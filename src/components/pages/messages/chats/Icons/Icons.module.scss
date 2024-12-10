@@ -1,11 +1,26 @@
+@import "@/styles/mixins";
+@import "@/styles/breakpoints";
+
 .icon {
   margin: 0;
   width: 32px;
   height: 30px;
+  @include media-min($breakpoint-tablet) {
+    width: 24px;
+    height: 22px;
+  }
+  @include media-min($breakpoint-laptop) {
+    width: 32px;
+    height: 30px;
+  }
 }
 
 .iconsData {
   height: 18px;
+  @include media-min($breakpoint-tablet) {
+    width: 18px;
+    height: 16px;
+  }
 }
 
 .folder {

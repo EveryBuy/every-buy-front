@@ -8,6 +8,9 @@
   // height: 100%;
 
   @include media-min($breakpoint-tablet) {
+    width: 40%;
+  }
+  @include media-min($breakpoint-laptop) {
     width: 35%;
   }
 }
@@ -21,12 +24,13 @@
   background-color: #ffffff;
 
   @include media-min($breakpoint-tablet) {
-    height: 81px;
-    flex-direction: column;
+    height: 65px;
+    // flex-direction: column;
     border-radius: 10px;
-    padding: 0px 8px;
+    padding: 0px 10px;
   }
   @include media-min($breakpoint-laptop) {
+    height: 81px;
     flex-direction: row;
     justify-content: space-between;
   }
@@ -47,9 +51,13 @@
   column-gap: 16px;
   width: 80px;
 
-  // @include media-min($breakpoint-tablet) {
-  //   width: 85px;
-  // }
+  @include media-min($breakpoint-tablet) {
+    width: 55px;
+    column-gap: 0px;
+  }
+  @include media-min($breakpoint-laptop) {
+    width: 80px;
+  }
 }
 
 .savedMessagesHeaderBlock {

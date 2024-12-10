@@ -1,7 +1,14 @@
+@import "@/styles/mixins";
+@import "@/styles/breakpoints";
+
 .pageWrapper {
   padding: 20px 0px 0px;
   margin-bottom: -54px;
-  @media (min-width: 768px) {
+  @include media-min($breakpoint-tablet) {
+    padding: 0px;
+    margin-bottom: 0px;
+  }
+  @include media-min($breakpoint-laptop) {
     padding: 20px 0px;
     margin-bottom: 0px;
   }
@@ -10,16 +17,22 @@
 .headline {
   padding-left: 20px;
   padding-right: 20px;
+  @include media-min($breakpoint-tablet) {
+    padding: 0px 20px 31px;
+  }
 }
 
 .chatBlockWrapper {
   display: flex;
-  @media (min-width: 768px) {
-    column-gap: 35px;
-    height: 720px;
+  @include media-min($breakpoint-tablet) {
+    column-gap: 15px;
+    height: 550px;
+    padding: 0px 20px;
   }
   @media (min-width: 1024px) {
+    height: 720px;
     margin: 26px 0px 0px;
     padding: 0px 60px;
+    column-gap: 35px;
   }
 }
