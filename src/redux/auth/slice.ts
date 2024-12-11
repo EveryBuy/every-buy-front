@@ -11,9 +11,15 @@ import {
   changeUserName,
   changeUserPhone,
   changeUserPhoto,
+  changeUserEmail,
 } from "./operations";
 import toast from "react-hot-toast";
-import { AuthResponse, AuthState, User, UserFullName } from "@/types/stateTypes";
+import {
+  AuthResponse,
+  AuthState,
+  User,
+  UserFullName,
+} from "@/types/stateTypes";
 
 const initialState: AuthState = {
   user: {
@@ -25,6 +31,7 @@ const initialState: AuthState = {
   },
   token: null,
   isLoggedIn: false,
+  error: null,
 };
 
 const authSlice = createSlice({
@@ -43,6 +50,9 @@ const authSlice = createSlice({
       state.isLoggedIn = false;
       state.isDeleted = false;
     },
+    clearErrors: state => {
+      state.error = null;
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -54,8 +64,9 @@ const authSlice = createSlice({
           state.isLoggedIn = true;
         }
       )
-      .addCase(register.rejected, (state, _action: PayloadAction<any>) => {
+      .addCase(register.rejected, (state, action: PayloadAction<any>) => {
         state.isLoggedIn = false;
+        state.error = action.payload;
         // here can be error notification like
         // toast.error(`Holly shit happends! Error:${payload}`)
       })
@@ -63,7 +74,7 @@ const authSlice = createSlice({
         state.user = payload.data;
         state.token = payload.token;
         state.isLoggedIn = true;
-        console.log(state.user);
+        console.log(state);
       })
       .addCase(login.rejected, (state, action) => {
         state.isLoggedIn = false;
@@ -109,22 +120,46 @@ const authSlice = createSlice({
       .addCase(changePassword.rejected, (state, { payload }) => {
         toast.error("Password not changed!");
       })
+      .addCase(changeUserName.pending, (state, _) => {
+        state.error = null;
+      })
       .addCase(changeUserName.fulfilled, (state, action: PayloadAction<UserFullName>) => {
+        state.error = null;
         state.user.fullName = action.payload.fullName;
         toast.success("Name successfully changed!");
       })
-      .addCase(changeUserName.rejected, (_state, action: PayloadAction<any>) => {
-        toast.error(action.payload.error);
+      .addCase(changeUserName.rejected, (state, action: PayloadAction<any>) => {
+        state.error = action.payload;
+      })
+      .addCase(changeUserPhone.pending, (state, _) => {
+        state.error = null;
       })
       .addCase(changeUserPhone.fulfilled, (state, action: PayloadAction<User>) => {
         state.user = action.payload;
+        toast.success("Phone successfully changed!");
+      })
+      .addCase(changeUserPhone.rejected, (state, action: PayloadAction<any>) => {
+        state.error = action.payload;
+      })
+      .addCase(changeUserEmail.pending, (state, _) => {
+        state.error = null;
+      })
+      .addCase(changeUserEmail.fulfilled, (state, action: PayloadAction<any>) => {
+        state.user = action.payload;
+        toast.success("Email successfully changed!");
+      })
+      .addCase(changeUserEmail.rejected, (state, action) => {
+        state.error = action.payload;
       })
       .addCase(changeUserPhoto.fulfilled, (state, action) => {
-        console.log(action.payload);
         state.user.userPhotoUrl = action.payload.data.userPhotoUrl
+      })
+      .addCase(changeUserPhoto.rejected, (state, action) => {
+        state.error = action.payload;
       })
       ;
   },
 });
 
 export const authReducer = authSlice.reducer;
+export const {clearErrors} = authSlice.actions;

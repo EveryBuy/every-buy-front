@@ -1,22 +1,59 @@
-import { FC } from "react";
+"use client";
+
+import { FC, useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 import Image from "next/image";
 import Link from "next/link";
+// import { Logout } from "@/components";
 import style from "./DropdownMenu.module.scss";
+import Logout from "../auth/Logout/Logout";
 
 interface DropdownMenuType {
   status: boolean;
+  isLoggedIn: boolean;
   changeStatus: () => void;
 }
 
-const DropdownMenu: FC<DropdownMenuType> = ({ status, changeStatus }) => {
-  return (
+const DropdownMenu: FC<DropdownMenuType> = ({
+  status,
+  changeStatus,
+  isLoggedIn,
+}) => {
+  const userPictureUrl = useSelector(
+    (state: RootState) => state.auth?.user?.userPhotoUrl
+  );
+
+  // resolve hydration problem
+  const [hydrated, setHydrated] = useState(false);
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
+  if (!hydrated) return null;
+
+  const handleLogout = (evt: React.MouseEvent) => {
+    evt.stopPropagation();
+  };
+
+  return isLoggedIn ? (
     <ul
-      className={status ? style.dropdownWrapper : "hidden"}
+      className={status ? style.dropdownLoginWrapper : "hidden"}
       onClick={changeStatus}
     >
       <li>
         <Link href="/user/about-me" className={style.nameWrapper}>
-          <Image alt="alt" src="/images/user.png" width={32} height={32} />
+          {userPictureUrl ? (
+            <Image
+              alt="alt"
+              src={`${userPictureUrl}`}
+              width={32}
+              height={32}
+              className={style.userPicture}
+            />
+          ) : (
+            <span className={style.circle}></span>
+          )}
+
           <p>Вікторія</p>
         </Link>
       </li>
@@ -32,10 +69,20 @@ const DropdownMenu: FC<DropdownMenuType> = ({ status, changeStatus }) => {
       <li>
         <Link href="/user/selected-goods">Обрані</Link>
       </li>
-      <li>
-        <Link href="#">Вихід</Link>
+      <li onClick={handleLogout}>
+        <Logout>Вихід</Logout>
       </li>
     </ul>
+  ) : (
+    <div
+      className={status ? style.dropdownNotLoginWrapper : "hidden"}
+      onClick={changeStatus}
+    >
+      <span className={style.circle}></span>
+      <Link href="/login">Вхід</Link>
+      {" / "}
+      <Link href="/register">Реєстрація</Link>
+    </div>
   );
 };
 

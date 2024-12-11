@@ -16,15 +16,17 @@ import { RootState } from "../store";
 export const register = createAsyncThunk(
   "auth/register",
   async (userRegisterData: UserRegData, thunkAPI) => {
+    
     try {
       const { data } = await API.post("/auth/registration", userRegisterData);
       setHeaderAuthToken(data.data.token);
       const userData = await API.get("/user");
-      console.log(data);
       return { data: userData.data.data, token: data.data.token };
     } catch (error: any) {
-      console.log(error.response.data.error);
-      return thunkAPI.rejectWithValue(error);
+      return thunkAPI.rejectWithValue({
+        message: error.response?.data?.message || error.message,
+        status: error.response?.status,
+      });
     }
   }
 );
@@ -37,10 +39,8 @@ export const login = createAsyncThunk(
       const { data } = await API.post("/auth/auth", userLogData);
       setHeaderAuthToken(data.data.token);
       const userData = await API.get("/user");
-      console.log(API.defaults.headers.common["Authorization"]);
       return { data: userData.data.data, token: data.data.token };
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -62,8 +62,6 @@ export const refreshUser = createAsyncThunk(
       const { auth }: any = getState();
       setHeaderAuthToken(auth.token);
       const { data } = await API.get("/user");
-      console.log(data.data);
-
       return data.data;
     } catch (error: any) {
       clearHeaderAuthToken();
@@ -127,7 +125,10 @@ export const changeUserName = createAsyncThunk(
       const responce = await API.put("/user/update-full-name", fullName);
       return responce.data.data;
     } catch (error: any) {
-      return rejectWithValue(error.message);
+      return rejectWithValue({
+        message: error.response?.data?.message || error.message,
+        status: error.response?.status,
+      });
     }
   }
 );
@@ -138,47 +139,56 @@ export const changeUserPhone = createAsyncThunk(
     try {
       const state = getState() as RootState;
       setHeaderAuthToken(state.auth.token);
-      const { data } = await API.put("/auth/change-phone-number", changePhoneData);
+      const { data } = await API.put(
+        "/auth/change-phone-number",
+        changePhoneData
+      );
       const token = data.data.token;
       setHeaderAuthToken(token);
       const response = await API.get("/user");
-      console.log(response.data.data);
-
       return response.data.data;
     } catch (error: any) {
-      rejectWithValue(error.message);
+      return rejectWithValue(
+        {
+        message: error.response?.data?.message || error.message,
+        status: error.response?.status,
+        }
+      );
     }
   }
-)
+);
 
 export const changeUserEmail = createAsyncThunk(
   "user/changeEmail",
-  async (changeEmailData: ChangeEmailData, {getState, rejectWithValue}) => {
+  async (changeEmailData: ChangeEmailData, { getState, rejectWithValue }) => {
     try {
-  const state = getState() as RootState;
+      const state = getState() as RootState;
       setHeaderAuthToken(state.auth.token);
-  const response = await API.put("/auth/change-email", changeEmailData)
-  return response.data;
-} catch (error: any) {
-  return rejectWithValue(error.message);
-}
+      const response = await API.put("/auth/change-email", changeEmailData);
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue( {
+        message: error.response?.data?.message || error.message,
+        status: error.response?.status,
+        });
+    }
   }
-)
+);
 
 export const changeUserPhoto = createAsyncThunk(
   "user/changePhoto",
-  async (formData: FormData, {getState, rejectWithValue}) => {
+  async (formData: FormData, { getState, rejectWithValue }) => {
     try {
-      const state = getState() as RootState
-      setHeaderAuthToken(state.auth.token)
+      const state = getState() as RootState;
+      setHeaderAuthToken(state.auth.token);
       const response = await API.post("/user/photo-upload", formData, {
         headers: {
-          "Content-Type": "multipart/form-data"
-        }
-      })
-      return response.data
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return response.data;
     } catch (error: any) {
-      return rejectWithValue(error.message)
+      return rejectWithValue(error.message);
     }
   }
-)
+);
