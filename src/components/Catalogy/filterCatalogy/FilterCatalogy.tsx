@@ -6,7 +6,55 @@ import { FilterConfig } from './CustomSelectProps';
 import { CustomSelect } from './customSelect';
 import { Slider } from './slider';
 
+import { useSelector, useDispatch } from 'react-redux';
+import { useAppSelector, useAppDispatch } from "@/redux/store";
+
+import { selectCategories } from "@/redux/advertisement/selectors";
+
+import { addCategory } from '@/redux/filters/slice';
+import { getCategory, getFilteredAdverts } from '@/redux/advertisement/operations';
+
+import CategoriesSelect from './Selects/CategoriesSelect';
+import TopSubCategoriesSelect from './Selects/TopSubCategoriesSelect';
+import LowSubCategoriesSelect from './Selects/LowSubCategoriesSelect';
+import CityListSelect from './Selects/CityListSelect';
+import SortOrderSelection from './Selects/SortOrderSelect';
+import ProductTyperSelection from './Selects/ProductTypeSelect';
+
+import { Category, CityList, TopSubCategory, LowSubCategory } from '@/redux/advertisement/slice';
+import { SortOrder, ProductType } from '@/redux/filters/slice';
+
 export function FilterCatalogySearch() {
+
+	const dispatch = useAppDispatch();
+	// const categoriesList: Category[] = useAppSelector(selectCategories);
+
+	const [sortOrderArr, setSortOrderArr] = useState<SortOrder[] | []>([]);
+	// const [categoriesArr, setCategoriesArr] = useState<Category[] | []>([]);
+	const [topSubCategoriesArr, setTopSubCategoriesArr] = useState<TopSubCategory[] | []>([]);
+	const [lowSubCategoriesArr, setLowSubCategoriesArr] = useState<LowSubCategory[] | []>([]);
+	const [productTyperArr, setProductTyperArr] = useState<ProductType[] | []>([]);
+	const [cityArr, setCityArr] = useState<CityList[] | []>([]);
+
+	// Сортувати за
+	// Категорія
+	// Підкатегорія
+	// Підкатегорія
+	// Стан
+	// Місцезнаходження
+
+	// useEffect(() => {
+	// 	dispatch(getCategory());
+	// }, [dispatch]);
+
+	// const dispatch = useAppDispatch();
+	// const categ = useAppSelector(item => item.filters.categoryId);
+	// console.log(categ);
+	// dispatch(addCategory(4));
+	// console.log(categ);
+
+
+
 	const [price, setPrice] = useState<number[]>([0, 100000]);
 	const [sort, setSort] = useState<string>('');
 	const [category, setCategory] = useState<string>('');
@@ -59,10 +107,20 @@ export function FilterCatalogySearch() {
 		},
 	];
 
+
+
 	return (
 		<Grid2 container spacing={2} alignItems='center'>
+
 			<Slider price={price} setPrice={setPrice} />
-			{filterConfigs.map((config, index) => (
+			<SortOrderSelection />
+			<CategoriesSelect />
+			<TopSubCategoriesSelect />
+			{/* <LowSubCategoriesSelect /> */}
+			<CityListSelect />
+			<ProductTyperSelection />
+
+			{/* {filterConfigs.map((config, index) => (
 				<Grid2 key={index} size={{ xs: 12, sm: 6, md: 4 }}>
 					<CustomSelect
 						label={config.label}
@@ -73,7 +131,7 @@ export function FilterCatalogySearch() {
 						options={config.options}
 					/>
 				</Grid2>
-			))}
+			))} */}
 			<Grid2
 				size={{ xs: 12 }}
 				sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}

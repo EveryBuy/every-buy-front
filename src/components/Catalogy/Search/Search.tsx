@@ -8,6 +8,10 @@ import Link from 'next/link';
 import { getSearchByWord } from '@/api/getSearchByWord';
 import ListItemsForSearch from '@/types/listItemsForSearch';
 
+// import { useAppSelector, useAppDispatch } from "@/redux/store";
+// import { getFilteredAdverts } from '@/redux/advertisement/operations';
+// import { addKeyWord } from '@/redux/filters/slice';
+
 type ItemProps = {
 	item: ListItemsForSearch[];
 };
@@ -23,6 +27,8 @@ const Search: FC = (props) => {
 
 	const goToSearch = (e: FormEventType) => {
 		e.preventDefault();
+		// const wordTest = dispatch(addKeyWord("кош"));
+		// console.log(wordTest);
 		router.push(`/catalogy?search=${word}`);
 	};
 
@@ -43,7 +49,18 @@ const Search: FC = (props) => {
 		fetchForSearch();
 	}, [word]);
 
-	const SuggestItem = (props: ListItemsForSearch) => {
+	// const dispatch = useAppDispatch();
+	// console.log(dispatch);
+
+	// useEffect(() => {
+	// 	dispatch(getFilteredAdverts({
+	// 		filters: {
+	// 			keyWord: "кош"
+	// 		}
+	// 	}));
+	// }, [dispatch]);
+
+	const SuggestItem = (props: ListItemsForSearch): JSX.Element => {
 
 		const {
 			advertisementId,
