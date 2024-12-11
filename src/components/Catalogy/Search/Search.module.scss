@@ -1,0 +1,167 @@
+@import "@/styles/_mixins";
+@import "@/styles/_breakpoints";
+
+.searchContainer {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	padding: 0 5%;
+
+	@media (min-width: 1024px) {
+		padding: 0 10%;
+	}
+}
+
+.searchForm {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	max-width: 1024px;
+	position: relative;
+}
+
+.searchInputWrapper {
+	position: relative;
+	display: flex;
+	align-items: center;
+	flex-grow: 1;
+	margin-right: 10px;
+
+	@include media-max($breakpoint-mobile) {
+		margin-right: 0;
+	}
+}
+
+.searchInput {
+	width: 100%;
+	padding: 10px;
+	font-size: 1rem;
+	border: 1px solid #e5ff46;
+	border-radius: 10px;
+	transition: all 0.3s ease;
+
+	@include media-min($breakpoint-mobile) {
+		border: none;
+		background-color: #b4b4b4;
+		color: #ffffff;
+		padding: 10px;
+	}
+
+	@include media-min($breakpoint-tablet) {
+		padding: 15.5px;
+	}
+
+	@media (min-width: 1024px) {
+		padding: 20px;
+	}
+}
+
+.searchInput::placeholder {
+	@include media-min($breakpoint-mobile) {
+		color: #fff;
+		font-size: 16px;
+	}
+
+	@include media-min($breakpoint-tablet) {
+		font-size: 18px;
+	}
+}
+
+.searchButton {
+	padding: 3px 14px 2px;
+	background-color: #e5ff46;
+	border: 1px solid #e5ff46;
+	border-radius: 10px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transition: all 0.3s ease;
+
+	@include media-min($breakpoint-mobile) {
+		background-color: #ffffff;
+		border: 1px solid #000000;
+		padding: 10px 15px;
+
+		&::before {
+			content: "Знайти";
+		}
+	}
+
+	@include media-min($breakpoint-tablet) {
+		padding: 14px 31.5px;
+	}
+
+	@media (min-width: 1024px) {
+		padding: 18px 40px;
+	}
+}
+
+.searchButtonIcon {
+	position: relative;
+
+	@include media-min($breakpoint-mobile) {
+		display: none;
+	}
+}
+
+@include media-min($breakpoint-mobile) {
+	.searchButtonIcon {
+		display: none;
+	}
+}
+
+.searchInputIconWrapper {
+	position: absolute;
+	right: 1%;
+	display: flex;
+	align-items: center;
+	width: 28px;
+	height: 28px;
+	margin-right: 10px;
+
+	@media (max-width: 480px) {
+		display: none;
+	}
+
+	& svg {
+		width: 28px;
+		margin: 0px;
+		cursor: default;
+	}
+}
+
+.searchSuggest {
+	display: block;
+	position: absolute;
+	left: 0;
+	top: 101%;
+	z-index: 500;
+	background-color: #fff;
+	width: 83%;
+	overflow: hidden;
+}
+
+.searchSuggestList {
+	border: 1px dashed #e5ff46;
+}
+
+.searchSuggestItem {}
+
+.searchSuggestItem a {
+	display: flex;
+	flex-direction: column;
+	min-height: 30px;
+	padding: 10px;
+	cursor: pointer;
+}
+
+.searchSuggestItem a:hover {
+	background-color: #d4d4d4;
+}
+
+.searchLinkItem {}
+
+.searchItemCategory {
+	font-size: 12px;
+}

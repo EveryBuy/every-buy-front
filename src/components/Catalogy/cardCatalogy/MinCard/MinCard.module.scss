@@ -1,0 +1,97 @@
+@import "@/styles/breakpoints";
+@import "@/styles/mixins";
+
+.containerMinCard {
+	width: 131px;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+
+	@include media-min($breakpoint-tablet) {
+		min-width: 451px;
+		width: 100%;
+		flex-direction: row;
+		gap: 18px;
+	}
+
+	.imageWrapper {
+		width: 131px;
+		height: 94px;
+		overflow: hidden;
+		position: relative;
+		border: 1px solid var(--border);
+		border-radius: 10px;
+
+		@include media-min($breakpoint-tablet) {
+			width: 179px;
+			height: 182px;
+		}
+	}
+
+	.image {
+		object-fit: cover;
+		width: 100%;
+
+		// @include media-min($breakpoint-tablet) {
+		// 	height: auto;
+		// }
+	}
+
+	.title {
+		font-weight: 700;
+
+		@include media-min($breakpoint-tablet) {
+			font-size: 36px;
+			font-weight: 500;
+			min-width: 320px;
+			min-height: 88px;
+		}
+	}
+
+	.state {
+		font-size: var(--body-mobile-text-small);
+		color: var(--success);
+
+		@include media-min($breakpoint-tablet) {
+			font-size: var(--large-body-medium);
+			font-weight: 500;
+		}
+	}
+
+	.price {
+		font-weight: 700;
+		margin-top: 16px;
+
+		@include media-min($breakpoint-tablet) {
+			font-size: 32px;
+			margin-top: 33px;
+		}
+	}
+
+	&.minCardString {
+		width: 100%;
+		max-width: 614px;
+		flex-direction: row;
+		gap: 15px;
+
+		.imageWrapper {
+			width: 94px;
+			height: 96px;
+		}
+
+		.title {
+			font-size: var(--large-body-medium);
+			font-weight: 400;
+		}
+
+		.state {
+			font-size: var(--large-body-text);
+		}
+
+		.price {
+			font-size: var(--large-body-medium);
+			font-weight: 400;
+		}
+
+	}
+}
