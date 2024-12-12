@@ -8,7 +8,7 @@ export type ProductType = "NEW" | "USED";
 export type SortOrder = "ASC" | "DESC";
 
 
-export type initialState = {
+export type InitialState = {
     price: Price,
     productType: ProductType | '',
     sortOrder: SortOrder | '',
@@ -18,7 +18,7 @@ export type initialState = {
     keyword: string,
 }
 
-const initialState = {
+const initialState: InitialState = {
     price: {
         min: 0,
         max: 100000,
@@ -46,20 +46,20 @@ const filtersSlice = createSlice({
             },
         },
         addProductType: {
-            reducer(state, action: PayloadAction<string>) {
+            reducer(state, action: PayloadAction<ProductType | ''>) {
                 state.productType = action.payload;
             },
-            prepare(productType: string) {
+            prepare(productType: ProductType | '') {
                 return {
                     payload: productType,
                 }
             },
         },
         addSortOrder: {
-            reducer(state, action: PayloadAction<string>) {
+            reducer(state, action: PayloadAction<SortOrder | ''>) {
                 state.sortOrder = action.payload;
             },
-            prepare(sortOrder: string) {
+            prepare(sortOrder: SortOrder | '') {
                 return {
                     payload: sortOrder,
                 }
@@ -77,6 +77,7 @@ const filtersSlice = createSlice({
         },
         addCategory: {
             reducer(state, action: PayloadAction<number>) {
+                state.categoryId = action.payload;
             },
             prepare(categoryId: number) {
                 return {
@@ -86,6 +87,7 @@ const filtersSlice = createSlice({
         },
         addSubCategory: {
             reducer(state, action: PayloadAction<number>) {
+                state.subcategoryId = action.payload;
             },
             prepare(subCategoryId: number) {
                 return {
@@ -95,6 +97,7 @@ const filtersSlice = createSlice({
         },
         addKeyWord: {
             reducer(state, action: PayloadAction<string>) {
+                state.keyword = action.payload;
             },
             prepare(keyWord: string) {
                 return {
