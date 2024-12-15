@@ -5,9 +5,9 @@ import React, { useState } from "react";
 import { useAppDispatch } from "@/redux/store";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import styles from './DeleteAccount.module.css'
+import styles from "./DeleteAccount.module.scss";
 
-export const DeleteAccount = ({ children }: {children: string}) => {
+export const DeleteAccount = ({ children }: { children: string }) => {
   const [open, setOpen] = useState(false);
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -26,12 +26,8 @@ export const DeleteAccount = ({ children }: {children: string}) => {
 
   return (
     <>
-      <Link href='#'
-        className={styles.link}
-        onClick={handleOpen}
-        >
+      <Link href="#" className={styles.link} onClick={handleOpen}>
         {children}
-
       </Link>
       <Backdrop
         sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}

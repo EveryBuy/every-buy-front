@@ -1,8 +1,8 @@
-import styles from "./CommonModal.module.scss";
 import Image from "next/image";
+import { Backdrop } from "@mui/material";
 import xClose from "@/assets/Svg/xClose.svg";
 import CommonModalProps from "@/types/commonModalProps";
-import { Backdrop } from "@mui/material";
+import styles from "./CommonModal.module.scss";
 
 export const CommonModal: React.FC<CommonModalProps> = ({
   contentClassName,
@@ -26,7 +26,9 @@ export const CommonModal: React.FC<CommonModalProps> = ({
         >
           <Image src={xClose} alt="close" width={18} height={18} />
         </button>
-        <div className={`${styles.contentWrapper} ${contentClassName}`}>{children}</div>
+        <div className={`${styles.contentWrapper} ${contentClassName}`}>
+          {children}
+        </div>
       </div>
     </Backdrop>
   );

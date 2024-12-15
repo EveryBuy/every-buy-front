@@ -1,4 +1,4 @@
-import { SelectedGoods } from "@/components/pages/userPage/SelectedGoods/SelectedGoods";
+import { SelectedGoods } from "@/components";
 
 export default function MyGoodsPage() {
   return <SelectedGoods />;

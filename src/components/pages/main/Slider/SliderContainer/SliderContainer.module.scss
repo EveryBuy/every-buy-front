@@ -1,0 +1,13 @@
+@import "../../../../../styles/mixins";
+@import "../../../../../styles/breakpoints";
+
+.sliderSection {
+  padding-top: 40px;
+
+  @include media-min($breakpoint-tablet) {
+    padding-top: 28px;
+  }
+  @media (min-width: 1024px) {
+    padding-top: 60px;
+  }
+}

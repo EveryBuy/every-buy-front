@@ -1,5 +1,3 @@
-type ChatsType = MessageType[];
-
 type UserDataType = {
   userId: number;
   fullName: string;

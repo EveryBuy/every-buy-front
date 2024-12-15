@@ -1,21 +1,25 @@
+"use client";
+
 import { FC, useEffect, useState } from "react";
+import Image from "next/image";
+import { CommonInput, CommonModal, CommonButton } from "@/components";
 import { selectUser } from "@/redux/auth/selectors";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
-import styles from "./UserDataEdit.module.scss";
-import CommonInput from "@/components/ui/CommonInput/CommonInput";
-import Image from "next/image";
 import submit from "@/assets/Svg/CheckCircleFilled.svg";
 import cancel from "@/assets/Svg/CloseCircleFilled.svg";
-import { changeUserEmail, changeUserName, changeUserPhone } from "@/redux/auth/operations";
-import CommonModal from "@/components/ui/CommonModal/CommonModal";
-import CommonButton from "@/components/ui/CommonButton/CommonButton";
+import {
+  changeUserEmail,
+  changeUserName,
+  changeUserPhone,
+} from "@/redux/auth/operations";
 import toast, { Toaster } from "react-hot-toast";
+import styles from "./UserDataEdit.module.scss";
 
 type Props = {
   onEdit: () => void;
 };
 
-export const UserDataEdit: React.FC<Props> = ({ onEdit }: Props) => {
+export const UserDataEdit: FC<Props> = ({ onEdit }: Props) => {
   const user = useAppSelector(selectUser);
   const dispatch = useAppDispatch();
 
@@ -46,10 +50,10 @@ export const UserDataEdit: React.FC<Props> = ({ onEdit }: Props) => {
   const handleSubmitEmail = () => {
     console.log(email);
     if (user.email === email) {
-      toast.error("Enter a new email!")
+      toast.error("Enter a new email!");
     }
-    dispatch(changeUserEmail({ password: password, newEmail: email }))
-    setIsOpenEmailModal
+    dispatch(changeUserEmail({ password: password, newEmail: email }));
+    setIsOpenEmailModal;
   };
 
   const handleCancel = () => {
@@ -81,8 +85,8 @@ export const UserDataEdit: React.FC<Props> = ({ onEdit }: Props) => {
             onClick={() => setIsOpenPhoneModal(false)}
           />
         </CommonModal>
-)}
-{/* модалка підтвердження зміни email */}
+      )}
+      {/* модалка підтвердження зміни email */}
 
       {isOpenEmailModal && (
         <CommonModal
@@ -106,7 +110,7 @@ export const UserDataEdit: React.FC<Props> = ({ onEdit }: Props) => {
             onClick={() => setIsOpenEmailModal(false)}
           />
         </CommonModal>
-)}
+      )}
 
       <form>
         <div className={styles.inputWrapper}>
@@ -185,7 +189,7 @@ export const UserDataEdit: React.FC<Props> = ({ onEdit }: Props) => {
           <button
             className={styles.inputBtn}
             type="button"
-            onClick={()=>setIsOpenEmailModal(true)}
+            onClick={() => setIsOpenEmailModal(true)}
           >
             <Image
               className={styles.buttonImg}
