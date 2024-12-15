@@ -22,7 +22,7 @@ export const SelectedGoods: FC = () => {
   const [category] = categories.filter(
     (elem: any) => elem.categoryName === selectedCategory
   );
-  const [section, setSection] = useState("");
+  const [section, setSection] = useState("SELL");
 
   useEffect(() => {
     dispatch(getCategory());

@@ -152,12 +152,15 @@ export const getAllFavouriteAdvert = createAsyncThunk('advert/getAllFavourite',
 );
 
 export const getUserActiveAdverts = createAsyncThunk('advert/getUserActive',
-    async (_, thunkAPI) => {
+    async (_, {rejectWithValue, getState}) => {
         try {
+            const state = getState() as RootState;
+            const token = state.auth.token;
+            setHeaderAuthToken(token);
             const response = await API.get('/ad/user/active-ads');
             return response.data;
         } catch (error: any) {
-            return thunkAPI.rejectWithValue(error.message)
+            return rejectWithValue(error.message)
         }
     }
 );
