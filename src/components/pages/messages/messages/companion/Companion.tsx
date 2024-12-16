@@ -5,11 +5,7 @@ import { RootState } from "@/redux/store";
 import Image from "next/image";
 import { Box } from "@mui/material";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
-<<<<<<< HEAD
-import { Menu } from "@/components";
-=======
 import { Menu, CommonIcon } from "@/components";
->>>>>>> 3c6254c7bbb0f754f23afe00e6624536522817f6
 import style from "./Companion.module.scss";
 
 type CompanionBlockType = {

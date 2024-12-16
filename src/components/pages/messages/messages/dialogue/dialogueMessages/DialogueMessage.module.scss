@@ -5,12 +5,7 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-<<<<<<< HEAD
-  width: 410px;
-  margin-top: 25px;
-=======
   width: 286px;
->>>>>>> 3c6254c7bbb0f754f23afe00e6624536522817f6
   height: fit-content;
   margin-top: 16px;
   @include media-min($breakpoint-tablet) {

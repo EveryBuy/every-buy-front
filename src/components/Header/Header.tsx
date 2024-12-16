@@ -78,12 +78,8 @@ const Header: FC = () => {
           <div className={styles.iconsWrapper}>
             <div onClick={openWindowHandle}>
               <Link
-<<<<<<< HEAD:src/components/Header/Header.tsx
-                href={`${isLoggedIn ? "/messages" : "#"}`}
-=======
                 href="/messages"
                 onClick={(e) => !isLoggedIn && e.preventDefault()}
->>>>>>> 3c6254c7bbb0f754f23afe00e6624536522817f6:src/components/header/Header.tsx
                 className={styles.linkToUserPage}
               >
                 <CommonIcon id="icon-chat" width="21" height="20" />
@@ -92,9 +88,6 @@ const Header: FC = () => {
             <CommonIcon id="icon-heart" width="21" height="20" />
             {/* <Link href="/user" className={styles.linkToUserPage}>
               <CommonIcon id="icon-user" width="21" height="20" />
-<<<<<<< HEAD:src/components/Header/Header.tsx
-            </Link>
-=======
             </Link> */}
             <div onClick={openWindowHandle}>
               <Link
@@ -105,7 +98,6 @@ const Header: FC = () => {
                 <CommonIcon id="icon-user" width="21" height="20" />
               </Link>
             </div>
->>>>>>> 3c6254c7bbb0f754f23afe00e6624536522817f6:src/components/header/Header.tsx
 
             {successRegisterModalOpen && (
               <DoLoginModal

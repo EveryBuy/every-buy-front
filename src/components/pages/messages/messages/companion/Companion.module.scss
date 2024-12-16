@@ -18,8 +18,6 @@
   align-items: center;
 }
 
-<<<<<<< HEAD
-=======
 .backArrow {
   margin: 0px;
   width: 40px;
@@ -29,19 +27,11 @@
   }
 }
 
->>>>>>> 3c6254c7bbb0f754f23afe00e6624536522817f6
 .picture,
 .noPicture {
   display: flex;
   justify-content: center;
   align-items: center;
-<<<<<<< HEAD
-  width: 72px;
-  height: 72px;
-  border-radius: 50%;
-  background-color: var(--bg-header-footer);
-  margin-right: 31px;
-=======
   width: 31px;
   height: 31px;
   border-radius: 50%;
@@ -62,11 +52,6 @@
       height: 24px;
     }
   }
-}
-
-.picture {
-  object-fit: cover;
->>>>>>> 3c6254c7bbb0f754f23afe00e6624536522817f6
 }
 
 .picture {

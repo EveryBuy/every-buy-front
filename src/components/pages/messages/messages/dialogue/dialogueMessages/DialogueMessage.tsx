@@ -35,13 +35,9 @@ const DialogueMessages: FC<MessageComponentType> = ({ message }) => {
       className={style.wrapper}
       sx={{ justifySelf: `${messagePositionStyle}` }}
     >
-<<<<<<< HEAD
-      <Box sx={{ order: `${picOrder}` }}>{picture}</Box>
-=======
       {/* <Box sx={{ order: `${picOrder}` }}> */}
       {picture}
       {/* </Box> */}
->>>>>>> 3c6254c7bbb0f754f23afe00e6624536522817f6
       <Box
         className={`${
           user.userId === message.userId

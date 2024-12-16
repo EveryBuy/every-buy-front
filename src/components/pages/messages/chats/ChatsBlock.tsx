@@ -2,14 +2,10 @@
 import { FC, useState } from "react";
 import { Box } from "@mui/material";
 import { ChatsList, Buttons, Icons, CommonIcon } from "@/components";
-<<<<<<< HEAD
-import { useGetChatsQuery } from "@/redux/messages/chatApi";
-=======
 import {
   useGetBuyChatsQuery,
   useGetSellChatsQuery,
 } from "@/redux/messages/chatApi";
->>>>>>> 3c6254c7bbb0f754f23afe00e6624536522817f6
 import style from "./ChatsBlock.module.scss";
 
 type MessageListBlockType = {
@@ -104,15 +100,9 @@ const MessageListBlock: FC<MessageListBlockType> = ({
           </>
         )}
       </Box>
-<<<<<<< HEAD
-      <Box className={style.listWrapper}>
-        <ChatsList chats={chats} onclick={onclick} />
-      </Box>
-=======
       {/* <Box className={style.listWrapper}> */}
       <ChatsList chats={chats} onclick={onclick} />
       {/* </Box> */}
->>>>>>> 3c6254c7bbb0f754f23afe00e6624536522817f6
     </Box>
   );
 };
