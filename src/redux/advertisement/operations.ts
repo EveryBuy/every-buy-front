@@ -93,7 +93,7 @@ export const getAdvertisementById = createAsyncThunk('advert/getById',
 );
 
 export const deleteAdvertisement = createAsyncThunk('advert/delete',
-    async (id, thunkAPI) => {
+    async (id: number, thunkAPI) => {
         try {
             const response = await API.delete(`/ad/${id}/`);
             return { response, id };
@@ -104,7 +104,7 @@ export const deleteAdvertisement = createAsyncThunk('advert/delete',
 );
 
 export const changeAdvertisementStatus = createAsyncThunk('advert/changeStatus',
-    async (id, thunkAPI) => {
+    async (id: number, thunkAPI) => {
         try {
             const response = await API.put(`/ad/${id}/change-status`);
             return response.data;
@@ -166,12 +166,15 @@ export const getUserActiveAdverts = createAsyncThunk('advert/getUserActive',
 );
 
 export const getUserInactiveAdverts = createAsyncThunk('advert/getUserInactive',
-    async (_, thunkAPI) => {
+    async (_, {rejectWithValue, getState}) => {
         try {
+            const state = getState() as RootState;
+            const token = state.auth.token;
+            setHeaderAuthToken(token);
             const response = await API.get('/ad/user/inactive-ads');
             return response.data;
         } catch (error: any) {
-            return thunkAPI.rejectWithValue(error.message)
+            return rejectWithValue(error.message)
         }
     }
 );

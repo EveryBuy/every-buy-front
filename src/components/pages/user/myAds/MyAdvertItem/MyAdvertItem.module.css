@@ -52,6 +52,11 @@
   height: 39px;
 }
 
+.itemButtonNotActive {
+  background-color: var(--button);
+  border: none;
+}
+
 .itemButtonBox {
   display: flex;
   flex-direction: row;

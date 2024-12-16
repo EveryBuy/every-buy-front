@@ -1,16 +1,16 @@
 "use client";
 
 import { FC, useEffect, useState } from "react";
-import styles from "./MyActiveAds.module.css";
+import styles from "./MyInactiveAds.module.css";
 import MyAdvertList from "../MyAdvertList/MyAdvertList";
 import { CommonPagination } from "@/components/ui/CommonPagination/CommonPagination";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
-import { getUserActiveAdverts } from "@/redux/advertisement/operations";
-import { selectUserActiveAdverts } from "@/redux/advertisement/selectors";
+import { getUserInactiveAdverts } from "@/redux/advertisement/operations";
+import { selectUserInactiveAdverts } from "@/redux/advertisement/selectors";
 
-const MyActiveAds: FC = () => {
+export const MyInactiveAds: FC = () => {
   const dispatch = useAppDispatch();
-  const activeAdsList = useAppSelector(selectUserActiveAdverts);
+  const activeAdsList = useAppSelector(selectUserInactiveAdverts);
   const [section, setSection] = useState("SELL");
   const [page, setPage] = useState(1);
 
@@ -19,7 +19,7 @@ const MyActiveAds: FC = () => {
     .slice((page - 1) * 8, (page - 1) * 8 + 8);
 
   useEffect(() => {
-    dispatch(getUserActiveAdverts());
+    dispatch(getUserInactiveAdverts());
   }, [dispatch]);
 
   const handleBuy = () => {
@@ -29,7 +29,7 @@ const MyActiveAds: FC = () => {
   const handleSell = () => {
     setSection("SELL");
   };
-  // console.log("pagination", Math.ceil(activeAdsList.length / 8));
+
   return (
     <section className={styles.myActiveAdsContainer}>
       <ul className={styles.buttonList}>
@@ -52,4 +52,4 @@ const MyActiveAds: FC = () => {
   );
 };
 
-export default MyActiveAds;
+export default MyInactiveAds;
