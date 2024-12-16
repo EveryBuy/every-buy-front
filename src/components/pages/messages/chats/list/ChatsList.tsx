@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useState } from "react";
+import { FC } from "react";
 import { Box } from "@mui/material";
 import { Chat, CommonPreloader } from "@/components";
 import { ChatType } from "@/types/messages/chats";
@@ -25,7 +25,7 @@ const ChatsList: FC<ListChatsType> = ({ chats, onclick }) => {
       {chats ? (
         chats.map(({ chatId, userData, lastMessage, lastMessageDate }) => (
           <Box
-            sx={{ borderBottom: "solid 1px gray" }}
+            className={style.listItem}
             key={chatId}
             onClick={() => {
               if (chatId) {

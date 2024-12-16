@@ -1,7 +1,21 @@
-.wrapper {
-  display: flex;
-  column-gap: 35px;
+.pageWrapper {
+  padding: 20px 0px 0px;
+  margin-bottom: -54px;
   @media (min-width: 768px) {
+    padding: 20px 0px;
+    margin-bottom: 0px;
+  }
+}
+
+.headline {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.chatBlockWrapper {
+  display: flex;
+  @media (min-width: 768px) {
+    column-gap: 35px;
     height: 720px;
   }
   @media (min-width: 1024px) {

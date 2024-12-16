@@ -51,7 +51,7 @@ body {
 }
 
 .title {
-  padding-bottom: 30px;
+  padding-bottom: 16px;
   font-size: var(--f-size-h4);
   @include media-min($breakpoint-tablet) {
     padding: 60px 60px 52px;

@@ -10,7 +10,11 @@ interface ChatMessagesDataTypeInt {
 export const chatApi = createApi({
   reducerPath: "chatApi",
   baseQuery: fetchBaseQuery({
+<<<<<<< HEAD
     baseUrl: "https://service-chat-t47s.onrender.com",
+=======
+    baseUrl: "https://api-everybuy.onrender.com",
+>>>>>>> 3c6254c7bbb0f754f23afe00e6624536522817f6
     prepareHeaders: (headers, { getState }) => {
       const token = (getState() as RootState).auth.token;
       if (token) {
@@ -20,8 +24,16 @@ export const chatApi = createApi({
     },
   }),
   endpoints: (builder) => ({
+<<<<<<< HEAD
     getChats: builder.query<ChatsType, void>({
       query: () => "/chat/get-all-users-chats",
+=======
+    getBuyChats: builder.query<ChatsType, void>({
+      query: () => "/chat/get-buy-users-chats",
+    }),
+    getSellChats: builder.query<ChatsType, void>({
+      query: () => "/chat/get-sell-users-chats",
+>>>>>>> 3c6254c7bbb0f754f23afe00e6624536522817f6
     }),
     getChat: builder.query<FullChatType, number>({
       query: (chatId) => `/chat/${chatId}`,
@@ -36,7 +48,12 @@ export const chatApi = createApi({
 });
 
 export const {
+<<<<<<< HEAD
   useGetChatsQuery,
+=======
+  useGetBuyChatsQuery,
+  useGetSellChatsQuery,
+>>>>>>> 3c6254c7bbb0f754f23afe00e6624536522817f6
   useGetChatQuery,
   useGetMessagesByChatIdQuery,
 } = chatApi;

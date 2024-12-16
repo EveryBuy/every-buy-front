@@ -7,6 +7,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import theme from "../styles/mui/theme";
 // import Category from "../components/Category/Category"
 import "./globals.scss";
+import Message from "@/components/ui/Message/Message";
 
 export default async function ClientLayout({
   children,
@@ -23,6 +24,7 @@ export default async function ClientLayout({
               <Header />
               <main className="container">{children}</main>
               <Footer />
+              <Message />
               {/* </AuthProvider> */}
             </ThemeProvider>
           </Providers>

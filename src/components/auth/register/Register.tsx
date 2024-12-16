@@ -1,6 +1,6 @@
 "use client";
 
-import React, {useState, useEffect, useRef} from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import EyePassword from "@/assets/Svg/EyePassword.svg";
 import EyeInvisibleFilled from "@/assets/Svg/EyeInvisibleFilled.svg";
@@ -10,7 +10,7 @@ import styles from "./Register.module.scss";
 import CommonInput from "@/components/ui/CommonInput/CommonInput";
 import Image from "next/image";
 import { register } from "@/redux/auth/operations";
-import { selectIsLoggedIn } from "@/redux/auth/selectors";
+import { selectError, selectIsLoggedIn } from "@/redux/auth/selectors";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import {
   validatePhone,
@@ -18,6 +18,7 @@ import {
   validatePassword,
 } from "@/utils/validate";
 import { SuccessRegisterModal, ErrorModal } from "@/components";
+import { useSelector } from "react-redux";
 
 type ErrorsType = {
   phone: string;
@@ -42,12 +43,14 @@ const Register: React.FC = () => {
     password: "",
     confirmPassword: "",
   });
-  const [successRegisterModalOpen, setSuccessRegisterModalOpen] = useState(false);
+  const [successRegisterModalOpen, setSuccessRegisterModalOpen] =
+    useState(false);
   const [serverErrorModalOpen, setServerErrorModalOpen] = useState(false);
   const [unknownErrorModalOpen, setUnknownErrorModalOpen] = useState(false);
   const [userErrorModalOpen, setUserErrorModalOpen] = useState(false);
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const showSuccessRegisterModal = useRef(false);
+  const isError = useSelector(selectError);
 
   useEffect(() => {
     if (isLoggedIn && !showSuccessRegisterModal.current) {
@@ -55,7 +58,6 @@ const Register: React.FC = () => {
     } else {
       showSuccessRegisterModal.current = true;
     }
-
     if (isLoggedIn && showSuccessRegisterModal.current) {
       setSuccessRegisterModalOpen(true);
     }
@@ -134,31 +136,52 @@ const Register: React.FC = () => {
     ) {
       return;
     }
+    await dispatch(
+      register({
+        email: email,
+        phone: phone.slice(-9),
+        password: password,
+      })
+    );
 
-    try {
-      await dispatch(
-          register({
-            email: email,
-            phone: phone,
-            password: password,
-          })
-      ).unwrap();
-    } catch (error: any) {
-      if (error.response) {
-        switch (error.response.status) {
-          case 500:
-            setServerErrorModalOpen(true);
-            break;
-          case 409:
-            setUserErrorModalOpen(true);
-            break;
-          default:
-            setUnknownErrorModalOpen(true);
-        }
-      } else {
-        setUnknownErrorModalOpen(true);
+    if (isError) {
+      // console.log("Error", isError);
+      switch (isError.status) {
+        case 500:
+          setServerErrorModalOpen(true);
+          break;
+        case 409:
+          setUserErrorModalOpen(true);
+          break;
+        default:
+          setUnknownErrorModalOpen(true);
       }
     }
+
+    // try {
+    //   await dispatch(
+    //     register({
+    //       email: email,
+    //       phone: phone,
+    //       password: password,
+    //     })
+    //   ).unwrap();
+    // } catch (error: any) {
+    //   if (error.response) {
+    //     switch (error.response.status) {
+    //       case 500:
+    //         setServerErrorModalOpen(true);
+    //         break;
+    //       case 409:
+    //         setUserErrorModalOpen(true);
+    //         break;
+    //       default:
+    //         setUnknownErrorModalOpen(true);
+    //     }
+    //   } else {
+    //     setUnknownErrorModalOpen(true);
+    //   }
+    // }
   };
 
   const getInputClass = (field: string) => {
@@ -198,7 +221,7 @@ const Register: React.FC = () => {
           value={phone}
           setValue={(e) => setPhone(e.target.value)}
           className={getInputClass("phone")}
-          placeholder="введіть номер телефону"
+          placeholder="+380"
           setOnBlur={() => handleBlur("phone")}
           errorsMessage={
             errors.phone && (
@@ -331,27 +354,30 @@ const Register: React.FC = () => {
       </form>
 
       {successRegisterModalOpen && <SuccessRegisterModal />}
-      {
-        serverErrorModalOpen && <ErrorModal
-            onClose={() => { setServerErrorModalOpen(false); router.refresh();}}
-            title={"Упс! Проблеми на сервері!"}
-            buttonText={"Перезавантажити сторінку"}
-          />
-      }
-      {
-        userErrorModalOpen && <ErrorModal
-              onClose={() => router.push("/login")}
-              title={"Користувач з таким телефоном/імейлом вже зареєстрований!"}
-              buttonText={"Вхід"}
-          />
-      }
-      {
-        unknownErrorModalOpen && <ErrorModal
-              onClose={() => router.push("/")}
-              title={"Упс! Невідома помилка!"}
-              buttonText={"На головну"}
-          />
-      }
+      {serverErrorModalOpen && (
+        <ErrorModal
+          onClose={() => {
+            setServerErrorModalOpen(false);
+            router.refresh();
+          }}
+          title={"Упс! Проблеми на сервері!"}
+          buttonText={"Перезавантажити сторінку"}
+        />
+      )}
+      {userErrorModalOpen && (
+        <ErrorModal
+          onClose={() => router.push("/login")}
+          title={"Користувач з таким телефоном/імейлом вже зареєстрований!"}
+          buttonText={"Вхід"}
+        />
+      )}
+      {unknownErrorModalOpen && (
+        <ErrorModal
+          onClose={() => router.push("/")}
+          title={"Упс! Невідома помилка!"}
+          buttonText={"На головну"}
+        />
+      )}
     </>
   );
 };

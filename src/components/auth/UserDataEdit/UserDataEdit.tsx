@@ -1,19 +1,14 @@
 "use client";
 
 import { FC, useEffect, useState } from "react";
-import Image from "next/image";
-import { CommonInput, CommonModal, CommonButton } from "@/components";
 import { selectUser } from "@/redux/auth/selectors";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import submit from "@/assets/Svg/CheckCircleFilled.svg";
 import cancel from "@/assets/Svg/CloseCircleFilled.svg";
-import {
-  changeUserEmail,
-  changeUserName,
-  changeUserPhone,
-} from "@/redux/auth/operations";
+import { changeUserEmail, changeUserName, changeUserPhone } from "@/redux/auth/operations";
+import CommonModal from "@/components/ui/CommonModal/CommonModal";
+import CommonButton from "@/components/ui/CommonButton/CommonButton";
 import toast, { Toaster } from "react-hot-toast";
-import styles from "./UserDataEdit.module.scss";
 
 type Props = {
   onEdit: () => void;
@@ -24,40 +19,84 @@ export const UserDataEdit: FC<Props> = ({ onEdit }: Props) => {
   const dispatch = useAppDispatch();
 
   const [name, setName] = useState(user.fullName || "");
-  const [phone, setPhone] = useState(user.phone || "");
+  const [phone, setPhone] = useState("+380" + (user.phone || ""));
   const [email, setEmail] = useState(user.email || "");
   const [password, setPassword] = useState("");
 
   const [isOpenPhoneModal, setIsOpenPhoneModal] = useState(false);
   const [isOpenEmailModal, setIsOpenEmailModal] = useState(false);
 
-  useEffect(() => {}, [user]);
+  const responseError = useSelector(selectError);
+  const [isError, setIsError] = useState(false);
+  const [messageText, setMessageText] = useState("");
 
-  const handleSubmitName = () => {
-    dispatch(changeUserName({ fullName: name }));
+  useEffect(() => {
+    if (responseError) {
+      // setIsError(true);
+      if (responseError.status === 400) {
+        setMessageText("Невірні дані! Виправте і спробуйте ще раз.");
+        return;
+      }
+      if (responseError.status === 401) {
+        setMessageText("Перевірте пароль!");
+        return;
+      }
+      if (responseError.status === 500) {
+        setMessageText("Помилка сервера. Спробуйте пізніше.");
+        return;
+      }
+    }
+  }, [user, responseError]);
+
+  const handleSubmitName = async () => {
+    if (!validateName(name)) {
+      setMessageText("Введено некоректне імʼя!");
+      return;
+    }
+    if (name === user.fullName) {
+      setMessageText("Введіть нове імʼя!");
+      return;
+    }
+    await dispatch(changeUserName({ fullName: name }));
     onEdit();
   };
 
-  const handleSubmitPhone = () => {
-    if (user.phone === phone) {
-      toast.error("Enter a new phone number!");
+  const handleCheckPhone = async () => {
+    const newPhone = phone.slice(-9);
+    if (!validatePhone(newPhone)) {
+      setMessageText("Введено не коректний номер телефону!");
       return;
     }
-    dispatch(changeUserPhone({ password: password, newPhoneNumber: phone }));
+    if (user.phone === newPhone) {
+      setMessageText("Введіть новий номер телефону!");
+      return;
+    }
+    setIsOpenPhoneModal(true);
+  };
+
+  const handleSubmitPhone = async () => {
+    await dispatch(
+      changeUserPhone({ password: password, newPhoneNumber: phone.slice(-9) })
+    );
     setIsOpenPhoneModal(false);
   };
 
-  const handleSubmitEmail = () => {
-    console.log(email);
+  const handleCheckEmail = () => {
     if (user.email === email) {
-      toast.error("Enter a new email!");
+      toast.error("Enter a new email!")
     }
-    dispatch(changeUserEmail({ password: password, newEmail: email }));
-    setIsOpenEmailModal;
+    dispatch(changeUserEmail({ password: password, newEmail: email }))
+    setIsOpenEmailModal
   };
 
   const handleCancel = () => {
     onEdit();
+  };
+
+  const closeModal = () => {
+    setMessageText("");
+    dispatch(clearErrors());
+    console.log(responseError);
   };
 
   return (
@@ -85,8 +124,8 @@ export const UserDataEdit: FC<Props> = ({ onEdit }: Props) => {
             onClick={() => setIsOpenPhoneModal(false)}
           />
         </CommonModal>
-      )}
-      {/* модалка підтвердження зміни email */}
+)}
+{/* модалка підтвердження зміни email */}
 
       {isOpenEmailModal && (
         <CommonModal
@@ -110,7 +149,7 @@ export const UserDataEdit: FC<Props> = ({ onEdit }: Props) => {
             onClick={() => setIsOpenEmailModal(false)}
           />
         </CommonModal>
-      )}
+)}
 
       <form>
         <div className={styles.inputWrapper}>
@@ -157,7 +196,7 @@ export const UserDataEdit: FC<Props> = ({ onEdit }: Props) => {
           <button
             className={styles.inputBtn}
             type="button"
-            onClick={() => setIsOpenPhoneModal(true)}
+            onClick={handleCheckPhone}
           >
             <Image
               className={styles.buttonImg}
@@ -189,7 +228,7 @@ export const UserDataEdit: FC<Props> = ({ onEdit }: Props) => {
           <button
             className={styles.inputBtn}
             type="button"
-            onClick={() => setIsOpenEmailModal(true)}
+            onClick={()=>setIsOpenEmailModal(true)}
           >
             <Image
               className={styles.buttonImg}

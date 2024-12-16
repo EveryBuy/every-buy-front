@@ -17,13 +17,13 @@ export const footerItems: ItemType[] = [
     id: "icon-create-plus",
     alt: "AddIcon",
     text: "Створити",
-    link: "/"
+    link: "/",
   },
   {
     id: "icon-chat",
     alt: "Chat",
     text: "Чат",
-    link: "/"
+    link: "/messages",
   },
   {
     id: "icon-user",

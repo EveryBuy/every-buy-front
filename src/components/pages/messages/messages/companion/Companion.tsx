@@ -1,15 +1,22 @@
 "use client";
-
 import { useState, useEffect, useRef, FC } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import Image from "next/image";
 import { Box } from "@mui/material";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
+<<<<<<< HEAD
 import { Menu } from "@/components";
+=======
+import { Menu, CommonIcon } from "@/components";
+>>>>>>> 3c6254c7bbb0f754f23afe00e6624536522817f6
 import style from "./Companion.module.scss";
 
-const Companion: FC = () => {
+type CompanionBlockType = {
+  setSelectedChatId: (chatId: number | null) => void;
+};
+
+const Companion: FC<CompanionBlockType> = ({ setSelectedChatId }) => {
   const [isMenuVisible, setMenuVisible] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const companionPictureUrl = useSelector((state: RootState) =>
@@ -53,6 +60,11 @@ const Companion: FC = () => {
 
   return (
     <Box className={style.companionWrapper}>
+      <CommonIcon
+        id="back-arrow"
+        className={style.backArrow}
+        onClick={() => setSelectedChatId(null)}
+      />
       <Box className={style.companion}>
         {picture}
         <Box className={style.companionInfo}>

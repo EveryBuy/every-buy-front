@@ -53,7 +53,9 @@ const Header: FC = () => {
         className={
           path === "/"
             ? styles.headerContainer
-            : `${styles.headerContainer} ${styles.headerMessagePageContainer}`
+            : path === "/messages"
+            ? `${styles.headerContainer} ${styles.headerMessagePageContainer}`
+            : `${styles.headerContainer} ${styles.headerPageContainer}`
         }
       >
         <Link href="/" className={path === "/" ? "" : styles.logo}>
@@ -76,16 +78,34 @@ const Header: FC = () => {
           <div className={styles.iconsWrapper}>
             <div onClick={openWindowHandle}>
               <Link
+<<<<<<< HEAD:src/components/Header/Header.tsx
                 href={`${isLoggedIn ? "/messages" : "#"}`}
+=======
+                href="/messages"
+                onClick={(e) => !isLoggedIn && e.preventDefault()}
+>>>>>>> 3c6254c7bbb0f754f23afe00e6624536522817f6:src/components/header/Header.tsx
                 className={styles.linkToUserPage}
               >
                 <CommonIcon id="icon-chat" width="21" height="20" />
               </Link>
             </div>
             <CommonIcon id="icon-heart" width="21" height="20" />
-            <Link href="/user" className={styles.linkToUserPage}>
+            {/* <Link href="/user" className={styles.linkToUserPage}>
               <CommonIcon id="icon-user" width="21" height="20" />
+<<<<<<< HEAD:src/components/Header/Header.tsx
             </Link>
+=======
+            </Link> */}
+            <div onClick={openWindowHandle}>
+              <Link
+                href="/user"
+                onClick={(e) => !isLoggedIn && e.preventDefault()}
+                className={styles.linkToUserPage}
+              >
+                <CommonIcon id="icon-user" width="21" height="20" />
+              </Link>
+            </div>
+>>>>>>> 3c6254c7bbb0f754f23afe00e6624536522817f6:src/components/header/Header.tsx
 
             {successRegisterModalOpen && (
               <DoLoginModal
@@ -101,6 +121,7 @@ const Header: FC = () => {
               <DropdownMenu
                 status={isDropdownMenuVisible}
                 changeStatus={dropdownMenuHandle}
+                isLoggedIn={isLoggedIn}
               />
             </div>
           </div>
