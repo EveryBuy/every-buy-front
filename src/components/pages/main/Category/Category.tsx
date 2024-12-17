@@ -61,7 +61,7 @@ const Category: React.FC = () => {
   return (
     <div className={styles.sectionContainer}>
       <div className={styles.titleContainer}>
-        <h2 className={styles.title}>Categories</h2>
+        <h2 className={styles.title}></h2>
         <div className={styles.buttonsContainer}>
           <div
             className={`${styles.buyButton} ${
