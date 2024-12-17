@@ -1,40 +1,33 @@
 "use client";
 import { useState, useEffect } from "react";
 import { fetchCategoryData } from "@/api/fetchCategoryData";
-import { fetchCategoryFilter } from "@/api/fetchCategoryFilter";
-import Image from "next/image";
-import Fold from "@/assets/Svg/fold.svg";
+import { useRouter } from "next/navigation";
 import CategoryItem from "@/types/categoryItemType";
-import FilterItem from "@/types/filterItemType";
+import Image from "next/image";
 import styles from "./Category.module.scss";
+import Fold from "@/assets/Svg/fold.svg";
 // import CommonPreloader from "@/components/ui/CommonPreloader";
 
 const Category: React.FC = () => {
   const [data, setData] = useState<CategoryItem[] | null>(null);
-  const [filter, setFilter] = useState<FilterItem[] | null>(null);
+  const [selectedSection, setSelectedSection] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [isListOpen, setListOpen] = useState(false);
 
+  const router = useRouter();
 
   const toggleListOpen = () => setListOpen((prev) => !prev);
-
-
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const [categoryData, categoryFilter] = await Promise.all([
-          fetchCategoryData(),
-          fetchCategoryFilter(),
-        ]);
+        const categoryData = await fetchCategoryData();
         setData(categoryData);
-        setFilter(categoryFilter);
       } catch (error: any) {
         console.error("Error fetching data:", error);
         setError(error.message || "Failed to fetch data.");
-
       } finally {
         setLoading(false);
       }
@@ -55,30 +48,34 @@ const Category: React.FC = () => {
     return <div className={styles.error}>Error: {error}</div>;
   }
 
-  const handleFilterButtonClick = (section: string) => {
-    const filteredItems = filter.filter((item) => item.section === section);
-
-    if (filteredItems.length > 0) {
-      console.log(`${section} items:`, filteredItems);
-    } else {
-      console.log(`No items found for section: ${section}`);
+  const handleSectionClick = (section: string) => {
+    setSelectedSection(section);
+  }
+  
+  const handleCategoryClick = (categoryId: string) => {
+    if (selectedSection){
+      router.push(`/products?category=${categoryId}&section=${selectedSection}`)
     }
   };
 
   return (
     <div className={styles.sectionContainer}>
       <div className={styles.titleContainer}>
-        <h2 className={styles.title} />
+        <h2 className={styles.title}>Categories</h2>
         <div className={styles.buttonsContainer}>
           <div
-            className={styles.buyButton}
-            onClick={() => handleFilterButtonClick("BUY")}
+            className={`${styles.buyButton} ${
+              selectedSection === "BUY" ? styles.activeButton : ""
+            }`}
+            onClick={() => handleSectionClick("BUY")}
           >
             Куплю
           </div>
           <div
-            className={styles.sellButton}
-            onClick={() => handleFilterButtonClick("SELL")}
+            className={`${styles.sellButton} ${
+              selectedSection === "SELL" ? styles.activeButton : ""
+            }`}
+            onClick={() => handleSectionClick("SELL")}
           >
             Продам
           </div>
@@ -92,7 +89,11 @@ const Category: React.FC = () => {
       {data && data.length > 0 ? (
         <ul className={isListOpen ? styles.listAll : styles.list}>
           {data.map(({ id, nameUkr, photoUrl }) => (
-            <li className={styles.listItem} key={id}>
+            <li
+              className={styles.listItem}
+              key={id}
+              onClick={() => handleCategoryClick(`${id}`)}
+            >
               <div className={styles.listItemWrapper}>
                 <Image
                   className={styles.listItemImage}
