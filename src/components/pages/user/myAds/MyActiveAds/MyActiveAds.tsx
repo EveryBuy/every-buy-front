@@ -5,47 +5,48 @@ import styles from "./MyActiveAds.module.css";
 import MyAdvertList from "../MyAdvertList/MyAdvertList";
 import { CommonPagination } from "@/components/ui/CommonPagination/CommonPagination";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
-import { getUserActiveAdverts } from "@/redux/advertisement/operations";
-import { selectUserActiveAdverts } from "@/redux/advertisement/selectors";
+import {
+  getUserActiveAdverts,
+  getUserInactiveAdverts,
+} from "@/redux/advertisement/operations";
+import {
+  selectUserActiveAdverts,
+  selectUserInactiveAdverts,
+} from "@/redux/advertisement/selectors";
+import CommonSectionSelector from "@/components/ui/CommonSectionSelector/CommonSectionSelector";
 
-const MyActiveAds: FC = () => {
+type Props = {
+  active: boolean;
+};
+
+const MyActiveAds: FC<Props> = ({ active }) => {
   const dispatch = useAppDispatch();
   const activeAdsList = useAppSelector(selectUserActiveAdverts);
+  const inactiveAdsList = useAppSelector(selectUserInactiveAdverts);
   const [section, setSection] = useState("SELL");
   const [page, setPage] = useState(1);
+  const listToFilter = active ? activeAdsList : inactiveAdsList;
+  if (active) {
+  }
 
-  const currentList = activeAdsList
-    .filter((elem) => elem.section === section)
-    .slice((page - 1) * 8, (page - 1) * 8 + 8);
+  const filteredList = listToFilter.filter((elem) => elem.section === section);
+  const currentList = filteredList.slice((page - 1) * 8, (page - 1) * 8 + 8);
 
   useEffect(() => {
-    dispatch(getUserActiveAdverts());
-  }, [dispatch]);
+    if (active) {
+      dispatch(getUserActiveAdverts());
+    } else {
+      dispatch(getUserInactiveAdverts());
+    }
+  }, [dispatch, active]);
 
-  const handleBuy = () => {
-    setSection("BUY");
-  };
-
-  const handleSell = () => {
-    setSection("SELL");
-  };
-  // console.log("pagination", Math.ceil(activeAdsList.length / 8));
   return (
     <section className={styles.myActiveAdsContainer}>
-      <ul className={styles.buttonList}>
-        <li>
-          <button onClick={handleBuy}>Куплю</button>
-          {section === "BUY" && <div className={styles.toggle}></div>}
-        </li>
-        <li>
-          <button onClick={handleSell}>Продам</button>
-          {section === "SELL" && <div className={styles.toggle}></div>}
-        </li>
-      </ul>
+      <CommonSectionSelector section={section} setSection={setSection} />
       <MyAdvertList advertList={currentList} />
       <CommonPagination
         page={page}
-        pages={Math.ceil(activeAdsList.length / 8)}
+        pages={Math.ceil(filteredList.length / 8)}
         changePage={setPage}
       />
     </section>

@@ -37,7 +37,7 @@ export const CommonPagination: FC<CommonPaginationProps> = ({
     }
   };
 
-  return (
+  return pages > 1 ? (
     <section className={styles.paginationSection}>
       <button
         className={clsx(styles.angleCircle, styles.angleCircleLeft)}
@@ -73,5 +73,5 @@ export const CommonPagination: FC<CommonPaginationProps> = ({
         />
       </button>
     </section>
-  );
+  ) : null;
 };

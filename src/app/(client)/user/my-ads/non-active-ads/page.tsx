@@ -1,5 +1,5 @@
-import MyInactiveAds from "@/components/pages/user/myAds/MyIactiveAds/MyInactiveAds";
+import { MyActiveAds } from "@/components";
 
 export default function page() {
-  return <MyInactiveAds />;
+  return <MyActiveAds active={false} />;
 }

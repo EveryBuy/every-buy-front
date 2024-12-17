@@ -7,6 +7,7 @@ import { selectCategories } from "@/redux/advertisement/selectors";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import s from "../UserPage.module.scss";
 import styles from "./SelectedGoods.module.scss";
+import CommonSectionSelector from "@/components/ui/CommonSectionSelector/CommonSectionSelector";
 
 const widthSize = {
   mobile: "0",
@@ -26,15 +27,7 @@ export const SelectedGoods: FC = () => {
 
   useEffect(() => {
     dispatch(getCategory());
-  }, [dispatch]);
-
-  const handleBuy = () => {
-    setSection("BUY");
-  };
-
-  const handleSell = () => {
-    setSection("SELL");
-  };
+  }, [dispatch, section]);
 
   return (
     <section className={styles.SelectedGoodsContainer}>
@@ -48,21 +41,12 @@ export const SelectedGoods: FC = () => {
           value={selectedCategory}
           onChange={(evt) => setSelectedCategory(evt.target.value)}
         />
-        <div className={styles.buttonBox}>
-          <ul className={styles.buttonList}>
-            <li>
-              <button onClick={handleBuy}>Куплю</button>
-              {section === "BUY" && <div className={styles.toggle}></div>}
-            </li>
-            <li>
-              <button onClick={handleSell}>Продам</button>
-              {section === "SELL" && <div className={styles.toggle}></div>}
-            </li>
-          </ul>
-          <div className={styles.separator}></div>
-        </div>
+        <CommonSectionSelector section={section} setSection={setSection} />
       </div>
-      <SelectedGoodsList categoryFilter={category && category.id} />
+      <SelectedGoodsList
+        categoryFilter={category && category.id}
+        section={section}
+      />
     </section>
   );
 };
