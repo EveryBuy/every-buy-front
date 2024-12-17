@@ -1,11 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { FC } from "react";
 import styles from "./CommonSectionSelector.module.css";
 
-export const CommonSectionSelector = ({ section, setSection }) => {
-  //   const [section, setSection] = useState("SELL");
+type Props = {
+  section: string;
+  setSection: (section: string) => void;
+};
 
+export const CommonSectionSelector: FC<Props> = ({ section, setSection }) => {
   const handleBuy = () => {
     setSection("BUY");
   };
