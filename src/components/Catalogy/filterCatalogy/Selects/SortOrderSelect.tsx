@@ -1,21 +1,20 @@
 'use client';
 
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { useAppDispatch } from "@/redux/store";
-import { addSortOrder } from '@/redux/filters/slice';
+import { SortOrder, addSortOrder } from '@/redux/filters/slice';
 import CommonSelect from '@/components/ui/CommonSelect/CommonSelect';
 import { SelectChangeEvent } from '@mui/material';
 
-
-type sortOrderType = {
-	type: "ASC" | "DESC",
+type sortOrderListType = {
+	type: SortOrder,
 	title: string
 }
 
 const SortOrderSelection: FC = () => {
-	const [selectedOption, setSelectedOption] = useState("");
 
-	const sortOrderList: sortOrderType[] = [
+	const sortOrderList: sortOrderListType[] = [
 		{
 			type: "ASC",
 			title: "Від дешевих до дорогих"
@@ -26,18 +25,29 @@ const SortOrderSelection: FC = () => {
 		}
 	];
 
+	const searchParams = useSearchParams();
 	const dispatch = useAppDispatch();
+
+	const searchParamsSort: string | null = searchParams.has('sortOrder') ? searchParams.get('sortOrder') : '';
+	const initialSearchParams: sortOrderListType[] | [] = searchParamsSort && searchParamsSort.length > 0
+		? sortOrderList.filter(item => item.type === searchParamsSort) : [];
+
+	useEffect(() => {
+		dispatch(addSortOrder(searchParamsSort));
+	}, []);
+
+	const [selectedOption, setSelectedOption] = useState(
+		initialSearchParams.length > 0 ? initialSearchParams[0].title : ""
+	);
 
 	const options: string[] = sortOrderList.map(item => item.title);
 
 	const handleChange = (event: SelectChangeEvent<string>) => {
 		const target: string = event.target.value;
-		const arrSortSelect: sortOrderType[] = sortOrderList?.filter(item => item.title === target);
-		console.log(arrSortSelect);
-		const newTypeSort: string = arrSortSelect.length > 0 ? arrSortSelect[0].type : '';
+		const arrSortSelect: sortOrderListType[] = sortOrderList?.filter(item => item.title === target);
+		const newTypeSort: string = arrSortSelect.length > 0 ? arrSortSelect[0].type : "";
 		dispatch(addSortOrder(newTypeSort));
 		setSelectedOption(target);
-		console.log(newTypeSort);
 	};
 
 	return (

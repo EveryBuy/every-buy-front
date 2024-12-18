@@ -14,7 +14,7 @@ const CityListSelect: FC = () => {
 	const cityList: CityList[] = useAppSelector(selectCityList);
 
 	// const options = ["Option 1", "Option 2", "Option 3"];
-	const options: string[] = cityList.map(item => item.cityName);
+	const options: string[] = cityList.map(item => item.cityName).sort();
 
 	const dispatch = useAppDispatch();
 

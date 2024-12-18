@@ -1,19 +1,18 @@
 'use client';
 
 import React, { FC, useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { useAppDispatch } from "@/redux/store";
-import { addProductType } from '@/redux/filters/slice';
+import { ProductType, addProductType, InitialState } from '@/redux/filters/slice';
 import CommonSelect from '@/components/ui/CommonSelect/CommonSelect';
 import { SelectChangeEvent } from '@mui/material';
-import { ProductType } from '@/redux/filters/slice';
 
 type productListType = {
-	type: "NEW" | "USED" | "OTHER",
+	type: ProductType | "OTHER",
 	title: string
 }
 
 const ProductTyperSelection: FC = () => {
-	const [selectedOption, setSelectedOption] = useState("");
 
 	const productTypeList: productListType[] = [
 		{
@@ -30,7 +29,22 @@ const ProductTyperSelection: FC = () => {
 		},
 	]
 
+	const searchParams = useSearchParams() as unknown as Map<keyof InitialState, string | null>;
 	const dispatch = useAppDispatch();
+
+	const searchParamsType: string | null = searchParams.has('productType')
+		? searchParams.get('productType') : '';
+
+	const initialSearchParams: productListType[] | [] = searchParamsType && searchParamsType.length > 0
+		? productTypeList.filter(item => item.type === searchParamsType) : [];
+
+	useEffect(() => {
+		dispatch(addProductType(searchParamsType));
+	}, []);
+
+	const [selectedOption, setSelectedOption] = useState(
+		initialSearchParams.length > 0 ? initialSearchParams[0]?.title : ""
+	);
 
 	const options: string[] = productTypeList.map(item => item.title);
 
@@ -40,7 +54,6 @@ const ProductTyperSelection: FC = () => {
 		const newProductType: string = arrProductTypeSelect.length > 0 ? arrProductTypeSelect[0].type : '';
 		dispatch(addProductType(newProductType));
 		setSelectedOption(target);
-		console.log(newProductType);
 	};
 
 	return (
