@@ -3,6 +3,7 @@
 import { CommonIcon, ComplaintModal } from "@/components";
 // import locationSvg from "../../../assets/Svg/location.svg";
 import styles from "./Info.module.scss";
+import announcement from "@/mock-data/announcement";
 
 interface locationObj {
   city: string;
@@ -55,7 +56,7 @@ export default function Info({ articleInfo }: ArticleInfo) {
           <p className={styles.text}>{delivery.join(", ")}</p>
         </div>
       </div>
-      <ComplaintModal />
+      <ComplaintModal announcement={announcement} />
     </div>
   );
 }

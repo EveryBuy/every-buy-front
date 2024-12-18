@@ -7,7 +7,14 @@ import { Backdrop } from "@mui/material";
 import xClose from "@/assets/Svg/xClose.svg";
 import styles from "./ComplaintModal.module.scss";
 
-const ComplaintModal: FC = () => {
+interface ComplaintModalProps {
+  announcement: {
+    title: string;
+    nameUkr: string;
+  };
+}
+
+const ComplaintModal: FC<ComplaintModalProps> = ({ announcement }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedReasons, setSelectedReasons] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -109,16 +116,14 @@ const ComplaintModal: FC = () => {
                   <p className={styles.confirmationContent}>Зміст скарги:</p>
                   <ul>
                     {selectedReasons.map((reason, index) => (
-                      <>
-                        <li className={styles.confirmReasons} key={index}>
-                          {reason}
-                        </li>
-                        <li className={styles.confirmReasons}>
-                          Предмет скарги: Оголошення &quot;Стильна жіноча
-                          сукня&quot; від продавця Вікторія.
-                        </li>
-                      </>
+                      <li className={styles.confirmReasons} key={index}>
+                        {reason}
+                      </li>
                     ))}
+                    <li className={styles.confirmReasons}>
+                      Предмет скарги: Оголошення "{announcement.title}" від
+                      продавця {announcement.nameUkr}.
+                    </li>
                   </ul>
                   <div className={styles.buttonContainer}>
                     <CommonButton
