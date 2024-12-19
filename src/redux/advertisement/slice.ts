@@ -72,7 +72,7 @@ export type FavouriteAdvertisement = {
     city: CityList,
     mainPhotoUrl: string,
     price: number,
-    productType: "NEW | USED",
+    productType: "NEW" | "USED" | "OTHER",
     title: string,
     updateDate: string,
     userId: number,
@@ -190,10 +190,20 @@ const advertisementSlice = createSlice({
             })
             .addCase(changeAdvertisementStatus.pending, handlePending)
             .addCase(changeAdvertisementStatus.fulfilled, (state, action) => {
+
                 state.isLoading = false;
-                const index = state.myAdvertisements.findIndex(elem => elem.id === action.payload.data.advertisementId)
-                state.myAdvertisements[index].isEnabled = action.payload.data.status;
-                state.myAdvertisements[index].updateDate = action.payload.data.updateDate;
+                if (action.payload.data.status === false) {
+                    const advert = state.userActiveAdverts.find(elem => elem.id === action.payload.data.advertisementId);
+                    const index = state.userActiveAdverts.findIndex(elem => elem.id === action.payload.data.advertisementId);
+                    if (advert) state.userInactiveAdverts.push(advert);
+                    state.userActiveAdverts.splice(index, 1);
+                } else {
+                    const advert = state.userInactiveAdverts.find(elem => elem.id === action.payload.data.advertisementId);
+                    const index = state.userInactiveAdverts.findIndex(elem => elem.id === action.payload.data.advertisementId);
+                    if (advert) state.userActiveAdverts.push(advert);
+                    state.userInactiveAdverts.splice(index, 1);
+                }
+
             })
             .addCase(changeAdvertisementStatus.rejected, (state) => {
                 state.isLoading = false;
