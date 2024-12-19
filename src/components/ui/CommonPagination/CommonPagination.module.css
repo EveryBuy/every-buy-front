@@ -1,0 +1,31 @@
+.paginationSection {
+  display: flex;
+  flex-direction: row;
+  gap: 11px;
+  justify-content: center;
+}
+
+.angleCircle {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.angleCircleLeft {
+  transform: rotate(180deg);
+}
+
+.list {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+}
+
+.page {
+  color: grey;
+}
+
+.selectedPage {
+  color: black;
+}

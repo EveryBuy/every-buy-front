@@ -26,7 +26,7 @@ export { default as Category } from "./pages/main/Category/Category";
 export { default as AboutMe } from "./pages/user/AboutMe/AboutMe";
 export { default as SelectedGoods } from "./pages/user/selectedGoods/SelectedGoods";
 export { default as MyAds } from "./pages/user/myAds/MyAds";
-export { default as MyActiveAds } from "./pages/user/myAds/MyActiveAds";
+export { default as MyActiveAds } from "./pages/user/myAds/MyActiveAds/MyActiveAds";
 export { default as MyNonActiveAds } from "./pages/user/myAds/MyNonActiveAds";
 export { default as ProfileMenu } from "./pages/user/ProfileMenu/ProfileMenu";
 export { default as MobileProfileMenu } from "./pages/user/MobileProfileMenu/MobileProfileMenu";
