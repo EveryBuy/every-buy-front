@@ -1,29 +1,35 @@
 'use client';
 
 import { Box, Typography } from '@mui/material';
+import { useAppSelector, useAppDispatch } from "@/redux/store";
+import { addCategory, InitialState } from '@/redux/filters/slice';
 import { useState, useEffect } from 'react';
-import { fetchCategoryData } from '@/api/fetchCategoryData';
+import { Category } from '@/redux/advertisement/slice';
 import CategoryItem from "@/types/categoryItemType";
 
 export function CategoryList() {
+
+	const categoryIdStore: number = useAppSelector((state) => state.filters.categoryId) || 0;
+
 	const [categories, setCategories] = useState<CategoryItem[] | []>([]);
 	const [selectedCategory, setSelectedCategory] = useState<number>(0);
 
-	useEffect(() => {
-		const fetchCategor = async () => {
-			try {
-				const result = await fetchCategoryData();
-				setCategories(result);
-			} catch (error: any) {
-				console.error("Error fetching data:", error);
-			}
-		};
+	const dispatch = useAppDispatch();
 
-		fetchCategor();
-	}, []);
+	const categoriesList: Category[] | [] = useAppSelector((state) => state.advertisement.category);
+
+	useEffect(() => {
+		setCategories(categoriesList);
+		setSelectedCategory(categoryIdStore);
+	}, [categoriesList]);
+
+	useEffect(() => {
+		setSelectedCategory(categoryIdStore);
+	}, [categoryIdStore]);
 
 	const handleCategoryClick = (id: number) => {
 		setSelectedCategory((prev) => (prev === id ? 0 : id));
+		dispatch(addCategory(id));
 	};
 
 	return (
