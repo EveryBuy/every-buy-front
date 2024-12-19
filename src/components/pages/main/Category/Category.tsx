@@ -48,6 +48,7 @@ const Category: React.FC = () => {
     return <div className={styles.error}>Error: {error}</div>;
   }
 
+
   const handleSectionClick = (section: string) => {
     setSelectedSection(section);
   }

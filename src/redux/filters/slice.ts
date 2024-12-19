@@ -16,6 +16,10 @@ export type InitialState = {
     categoryId: number | null,
     subcategoryId: number | null,
     keyword: string,
+    regionId: number | null,
+    topSubCateroryId: number | null,
+    lowSubCategoryId: number | null,
+    page: number,
 }
 
 const initialState: InitialState = {
@@ -29,6 +33,10 @@ const initialState: InitialState = {
     categoryId: null,
     subcategoryId: null,
     keyword: '',
+    regionId: null,
+    topSubCateroryId: null,
+    lowSubCategoryId: null,
+    page: 1,
 }
 
 const filtersSlice = createSlice({
@@ -105,8 +113,75 @@ const filtersSlice = createSlice({
                 }
             },
         },
+        addRegionId: {
+            reducer(state, action: PayloadAction<number>) {
+                state.regionId = action.payload;
+            },
+            prepare(regionId: number) {
+                return {
+                    payload: regionId, 
+                }
+            },
+        },
+        addTopSubCateroryId: {
+            reducer(state, action: PayloadAction<number>) {
+                state.topSubCateroryId = action.payload;
+            },
+            prepare(topSubCateroryId: number) {
+                return {
+                    payload: topSubCateroryId,
+                }
+            }
+        },
+        addLowSubCategoryId: {
+            reducer(state, action: PayloadAction<number>) {
+                state.lowSubCategoryId = action.payload;
+            },
+            prepare(lowSubCategoryId: number) {
+                return {
+                    payload: lowSubCategoryId,
+                }
+            }
+        },
+        addPage: {
+            reducer(state, action: PayloadAction<number>) {
+                state.page = action.payload;
+            },
+            prepare(page: number) {
+                return {
+                    payload: page,
+                }
+            }
+        },
+        resetFilters(state, _) {
+            state.price.min = 0,
+                state.price.max = 100000,
+                state.productType = '';
+                state.sortOrder = '';
+                state.location = '';
+                state.categoryId = null;
+                state.subcategoryId = null;
+                state.regionId = null;
+                state.topSubCateroryId = null;
+                state.lowSubCategoryId = null;
+                state.page = 1;
+            },
+        
     }
 });
 
-export const { addPrice, addProductType, addSortOrder, addLocation, addCategory, addSubCategory, addKeyWord } = filtersSlice.actions;
+export const {
+    addPrice,
+    addProductType,
+    addSortOrder,
+    addLocation,
+    addCategory,
+    addSubCategory,
+    addKeyWord,
+    addRegionId,
+    addTopSubCateroryId,
+    addLowSubCategoryId,
+    addPage,
+    resetFilters,
+} = filtersSlice.actions;
 export const filtersReducer = filtersSlice.reducer;

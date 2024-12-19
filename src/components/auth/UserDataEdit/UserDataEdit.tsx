@@ -1,14 +1,28 @@
 "use client";
-
 import { FC, useEffect, useState } from "react";
-import { selectUser } from "@/redux/auth/selectors";
+import Image from "next/image";
+import {
+  CommonInput,
+  CommonModal,
+  CommonButton,
+  ErrorModal,
+} from "@/components";
+import { selectError, selectUser } from "@/redux/auth/selectors";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import submit from "@/assets/Svg/CheckCircleFilled.svg";
 import cancel from "@/assets/Svg/CloseCircleFilled.svg";
-import { changeUserEmail, changeUserName, changeUserPhone } from "@/redux/auth/operations";
-import CommonModal from "@/components/ui/CommonModal/CommonModal";
-import CommonButton from "@/components/ui/CommonButton/CommonButton";
+import {
+  changeUserEmail,
+  changeUserName,
+  changeUserPhone,
+} from "@/redux/auth/operations";
+
 import toast, { Toaster } from "react-hot-toast";
+import styles from "./UserDataEdit.module.scss";
+import { useSelector } from "react-redux";
+import { clearErrors } from "@/redux/auth/slice";
+import { validateEmail, validateName, validatePhone } from "@/utils/validate";
+import { log } from "util";
 
 type Props = {
   onEdit: () => void;
@@ -83,10 +97,19 @@ export const UserDataEdit: FC<Props> = ({ onEdit }: Props) => {
 
   const handleCheckEmail = () => {
     if (user.email === email) {
-      toast.error("Enter a new email!")
+      setMessageText("Введіть новий email!");
+      return;
     }
-    dispatch(changeUserEmail({ password: password, newEmail: email }))
-    setIsOpenEmailModal
+    if (!validateEmail(email)) {
+      setMessageText("Введено не коректний email!");
+      return;
+    }
+    setIsOpenEmailModal(true);
+  };
+
+  const handleSubmitEmail = () => {
+    dispatch(changeUserEmail({ password: password, newEmail: email }));
+    setIsOpenEmailModal(false);
   };
 
   const handleCancel = () => {
@@ -124,9 +147,8 @@ export const UserDataEdit: FC<Props> = ({ onEdit }: Props) => {
             onClick={() => setIsOpenPhoneModal(false)}
           />
         </CommonModal>
-)}
-{/* модалка підтвердження зміни email */}
-
+      )}
+      {/* модалка підтвердження зміни email */}
       {isOpenEmailModal && (
         <CommonModal
           contentClassName={styles.content}
@@ -149,8 +171,15 @@ export const UserDataEdit: FC<Props> = ({ onEdit }: Props) => {
             onClick={() => setIsOpenEmailModal(false)}
           />
         </CommonModal>
-)}
-
+      )}
+      {/* модалка помилок */}
+      {messageText && (
+        <ErrorModal
+          onClose={() => closeModal()}
+          title={messageText}
+          buttonText="Ok"
+        />
+      )}
       <form>
         <div className={styles.inputWrapper}>
           <CommonInput
@@ -228,7 +257,7 @@ export const UserDataEdit: FC<Props> = ({ onEdit }: Props) => {
           <button
             className={styles.inputBtn}
             type="button"
-            onClick={()=>setIsOpenEmailModal(true)}
+            onClick={handleCheckEmail}
           >
             <Image
               className={styles.buttonImg}

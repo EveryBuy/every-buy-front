@@ -11,18 +11,19 @@ import { selectFavouriteAdvertisements } from "@/redux/advertisement/selectors";
 import { useSelector } from "react-redux";
 import styles from "./SelectedGoodsList.module.scss";
 
-export const SelectedGoodsList: FC<{ categoryFilter: number }> = ({
-  categoryFilter,
-}) => {
+export const SelectedGoodsList: FC<{
+  categoryFilter: number;
+  section: string;
+}> = ({ categoryFilter, section }) => {
   const categoryId = categoryFilter ? categoryFilter : null;
   const items = useSelector(selectFavouriteAdvertisements);
   const dispatch = useAppDispatch();
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    dispatch(getAllFavouriteAdvert({ categoryId }));
+    dispatch(getAllFavouriteAdvert({ categoryId, section }));
     setIsClient(true);
-  }, [dispatch, categoryId]);
+  }, [dispatch, categoryId, section]);
 
   const handleRemove = async (advertisementId: number) => {
     await dispatch(removeAdvertFromFavourite(advertisementId));

@@ -2,7 +2,7 @@ import Image from "next/image";
 import { Backdrop } from "@mui/material";
 import xClose from "@/assets/Svg/xClose.svg";
 import CommonModalProps from "@/types/commonModalProps";
-import styles from "./CommonModal.module.scss";
+import styles from "./CommonModal.module.scss"
 
 export const CommonModal: React.FC<CommonModalProps> = ({
   contentClassName,
