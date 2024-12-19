@@ -14,7 +14,7 @@ const IconsData: FC = () => {
         />
       </Box>
       <Box className={style.iconsDataLaptopWrapper}>
-        <Icons scss="iconsData" />
+        <Icons scss="iconsData" isItTopBlock={false} />
       </Box>
     </>
   );

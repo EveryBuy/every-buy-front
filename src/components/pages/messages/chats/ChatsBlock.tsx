@@ -92,7 +92,7 @@ const MessageListBlock: FC<MessageListBlockType> = ({
             />
             <Box className={style.iconsWrapper}>
               <Icons
-                // status={isHeartSelected}
+                isItTopBlock={true}
                 statusHeartHandler={handleIconHeartClick}
                 statusFolderHandler={handleIconFolderClick}
               />

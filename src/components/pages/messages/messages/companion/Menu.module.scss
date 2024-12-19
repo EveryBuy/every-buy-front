@@ -29,6 +29,9 @@
     @include media-min($breakpoint-tablet) {
       padding: 4px 0px;
     }
+    @include media-min($breakpoint-tablet) {
+      padding: 6px 0px;
+    }
   }
 
   & li:last-child {

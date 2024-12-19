@@ -21,6 +21,10 @@
     width: 18px;
     height: 16px;
   }
+  @include media-min($breakpoint-laptop) {
+    width: 18px;
+    height: 18px;
+  }
 }
 
 .folder {

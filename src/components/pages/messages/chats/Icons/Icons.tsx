@@ -3,15 +3,16 @@ import { Box } from "@mui/material";
 import { CommonIcon } from "@/components";
 import style from "./Icons.module.scss";
 
-interface IconsType {
+interface IconsBlockType {
   scss?: keyof typeof style;
-  // status?: boolean;
+  isItTopBlock: boolean;
   statusHeartHandler?: () => void;
   statusFolderHandler?: () => void;
 }
 
-const Icons: FC<IconsType> = ({
+const Icons: FC<IconsBlockType> = ({
   scss,
+  isItTopBlock,
   statusHeartHandler,
   statusFolderHandler,
 }) => {
@@ -20,12 +21,12 @@ const Icons: FC<IconsType> = ({
       <CommonIcon
         id="icon-heart"
         className={`${style.icon} ${scss ? style[scss] : ""}`}
-        onClick={statusHeartHandler}
+        onClick={isItTopBlock ? statusHeartHandler : statusHeartHandler}
       />
       <CommonIcon
         id="folder"
         className={`${style.icon} ${style.folder} ${scss ? style[scss] : ""}`}
-        onClick={statusFolderHandler}
+        onClick={isItTopBlock ? statusFolderHandler : statusFolderHandler}
       />
       <CommonIcon
         id="trash"
