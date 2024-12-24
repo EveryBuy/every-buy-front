@@ -1,5 +1,5 @@
-import { MyNonActiveAds } from "@/components";
+import { MyActiveAds } from "@/components";
 
-export default function NonActiveAdsPage() {
-  return <MyNonActiveAds />;
+export default function page() {
+  return <MyActiveAds active={false} />;
 }

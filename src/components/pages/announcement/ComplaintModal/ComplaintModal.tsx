@@ -7,9 +7,16 @@ import { Backdrop } from "@mui/material";
 import xClose from "@/assets/Svg/xClose.svg";
 import styles from "./ComplaintModal.module.scss";
 
-const ComplaintModal: FC = () => {
+interface ComplaintModalProps {
+  announcement: {
+    title: string;
+    nameUkr: string;
+  };
+}
+
+const ComplaintModal: FC<ComplaintModalProps> = ({ announcement }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedReasons, setSelectedReasons] = useState<string[]>([]);
+  const [selectedReason, setSelectedReason] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
@@ -28,7 +35,7 @@ const ComplaintModal: FC = () => {
   };
 
   const resetModalState = () => {
-    setSelectedReasons([]);
+    setSelectedReason(null);
     setIsSubmitting(false);
     setSubmitted(false);
   };
@@ -37,12 +44,8 @@ const ComplaintModal: FC = () => {
     setIsModalOpen(false);
   };
 
-  const toggleReason = (reason: string) => {
-    setSelectedReasons((prev) =>
-      prev.includes(reason)
-        ? prev.filter((item) => item !== reason)
-        : [...prev, reason]
-    );
+  const selectReason = (reason: string) => {
+    setSelectedReason((prev) => (prev === reason ? null : reason));
   };
 
   const handleSubmit = () => {
@@ -108,17 +111,13 @@ const ComplaintModal: FC = () => {
                   </h2>
                   <p className={styles.confirmationContent}>Зміст скарги:</p>
                   <ul>
-                    {selectedReasons.map((reason, index) => (
-                      <>
-                        <li className={styles.confirmReasons} key={index}>
-                          {reason}
-                        </li>
-                        <li className={styles.confirmReasons}>
-                          Предмет скарги: Оголошення &quot;Стильна жіноча
-                          сукня&quot; від продавця Вікторія.
-                        </li>
-                      </>
-                    ))}
+                    {selectedReason && (
+                      <li className={styles.confirmReasons}>{selectedReason}</li>
+                    )}
+                    <li className={styles.confirmReasons}>
+                      Предмет скарги: Оголошення "{announcement.title}" від
+                      продавця {announcement.nameUkr}.
+                    </li>
                   </ul>
                   <div className={styles.buttonContainer}>
                     <CommonButton
@@ -145,9 +144,10 @@ const ComplaintModal: FC = () => {
                       <li key={index} className={styles.reasonItem}>
                         <label>
                           <input
-                            type="checkbox"
-                            checked={selectedReasons.includes(reason)}
-                            onChange={() => toggleReason(reason)}
+                            type="radio"
+                            name="complaintReason"
+                            checked={selectedReason === reason}
+                            onChange={() => selectReason(reason)}
                           />
                           {reason}
                         </label>
@@ -160,7 +160,7 @@ const ComplaintModal: FC = () => {
                     color="yellow"
                     className={styles.modalButton}
                     onClick={handleSubmit}
-                    disabled={selectedReasons.length === 0}
+                    disabled={!selectedReason}
                   />
                 </div>
               )}

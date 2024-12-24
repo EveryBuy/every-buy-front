@@ -1,5 +1,11 @@
-import { MyAds } from "@/components";
+"use client";
+
+import { useRouter } from "next/navigation";
 
 export default function MyAdsPage() {
-  return <MyAds />;
+  const router = useRouter();
+
+  router.push("/user/my-ads/active-ads");
+
+  return;
 }
