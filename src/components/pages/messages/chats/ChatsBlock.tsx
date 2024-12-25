@@ -8,15 +8,12 @@ import {
 } from "@/redux/messages/chatApi";
 import style from "./ChatsBlock.module.scss";
 
-type MessageListBlockType = {
+type ChatsBlockType = {
   onclick: (selectedChatId: number) => void;
   selectedChatId: number | null;
 };
 
-const MessageListBlock: FC<MessageListBlockType> = ({
-  onclick,
-  selectedChatId,
-}) => {
+const ChatsBlock: FC<ChatsBlockType> = ({ onclick, selectedChatId }) => {
   const [activeButton, setActiveButton] = useState<number | null>(1);
   const [isHeartSelected, setHeardSelected] = useState<boolean>(false);
   const [isFolderSelected, setFolderSelected] = useState<boolean>(false);
@@ -101,10 +98,14 @@ const MessageListBlock: FC<MessageListBlockType> = ({
         )}
       </Box>
       {/* <Box className={style.listWrapper}> */}
-      <ChatsList chats={chats} onclick={onclick} />
+      <ChatsList
+        chats={chats}
+        onclick={onclick}
+        selectedChatId={selectedChatId}
+      />
       {/* </Box> */}
     </Box>
   );
 };
 
-export default MessageListBlock;
+export default ChatsBlock;

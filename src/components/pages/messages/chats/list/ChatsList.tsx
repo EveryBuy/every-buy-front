@@ -9,12 +9,13 @@ import style from "./ChatsList.module.scss";
 // TODO create slice
 // TODO onclick => make request, take messages by id => save to redux
 
-interface ListChatsType {
+interface ChatsListType {
   chats?: ChatType[] | undefined;
   onclick: (chatId: number) => void;
+  selectedChatId: number | null;
 }
 
-const ChatsList: FC<ListChatsType> = ({ chats, onclick }) => {
+const ChatsList: FC<ChatsListType> = ({ chats, onclick, selectedChatId }) => {
   const handleChatClick = (chatId: number) => {
     // setSelectedChatId(chatId);
     onclick(chatId);
@@ -37,6 +38,7 @@ const ChatsList: FC<ListChatsType> = ({ chats, onclick }) => {
               lastMessage={lastMessage}
               userData={userData}
               lastMessageDate={lastMessageDate}
+              selectedChatId={selectedChatId}
             />
           </Box>
         ))

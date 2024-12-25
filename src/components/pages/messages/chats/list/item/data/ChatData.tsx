@@ -1,19 +1,20 @@
 import { FC } from "react";
 import { Box } from "@mui/material";
 import { IconsData, TimeData } from "@/components";
-import style from "./MessageData.module.scss";
+import style from "./ChatData.module.scss";
 
-interface MessageDataType {
+interface ChatDataType {
   lastMessageDate: string;
+  selectedChatId: number | null | undefined;
 }
 
-const MessageData: FC<MessageDataType> = ({ lastMessageDate }) => {
+const ChatData: FC<ChatDataType> = ({ lastMessageDate, selectedChatId }) => {
   return (
     <Box className={style.blockWrapper}>
       <TimeData lastMessageDate={lastMessageDate} />
-      <IconsData />
+      <IconsData selectedChatId={selectedChatId} />
     </Box>
   );
 };
 
-export default MessageData;
+export default ChatData;

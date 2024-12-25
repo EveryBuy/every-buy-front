@@ -12,6 +12,7 @@ type ChatType = {
   lastMessageDate: string;
   section?: string;
   userData: UserDataType;
+  selectedChatId?: number | null;
 };
 
 type FullChatType = {

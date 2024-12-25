@@ -68,7 +68,7 @@ export { default as Product } from "./pages/messages/messages/product/Product";
 export { default as Menu } from "./pages/messages/messages/companion/Menu";
 export { default as ChatsList } from "./pages/messages/chats/list/ChatsList";
 export { default as Chat } from "./pages/messages/chats/list/item/Chat";
-export { default as MessageData } from "./pages/messages/chats/list/item/data/MessageData";
+export { default as ChatData } from "./pages/messages/chats/list/item/data/ChatData";
 export { default as TimeData } from "./pages/messages/chats/list/item/data/TimeData";
 export { default as IconsData } from "./pages/messages/chats/list/item/data/IconsData";
 export { default as Buttons } from "./pages/messages/chats/Buttons/Buttons";
