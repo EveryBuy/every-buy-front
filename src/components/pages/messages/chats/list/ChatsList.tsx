@@ -6,19 +6,16 @@ import { Chat, CommonPreloader } from "@/components";
 import { ChatType } from "@/types/messages/chats";
 import style from "./ChatsList.module.scss";
 
-// TODO create slice
-// TODO onclick => make request, take messages by id => save to redux
-
 interface ChatsListType {
   chats?: ChatType[] | undefined;
-  onclick: (chatId: number) => void;
+  setSelectedChatId: (chatId: number) => void;
   selectedChatId: number | null;
 }
 
-const ChatsList: FC<ChatsListType> = ({ chats, onclick, selectedChatId }) => {
+const ChatsList: FC<ChatsListType> = ({ chats, setSelectedChatId }) => {
   const handleChatClick = (chatId: number) => {
-    // setSelectedChatId(chatId);
-    onclick(chatId);
+    setSelectedChatId(chatId);
+    console.log(chatId);
   };
 
   return (
@@ -38,7 +35,8 @@ const ChatsList: FC<ChatsListType> = ({ chats, onclick, selectedChatId }) => {
               lastMessage={lastMessage}
               userData={userData}
               lastMessageDate={lastMessageDate}
-              selectedChatId={selectedChatId}
+              // handleChatClick={setSelectedChatId}
+              chatId={chatId}
             />
           </Box>
         ))

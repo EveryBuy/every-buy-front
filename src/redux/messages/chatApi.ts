@@ -19,9 +19,11 @@ export const chatApi = createApi({
       return headers;
     },
   }),
+  tagTypes: ["Chat"],
   endpoints: (builder) => ({
     getBuyChats: builder.query<ChatsType, void>({
       query: () => "/chat/get-buy-users-chats",
+      providesTags: ["Chat"],
     }),
     getSellChats: builder.query<ChatsType, void>({
       query: () => "/chat/get-sell-users-chats",
@@ -35,6 +37,34 @@ export const chatApi = createApi({
       transformResponse: (response: { data: ChatMessagesDataTypeInt }) =>
         response.data.chatMessages,
     }),
+    addChatToFavorites: builder.mutation<void, { chatId: number }>({
+      query: ({ chatId }) => ({
+        url: `/chat/add-to-favorite?chatId=${chatId}`,
+        method: "POST",
+      }),
+      invalidatesTags: ["Chat"],
+    }),
+    removeChatFromFavorites: builder.mutation<void, { chatId: number }>({
+      query: ({ chatId }) => ({
+        url: `/chat/remove-from-favorite?chatId=${chatId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Chat"],
+    }),
+    addChatToArchive: builder.mutation<void, { chatId: number }>({
+      query: ({ chatId }) => ({
+        url: `/chat/add-to-archive?chatId=${chatId}`,
+        method: "POST",
+      }),
+      invalidatesTags: ["Chat"],
+    }),
+    removeChatFromArchive: builder.mutation<void, { chatId: number }>({
+      query: ({ chatId }) => ({
+        url: `/chat/remove-from-archive?chatId=${chatId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Chat"],
+    }),
   }),
 });
 
@@ -43,4 +73,8 @@ export const {
   useGetSellChatsQuery,
   useGetChatQuery,
   useGetMessagesByChatIdQuery,
+  useAddChatToFavoritesMutation,
+  useRemoveChatFromFavoritesMutation,
+  useAddChatToArchiveMutation,
+  useRemoveChatFromArchiveMutation,
 } = chatApi;

@@ -31,7 +31,8 @@ const Dialogue: FC<DialogueType> = ({ chatId }) => {
   } = useGetMessagesByChatIdQuery(chatId ?? skipToken, {
     refetchOnMountOrArgChange: true,
   });
-  const { data: chat } = useGetChatQuery(chatId ?? skipToken, {
+
+  useGetChatQuery(chatId ?? skipToken, {
     refetchOnMountOrArgChange: true,
   });
 

@@ -13,6 +13,7 @@ type ChatType = {
   section?: string;
   userData: UserDataType;
   selectedChatId?: number | null;
+  // handleChatClick: (chatId: number) => void;
 };
 
 type FullChatType = {

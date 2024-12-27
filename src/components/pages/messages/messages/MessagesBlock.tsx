@@ -18,21 +18,7 @@ const MessagesBlock: FC<MessagesBlockType> = ({
         chatId ? `${style.blockWrapper} ${style.visible}` : style.blockWrapper
       }
     >
-      {/* {chatId ? (
-        <>
-          <Companion setSelectedChatId={setSelectedChatId} />
-          <Product />
-          <Dialogue chatId={chatId} />
-        </>
-      ) : (
-        <Box
-          sx={{
-            paddingTop: "25%",
-          }}
-        >
-          <CommonPreloader sx={{ color: "#9d9d9d" }} />
-        </Box>
-      )} */}
+      {/* setSelectedChatId - for mobile version */}
       <Companion setSelectedChatId={setSelectedChatId} />
       <Product />
       <Dialogue chatId={chatId} />

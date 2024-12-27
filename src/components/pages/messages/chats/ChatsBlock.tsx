@@ -9,23 +9,26 @@ import {
 import style from "./ChatsBlock.module.scss";
 
 type ChatsBlockType = {
-  onclick: (selectedChatId: number) => void;
+  setSelectedChatId: (selectedChatId: number) => void;
   selectedChatId: number | null;
 };
 
-const ChatsBlock: FC<ChatsBlockType> = ({ onclick, selectedChatId }) => {
+const ChatsBlock: FC<ChatsBlockType> = ({
+  setSelectedChatId,
+  selectedChatId,
+}) => {
   const [activeButton, setActiveButton] = useState<number | null>(1);
   const [isHeartSelected, setHeardSelected] = useState<boolean>(false);
   const [isFolderSelected, setFolderSelected] = useState<boolean>(false);
   const {
     data: buyChats,
-    isLoading: isBuyChatsLoading,
-    isError: isBuyChatsError,
+    // isLoading: isBuyChatsLoading,
+    // isError: isBuyChatsError,
   } = useGetBuyChatsQuery();
   const {
     data: sellChats,
-    isLoading: isSellChatsLoading,
-    isError: isSellChatsError,
+    // isLoading: isSellChatsLoading,
+    // isError: isSellChatsError,
   } = useGetSellChatsQuery();
 
   const chats = activeButton === 1 ? buyChats : sellChats;
@@ -97,13 +100,11 @@ const ChatsBlock: FC<ChatsBlockType> = ({ onclick, selectedChatId }) => {
           </>
         )}
       </Box>
-      {/* <Box className={style.listWrapper}> */}
       <ChatsList
         chats={chats}
-        onclick={onclick}
+        setSelectedChatId={setSelectedChatId}
         selectedChatId={selectedChatId}
       />
-      {/* </Box> */}
     </Box>
   );
 };

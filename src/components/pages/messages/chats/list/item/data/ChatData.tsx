@@ -6,13 +6,18 @@ import style from "./ChatData.module.scss";
 interface ChatDataType {
   lastMessageDate: string;
   selectedChatId: number | null | undefined;
+  // handleChatClick: (chatId: number) => void;
+  chatId: number | undefined;
 }
 
-const ChatData: FC<ChatDataType> = ({ lastMessageDate, selectedChatId }) => {
+const ChatData: FC<ChatDataType> = ({ lastMessageDate, chatId }) => {
   return (
     <Box className={style.blockWrapper}>
       <TimeData lastMessageDate={lastMessageDate} />
-      <IconsData selectedChatId={selectedChatId} />
+      <IconsData
+        chatId={chatId}
+        // handleChatClick={handleChatClick}
+      />
     </Box>
   );
 };
