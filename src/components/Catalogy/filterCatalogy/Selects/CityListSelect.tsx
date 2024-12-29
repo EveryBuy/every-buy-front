@@ -1,31 +1,53 @@
 'use client';
 
 import React, { FC, useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { selectCityList } from "@/redux/advertisement/selectors";
 import { useAppSelector, useAppDispatch } from "@/redux/store";
 import { getCity } from '@/redux/advertisement/operations';
-import { addLocation } from '@/redux/filters/slice';
+import { addLocation, addRegionId, InitialState } from '@/redux/filters/slice';
 import CommonSelect from '@/components/ui/CommonSelect/CommonSelect';
 import { SelectChangeEvent } from '@mui/material';
 import { CityList } from '@/redux/advertisement/slice';
 
 const CityListSelect: FC = () => {
-	const [selectedOption, setSelectedOption] = useState("");
+
+	const searchParams = useSearchParams() as unknown as Map<keyof InitialState, string | null>;
+	const dispatch = useAppDispatch();
+
+	const searchParamsRegionId: number | null = searchParams.has('regionId') ? Number(searchParams.get('regionId')) : null;
+
 	const cityList: CityList[] = useAppSelector(selectCityList);
 
-	// const options = ["Option 1", "Option 2", "Option 3"];
-	const options: string[] = cityList.map(item => item.cityName).sort();
-
-	const dispatch = useAppDispatch();
+	const [initialSearchParams, setInitialSearchParams] = useState([]);
+	const [selectedOption, setSelectedOption] = useState("");
 
 	useEffect(() => {
 		dispatch(getCity());
-	}, []);
+		if (searchParamsRegionId && searchParamsRegionId > 0) {
+			dispatch(addRegionId(searchParamsRegionId));
+		} else {
+			setInitialSearchParams([]);
+			setSelectedOption('');
+		}
+	}, [searchParamsRegionId]);
+
+	useEffect(() => {
+		if (cityList && cityList.length > 0 && searchParamsRegionId && searchParamsRegionId > 0) {
+			setInitialSearchParams(cityList.filter(item => item.id === searchParamsRegionId));
+		}
+
+		if (initialSearchParams.length > 0) setSelectedOption(initialSearchParams[0].cityName)
+	}, [cityList]);
+
+	// const options = ["Option 1", "Option 2", "Option 3"];
+	const options: string[] = cityList.map(item => item.cityName).sort();
 
 	const handleChange = (event: SelectChangeEvent<string>) => {
 		const target: string = event.target.value;
 		const arrCitySelect: CityList[] = cityList?.filter(item => item.cityName === target);
 		const newIdCity: number = arrCitySelect.length > 0 ? arrCitySelect[0].id : 0;
+		dispatch(addRegionId(newIdCity));
 		dispatch(addLocation(target));
 		setSelectedOption(target);
 		console.log(newIdCity);

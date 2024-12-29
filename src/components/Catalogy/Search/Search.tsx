@@ -1,10 +1,13 @@
 "use client";
 
 import { FC, useState, useEffect } from "react";
+import { useAppSelector, useAppDispatch } from "@/redux/store";
+import { getFilteredAdverts } from '@/redux/advertisement/operations';
 import { CommonIcon, CommonButton } from "@/components";
 import styles from "./Search.module.scss";
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
+import { addKeyWord, filtersReducer } from '@/redux/filters/slice';
+import SearchSuggest from './SearchSuggest';
 import { getSearchByWord } from '@/api/getSearchByWord';
 import ListItemsForSearch from '@/types/listItemsForSearch';
 
@@ -21,32 +24,40 @@ type FormEventType = React.FormEvent<HTMLFormElement>;
 // type ChangeEventType = React.ChangeEvent<HTMLInputElement>;
 
 const Search: FC = (props) => {
-	const [word, setWord] = useState<string>('');
-	const [search, setSearch] = useState<[]>([]);
+	const wordState = useAppSelector(state => state.filters.keyword);
+	const [word, setWord] = useState<string>(
+		wordState ? wordState : ""
+	);
+	const [searchArr, setSearchArr] = useState<[]>([]);
 	const router = useRouter();
+
+	const dispatch = useAppDispatch();
+
+	const handlerSetWord = (event: React.ChangeEvent<HTMLInputElement>) => {
+		const newValue = event.target.value;
+		setWord(newValue);
+		dispatch(addKeyWord(newValue));
+	}
 
 	const goToSearch = (e: FormEventType) => {
 		e.preventDefault();
 		// const wordTest = dispatch(addKeyWord("кош"));
 		// console.log(wordTest);
-		router.push(`/catalogy?search=${word}`);
+		router.push(`/catalogy?keyword=${word}`);
 	};
 
 	useEffect(() => {
-		const fetchForSearch = async () => {
-			if (word.length > 1) {
-				try {
-					const result: ListItemsForSearch[] = await getSearchByWord(word);
-					setSearch(result);
-					console.log(search);
-
-				} catch (error: any) {
-					console.error("Error fetching data:", error);
-				}
-			}
-		};
-
-		fetchForSearch();
+		if (word && word.length > 0) {
+			dispatch(getFilteredAdverts({
+				keyword: word
+			}))
+				.then((data) => {
+					if (data && data.payload.length > 0) {
+						setSearchArr(data.payload);
+					}
+					console.log(data.payload);
+				});
+		}
 	}, [word]);
 
 	// const dispatch = useAppDispatch();
@@ -60,33 +71,6 @@ const Search: FC = (props) => {
 	// 	}));
 	// }, [dispatch]);
 
-	const SuggestItem = (props: ListItemsForSearch): JSX.Element => {
-
-		const {
-			advertisementId,
-			title,
-			category,
-			topSubCategory
-		} = props.item;
-
-		// console.log(item.advertisementId);
-		return (
-			<li key={advertisementId} className={styles.searchSuggestItem}>
-				<Link href={`/announcement?id=${advertisementId}`}>
-					<span className={styles.searchLinkItem}>{title}</span>
-					<span className={styles.searchItemCategory}>{category.nameUkr}
-						/ {topSubCategory.subCategoryNameUkr}</span>
-				</Link>
-			</li>
-		)
-	}
-	// advertisementId
-	// category.nameUkr
-	// lowSubCategory.subCategoryNameUkr  
-	// topSubCategory.subCategoryNameUkr
-	// title  
-	// ? mainPhotoUrl
-
 	return (
 		<div className={styles.searchContainer}>
 			<form className={styles.searchForm}>
@@ -95,7 +79,7 @@ const Search: FC = (props) => {
 						className={styles.searchInput}
 						placeholder="Що шукаєте?"
 						value={word}
-						onChange={e => setWord(e.target.value)}
+						onChange={handlerSetWord}
 					/>
 					<div className={styles.searchInputIconWrapper}>
 						<CommonIcon
@@ -121,15 +105,11 @@ const Search: FC = (props) => {
 					/>
 				</CommonButton>
 				{
-					search.length === 0 || word === ""
-						? null
-						: <div className={styles.searchSuggest}>
-							<ul className={styles.searchSuggestList}>
-								{
-									search.map(item => <SuggestItem key={item.advertisementId} item={item} />)
-								}
-							</ul>
-						</div>
+					word.length > 0 && searchArr.length > 0
+						? <SearchSuggest searchArr={searchArr} />
+						: word.length > 0 && searchArr.length === 0
+							? <div>Нажаль ми не знайшли жодного оголошення</div>
+							: null
 				}
 
 			</form>

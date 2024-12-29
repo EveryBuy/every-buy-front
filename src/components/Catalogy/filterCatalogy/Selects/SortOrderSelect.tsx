@@ -32,13 +32,17 @@ const SortOrderSelection: FC = () => {
 	const initialSearchParams: sortOrderListType[] | [] = searchParamsSort && searchParamsSort.length > 0
 		? sortOrderList.filter(item => item.type === searchParamsSort) : [];
 
-	useEffect(() => {
-		dispatch(addSortOrder(searchParamsSort));
-	}, []);
-
 	const [selectedOption, setSelectedOption] = useState(
 		initialSearchParams.length > 0 ? initialSearchParams[0].title : ""
 	);
+
+	useEffect(() => {
+		if (searchParamsSort && searchParamsSort !== '') {
+			dispatch(addSortOrder(searchParamsSort));
+		} else {
+			setSelectedOption('');
+		}
+	}, [searchParamsSort]);
 
 	const options: string[] = sortOrderList.map(item => item.title);
 

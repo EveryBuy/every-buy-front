@@ -50,6 +50,15 @@ const PriceSlider: FC = () => {
 		dispatch(addPrice(price));
 	}, []);
 
+	useEffect(() => {
+		if (!searchParams.get('minPrice') && !searchParams.get('maxPrice')) {
+			setPrice({
+				...priceObj
+			});
+		}
+
+	}, [searchParamsMaxPrice]);
+
 	const handleChangePriceSlider = (event: Event, newValue: number | number[]) => {
 		if (Array.isArray(newValue)) {
 			const targetObj = {

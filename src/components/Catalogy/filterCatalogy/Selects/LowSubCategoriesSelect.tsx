@@ -1,36 +1,69 @@
 'use client';
 
 import React, { FC, useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { selectLowSubCategories } from "@/redux/advertisement/selectors";
+import { LowSubCategory } from '@/redux/advertisement/slice';
 import { useAppSelector, useAppDispatch } from "@/redux/store";
+import { addLowSubCategoryId, InitialState } from '@/redux/filters/slice';
 import { getLowSubCategory } from '@/redux/advertisement/operations';
 import CommonSelect from '@/components/ui/CommonSelect/CommonSelect';
 import { SelectChangeEvent } from '@mui/material';
-import { LowSubCategory } from '@/redux/advertisement/slice';
 
-const LowSubCategoriesSelect: FC | void = () => {
+const LowSubCategoriesSelect: FC = () => {
+	const searchParams = useSearchParams() as unknown as Map<keyof InitialState, string | null>;
+	const dispatch = useAppDispatch();
+
+	const categoryID: number = useAppSelector(state => state.filters.categoryId) || 0;
+	const topCategoryID: number = useAppSelector(state => state.filters.topSubCateroryId) || 0;
+	const searchParamsLowCategoryId: number | null = searchParams.has('lowSubCategoryId') ? Number(searchParams.get('lowSubCategoryId')) : null;
+
+	const lowSubCategoriesList: LowSubCategory[] = useAppSelector(selectLowSubCategories);
+
+	const [initialSearchParams, setInitialSearchParams] = useState([]);
 	const [selectedOption, setSelectedOption] = useState("");
 
-	const subCategoryID: number = useAppSelector(state => state.filters.subcategoryId) || 0;
+	useEffect(() => {
+		setSelectedOption('');
+		dispatch(addLowSubCategoryId(null));
+		if (topCategoryID && topCategoryID > 0) {
+			dispatch(getLowSubCategory(topCategoryID));
+		}
+	}, [topCategoryID]);
 
-	const dispatch = useAppDispatch();
-	const lowSubCategoriesList: LowSubCategory[] = useAppSelector(selectLowSubCategories);
-	console.log(lowSubCategoriesList);
+	useEffect(() => {
+		if (searchParamsLowCategoryId && searchParamsLowCategoryId > 0) {
+			dispatch(addLowSubCategoryId(searchParamsLowCategoryId));
+		}
+	}, [searchParamsLowCategoryId]);
+
+
+	useEffect(() => {
+		if (lowSubCategoriesList.length > 0 && searchParamsLowCategoryId !== null && searchParamsLowCategoryId > 0) {
+			setInitialSearchParams(lowSubCategoriesList.filter(item => item.id === searchParamsLowCategoryId));
+		}
+	}, [lowSubCategoriesList]);
+
+	useEffect(() => {
+		if (initialSearchParams.length > 0) {
+			setSelectedOption(initialSearchParams[0].subCategoryNameUkr);
+		}
+	}, [initialSearchParams]);
+
+	useEffect(() => {
+		setSelectedOption('');
+		setInitialSearchParams([]);
+	}, [categoryID]);
 
 	// const options = ["Option 1", "Option 2", "Option 3"];
 	const options: string[] = lowSubCategoriesList.map(item => item.subCategoryNameUkr);
-
-	useEffect(() => {
-		dispatch(getLowSubCategory(subCatelogyID));
-	}, [subCategoryID]);
 
 	const handleChange = (event: SelectChangeEvent<string>) => {
 		const target: string = event.target.value;
 		const arrLowCategorySelect: LowSubCategory[] = lowSubCategoriesList?.filter(item => item.subCategoryNameUkr === target);
 		const newIdLowCategory: number = arrLowCategorySelect.length > 0 ? arrLowCategorySelect[0].id : 0;
-		// dispatch(addSubCategory(arrLowCategorySelect));
+		dispatch(addLowSubCategoryId(newIdLowCategory));
 		setSelectedOption(target);
-		console.log(newIdLowCategory);
 	};
 
 	return (

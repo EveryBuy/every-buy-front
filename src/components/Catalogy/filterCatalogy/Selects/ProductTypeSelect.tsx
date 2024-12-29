@@ -38,13 +38,17 @@ const ProductTyperSelection: FC = () => {
 	const initialSearchParams: productListType[] | [] = searchParamsType && searchParamsType.length > 0
 		? productTypeList.filter(item => item.type === searchParamsType) : [];
 
-	useEffect(() => {
-		dispatch(addProductType(searchParamsType));
-	}, []);
-
 	const [selectedOption, setSelectedOption] = useState(
 		initialSearchParams.length > 0 ? initialSearchParams[0]?.title : ""
 	);
+
+	useEffect(() => {
+		if (searchParamsType && searchParamsType !== "") {
+			dispatch(addProductType(searchParamsType));
+		} else {
+			setSelectedOption('');
+		}
+	}, [searchParamsType]);
 
 	const options: string[] = productTypeList.map(item => item.title);
 

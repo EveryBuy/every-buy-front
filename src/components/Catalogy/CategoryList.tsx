@@ -1,6 +1,7 @@
 'use client';
 
 import { Box, Typography } from '@mui/material';
+import { useSearchParams } from 'next/navigation';
 import { useAppSelector, useAppDispatch } from "@/redux/store";
 import { addCategory, InitialState } from '@/redux/filters/slice';
 import { useState, useEffect } from 'react';
@@ -9,28 +10,37 @@ import CategoryItem from "@/types/categoryItemType";
 
 export function CategoryList() {
 
+	const searchParams = useSearchParams() as unknown as Map<keyof InitialState, string | null>;
+	const dispatch = useAppDispatch();
+
+	const searchParamsCategoryId: number | null = searchParams.has('categoryId') ? Number(searchParams.get('categoryId')) : null;
+
 	const categoryIdStore: number = useAppSelector((state) => state.filters.categoryId) || 0;
 
 	const [categories, setCategories] = useState<CategoryItem[] | []>([]);
 	const [selectedCategory, setSelectedCategory] = useState<number>(0);
 
-	const dispatch = useAppDispatch();
-
 	const categoriesList: Category[] | [] = useAppSelector((state) => state.advertisement.category);
 
 	useEffect(() => {
 		setCategories(categoriesList);
-		setSelectedCategory(categoryIdStore);
+		if (searchParamsCategoryId && searchParamsCategoryId > 0) {
+			setSelectedCategory(searchParamsCategoryId);
+		}
 	}, [categoriesList]);
-
-	useEffect(() => {
-		setSelectedCategory(categoryIdStore);
-	}, [categoryIdStore]);
 
 	const handleCategoryClick = (id: number) => {
 		setSelectedCategory((prev) => (prev === id ? 0 : id));
 		dispatch(addCategory(id));
 	};
+
+	useEffect(() => {
+		if (categoryIdStore && categoryIdStore > 0) {
+			setSelectedCategory(categoryIdStore);
+		} else {
+			setSelectedCategory(0);
+		}
+	}, [categoryIdStore]);
 
 	return (
 		<Box
