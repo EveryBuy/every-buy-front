@@ -24,6 +24,8 @@ import { useSelector } from "react-redux";
 import { clearErrors } from "@/redux/auth/slice";
 import { validateEmail, validateName, validatePhone } from "@/utils/validate";
 import { log } from "util";
+import EyeFilled from "@/assets/Svg/EyeFilled.svg";
+import EyeInvisibleFilled from "@/assets/Svg/EyeInvisibleFilled.svg";
 
 type Props = {
   onEdit: () => void;
@@ -44,6 +46,7 @@ export const UserDataEdit: FC<Props> = ({ onEdit }: Props) => {
   const responseError = useSelector(selectError);
   const [isError, setIsError] = useState(false);
   const [messageText, setMessageText] = useState("");
+  const [showPwd, setShowPwd] = useState(false);
 
   useEffect(() => {
     if (responseError) {
@@ -94,6 +97,7 @@ export const UserDataEdit: FC<Props> = ({ onEdit }: Props) => {
       changeUserPhone({ password: password, newPhoneNumber: phone.slice(-9) })
     );
     setIsOpenPhoneModal(false);
+    onEdit();
   };
 
   const handleCheckEmail = () => {
@@ -120,7 +124,11 @@ export const UserDataEdit: FC<Props> = ({ onEdit }: Props) => {
   const closeModal = () => {
     setMessageText("");
     dispatch(clearErrors());
-    console.log(responseError);
+    // console.log(responseError);
+  };
+
+  const toggleShowPwd = () => {
+    setShowPwd(!showPwd);
   };
 
   return (
@@ -132,7 +140,20 @@ export const UserDataEdit: FC<Props> = ({ onEdit }: Props) => {
           onClose={() => setIsOpenPhoneModal(false)}
         >
           <h3> Введіть пароль для підтвердження зміни номеру телефону</h3>
-          <CommonInput setValue={(e) => setPassword(e.target.value)} />
+          <div className={styles.imageWrapper}>
+            <CommonInput
+              typeInput={showPwd ? "text" : "password"}
+              setValue={(e) => setPassword(e.target.value)}
+            />
+            <Image
+              className={styles.EyePassword}
+              src={!showPwd ? EyeInvisibleFilled : EyeFilled}
+              alt="showPassword"
+              width={24}
+              height={24}
+              onClick={toggleShowPwd}
+            />
+          </div>
           <CommonButton
             type="button"
             title="Підтвердити"

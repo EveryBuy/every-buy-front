@@ -150,7 +150,7 @@ export const ChangePassword: React.FC<Props> = ({ onClose }: Props) => {
                   ></Field>
                   <Image
                     className={styles.EyePassword}
-                    src={showNewPwd ? EyeInvisibleFilled : EyeFilled}
+                    src={!showNewPwd ? EyeInvisibleFilled : EyeFilled}
                     alt="showPassword"
                     width={24}
                     height={24}
@@ -196,7 +196,7 @@ export const ChangePassword: React.FC<Props> = ({ onClose }: Props) => {
                   ></Field>
                   <Image
                     className={styles.EyePassword}
-                    src={showConfirmPwd ? EyeInvisibleFilled : EyeFilled}
+                    src={!showConfirmPwd ? EyeInvisibleFilled : EyeFilled}
                     alt="showPassword"
                     width={24}
                     height={24}

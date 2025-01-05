@@ -101,3 +101,9 @@
   background-color: var(--button);
   right: -2px;
 }
+
+.logoutBox {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
