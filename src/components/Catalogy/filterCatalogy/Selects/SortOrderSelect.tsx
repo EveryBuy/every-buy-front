@@ -3,7 +3,7 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useAppDispatch } from "@/redux/store";
-import { SortOrder, addSortOrder } from '@/redux/filters/slice';
+import { SortOrder, addSortOrder, InitialState } from '@/redux/filters/slice';
 import CommonSelect from '@/components/ui/CommonSelect/CommonSelect';
 import { SelectChangeEvent } from '@mui/material';
 
@@ -25,19 +25,19 @@ const SortOrderSelection: FC = () => {
 		}
 	];
 
-	const searchParams = useSearchParams();
+	const searchParams = useSearchParams() as unknown as Map<keyof InitialState, string | null>;
 	const dispatch = useAppDispatch();
 
-	const searchParamsSort: string | null = searchParams.has('sortOrder') ? searchParams.get('sortOrder') : '';
-	const initialSearchParams: sortOrderListType[] | [] = searchParamsSort && searchParamsSort.length > 0
+	const searchParamsSort: SortOrder | "" = searchParams.has('sortOrder') ? searchParams.get('sortOrder') : "";
+	const initialSearchParams: sortOrderListType[] = searchParamsSort && searchParamsSort.length > 0
 		? sortOrderList.filter(item => item.type === searchParamsSort) : [];
 
-	const [selectedOption, setSelectedOption] = useState(
+	const [selectedOption, setSelectedOption] = useState<string>(
 		initialSearchParams.length > 0 ? initialSearchParams[0].title : ""
 	);
 
 	useEffect(() => {
-		if (searchParamsSort && searchParamsSort !== '') {
+		if (searchParamsSort && searchParamsSort.length > 0) {
 			dispatch(addSortOrder(searchParamsSort));
 		} else {
 			setSelectedOption('');
@@ -49,7 +49,7 @@ const SortOrderSelection: FC = () => {
 	const handleChange = (event: SelectChangeEvent<string>) => {
 		const target: string = event.target.value;
 		const arrSortSelect: sortOrderListType[] = sortOrderList?.filter(item => item.title === target);
-		const newTypeSort: string = arrSortSelect.length > 0 ? arrSortSelect[0].type : "";
+		const newTypeSort: SortOrder | "" = arrSortSelect.length > 0 ? arrSortSelect[0].type : "";
 		dispatch(addSortOrder(newTypeSort));
 		setSelectedOption(target);
 	};

@@ -19,8 +19,8 @@ const CityListSelect: FC = () => {
 
 	const cityList: CityList[] = useAppSelector(selectCityList);
 
-	const [initialSearchParams, setInitialSearchParams] = useState([]);
-	const [selectedOption, setSelectedOption] = useState("");
+	const [initialSearchParams, setInitialSearchParams] = useState<CityList[]>([]);
+	const [selectedOption, setSelectedOption] = useState<string>("");
 
 	useEffect(() => {
 		dispatch(getCity());

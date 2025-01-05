@@ -71,13 +71,15 @@ const PriceSlider: FC = () => {
 	}
 
 	const handleChangePriceMin = (event: React.ChangeEvent<HTMLInputElement>) => {
-		const target: number = Number(event.target.value);
-		const targetObj = {
-			min: target || price.min,
-			max: price.max
+		if (event && Number(event.target.value) >= 0) {
+			const target: number = Number(event.target.value);
+			const targetObj = {
+				min: target || price.min,
+				max: price.max
+			}
+			setPrice(targetObj);
+			dispatch(addPrice(targetObj));
 		}
-		setPrice(targetObj);
-		dispatch(addPrice(targetObj));
 	}
 	const handleChangePriceMax = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const target: number = Number(event.target.value);

@@ -1,7 +1,7 @@
 import styles from "./MinCard.module.scss";
 import Image from "next/image";
 import { MinCardType } from "@/types/minCardType";
-import nohPhotoCard from "@/assets/noPhotoCard.jpg";
+import noPhotoCard from "@/assets/noPhotoCard.jpg";
 
 type ItemProps = {
 	item: MinCardType;
@@ -23,7 +23,7 @@ export const MinCard = (props: ItemProps): JSX.Element => {
 					fill
 					sizes="(max-width: 768px) 134px, 94px, (max-width: 2600px) 179px, 182px"
 					className={styles.image}
-					src={mainPhotoUrl || nohPhotoCard}
+					src={mainPhotoUrl || noPhotoCard}
 					alt={title || "img"}
 				/>
 			</div>

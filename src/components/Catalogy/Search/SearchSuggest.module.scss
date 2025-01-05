@@ -1,0 +1,82 @@
+@import "@/styles/_mixins";
+@import "@/styles/_breakpoints";
+
+.searchSuggest {
+	display: block;
+	position: absolute;
+	left: 0;
+	top: calc(100% + 7px);
+	z-index: 500;
+	background: var(--main-background, #F6F6F6);
+	width: calc(100% - 61px);
+	overflow: hidden;
+	padding: 19px 18px;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 10px;
+	flex-shrink: 0;
+	border: 1px solid var(--label, #000);
+	border-radius: 10px;
+
+	@include media-min($breakpoint-mobile) {
+		width: calc(100% - 98px);
+	}
+
+	@include media-min($breakpoint-tablet) {
+		width: calc(100% - 130px);
+	}
+
+	@media (min-width: 1024px) {
+		width: calc(100% - 140px);
+	}
+}
+
+.searchTitle {
+	font-size: 20px;
+	font-weight: 600;
+	margin-bottom: 8px;
+}
+
+.searchSuggestList {}
+
+.searchSuggestItem {}
+
+.searchSuggestItem a {
+	display: flex;
+	flex-direction: column;
+	min-height: 30px;
+	padding: 8px;
+	cursor: pointer;
+}
+
+.searchSuggestItem a:hover {
+	background-color: #d4d4d4;
+}
+
+.searchLinkItem {
+	font-weight: 700;
+	margin-bottom: 4px;
+}
+
+.searchItemCategory {
+	font-size: 14px;
+	color: var(--input-text, #9D9D9D);
+}
+
+.searchEmptyWrapper {
+	text-align: center;
+	padding: 10px 5px 0;
+
+	@include media-min($breakpoint-tablet) {
+		padding: 35px 10px 20px;
+	}
+
+	img {
+		max-width: 100%;
+	}
+}
+
+.searchEmptyTitle {
+	font-weight: 700;
+	margin-bottom: 22px;
+}

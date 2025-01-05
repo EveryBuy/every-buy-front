@@ -15,7 +15,14 @@ import {
 	CategoryList,
 	Search,
 } from '@/components';
+import Image from 'next/image';
+import imgSearchEmpty from '@/assets/Svg/searchEmpty.svg';
 // import { searchGoods } from '@/mock-data/searchGoods';
+
+type createQuerySettingsType = {
+	queryString: string,
+	queryObj: Object
+}
 
 const styles = {
 	display: 'flex',
@@ -27,11 +34,11 @@ export const CatalogyPage = () => {
 	const dispatch = useAppDispatch();
 	const searchParams = useSearchParams() as unknown as Map<keyof InitialState, string | null>;
 
-	const [isListOpen, setListOpen] = useState(false);
-	const [search, setSearch] = useState([]);
-	const [loading, setLoading] = useState(false);
-	const wordSearch = searchParams.get('keyword') ? searchParams.get('keyword') : "";
-	const [word, setWord] = useState<string | null>(wordSearch);
+	const [isListOpen, setListOpen] = useState<boolean>(false);
+	const [dataArray, setDataArray] = useState([]);
+	const [loading, setLoading] = useState<boolean>(false);
+	// const wordSearch = searchParams.get('keyword') ? searchParams.get('keyword') : "";
+	// const [word, setWord] = useState<string | null>(wordSearch);
 
 	const makeLinkOpen = () => {
 		setListOpen((prev) => !prev);
@@ -43,8 +50,8 @@ export const CatalogyPage = () => {
 	const {
 		categoryId,
 		price: {
-			max,
-			min
+			max: maxPrice,
+			min: minPrice,
 		},
 		sortOrder,
 		regionId,
@@ -56,11 +63,11 @@ export const CatalogyPage = () => {
 	} = filtersSetting;
 
 
-	const createQuerySettings = () => {
+	const createQuerySettings = (): createQuerySettingsType => {
 		let queryArray: string[] = [];
 		if (categoryId !== null) queryArray.push(`categoryId=${categoryId}`);
-		if (min !== 0) queryArray.push(`minPrice=${min}`);
-		if (max !== 100000) queryArray.push(`maxPrice=${max}`);
+		if (minPrice !== 0) queryArray.push(`minPrice=${minPrice}`);
+		if (maxPrice !== 100000) queryArray.push(`maxPrice=${maxPrice}`);
 		if (sortOrder !== "") queryArray.push(`sortOrder=${sortOrder}`);
 		if (regionId !== null) queryArray.push(`regionId=${regionId}`);
 		if (topSubCateroryId !== null) queryArray.push(`topSubCategoryId=${topSubCateroryId}`);
@@ -71,36 +78,47 @@ export const CatalogyPage = () => {
 
 		const queryString: string = queryArray.length > 0 ? "?" + queryArray.join('&') : "";
 		console.log(queryString);
-		return queryString;
+		let queryObj: {} = queryArray.reduce((obj, item) => {
+			const itemArr = item.split("=");
+			const valueNumber = Number.isNaN(Number(itemArr[1])) ? itemArr[1] : Number(itemArr[1]);
+			const newQueryObj = {
+				[itemArr[0]]: valueNumber
+			};
+			return Object.assign(obj, newQueryObj);
+		}, {});
+		console.log(queryObj);
+		return {
+			queryString: queryString,
+			queryObj: queryObj
+		};
 	}
 
-	// createQuerySettings();
-
 	useEffect(() => {
-		if (wordSearch && wordSearch.length > 0) {
-			dispatch(addKeyWord(wordSearch));
-
-			dispatch(getFilteredAdverts({
-				keyword: wordSearch
-			}))
+		setLoading(false);
+		console.log('query');
+		const { queryString, queryObj } = createQuerySettings();
+		if (queryString.length > 0) {
+			dispatch(getFilteredAdverts(queryObj))
 				.then((data) => {
-					if (data && data.payload.length > 0) {
-						setSearch(data.payload);
-					}
 					console.log(data.payload);
+					if (data && data.payload.length > 0) {
+						setDataArray(data.payload);
+					} else {
+						setDataArray([]);
+						console.log('not data');
+					}
 				});
+			setLoading(true);
+			setTimeout(() => {
+				router.push(`${queryString}`, {
+					scroll: false,
+				});
+			}, 0);
+		} else {
+			setDataArray([]);
 		}
-	}, [wordSearch]);
 
-	useEffect(() => {
-		const query: string = createQuerySettings();
-
-		router.push(`${query}`, {
-			scroll: false,
-		});
-	}, [filtersSetting, router]);  //min, max, categoryId, sortOrder, productType,
-
-	console.log(filtersSetting);
+	}, [filtersSetting, router]);  //min, max, categoryId, sortOrder, productType, ...
 
 	const handlerResetFilters = () => {
 		dispatch(resetFilters());
@@ -118,7 +136,7 @@ export const CatalogyPage = () => {
 				<CustomSeparator category="Moda" />
 			</Box>
 			<Box sx={{ margin: "2em 1em" }}>
-				<Search />
+				<Search hideSuggest={true} />
 			</Box>
 			<Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: "space-between", alignItems: "center", margin: '2.5rem 0' }}>
 				<Typography variant='h3' sx={{ fontSize: '2.3em' }}>
@@ -135,13 +153,30 @@ export const CatalogyPage = () => {
 			</Box>
 
 			<CategoryList />
-			<Typography variant='h3' sx={{ margin: '1rem 0 2.3rem', fontSize: '2.3em' }}>
-				Ми знайшли понад 1000 оголошень
-			</Typography>
 			{
-				search.length > 0
-					? <CatalogyCard item={search} />
-					: <CatalogyCard />
+				!loading
+					? <div>Зачекайте ...</div>
+					: dataArray.length > 0
+						? <><Typography variant='h3' sx={{ margin: '1rem 0 2.3rem', fontSize: '2.3em' }}>
+							Ми знайшли понад 1000 оголошень
+						</Typography>
+							<CatalogyCard item={dataArray} />
+						</>
+						: <Box sx={{ margin: "52px 2em 0", textAlign: "center" }}>
+							<Typography sx={{ fontSize: '2em', marginBottom: "60px" }}>
+								Нажаль ми не знайшли жодного оголошення за вашим запитом.
+							</Typography>
+							<Image
+								src={imgSearchEmpty}
+								width={288}
+								height={350}
+								alt="не має оголошення"
+							/>
+							<Typography sx={{ fontSize: '2em', marginTop: "60px" }}>
+								Перевірте правильність запиту <br />
+								або оберіть будь-яку категорію для перегляду оголошень.
+							</Typography>
+						</Box>
 			}
 		</Container>
 	);

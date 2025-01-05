@@ -1,75 +1,78 @@
 "use client";
 
 import { FC, useState, useEffect } from "react";
+import { useSearchParams } from 'next/navigation';
 import { useAppSelector, useAppDispatch } from "@/redux/store";
 import { getFilteredAdverts } from '@/redux/advertisement/operations';
 import { CommonIcon, CommonButton } from "@/components";
 import styles from "./Search.module.scss";
 import { useRouter } from 'next/navigation';
-import { addKeyWord, filtersReducer } from '@/redux/filters/slice';
+import { addKeyWord, InitialState } from '@/redux/filters/slice';
 import SearchSuggest from './SearchSuggest';
 import { getSearchByWord } from '@/api/getSearchByWord';
 import ListItemsForSearch from '@/types/listItemsForSearch';
 
-// import { useAppSelector, useAppDispatch } from "@/redux/store";
-// import { getFilteredAdverts } from '@/redux/advertisement/operations';
-// import { addKeyWord } from '@/redux/filters/slice';
-
-type ItemProps = {
-	item: ListItemsForSearch[];
+type SearchProps = {
+	hideSuggest?: boolean
 };
 
 type FormEventType = React.FormEvent<HTMLFormElement>;
 // type MouseEventType = React.MouseEvent<HTMLButtonElement>;
 // type ChangeEventType = React.ChangeEvent<HTMLInputElement>;
 
-const Search: FC = (props) => {
+const Search: FC = (props: SearchProps) => {
+
+	const hideSearchSuggest = props.hideSuggest || false;
+
 	const wordState = useAppSelector(state => state.filters.keyword);
 	const [word, setWord] = useState<string>(
 		wordState ? wordState : ""
 	);
-	const [searchArr, setSearchArr] = useState<[]>([]);
-	const router = useRouter();
 
 	const dispatch = useAppDispatch();
 
-	const handlerSetWord = (event: React.ChangeEvent<HTMLInputElement>) => {
-		const newValue = event.target.value;
-		setWord(newValue);
-		dispatch(addKeyWord(newValue));
+	const searchParams = useSearchParams() as unknown as Map<keyof InitialState, string | null>;
+	const searchParamsKeyWord: string | null | undefined = searchParams.has('keyword') ? searchParams.get('keyword') : "";
+
+	if (wordState.length === 0 && searchParamsKeyWord && searchParamsKeyWord.length > 0) {
+		dispatch(addKeyWord(searchParamsKeyWord));
+		// setWord(searchParamsKeyWord);
 	}
 
-	const goToSearch = (e: FormEventType) => {
-		e.preventDefault();
-		// const wordTest = dispatch(addKeyWord("кош"));
-		// console.log(wordTest);
-		router.push(`/catalogy?keyword=${word}`);
+	if (searchParamsKeyWord && searchParamsKeyWord.length === 0) {
+		dispatch(addKeyWord(""));
+		// setWord("");
+	}
+
+	const [searchArr, setSearchArr] = useState<[]>([]);
+	const router = useRouter();
+
+	const handlerSetWord = (event: React.ChangeEvent<HTMLInputElement>) => {
+		const newValue = event.target.value;
+		dispatch(addKeyWord(newValue));
+		setWord(newValue);
+	}
+
+	const goToSearch = (event: FormEventType) => {
+		event.preventDefault();
+		if (!hideSearchSuggest) {
+			router.push(`/catalogy?keyword=${word}`);
+		}
 	};
 
 	useEffect(() => {
-		if (word && word.length > 0) {
+		if (!hideSearchSuggest && word && word.length > 0) {
 			dispatch(getFilteredAdverts({
 				keyword: word
 			}))
 				.then((data) => {
-					if (data && data.payload.length > 0) {
+					console.log(data.payload);
+					if (data) {
 						setSearchArr(data.payload);
 					}
-					console.log(data.payload);
 				});
 		}
 	}, [word]);
-
-	// const dispatch = useAppDispatch();
-	// console.log(dispatch);
-
-	// useEffect(() => {
-	// 	dispatch(getFilteredAdverts({
-	// 		filters: {
-	// 			keyWord: "кош"
-	// 		}
-	// 	}));
-	// }, [dispatch]);
 
 	return (
 		<div className={styles.searchContainer}>
@@ -105,10 +108,10 @@ const Search: FC = (props) => {
 					/>
 				</CommonButton>
 				{
-					word.length > 0 && searchArr.length > 0
-						? <SearchSuggest searchArr={searchArr} />
-						: word.length > 0 && searchArr.length === 0
-							? <div>Нажаль ми не знайшли жодного оголошення</div>
+					hideSearchSuggest
+						? null
+						: word.length > 0
+							? <SearchSuggest searchArr={searchArr} />
 							: null
 				}
 

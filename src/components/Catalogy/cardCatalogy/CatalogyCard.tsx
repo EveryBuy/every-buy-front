@@ -13,19 +13,22 @@ type ItemProps = {
 
 export const CatalogyCard = (props: ItemProps) => {
 
-	const items = props.item?.length > 0 ? props.item : goodsListSell;
+	const items: ElemCard[] | null = props.item?.length > 0 ? props.item : null;
+	console.log(items);
 
 	return (
 		<div className={styles.containerMiddleCardsList}>
 			<ul className={styles.middleCardsList}>
 				{
-					items.map((elem) => {
-						return (
-							<li key={elem.advertisementId} className={styles.middleCardsItem}>
-								<MiddleCard item={elem} />
-							</li>
-						);
-					})
+					items && items.length > 0
+						? items.map((elem) => {
+							return (
+								<li key={elem.advertisementId} className={styles.middleCardsItem}>
+									<MiddleCard item={elem} />
+								</li>
+							);
+						})
+						: <div>За вашим запросом нічого не знайдено.</div>
 
 				}
 			</ul>

@@ -87,7 +87,7 @@ const filtersSlice = createSlice({
 			reducer(state, action: PayloadAction<number | null>) {
 				state.categoryId = action.payload;
 			},
-			prepare(categoryId: number) {
+			prepare(categoryId: number | null) {
 				return {
 					payload: categoryId,
 				}
@@ -117,7 +117,7 @@ const filtersSlice = createSlice({
 			reducer(state, action: PayloadAction<number | null>) {
 				state.regionId = action.payload;
 			},
-			prepare(regionId: number) {
+			prepare(regionId: number | null) {
 				return {
 					payload: regionId,
 				}
@@ -127,7 +127,7 @@ const filtersSlice = createSlice({
 			reducer(state, action: PayloadAction<number | null>) {
 				state.topSubCateroryId = action.payload;
 			},
-			prepare(topSubCateroryId: number) {
+			prepare(topSubCateroryId: number | null) {
 				return {
 					payload: topSubCateroryId,
 				}
@@ -137,7 +137,7 @@ const filtersSlice = createSlice({
 			reducer(state, action: PayloadAction<number | null>) {
 				state.lowSubCategoryId = action.payload;
 			},
-			prepare(lowSubCategoryId: number) {
+			prepare(lowSubCategoryId: number | null) {
 				return {
 					payload: lowSubCategoryId,
 				}

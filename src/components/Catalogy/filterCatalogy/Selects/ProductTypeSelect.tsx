@@ -12,6 +12,8 @@ type productListType = {
 	title: string
 }
 
+type ProductItemType = ProductType | "OTHER" | "";
+
 const ProductTyperSelection: FC = () => {
 
 	const productTypeList: productListType[] = [
@@ -32,13 +34,13 @@ const ProductTyperSelection: FC = () => {
 	const searchParams = useSearchParams() as unknown as Map<keyof InitialState, string | null>;
 	const dispatch = useAppDispatch();
 
-	const searchParamsType: string | null = searchParams.has('productType')
+	const searchParamsType: string | null | undefined = searchParams.has('productType')
 		? searchParams.get('productType') : '';
 
-	const initialSearchParams: productListType[] | [] = searchParamsType && searchParamsType.length > 0
+	const initialSearchParams: productListType[] = searchParamsType && searchParamsType.length > 0
 		? productTypeList.filter(item => item.type === searchParamsType) : [];
 
-	const [selectedOption, setSelectedOption] = useState(
+	const [selectedOption, setSelectedOption] = useState<string>(
 		initialSearchParams.length > 0 ? initialSearchParams[0]?.title : ""
 	);
 

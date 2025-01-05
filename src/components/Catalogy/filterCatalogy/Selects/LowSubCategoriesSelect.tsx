@@ -14,14 +14,14 @@ const LowSubCategoriesSelect: FC = () => {
 	const searchParams = useSearchParams() as unknown as Map<keyof InitialState, string | null>;
 	const dispatch = useAppDispatch();
 
-	const categoryID: number = useAppSelector(state => state.filters.categoryId) || 0;
-	const topCategoryID: number = useAppSelector(state => state.filters.topSubCateroryId) || 0;
+	const categoryID: number | null = useAppSelector(state => state.filters.categoryId) || null;
+	const topCategoryID: number | null = useAppSelector(state => state.filters.topSubCateroryId) || null;
 	const searchParamsLowCategoryId: number | null = searchParams.has('lowSubCategoryId') ? Number(searchParams.get('lowSubCategoryId')) : null;
 
 	const lowSubCategoriesList: LowSubCategory[] = useAppSelector(selectLowSubCategories);
 
-	const [initialSearchParams, setInitialSearchParams] = useState([]);
-	const [selectedOption, setSelectedOption] = useState("");
+	const [initialSearchParams, setInitialSearchParams] = useState<LowSubCategory[]>([]);
+	const [selectedOption, setSelectedOption] = useState<string>("");
 
 	useEffect(() => {
 		setSelectedOption('');

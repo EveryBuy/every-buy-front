@@ -28,8 +28,8 @@ const CategoriesSelect: FC = () => {
 
 	const categoriesList: Category[] = useAppSelector(selectCategories);
 
-	const [initialSearchParams, setInitialSearchParams] = useState([]);
-	const [selectedOption, setSelectedOption] = useState("");
+	const [initialSearchParams, setInitialSearchParams] = useState<Category[]>([]);
+	const [selectedOption, setSelectedOption] = useState<string>("");
 
 	useEffect(() => {
 		if (categoriesList.length > 0 && searchParamsCategoryId !== null && searchParamsCategoryId > 0) {

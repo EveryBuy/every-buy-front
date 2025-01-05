@@ -130,38 +130,3 @@
 		cursor: default;
 	}
 }
-
-.searchSuggest {
-	display: block;
-	position: absolute;
-	left: 0;
-	top: 101%;
-	z-index: 500;
-	background-color: #fff;
-	width: 83%;
-	overflow: hidden;
-}
-
-.searchSuggestList {
-	border: 1px dashed #e5ff46;
-}
-
-.searchSuggestItem {}
-
-.searchSuggestItem a {
-	display: flex;
-	flex-direction: column;
-	min-height: 30px;
-	padding: 10px;
-	cursor: pointer;
-}
-
-.searchSuggestItem a:hover {
-	background-color: #d4d4d4;
-}
-
-.searchLinkItem {}
-
-.searchItemCategory {
-	font-size: 12px;
-}
