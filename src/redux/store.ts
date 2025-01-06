@@ -18,7 +18,6 @@ import {
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 import { chatApi } from "./messages/chatApi";
-import { userReducer } from "./user/slice";
 import { filtersReducer } from "./filters/slice";
 import { version } from "os";
 

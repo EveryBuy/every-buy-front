@@ -37,9 +37,31 @@ export const getCity = createAsyncThunk('advert/getCity',
             const response = await API.get('/ad/city');
             return response.data;
         } catch (error: any) {
-            return thunkAPI.rejectWithValue(error.message)
+            return thunkAPI.rejectWithValue(error.message);
         }
     });
+
+export const getRegion = createAsyncThunk('advert/getRegion',
+    async (_, thunkAPI) => {
+        try {
+            const response = await API.get('/ad/region');
+            return response.data;
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue(error.message);
+        }
+    }
+);
+
+export const getCitiesByRegionId = createAsyncThunk('advert/getCitiesByRegionId',
+    async (regionId: number, thunkAPI) => {
+        try {
+            const response = await API.get(`/ad/region/${regionId}/cities`);
+            return response.data;
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue(error.message);
+        }
+    }
+)
 
 export const createAdvertisement = createAsyncThunk('advert/create',
     async (advertData, thunkAPI) => {
