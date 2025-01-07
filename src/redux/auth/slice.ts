@@ -12,6 +12,8 @@ import {
   changeUserPhone,
   changeUserPhoto,
   changeUserEmail,
+  subscribeUser,
+  unsubscribeUser,
 } from "./operations";
 import toast from "react-hot-toast";
 import {
@@ -20,6 +22,7 @@ import {
   User,
   UserFullName,
 } from "@/types/stateTypes";
+import { changeNameMessages, changePhoneMessages, unsubscribeMessages } from "@/utils/errorMessages";
 
 const initialState: AuthState = {
   user: {
@@ -74,7 +77,7 @@ const authSlice = createSlice({
         state.user = payload.data;
         state.token = payload.token;
         state.isLoggedIn = true;
-        console.log(state);
+        // console.log(state);
       })
       .addCase(login.rejected, (state, action) => {
         state.isLoggedIn = false;
@@ -130,6 +133,8 @@ const authSlice = createSlice({
       })
       .addCase(changeUserName.rejected, (state, action: PayloadAction<any>) => {
         state.error = action.payload;
+        const message = changeNameMessages(action.payload.status);
+        toast.error(message);
       })
       .addCase(changeUserPhone.pending, (state, _) => {
         state.error = null;
@@ -139,7 +144,9 @@ const authSlice = createSlice({
         toast.success("Phone successfully changed!");
       })
       .addCase(changeUserPhone.rejected, (state, action: PayloadAction<any>) => {
-        state.error = action.payload;
+        // state.error = action.payload;
+        const message = changePhoneMessages(action.payload.status)
+        toast.error(message);
       })
       .addCase(changeUserEmail.pending, (state, _) => {
         state.error = null;
@@ -156,6 +163,20 @@ const authSlice = createSlice({
       })
       .addCase(changeUserPhoto.rejected, (state, action) => {
         state.error = action.payload;
+      })
+      .addCase(subscribeUser.fulfilled, (_, action) => {
+        toast.success("You are successfully subscribed!")
+      })
+      .addCase(subscribeUser.rejected, (state, action: PayloadAction<any>) => {
+        state.error = action.payload.message;
+      })
+      .addCase(unsubscribeUser.fulfilled, (_, action) => {
+        toast.success("You are successfully unsubscribed!")
+      })
+      .addCase(unsubscribeUser.rejected, (state, action: PayloadAction<any>) => {
+        state.error = action.payload.message;
+        const message = unsubscribeMessages(action.payload.status);
+        toast.error(message);
       })
       ;
   },

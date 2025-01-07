@@ -8,6 +8,7 @@ import Link from "next/link";
 // import { Logout } from "@/components";
 import style from "./DropdownMenu.module.scss";
 import Logout from "../auth/Logout/Logout";
+import { selectUser } from "@/redux/auth/selectors";
 
 interface DropdownMenuType {
   status: boolean;
@@ -20,9 +21,9 @@ const DropdownMenu: FC<DropdownMenuType> = ({
   changeStatus,
   isLoggedIn,
 }) => {
-  const userPictureUrl = useSelector(
-    (state: RootState) => state.auth?.user?.userPhotoUrl
-  );
+  const user = useSelector(selectUser);
+  const userPictureUrl = user.userPhotoUrl;
+  const userName = user.fullName;
 
   // resolve hydration problem
   const [hydrated, setHydrated] = useState(false);
@@ -53,8 +54,7 @@ const DropdownMenu: FC<DropdownMenuType> = ({
           ) : (
             <span className={style.circle}></span>
           )}
-
-          <p>Вікторія</p>
+          <p className={style.userName}>{userName}</p>
         </Link>
       </li>
       <li>

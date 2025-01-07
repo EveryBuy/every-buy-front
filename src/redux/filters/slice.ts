@@ -184,4 +184,5 @@ export const {
     addPage,
     resetFilters,
 } = filtersSlice.actions;
+
 export const filtersReducer = filtersSlice.reducer;
