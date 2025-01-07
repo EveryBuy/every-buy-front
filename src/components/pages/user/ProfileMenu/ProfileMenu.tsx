@@ -7,6 +7,7 @@ import { Logout } from "@/components";
 import { PROFMENU_ITEMS } from "@/constants/constants";
 import clsx from "clsx";
 import styles from "./ProfileMenu.module.scss";
+import Unsubscribe from "@/components/auth/Unsubscribe/Unsubscribe";
 
 const ProfileMenu: FC = () => {
   const [isOpen, setIsOpen] = useState(true);
@@ -51,7 +52,10 @@ const ProfileMenu: FC = () => {
             );
           })}
         </ul>
-        <Logout>Вихід</Logout>
+        <div className={styles.logoutBox}>
+          <Unsubscribe>Відписатись від розсилки</Unsubscribe>
+          <Logout>Вихід</Logout>
+        </div>
       </div>
       <div className={styles.devider}></div>
     </nav>
