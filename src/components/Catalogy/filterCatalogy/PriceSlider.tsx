@@ -92,7 +92,7 @@ const PriceSlider: FC = () => {
 	}
 
 	return (
-		<Grid2 size={{ xs: 12, sm: 6, md: 4 }}>
+		<Grid2 size={{ xs: 12, sm: 4, md: 4 }} style={{ padding: "0 6px 5px 0" }}>
 			<Typography>Ціна</Typography>
 			<MuiSlider
 				value={Object.values(price)}
@@ -119,7 +119,7 @@ const PriceSlider: FC = () => {
 					label='Макс'
 				/>
 			</Box>
-		</Grid2>
+		</Grid2 >
 	);
 }
 export default PriceSlider;

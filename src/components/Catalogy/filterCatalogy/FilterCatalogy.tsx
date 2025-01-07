@@ -8,6 +8,7 @@ import PriceSlider from './PriceSlider';
 import CategoriesSelect from './Selects/CategoriesSelect';
 import TopSubCategoriesSelect from './Selects/TopSubCategoriesSelect';
 import LowSubCategoriesSelect from './Selects/LowSubCategoriesSelect';
+import RegionListSelect from './Selects/RegionListSelect';
 import CityListSelect from './Selects/CityListSelect';
 import SortOrderSelection from './Selects/SortOrderSelect';
 import ProductTyperSelection from './Selects/ProductTypeSelect';
@@ -24,7 +25,7 @@ export function FilterCatalogySearch(props: ResetFiltersType) {
 	const topSubCateroryId = useAppSelector(state => state.filters.topSubCateroryId);
 
 	return (
-		<Grid2 container spacing={2} alignItems='center' justifyItems='center'>
+		<Grid2 container direction="row" spacing={2} sx={{ justifyContent: "center", alignItems: "flex-end", }}>
 
 			<PriceSlider />
 			<SortOrderSelection />
@@ -36,7 +37,8 @@ export function FilterCatalogySearch(props: ResetFiltersType) {
 				topSubCateroryId && topSubCateroryId > 0 && <LowSubCategoriesSelect />
 			}
 			<ProductTyperSelection />
-			<CityListSelect />
+			<RegionListSelect />
+			{/* <CityListSelect /> */}
 
 			<Grid2
 				size={{ xs: 12 }}

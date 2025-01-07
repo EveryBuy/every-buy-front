@@ -2,15 +2,14 @@
 
 import { FC, useState, useEffect } from "react";
 import { useSearchParams } from 'next/navigation';
-import { useAppSelector, useAppDispatch } from "@/redux/store";
+import { usePathname } from 'next/navigation';
+import { useAppDispatch } from "@/redux/store";
 import { getFilteredAdverts } from '@/redux/advertisement/operations';
 import { CommonIcon, CommonButton } from "@/components";
 import styles from "./Search.module.scss";
 import { useRouter } from 'next/navigation';
 import { addKeyWord, InitialState } from '@/redux/filters/slice';
 import SearchSuggest from './SearchSuggest';
-import { getSearchByWord } from '@/api/getSearchByWord';
-import ListItemsForSearch from '@/types/listItemsForSearch';
 
 type SearchProps = {
 	hideSuggest?: boolean
@@ -24,24 +23,17 @@ const Search: FC = (props: SearchProps) => {
 
 	const hideSearchSuggest = props.hideSuggest || false;
 
-	const wordState = useAppSelector(state => state.filters.keyword);
-	const [word, setWord] = useState<string>(
-		wordState ? wordState : ""
-	);
-
 	const dispatch = useAppDispatch();
 
 	const searchParams = useSearchParams() as unknown as Map<keyof InitialState, string | null>;
 	const searchParamsKeyWord: string | null | undefined = searchParams.has('keyword') ? searchParams.get('keyword') : "";
 
-	if (wordState.length === 0 && searchParamsKeyWord && searchParamsKeyWord.length > 0) {
-		dispatch(addKeyWord(searchParamsKeyWord));
-		// setWord(searchParamsKeyWord);
-	}
+	const [word, setWord] = useState<string>(
+		(searchParamsKeyWord && searchParamsKeyWord.length > 0) ? searchParamsKeyWord : ""
+	);
 
-	if (searchParamsKeyWord && searchParamsKeyWord.length === 0) {
-		dispatch(addKeyWord(""));
-		// setWord("");
+	if (hideSearchSuggest && searchParamsKeyWord && searchParamsKeyWord.length === 0) {
+		setWord("");
 	}
 
 	const [searchArr, setSearchArr] = useState<[]>([]);
@@ -49,16 +41,24 @@ const Search: FC = (props: SearchProps) => {
 
 	const handlerSetWord = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const newValue = event.target.value;
-		dispatch(addKeyWord(newValue));
 		setWord(newValue);
 	}
 
+	const pathname = usePathname();
+
 	const goToSearch = (event: FormEventType) => {
 		event.preventDefault();
+		dispatch(addKeyWord(word));
 		if (!hideSearchSuggest) {
 			router.push(`/catalogy?keyword=${word}`);
 		}
 	};
+
+	useEffect(() => {
+		if (word && word.length > 0) {
+			dispatch(addKeyWord(word));
+		}
+	}, []);
 
 	useEffect(() => {
 		if (!hideSearchSuggest && word && word.length > 0) {

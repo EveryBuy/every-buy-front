@@ -35,6 +35,7 @@ const CityListSelect: FC = () => {
 	useEffect(() => {
 		if (cityList && cityList.length > 0 && searchParamsRegionId && searchParamsRegionId > 0) {
 			setInitialSearchParams(cityList.filter(item => item.id === searchParamsRegionId));
+			console.log(cityList);
 		}
 
 		if (initialSearchParams.length > 0) setSelectedOption(initialSearchParams[0].cityName)
@@ -60,8 +61,8 @@ const CityListSelect: FC = () => {
 			size={{
 				//mobile: "0",  0 - якщо не відображається на даному екрані
 				mobile: "100%",
-				tablet: "45%",
-				laptop: "30%"
+				tablet: "30%",
+				laptop: "22%"
 			}}
 			outlineColor="blue"
 			value={selectedOption}

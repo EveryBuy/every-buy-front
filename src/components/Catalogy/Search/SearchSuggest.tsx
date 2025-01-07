@@ -3,22 +3,26 @@
 import { FC } from "react";
 import styles from "./SearchSuggest.module.scss";
 import Link from 'next/link';
-import ListItemsForSearch from '@/types/listItemsForSearch';
+import { Advertisement, ListItemsForSearch } from '@/types/listItemsForSearch';
 import Image from 'next/image';
 import imgSearchEmpty from '@/assets/Svg/searchEmpty.svg';
 
-type ItemProps = {
-	searchArr: ListItemsForSearch[]
+type SearchSuggestProps = {
+	searchArr: Advertisement[]
 };
 
-const SearchSuggest: FC<ItemProps> = (props): JSX.Element => {
+type ItemSearchProps = {
+	item: ListItemsForSearch
+}
+
+const SearchSuggest = (props: SearchSuggestProps): JSX.Element => {
 
 	const searchArr = props.searchArr;
 	return (
 		<div className={styles.searchSuggest}>
 			<div className={styles.searchTitle}>Рекомендації</div>
 			{
-				searchArr && searchArr.length > 0
+				searchArr && Array.isArray(searchArr) && searchArr.length > 0
 					? <ul className={styles.searchSuggestList}>
 						{searchArr.map((item) => <SuggestItem key={item.advertisementId} item={item} />)}
 					</ul>
@@ -37,7 +41,7 @@ const SearchSuggest: FC<ItemProps> = (props): JSX.Element => {
 	)
 }
 
-const SuggestItem: FC<ListItemsForSearch> = (props): JSX.Element => {
+const SuggestItem = (props: ItemSearchProps): JSX.Element => {
 
 	const {
 		advertisementId,

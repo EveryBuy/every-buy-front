@@ -1,11 +1,10 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useSearchParams } from 'next/navigation';
 import { useAppSelector, useAppDispatch } from "@/redux/store";
 import { getFilteredAdverts } from '@/redux/advertisement/operations';
 import { useRouter } from 'next/navigation';
-import { addKeyWord, resetFilters, InitialState } from '@/redux/filters/slice';
+import { resetFilters } from '@/redux/filters/slice';
 
 import { CatalogyCard } from "../../Catalogy/cardCatalogy/CatalogyCard";
 import { Container, Box, Typography } from '@mui/material';
@@ -32,19 +31,15 @@ const styles = {
 export const CatalogyPage = () => {
 
 	const dispatch = useAppDispatch();
-	const searchParams = useSearchParams() as unknown as Map<keyof InitialState, string | null>;
+	const router = useRouter();
 
 	const [isListOpen, setListOpen] = useState<boolean>(false);
 	const [dataArray, setDataArray] = useState([]);
 	const [loading, setLoading] = useState<boolean>(false);
-	// const wordSearch = searchParams.get('keyword') ? searchParams.get('keyword') : "";
-	// const [word, setWord] = useState<string | null>(wordSearch);
 
-	const makeLinkOpen = () => {
+	const makeLinkOpen = (): void => {
 		setListOpen((prev) => !prev);
 	};
-
-	const router = useRouter();
 
 	const filtersSetting = useAppSelector(state => state.filters);
 	const {
@@ -77,7 +72,6 @@ export const CatalogyPage = () => {
 		if (page !== 1) queryArray.push(`page=${page}`);
 
 		const queryString: string = queryArray.length > 0 ? "?" + queryArray.join('&') : "";
-		console.log(queryString);
 		let queryObj: {} = queryArray.reduce((obj, item) => {
 			const itemArr = item.split("=");
 			const valueNumber = Number.isNaN(Number(itemArr[1])) ? itemArr[1] : Number(itemArr[1]);
@@ -86,7 +80,6 @@ export const CatalogyPage = () => {
 			};
 			return Object.assign(obj, newQueryObj);
 		}, {});
-		console.log(queryObj);
 		return {
 			queryString: queryString,
 			queryObj: queryObj
@@ -95,14 +88,15 @@ export const CatalogyPage = () => {
 
 	useEffect(() => {
 		setLoading(false);
-		console.log('query');
 		const { queryString, queryObj } = createQuerySettings();
+		console.log('query', queryObj);
 		if (queryString.length > 0) {
 			dispatch(getFilteredAdverts(queryObj))
 				.then((data) => {
-					console.log(data.payload);
-					if (data && data.payload.length > 0) {
-						setDataArray(data.payload);
+					const newData: [] | string = data.payload;
+					console.log(newData);
+					if (newData && Array.isArray(newData) && newData.length > 0) {
+						setDataArray(newData);
 					} else {
 						setDataArray([]);
 						console.log('not data');
@@ -124,9 +118,15 @@ export const CatalogyPage = () => {
 		dispatch(resetFilters());
 
 		setTimeout(() => {
-			router.push(`/catalogy`, {
-				scroll: false,
-			});
+			if (keyword.length > 0) {
+				router.push(`/catalogy?keyword=${keyword}`, {
+					scroll: false,
+				});
+			} else {
+				router.push(`/catalogy`, {
+					scroll: false,
+				});
+			}
 		}, 0);
 	};
 
@@ -136,7 +136,7 @@ export const CatalogyPage = () => {
 				<CustomSeparator category="Moda" />
 			</Box>
 			<Box sx={{ margin: "2em 1em" }}>
-				<Search hideSuggest={true} />
+				<Search hideSuggest={true as Boolean} />
 			</Box>
 			<Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: "space-between", alignItems: "center", margin: '2.5rem 0' }}>
 				<Typography variant='h3' sx={{ fontSize: '2.3em' }}>

@@ -61,8 +61,8 @@ const SortOrderSelection: FC = () => {
 			size={{
 				//mobile: "0",  0 - якщо не відображається на даному екрані
 				mobile: "100%",
-				tablet: "45%",
-				laptop: "30%"
+				tablet: "30%",
+				laptop: "22%"
 			}}
 			outlineColor="blue"
 			value={selectedOption}
