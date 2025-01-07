@@ -40,8 +40,12 @@ export const login = createAsyncThunk(
       setHeaderAuthToken(data.data.token);
       const userData = await API.get("/user");
       return { data: userData.data.data, token: data.data.token };
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue({
+        message: error.response?.data?.message || error.message,
+        status: error.response?.status,
+        });
+      
     }
   }
 );
@@ -167,7 +171,7 @@ export const changeUserEmail = createAsyncThunk(
       const response = await API.put("/auth/change-email", changeEmailData);
       return response.data;
     } catch (error: any) {
-      return rejectWithValue( {
+      return rejectWithValue({
         message: error.response?.data?.message || error.message,
         status: error.response?.status,
         });
@@ -192,3 +196,35 @@ export const changeUserPhoto = createAsyncThunk(
     }
   }
 );
+
+export const subscribeUser = createAsyncThunk(
+  "user/subscribe",
+  async (email: string, thunkAPI) => {
+    console.log("email", email);
+    
+    try {
+      const response = await API.post('/user/add-subscriber', { email } )
+      return response.data;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue({
+        message: error.response?.data?.message || "An error occurred" ,
+        status: error.response?.status || 500,
+      })
+    }
+  }
+)
+
+export const unsubscribeUser = createAsyncThunk(
+  "user/unsubscribe",
+  async (email: string, thunkAPI) => {
+    try {
+      const response = await API.delete('/user/delete-subscriber', { data: { email } })
+      return response.data;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue({
+        message: error.response?.data?.message || "An error occurred",
+        status: error.response?.status || 500,
+      })
+    }
+  }
+)

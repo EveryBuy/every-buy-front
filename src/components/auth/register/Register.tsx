@@ -19,6 +19,7 @@ import {
 } from "@/utils/validate";
 import { SuccessRegisterModal, ErrorModal } from "@/components";
 import { useSelector } from "react-redux";
+import clsx from "clsx";
 
 type ErrorsType = {
   phone: string;
@@ -348,7 +349,13 @@ const Register: React.FC = () => {
             />
           </button>
         </CommonInput>
-        <button className={styles.submitButton} type="submit">
+        <button
+          className={clsx(
+            styles.submitButton,
+            phone && email && password && confirmPassword && styles.activeColor
+          )}
+          type="submit"
+        >
           Зареєструватись
         </button>
       </form>

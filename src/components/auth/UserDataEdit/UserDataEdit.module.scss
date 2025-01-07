@@ -8,6 +8,17 @@
     gap: 10px;
 }
 
+.imageWrapper {
+    position: relative;
+}
+
+.EyePassword {
+    position: absolute;
+    top: 15%;
+    right: 0;
+    transform: translateX(-50%);
+}
+
 .button {
     width: 100%;
     height: 51px;

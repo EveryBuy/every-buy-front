@@ -84,10 +84,10 @@ const filtersSlice = createSlice({
 			},
 		},
 		addCategory: {
-			reducer(state, action: PayloadAction<number | null>) {
+			reducer(state, action: PayloadAction<number>) {
 				state.categoryId = action.payload;
 			},
-			prepare(categoryId: number | null) {
+			prepare(categoryId: number) {
 				return {
 					payload: categoryId,
 				}
@@ -114,30 +114,30 @@ const filtersSlice = createSlice({
 			},
 		},
 		addRegionId: {
-			reducer(state, action: PayloadAction<number | null>) {
+			reducer(state, action: PayloadAction<number>) {
 				state.regionId = action.payload;
 			},
-			prepare(regionId: number | null) {
+			prepare(regionId: number) {
 				return {
 					payload: regionId,
 				}
 			},
 		},
 		addTopSubCateroryId: {
-			reducer(state, action: PayloadAction<number | null>) {
+			reducer(state, action: PayloadAction<number>) {
 				state.topSubCateroryId = action.payload;
 			},
-			prepare(topSubCateroryId: number | null) {
+			prepare(topSubCateroryId: number) {
 				return {
 					payload: topSubCateroryId,
 				}
 			}
 		},
 		addLowSubCategoryId: {
-			reducer(state, action: PayloadAction<number | null>) {
+			reducer(state, action: PayloadAction<number>) {
 				state.lowSubCategoryId = action.payload;
 			},
-			prepare(lowSubCategoryId: number | null) {
+			prepare(lowSubCategoryId: number) {
 				return {
 					payload: lowSubCategoryId,
 				}
@@ -154,9 +154,9 @@ const filtersSlice = createSlice({
 			}
 		},
 		resetFilters(state, _) {
-			state.price.min = 0;
-			state.price.max = 100000;
-			state.productType = '';
+			state.price.min = 0,
+				state.price.max = 100000,
+				state.productType = '';
 			state.sortOrder = '';
 			state.location = '';
 			state.categoryId = null;
@@ -184,4 +184,5 @@ export const {
 	addPage,
 	resetFilters,
 } = filtersSlice.actions;
+
 export const filtersReducer = filtersSlice.reducer;

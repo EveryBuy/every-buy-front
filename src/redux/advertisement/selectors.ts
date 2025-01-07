@@ -4,6 +4,8 @@ export const selectCategories = (state: RootState) => state.advertisement.catego
 export const selectTopSubCategories = (state: RootState) => state.advertisement.topSubCategory;
 export const selectLowSubCategories = (state: RootState) => state.advertisement.lowSubCategory;
 export const selectCityList = (state: RootState) => state.advertisement.cityList;
+export const selectRegionList = (state: RootState) => state.advertisement.regionList;
+export const selectCitiesListByRegion = (state: RootState) => state.advertisement.citiesListByRegion;
 export const selectMyAdvertisements = (state: RootState) => state.advertisement.myAdvertisements;
 export const selectActiveAdvertisement = (state: RootState) => state.advertisement.activeAdvertisement;
 export const selectAdvertisementById = (state: RootState) => state.advertisement.advertisementById;
