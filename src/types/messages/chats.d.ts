@@ -2,8 +2,8 @@ import { MessageType } from "@/types/messages/messages";
 
 type UserDataType = {
   userId: number;
-  fullName: string;
-  photoUrl?: string;
+  fullName: string | null;
+  photoUrl?: string | null;
 };
 
 type ChatType = {
@@ -40,4 +40,28 @@ type FullChatType = {
 
 type ChatsType = ChatType[];
 
-export { UserDataType, ChatType, FullChatType, ChatsType };
+type FavoritesChatType = {
+  chatId: number;
+  userData: UserDataType;
+  lastMessage: string;
+  lastMessageDate: string;
+  section: string;
+  advertisementActive: boolean;
+};
+type ArchivedChatType = {
+  chatId: number;
+  userData: UserDataType;
+  lastMessage: string;
+  lastMessageDate: string;
+  section: string;
+  advertisementActive: boolean;
+};
+
+export {
+  UserDataType,
+  ChatType,
+  FullChatType,
+  ChatsType,
+  FavoritesChatType,
+  ArchivedChatType,
+};

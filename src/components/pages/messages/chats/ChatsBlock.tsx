@@ -5,6 +5,8 @@ import { ChatsList, Buttons, Icons, CommonIcon } from "@/components";
 import {
   useGetBuyChatsQuery,
   useGetSellChatsQuery,
+  useGetFavoritesChatsQuery,
+  useGetArchivedChatsQuery,
 } from "@/redux/messages/chatApi";
 import style from "./ChatsBlock.module.scss";
 
@@ -30,8 +32,19 @@ const ChatsBlock: FC<ChatsBlockType> = ({
     // isLoading: isSellChatsLoading,
     // isError: isSellChatsError,
   } = useGetSellChatsQuery();
+  const { data: favoritesChats } = useGetFavoritesChatsQuery();
+  const { data: archivedChats } = useGetArchivedChatsQuery();
 
-  const chats = activeButton === 1 ? buyChats : sellChats;
+  let chats;
+  if (favoritesChats || archivedChats) {
+    chats = isHeartSelected
+      ? favoritesChats
+      : isFolderSelected
+      ? archivedChats
+      : activeButton === 1
+      ? buyChats
+      : sellChats;
+  }
 
   const handleButtonClick = (buttonId: number) => {
     setActiveButton(buttonId);

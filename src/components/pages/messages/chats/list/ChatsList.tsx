@@ -3,11 +3,15 @@
 import { FC } from "react";
 import { Box } from "@mui/material";
 import { Chat, CommonPreloader } from "@/components";
-import { ChatType } from "@/types/messages/chats";
+import {
+  ChatType,
+  FavoritesChatType,
+  ArchivedChatType,
+} from "@/types/messages/chats";
 import style from "./ChatsList.module.scss";
 
 interface ChatsListType {
-  chats?: ChatType[] | undefined;
+  chats?: ChatType[] | FavoritesChatType[] | ArchivedChatType[] | undefined;
   setSelectedChatId: (chatId: number) => void;
   selectedChatId: number | null;
 }

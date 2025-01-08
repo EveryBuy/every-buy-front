@@ -1,6 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { RootState } from "@/redux/store";
-import { ChatsType, FullChatType } from "@/types/messages/chats";
+import {
+  ChatsType,
+  FullChatType,
+  FavoritesChatType,
+  ArchivedChatType,
+} from "@/types/messages/chats";
 import { MessageType } from "@/types/messages/messages";
 
 interface ChatMessagesDataTypeInt {
@@ -37,6 +42,10 @@ export const chatApi = createApi({
       transformResponse: (response: { data: ChatMessagesDataTypeInt }) =>
         response.data.chatMessages,
     }),
+    getFavoritesChats: builder.query<FavoritesChatType[], void>({
+      query: () => "/chat/get-all-favorite-chats",
+      providesTags: ["Chat"],
+    }),
     addChatToFavorites: builder.mutation<void, { chatId: number }>({
       query: ({ chatId }) => ({
         url: `/chat/add-to-favorite?chatId=${chatId}`,
@@ -50,6 +59,10 @@ export const chatApi = createApi({
         method: "DELETE",
       }),
       invalidatesTags: ["Chat"],
+    }),
+    getArchivedChats: builder.query<ArchivedChatType[], void>({
+      query: () => "/chat/get-all-archive-chats",
+      providesTags: ["Chat"],
     }),
     addChatToArchive: builder.mutation<void, { chatId: number }>({
       query: ({ chatId }) => ({
@@ -73,8 +86,10 @@ export const {
   useGetSellChatsQuery,
   useGetChatQuery,
   useGetMessagesByChatIdQuery,
+  useGetFavoritesChatsQuery,
   useAddChatToFavoritesMutation,
   useRemoveChatFromFavoritesMutation,
+  useGetArchivedChatsQuery,
   useAddChatToArchiveMutation,
   useRemoveChatFromArchiveMutation,
 } = chatApi;
