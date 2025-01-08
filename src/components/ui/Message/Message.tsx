@@ -22,7 +22,7 @@ export const Message = () => {
         success: {
           duration: 3000,
           style: {
-            background: "green",
+            background: "#29B126",
             color: "black",
           },
         },

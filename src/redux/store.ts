@@ -18,6 +18,8 @@ import {
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 import { chatApi } from "./messages/chatApi";
+import { filtersReducer } from "./filters/slice";
+import { version } from "os";
 
 const createNoopStorage = () => {
   return {
@@ -38,14 +40,13 @@ const storage =
     ? createWebStorage("local")
     : createNoopStorage();
 
-const persistConfig = {
+const authPersistConfig = {
   key: "root",
   version: 1,
   storage,
-  // whitelist: ["token"],
 };
 
-const persistedAuthReducer = persistReducer(persistConfig, authReducer);
+const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
 
 export const makeStore = () => {
   return configureStore({
@@ -53,8 +54,7 @@ export const makeStore = () => {
       auth: persistedAuthReducer,
       messages: messagesReducer,
       advertisement: advertisementReducer,
-      // ui: persistedUiReducer,
-      // filters: filtersReducer,
+      filters: filtersReducer,
       [chatApi.reducerPath]: chatApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>

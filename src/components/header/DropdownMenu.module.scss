@@ -71,6 +71,10 @@
   background-color: #cccccc;
 }
 
+.userName {
+  font-size: var(--large-body-medium);
+}
+
 .userPicture {
   border-radius: 50%;
   object-fit: cover;

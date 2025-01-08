@@ -8,8 +8,10 @@ import {
     getAdvertisementById,
     getAllFavouriteAdvert,
     getCategory,
+    getCitiesByRegionId,
     getCity,
     getLowSubCategory,
+    getRegion,
     getTopSubCategory,
     getUserActiveAdverts,
     getUserInactiveAdverts,
@@ -37,13 +39,15 @@ export type LowSubCategory = {
     subCategoryNameUkr: string,
 }
 
-export type CityList = {
+export type Region = {
+    id: number,
+    regionName: string,
+}
+
+export type City = {
     id: number,
     cityName: string,
-    region: {
-        id: number,
-        regionName: string,
-      }
+    region: Region,
 }
 
 export type Advertisement = {
@@ -69,10 +73,10 @@ export type Advertisement = {
 export type FavouriteAdvertisement = {
     advertisementId: number,
     category: Category,
-    city: CityList,
+    city: City,
     mainPhotoUrl: string,
     price: number,
-    productType: "NEW | USED",
+    productType: "NEW" | "USED" | "OTHER",
     title: string,
     updateDate: string,
     userId: number,
@@ -82,7 +86,9 @@ export type AdvertisementState = {
     category: Category[],
     topSubCategory: TopSubCategory[],
     lowSubCategory: LowSubCategory[],
-    cityList: CityList[],
+    cityList: City[],
+    regionList: Region[],
+    citiesListByRegion: City[],
     myAdvertisements: Advertisement[],
     activeAdvertisement: Advertisement | null,
     advertisementById: Advertisement | null,
@@ -97,6 +103,8 @@ const initialState: AdvertisementState = {
     topSubCategory: [],
     lowSubCategory: [],
     cityList: [],
+    regionList: [],
+    citiesListByRegion: [],
     myAdvertisements: [],
     activeAdvertisement: null,
     advertisementById: null,
@@ -148,6 +156,22 @@ const advertisementSlice = createSlice({
             .addCase(getCity.rejected, (state) => {
                 state.isLoading = false;
             })
+            .addCase(getRegion.pending, handlePending)
+            .addCase(getRegion.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.regionList = action.payload.data;
+            })
+            .addCase(getRegion.rejected, (state) => {
+                state.isLoading = false;
+            })
+            .addCase(getCitiesByRegionId.pending, handlePending)
+            .addCase(getCitiesByRegionId.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.citiesListByRegion = action.payload.data;
+            })
+            .addCase(getCitiesByRegionId.rejected, (state) => {
+                state.isLoading = false;
+            })
             .addCase(createAdvertisement.pending, handlePending)
             .addCase(createAdvertisement.fulfilled, (state, action) => {
                 state.isLoading = false;
@@ -190,10 +214,20 @@ const advertisementSlice = createSlice({
             })
             .addCase(changeAdvertisementStatus.pending, handlePending)
             .addCase(changeAdvertisementStatus.fulfilled, (state, action) => {
+
                 state.isLoading = false;
-                const index = state.myAdvertisements.findIndex(elem => elem.id === action.payload.data.advertisementId)
-                state.myAdvertisements[index].isEnabled = action.payload.data.status;
-                state.myAdvertisements[index].updateDate = action.payload.data.updateDate;
+                if (action.payload.data.status === false) {
+                    const advert = state.userActiveAdverts.find(elem => elem.id === action.payload.data.advertisementId);
+                    const index = state.userActiveAdverts.findIndex(elem => elem.id === action.payload.data.advertisementId);
+                    if (advert) state.userInactiveAdverts.push(advert);
+                    state.userActiveAdverts.splice(index, 1);
+                } else {
+                    const advert = state.userInactiveAdverts.find(elem => elem.id === action.payload.data.advertisementId);
+                    const index = state.userInactiveAdverts.findIndex(elem => elem.id === action.payload.data.advertisementId);
+                    if (advert) state.userActiveAdverts.push(advert);
+                    state.userInactiveAdverts.splice(index, 1);
+                }
+
             })
             .addCase(changeAdvertisementStatus.rejected, (state) => {
                 state.isLoading = false;
