@@ -77,7 +77,8 @@
     }
   }
   @include media-min($breakpoint-laptop-large) {
-    height: 455px;
+    // height: 455px;
+    height: 440px;
     padding: 10px 40px 0px;
   }
 

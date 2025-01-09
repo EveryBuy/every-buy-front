@@ -5,7 +5,7 @@ type UserDataType = {
 };
 
 type MessageType = {
-  chatId: number;
+  chatId: number | null;
   creationTime: string;
   id: number;
   text: string;

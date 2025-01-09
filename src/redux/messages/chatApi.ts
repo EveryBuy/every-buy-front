@@ -78,6 +78,16 @@ export const chatApi = createApi({
       }),
       invalidatesTags: ["Chat"],
     }),
+    addMessageToChat: builder.mutation<
+      MessageType,
+      { chatId: number; text: string }
+    >({
+      query: ({ chatId, text }) => ({
+        url: `/chat/${chatId}/send-message`,
+        method: "POST",
+        body: { text },
+      }),
+    }),
   }),
 });
 
@@ -92,4 +102,5 @@ export const {
   useGetArchivedChatsQuery,
   useAddChatToArchiveMutation,
   useRemoveChatFromArchiveMutation,
+  useAddMessageToChatMutation,
 } = chatApi;
