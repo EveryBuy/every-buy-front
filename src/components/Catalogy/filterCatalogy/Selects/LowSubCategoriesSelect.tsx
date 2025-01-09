@@ -16,11 +16,11 @@ const LowSubCategoriesSelect: FC = () => {
 
 	const categoryID: number | null = useAppSelector(state => state.filters.categoryId) || null;
 	const topCategoryID: number | null = useAppSelector(state => state.filters.topSubCateroryId) || null;
-	const searchParamsLowCategoryId: number | null = searchParams.has('lowSubCategoryId') ? Number(searchParams.get('lowSubCategoryId')) : null;
+	const paramsLowCategoryId: number | null = searchParams.has('lowSubCategoryId') ? Number(searchParams.get('lowSubCategoryId')) : null;
 
 	const lowSubCategoriesList: LowSubCategory[] = useAppSelector(selectLowSubCategories);
 
-	const [initialSearchParams, setInitialSearchParams] = useState<LowSubCategory[]>([]);
+	const [initialParams, setInitialParams] = useState<LowSubCategory[]>([]);
 	const [selectedOption, setSelectedOption] = useState<string>("");
 
 	useEffect(() => {
@@ -32,27 +32,27 @@ const LowSubCategoriesSelect: FC = () => {
 	}, [topCategoryID]);
 
 	useEffect(() => {
-		if (searchParamsLowCategoryId && searchParamsLowCategoryId > 0) {
-			dispatch(addLowSubCategoryId(searchParamsLowCategoryId));
+		if (paramsLowCategoryId && paramsLowCategoryId > 0) {
+			dispatch(addLowSubCategoryId(paramsLowCategoryId));
 		}
-	}, [searchParamsLowCategoryId]);
+	}, [paramsLowCategoryId]);
 
 
 	useEffect(() => {
-		if (lowSubCategoriesList.length > 0 && searchParamsLowCategoryId !== null && searchParamsLowCategoryId > 0) {
-			setInitialSearchParams(lowSubCategoriesList.filter(item => item.id === searchParamsLowCategoryId));
+		if (lowSubCategoriesList.length > 0 && paramsLowCategoryId !== null && paramsLowCategoryId > 0) {
+			setInitialParams(lowSubCategoriesList.filter(item => item.id === paramsLowCategoryId));
 		}
 	}, [lowSubCategoriesList]);
 
 	useEffect(() => {
-		if (initialSearchParams.length > 0) {
-			setSelectedOption(initialSearchParams[0].subCategoryNameUkr);
+		if (initialParams.length > 0) {
+			setSelectedOption(initialParams[0].subCategoryNameUkr);
 		}
-	}, [initialSearchParams]);
+	}, [initialParams]);
 
 	useEffect(() => {
 		setSelectedOption('');
-		setInitialSearchParams([]);
+		setInitialParams([]);
 	}, [categoryID]);
 
 	// const options = ["Option 1", "Option 2", "Option 3"];

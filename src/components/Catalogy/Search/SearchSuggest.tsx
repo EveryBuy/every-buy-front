@@ -1,6 +1,6 @@
 "use client";
 
-import { FC } from "react";
+// import { FC } from "react";
 import styles from "./SearchSuggest.module.scss";
 import Link from 'next/link';
 import { Advertisement, ListItemsForSearch } from '@/types/listItemsForSearch';

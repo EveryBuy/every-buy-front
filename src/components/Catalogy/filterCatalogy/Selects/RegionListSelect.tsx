@@ -18,28 +18,22 @@ const RegionListSelect: FC = () => {
 	const searchParams = useSearchParams() as unknown as Map<keyof InitialState, string | null>;
 	const dispatch = useAppDispatch();
 
-	const searchParamsRegionId: number | null = searchParams.has('regionId') ? Number(searchParams.get('regionId')) : null;
+	const paramsRegionId: number | null = searchParams.has('regionId') ? Number(searchParams.get('regionId')) : null;
 
-	const initialSearchParams: RegionListType[] = searchParamsRegionId && searchParamsRegionId > 0
-		? regionList.filter(item => item.id === searchParamsRegionId) : [];
+	const initialParams: RegionListType[] = paramsRegionId && paramsRegionId > 0
+		? regionList.filter(item => item.id === paramsRegionId) : [];
 
 	const [selectedOption, setSelectedOption] = useState<string>(
-		initialSearchParams.length > 0 ? initialSearchParams[0]?.regionName : ""
+		initialParams.length > 0 ? initialParams[0]?.regionName : ""
 	);
 
 	useEffect(() => {
-		if (searchParamsRegionId && searchParamsRegionId > 0) {
-			dispatch(addRegionId(searchParamsRegionId));
+		if (paramsRegionId && paramsRegionId > 0) {
+			dispatch(addRegionId(paramsRegionId));
 		} else {
 			setSelectedOption('');
 		}
-	}, [searchParamsRegionId]);
-
-	useEffect(() => {
-		if (searchParamsRegionId && searchParamsRegionId > 0 && initialSearchParams.length > 0) {
-			setSelectedOption(initialSearchParams[0].regionName);
-		}
-	}, [regionList]);
+	}, [paramsRegionId]);
 
 	// const options = ["Option 1", "Option 2", "Option 3"];
 	const options: string[] = regionList.map(item => item.regionName).sort();

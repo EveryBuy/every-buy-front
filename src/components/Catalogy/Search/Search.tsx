@@ -19,7 +19,7 @@ type FormEventType = React.FormEvent<HTMLFormElement>;
 // type MouseEventType = React.MouseEvent<HTMLButtonElement>;
 // type ChangeEventType = React.ChangeEvent<HTMLInputElement>;
 
-const Search: FC = (props: SearchProps) => {
+const Search: FC<SearchProps> = (props: SearchProps) => {
 
 	const hideSearchSuggest = props.hideSuggest || false;
 
@@ -39,15 +39,15 @@ const Search: FC = (props: SearchProps) => {
 	const [searchArr, setSearchArr] = useState<[]>([]);
 	const router = useRouter();
 
-	const handlerSetWord = (event: React.ChangeEvent<HTMLInputElement>) => {
+	const handlerSetWord = (event: React.ChangeEvent<HTMLInputElement>): void => {
 		const newValue = event.target.value;
 		setWord(newValue);
 	}
 
 	const pathname = usePathname();
 
-	const goToSearch = (event: FormEventType) => {
-		event.preventDefault();
+	const hendlerSearch = (event?: FormEventType | undefined): void => {
+		event?.preventDefault();
 		dispatch(addKeyWord(word));
 		if (!hideSearchSuggest) {
 			router.push(`/catalogy?keyword=${word}`);
@@ -66,7 +66,6 @@ const Search: FC = (props: SearchProps) => {
 				keyword: word
 			}))
 				.then((data) => {
-					console.log(data.payload);
 					if (data) {
 						setSearchArr(data.payload);
 					}
@@ -98,7 +97,7 @@ const Search: FC = (props: SearchProps) => {
 					title=""
 					color="white"
 					className={styles.searchButton}
-					onClick={goToSearch}
+					onClick={hendlerSearch}
 				>
 					<CommonIcon
 						id="icon-search"

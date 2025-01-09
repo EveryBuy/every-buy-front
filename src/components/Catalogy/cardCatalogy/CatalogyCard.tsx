@@ -19,7 +19,7 @@ export const CatalogyCard = (props: ItemProps) => {
 		<div className={styles.containerMiddleCardsList}>
 			<ul className={styles.middleCardsList}>
 				{
-					items && Array.isArray(items) && items.length > 0
+					items && items.length > 0 && Array.isArray(items)
 						? items.map((elem) => {
 							return (
 								<li key={elem.advertisementId} className={styles.middleCardsItem}>

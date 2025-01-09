@@ -15,34 +15,34 @@ const CategoriesSelect: FC = () => {
 	const searchParams = useSearchParams() as unknown as Map<keyof InitialState, string | null>;
 	const dispatch = useAppDispatch();
 
-	const searchParamsCategoryId: number | null = searchParams.has('categoryId') ? Number(searchParams.get('categoryId')) : null;
+	const paramsCategoryId: number | null = searchParams.has('categoryId') ? Number(searchParams.get('categoryId')) : null;
 
 	const categoryIdStore: number = useAppSelector((state) => state.filters.categoryId) || 0;
 
 	useEffect(() => {
 		dispatch(getCategory());
-		if (searchParamsCategoryId && searchParamsCategoryId > 0) {
-			dispatch(addCategory(searchParamsCategoryId));
+		if (paramsCategoryId && paramsCategoryId > 0) {
+			dispatch(addCategory(paramsCategoryId));
 		}
 	}, []);
 
 	const categoriesList: Category[] = useAppSelector(selectCategories);
 
-	const [initialSearchParams, setInitialSearchParams] = useState<Category[]>([]);
+	const [initialParams, setInitialParams] = useState<Category[]>([]);
 	const [selectedOption, setSelectedOption] = useState<string>("");
 
 	useEffect(() => {
-		if (categoriesList.length > 0 && searchParamsCategoryId !== null && searchParamsCategoryId > 0) {
-			const arrCategory = categoriesList.filter(item => item.id === searchParamsCategoryId);
-			setInitialSearchParams(arrCategory);
+		if (categoriesList.length > 0 && paramsCategoryId !== null && paramsCategoryId > 0) {
+			const arrCategory = categoriesList.filter(item => item.id === paramsCategoryId);
+			setInitialParams(arrCategory);
 		}
 	}, [categoriesList]);
 
 	useEffect(() => {
-		if (initialSearchParams.length > 0) {
-			setSelectedOption(initialSearchParams[0].nameUkr)
+		if (initialParams.length > 0) {
+			setSelectedOption(initialParams[0].nameUkr)
 		}
-	}, [initialSearchParams]);
+	}, [initialParams]);
 
 	useEffect(() => {
 		dispatch(addTopSubCateroryId(null));
@@ -55,7 +55,7 @@ const CategoriesSelect: FC = () => {
 			}
 		} else {
 			setSelectedOption('');
-			setInitialSearchParams([]);
+			setInitialParams([]);
 		}
 	}, [categoryIdStore]);
 

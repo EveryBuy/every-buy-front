@@ -28,21 +28,21 @@ const SortOrderSelection: FC = () => {
 	const searchParams = useSearchParams() as unknown as Map<keyof InitialState, string | null>;
 	const dispatch = useAppDispatch();
 
-	const searchParamsSort: SortOrder | "" = searchParams.has('sortOrder') ? searchParams.get('sortOrder') : "";
-	const initialSearchParams: sortOrderListType[] = searchParamsSort && searchParamsSort.length > 0
-		? sortOrderList.filter(item => item.type === searchParamsSort) : [];
+	const paramsSort: SortOrder | "" = searchParams.has('sortOrder') ? searchParams.get('sortOrder') : "";
+	const initialParams: sortOrderListType[] = paramsSort && paramsSort.length > 0
+		? sortOrderList.filter(item => item.type === paramsSort) : [];
 
 	const [selectedOption, setSelectedOption] = useState<string>(
-		initialSearchParams.length > 0 ? initialSearchParams[0].title : ""
+		initialParams.length > 0 ? initialParams[0].title : ""
 	);
 
 	useEffect(() => {
-		if (searchParamsSort && searchParamsSort.length > 0) {
-			dispatch(addSortOrder(searchParamsSort));
+		if (paramsSort && paramsSort.length > 0) {
+			dispatch(addSortOrder(paramsSort));
 		} else {
 			setSelectedOption('');
 		}
-	}, [searchParamsSort]);
+	}, [paramsSort]);
 
 	const options: string[] = sortOrderList.map(item => item.title);
 

@@ -8,11 +8,11 @@ import CommonSelect from '@/components/ui/CommonSelect/CommonSelect';
 import { SelectChangeEvent } from '@mui/material';
 
 type productListType = {
-	type: ProductType | "OTHER",
+	type: ProductType,
 	title: string
 }
 
-type ProductItemType = ProductType | "OTHER" | "";
+type ProductItemType = ProductType | "";
 
 const ProductTyperSelection: FC = () => {
 
@@ -34,23 +34,23 @@ const ProductTyperSelection: FC = () => {
 	const searchParams = useSearchParams() as unknown as Map<keyof InitialState, string | null>;
 	const dispatch = useAppDispatch();
 
-	const searchParamsType: string | null | undefined = searchParams.has('productType')
-		? searchParams.get('productType') : '';
+	const paramsType: string | null | undefined = searchParams.has('productType')
+		? searchParams.get('productType') : "";
 
-	const initialSearchParams: productListType[] = searchParamsType && searchParamsType.length > 0
-		? productTypeList.filter(item => item.type === searchParamsType) : [];
+	const initialParams: productListType[] = paramsType && paramsType.length > 0
+		? productTypeList.filter(item => item.type === paramsType) : [];
 
 	const [selectedOption, setSelectedOption] = useState<string>(
-		initialSearchParams.length > 0 ? initialSearchParams[0]?.title : ""
+		initialParams.length > 0 ? initialParams[0]?.title : ""
 	);
 
 	useEffect(() => {
-		if (searchParamsType && searchParamsType !== "") {
-			dispatch(addProductType(searchParamsType));
+		if (paramsType && paramsType !== "") {
+			dispatch(addProductType(paramsType));
 		} else {
 			setSelectedOption('');
 		}
-	}, [searchParamsType]);
+	}, [paramsType]);
 
 	const options: string[] = productTypeList.map(item => item.title);
 

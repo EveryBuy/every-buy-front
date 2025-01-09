@@ -1,7 +1,8 @@
 'use client';
 
-import React from 'react';
-import { useAppSelector } from "@/redux/store";
+import React, { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '@/redux/store';
+import { resetFilters } from '@/redux/filters/slice';
 
 
 import PriceSlider from './PriceSlider';
@@ -23,6 +24,16 @@ export function FilterCatalogySearch(props: ResetFiltersType) {
 
 	const categoryId = useAppSelector(state => state.filters.categoryId);
 	const topSubCateroryId = useAppSelector(state => state.filters.topSubCateroryId);
+	const regionId = useAppSelector(state => state.filters.regionId);
+
+	const dispatch = useAppDispatch();
+
+	useEffect(() => {
+		return () => {
+			dispatch(resetFilters(1)); // clean redux for filters
+		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	return (
 		<Grid2 container direction="row" spacing={2} sx={{ justifyContent: "center", alignItems: "flex-end", }}>
@@ -38,7 +49,7 @@ export function FilterCatalogySearch(props: ResetFiltersType) {
 			}
 			<ProductTyperSelection />
 			<RegionListSelect />
-			{/* <CityListSelect /> */}
+			{regionId && <CityListSelect />}
 
 			<Grid2
 				size={{ xs: 12 }}

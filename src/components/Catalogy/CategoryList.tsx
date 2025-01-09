@@ -13,7 +13,7 @@ export function CategoryList() {
 	const searchParams = useSearchParams() as unknown as Map<keyof InitialState, string | null>;
 	const dispatch = useAppDispatch();
 
-	const searchParamsCategoryId: number | null = searchParams.has('categoryId') ? Number(searchParams.get('categoryId')) : null;
+	const paramsCategoryId: number | null = searchParams.has('categoryId') ? Number(searchParams.get('categoryId')) : null;
 
 	const categoryIdStore: number = useAppSelector((state) => state.filters.categoryId) || 0;
 
@@ -24,8 +24,8 @@ export function CategoryList() {
 
 	useEffect(() => {
 		setCategories(categoriesList);
-		if (searchParamsCategoryId && searchParamsCategoryId > 0) {
-			setSelectedCategory(searchParamsCategoryId);
+		if (paramsCategoryId && paramsCategoryId > 0) {
+			setSelectedCategory(paramsCategoryId);
 		}
 	}, [categoriesList]);
 

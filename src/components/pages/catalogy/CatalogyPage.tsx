@@ -28,13 +28,33 @@ const styles = {
 	flexDirection: 'column',
 };
 
+const EmptyData = (): JSX.Element => {
+	return (
+		<Box sx={{ margin: "52px 2em 0", textAlign: "center" }}>
+			<Typography sx={{ fontSize: '2em', marginBottom: "60px" }}>
+				Нажаль ми не знайшли жодного оголошення за вашим запитом.
+			</Typography>
+			<Image
+				src={imgSearchEmpty}
+				width={288}
+				height={350}
+				alt="не має оголошення"
+			/>
+			<Typography sx={{ fontSize: '2em', marginTop: "60px" }}>
+				Перевірте правильність запиту <br />
+				або оберіть будь-яку категорію для перегляду оголошень.
+			</Typography>
+		</Box>
+	)
+};
+
 export const CatalogyPage = () => {
 
 	const dispatch = useAppDispatch();
 	const router = useRouter();
 
 	const [isListOpen, setListOpen] = useState<boolean>(false);
-	const [dataArray, setDataArray] = useState([]);
+	const [dataArray, setDataArray] = useState<[] | string>([]);
 	const [loading, setLoading] = useState<boolean>(false);
 
 	const makeLinkOpen = (): void => {
@@ -50,6 +70,7 @@ export const CatalogyPage = () => {
 		},
 		sortOrder,
 		regionId,
+		cityId,
 		topSubCateroryId,
 		lowSubCategoryId,
 		productType,
@@ -65,6 +86,7 @@ export const CatalogyPage = () => {
 		if (maxPrice !== 100000) queryArray.push(`maxPrice=${maxPrice}`);
 		if (sortOrder !== "") queryArray.push(`sortOrder=${sortOrder}`);
 		if (regionId !== null) queryArray.push(`regionId=${regionId}`);
+		if (cityId !== null) queryArray.push(`cityId=${cityId}`);
 		if (topSubCateroryId !== null) queryArray.push(`topSubCategoryId=${topSubCateroryId}`);
 		if (lowSubCategoryId !== null) queryArray.push(`lowSubCategoryId=${lowSubCategoryId}`);
 		if (productType !== "") queryArray.push(`productType=${productType}`);
@@ -95,7 +117,7 @@ export const CatalogyPage = () => {
 				.then((data) => {
 					const newData: [] | string = data.payload;
 					console.log(newData);
-					if (newData && Array.isArray(newData) && newData.length > 0) {
+					if (newData && newData.length > 0) {
 						setDataArray(newData);
 					} else {
 						setDataArray([]);
@@ -111,11 +133,12 @@ export const CatalogyPage = () => {
 		} else {
 			setDataArray([]);
 		}
-
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [filtersSetting, router]);  //min, max, categoryId, sortOrder, productType, ...
 
-	const handlerResetFilters = () => {
-		dispatch(resetFilters());
+	const handlerResetFilters = (event?: React.FormEvent<HTMLFormElement> | undefined): void => {
+		event?.preventDefault();
+		dispatch(resetFilters(1));
 
 		setTimeout(() => {
 			if (keyword.length > 0) {
@@ -136,7 +159,7 @@ export const CatalogyPage = () => {
 				<CustomSeparator category="Moda" />
 			</Box>
 			<Box sx={{ margin: "2em 1em" }}>
-				<Search hideSuggest={true as Boolean} />
+				<Search hideSuggest={true} />
 			</Box>
 			<Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: "space-between", alignItems: "center", margin: '2.5rem 0' }}>
 				<Typography variant='h3' sx={{ fontSize: '2.3em' }}>
@@ -156,27 +179,15 @@ export const CatalogyPage = () => {
 			{
 				!loading
 					? <div>Зачекайте ...</div>
-					: dataArray.length > 0
-						? <><Typography variant='h3' sx={{ margin: '1rem 0 2.3rem', fontSize: '2.3em' }}>
-							Ми знайшли понад 1000 оголошень
-						</Typography>
-							<CatalogyCard item={dataArray} />
-						</>
-						: <Box sx={{ margin: "52px 2em 0", textAlign: "center" }}>
-							<Typography sx={{ fontSize: '2em', marginBottom: "60px" }}>
-								Нажаль ми не знайшли жодного оголошення за вашим запитом.
+					: typeof (dataArray) === "string"
+						? <div style={{ fontSize: "32px" }}>Помилка сервера</div>
+						: Array.isArray(dataArray) && dataArray.length > 0
+							? <><Typography variant='h3' sx={{ margin: '1rem 0 2.3rem', fontSize: '2.3em' }}>
+								Ми знайшли понад 1000 оголошень
 							</Typography>
-							<Image
-								src={imgSearchEmpty}
-								width={288}
-								height={350}
-								alt="не має оголошення"
-							/>
-							<Typography sx={{ fontSize: '2em', marginTop: "60px" }}>
-								Перевірте правильність запиту <br />
-								або оберіть будь-яку категорію для перегляду оголошень.
-							</Typography>
-						</Box>
+								<CatalogyCard item={dataArray} />
+							</>
+							: <EmptyData />
 			}
 		</Container>
 	);

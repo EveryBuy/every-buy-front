@@ -36,14 +36,14 @@ const PriceSlider: FC = () => {
 	const searchParams = useSearchParams();
 	const dispatch = useAppDispatch();
 
-	const searchParamsMinPrice: number = searchParams.has('minPrice')
+	const paramsMinPrice: number = searchParams.has('minPrice')
 		? Number(searchParams.get('minPrice')) : priceObj.min;
-	const searchParamsMaxPrice: number = searchParams.has('maxPrice')
+	const paramsMaxPrice: number = searchParams.has('maxPrice')
 		? Number(searchParams.get('maxPrice')) : priceObj.max;
 
 	const [price, setPrice] = useState({
-		min: searchParamsMinPrice,
-		max: searchParamsMaxPrice
+		min: paramsMinPrice,
+		max: paramsMaxPrice
 	});
 
 	useEffect(() => {
@@ -57,7 +57,7 @@ const PriceSlider: FC = () => {
 			});
 		}
 
-	}, [searchParamsMaxPrice]);
+	}, [paramsMinPrice, paramsMaxPrice]);
 
 	const handleChangePriceSlider = (event: Event, newValue: number | number[]) => {
 		if (Array.isArray(newValue)) {
@@ -92,7 +92,7 @@ const PriceSlider: FC = () => {
 	}
 
 	return (
-		<Grid2 size={{ xs: 12, sm: 4, md: 4 }} style={{ padding: "0 6px 5px 0" }}>
+		<Grid2 size={{ xs: 12, sm: 4, md: 4 }} style={{ padding: "0 6px 5px 10px" }}>
 			<Typography>Ціна</Typography>
 			<MuiSlider
 				value={Object.values(price)}
@@ -108,6 +108,7 @@ const PriceSlider: FC = () => {
 					variant='outlined'
 					size='small'
 					value={price.min}
+					style={{ borderRadius: "6px", border: "none", backgroundColor: "#fff" }}
 					onChange={handleChangePriceMin}
 					label='Мін'
 				/>
@@ -115,6 +116,7 @@ const PriceSlider: FC = () => {
 					variant='outlined'
 					size='small'
 					value={price.max}
+					style={{ borderRadius: "6px", border: "none", backgroundColor: "#fff" }}
 					onChange={handleChangePriceMax}
 					label='Макс'
 				/>

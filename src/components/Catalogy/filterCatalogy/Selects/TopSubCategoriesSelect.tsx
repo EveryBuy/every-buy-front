@@ -16,11 +16,12 @@ const TopSubCategoriesSelect: FC = () => {
 	const dispatch = useAppDispatch();
 
 	const categoryID: number | null = useAppSelector(state => state.filters.categoryId) || null;
-	const searchParamsTopCategoryId: number | null = searchParams.has('topSubCateroryId') ? Number(searchParams.get('topSubCateroryId')) : null;
+	const paramsTopCategoryId: number | null = searchParams.has('topSubCateroryId')
+		? Number(searchParams.get('topSubCateroryId')) : null;
 
 	const subCategoriesList: TopSubCategory[] = useAppSelector(selectTopSubCategories);
 
-	const [initialSearchParams, setInitialSearchParams] = useState<TopSubCategory[]>([]);
+	const [initialParams, setInitialParams] = useState<TopSubCategory[]>([]);
 	const [selectedOption, setSelectedOption] = useState<string>("");
 
 	useEffect(() => {
@@ -28,33 +29,33 @@ const TopSubCategoriesSelect: FC = () => {
 		if (categoryID && categoryID > 0) {
 			dispatch(getTopSubCategory(categoryID));
 		}
-		if (searchParamsTopCategoryId && searchParamsTopCategoryId > 0) {
-			dispatch(addTopSubCateroryId(searchParamsTopCategoryId));
+		if (paramsTopCategoryId && paramsTopCategoryId > 0) {
+			dispatch(addTopSubCateroryId(paramsTopCategoryId));
 		}
 	}, [categoryID]);
 
 	useEffect(() => {
-		if (searchParamsTopCategoryId && searchParamsTopCategoryId > 0) {
-			dispatch(addTopSubCateroryId(searchParamsTopCategoryId));
+		if (paramsTopCategoryId && paramsTopCategoryId > 0) {
+			dispatch(addTopSubCateroryId(paramsTopCategoryId));
 		}
-	}, [searchParamsTopCategoryId]);
+	}, [paramsTopCategoryId]);
 
 	useEffect(() => {
-		if (subCategoriesList.length > 0 && searchParamsTopCategoryId !== null && searchParamsTopCategoryId > 0) {
-			setInitialSearchParams(subCategoriesList.filter(item => item.id === searchParamsTopCategoryId));
+		if (subCategoriesList.length > 0 && paramsTopCategoryId !== null && paramsTopCategoryId > 0) {
+			setInitialParams(subCategoriesList.filter(item => item.id === paramsTopCategoryId));
 		}
 	}, [subCategoriesList]);
 
 	useEffect(() => {
-		if (initialSearchParams && initialSearchParams.length > 0) {
-			setSelectedOption(initialSearchParams[0].subCategoryNameUkr)
+		if (initialParams && initialParams.length > 0) {
+			setSelectedOption(initialParams[0].subCategoryNameUkr)
 		}
-	}, [initialSearchParams]);
+	}, [initialParams]);
 
 	// const options = ["Option 1", "Option 2", "Option 3"];
 	const options: string[] = subCategoriesList.map(item => item.subCategoryNameUkr) || [];
 
-	const handleChange = (event: SelectChangeEvent<string>) => {
+	const handleChange = (event: SelectChangeEvent<string>): void => {
 		const target: string = event.target.value;
 		const arrTopCategorySelect: TopSubCategory[] = subCategoriesList?.filter(item => item.subCategoryNameUkr === target);
 		const newIdTopCategory: number = arrTopCategorySelect.length > 0 ? arrTopCategorySelect[0].id : 0;

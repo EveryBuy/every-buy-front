@@ -2,61 +2,66 @@
 
 import React, { FC, useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { selectCityList } from "@/redux/advertisement/selectors";
 import { useAppSelector, useAppDispatch } from "@/redux/store";
-import { getCity } from '@/redux/advertisement/operations';
-import { addLocation, addRegionId, InitialState } from '@/redux/filters/slice';
+import { addLocation, addCityId, InitialState } from '@/redux/filters/slice';
 import CommonSelect from '@/components/ui/CommonSelect/CommonSelect';
 import { SelectChangeEvent } from '@mui/material';
-import { CityList } from '@/redux/advertisement/slice';
+import { City } from '@/redux/advertisement/slice';
+import cityList from '@/assets/cityList.json';
 
 const CityListSelect: FC = () => {
 
 	const searchParams = useSearchParams() as unknown as Map<keyof InitialState, string | null>;
 	const dispatch = useAppDispatch();
 
-	const searchParamsRegionId: number | null = searchParams.has('regionId') ? Number(searchParams.get('regionId')) : null;
+	const regionId: number | null = useAppSelector(state => state.filters.regionId);
 
-	const cityList: CityList[] = useAppSelector(selectCityList);
+	const paramsCityId: number | null = searchParams.has('cityId') && regionId !== null
+		? Number(searchParams.get('cityId'))
+		: null;
 
-	const [initialSearchParams, setInitialSearchParams] = useState<CityList[]>([]);
+	const initialParams: City[] = paramsCityId && paramsCityId > 0
+		? cityList.filter(item => item.id === paramsCityId) : [];
+
+	const [cityListForRegion, setCityListForRegion] = useState<City[]>(
+		regionId && regionId > 0 ? cityList.filter(item => item.region.id === regionId) : []
+	);
 	const [selectedOption, setSelectedOption] = useState<string>("");
 
 	useEffect(() => {
-		dispatch(getCity());
-		if (searchParamsRegionId && searchParamsRegionId > 0) {
-			dispatch(addRegionId(searchParamsRegionId));
+		if (paramsCityId && paramsCityId > 0) {
+			setSelectedOption(initialParams[0]?.cityName);
+			dispatch(addCityId(paramsCityId));
 		} else {
-			setInitialSearchParams([]);
 			setSelectedOption('');
 		}
-	}, [searchParamsRegionId]);
+	}, [paramsCityId]);
 
 	useEffect(() => {
-		if (cityList && cityList.length > 0 && searchParamsRegionId && searchParamsRegionId > 0) {
-			setInitialSearchParams(cityList.filter(item => item.id === searchParamsRegionId));
-			console.log(cityList);
+		if (regionId && regionId > 0) {
+			const newList: City[] = cityList.filter(item => item.region.id === regionId);
+			setCityListForRegion(newList);
 		}
+		setSelectedOption('');
+		dispatch(addCityId(null));
 
-		if (initialSearchParams.length > 0) setSelectedOption(initialSearchParams[0].cityName)
-	}, [cityList]);
+	}, [regionId]);
 
 	// const options = ["Option 1", "Option 2", "Option 3"];
-	const options: string[] = cityList.map(item => item.cityName).sort();
+	const options: string[] = cityListForRegion.map(item => item.cityName).sort();
 
-	const handleChange = (event: SelectChangeEvent<string>) => {
+	const handleChange = (event: SelectChangeEvent<string>): void => {
 		const target: string = event.target.value;
-		const arrCitySelect: CityList[] = cityList?.filter(item => item.cityName === target);
+		const arrCitySelect: City[] = cityListForRegion?.filter(item => item.cityName === target);
 		const newIdCity: number = arrCitySelect.length > 0 ? arrCitySelect[0].id : 0;
-		dispatch(addRegionId(newIdCity));
-		dispatch(addLocation(target));
+		dispatch(addCityId(newIdCity));
+		// dispatch(addLocation(target));
 		setSelectedOption(target);
-		console.log(newIdCity);
 	};
 
 	return (
 		<CommonSelect
-			label="Розташування"
+			label="Месцезнаходження"
 			options={options}
 			size={{
 				//mobile: "0",  0 - якщо не відображається на даному екрані
