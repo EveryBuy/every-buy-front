@@ -17,7 +17,7 @@ import ProductTyperSelection from './Selects/ProductTypeSelect';
 import { Grid2, Button, SelectChangeEvent } from '@mui/material';
 
 type ResetFiltersType = {
-	heandlerClick: void
+	heandlerClick: () => void
 }
 
 export function FilterCatalogySearch(props: ResetFiltersType) {

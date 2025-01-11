@@ -28,6 +28,10 @@ const styles = {
 	flexDirection: 'column',
 };
 
+const stylesHide = {
+	display: 'none',
+}
+
 const EmptyData = (): JSX.Element => {
 	return (
 		<Box sx={{ margin: "52px 2em 0", textAlign: "center" }}>
@@ -48,7 +52,7 @@ const EmptyData = (): JSX.Element => {
 	)
 };
 
-export const CatalogyPage = () => {
+export const CatalogyPage: React.FC = (): JSX.Element => {
 
 	const dispatch = useAppDispatch();
 	const router = useRouter();
@@ -171,7 +175,7 @@ export const CatalogyPage = () => {
 					{isListOpen ? "Згорнути" : "Розгорнути"}
 				</Typography>
 			</Box>
-			<Box className={isListOpen ? styles : "hidden"}>
+			<Box style={isListOpen ? styles : stylesHide}>
 				<FilterCatalogySearch heandlerClick={handlerResetFilters} />
 			</Box>
 
