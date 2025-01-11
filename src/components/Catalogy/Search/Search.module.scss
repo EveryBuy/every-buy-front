@@ -130,3 +130,17 @@
 		cursor: default;
 	}
 }
+
+.closeBtn {
+	border: none;
+
+	& svg:hover {
+		cursor: pointer;
+	}
+
+}
+
+.closeBtn:hover {
+	box-shadow: none;
+	background-color: transparent;
+}

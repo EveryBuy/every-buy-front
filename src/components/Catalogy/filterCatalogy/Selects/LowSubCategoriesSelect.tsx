@@ -29,12 +29,14 @@ const LowSubCategoriesSelect: FC = () => {
 		if (topCategoryID && topCategoryID > 0) {
 			dispatch(getLowSubCategory(topCategoryID));
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [topCategoryID]);
 
 	useEffect(() => {
 		if (paramsLowCategoryId && paramsLowCategoryId > 0) {
 			dispatch(addLowSubCategoryId(paramsLowCategoryId));
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [paramsLowCategoryId]);
 
 
@@ -42,6 +44,7 @@ const LowSubCategoriesSelect: FC = () => {
 		if (lowSubCategoriesList.length > 0 && paramsLowCategoryId !== null && paramsLowCategoryId > 0) {
 			setInitialParams(lowSubCategoriesList.filter(item => item.id === paramsLowCategoryId));
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [lowSubCategoriesList]);
 
 	useEffect(() => {
@@ -56,14 +59,19 @@ const LowSubCategoriesSelect: FC = () => {
 	}, [categoryID]);
 
 	// const options = ["Option 1", "Option 2", "Option 3"];
-	const options: string[] = lowSubCategoriesList.map(item => item.subCategoryNameUkr);
+	const options: string[] = ["Всі підкатегорії", ...lowSubCategoriesList.map(item => item.subCategoryNameUkr)];
 
 	const handleChange = (event: SelectChangeEvent<string>) => {
 		const target: string = event.target.value;
 		const arrLowCategorySelect: LowSubCategory[] = lowSubCategoriesList?.filter(item => item.subCategoryNameUkr === target);
 		const newIdLowCategory: number = arrLowCategorySelect.length > 0 ? arrLowCategorySelect[0].id : 0;
-		dispatch(addLowSubCategoryId(newIdLowCategory));
-		setSelectedOption(target);
+		if (newIdLowCategory > 0) {
+			dispatch(addLowSubCategoryId(newIdLowCategory));
+			setSelectedOption(target);
+		} else {
+			dispatch(addLowSubCategoryId(null));
+			setSelectedOption('');
+		}
 	};
 
 	return (

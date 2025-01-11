@@ -27,6 +27,7 @@ export function CategoryList() {
 		if (paramsCategoryId && paramsCategoryId > 0) {
 			setSelectedCategory(paramsCategoryId);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [categoriesList]);
 
 	const handleCategoryClick = (id: number) => {

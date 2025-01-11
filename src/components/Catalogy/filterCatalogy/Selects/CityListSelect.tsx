@@ -35,6 +35,7 @@ const CityListSelect: FC = () => {
 		} else {
 			setSelectedOption('');
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [paramsCityId]);
 
 	useEffect(() => {
@@ -44,19 +45,23 @@ const CityListSelect: FC = () => {
 		}
 		setSelectedOption('');
 		dispatch(addCityId(null));
-
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [regionId]);
 
 	// const options = ["Option 1", "Option 2", "Option 3"];
-	const options: string[] = cityListForRegion.map(item => item.cityName).sort();
+	const options: string[] = ["Всі міста", ...cityListForRegion.map(item => item.cityName).sort()];
 
 	const handleChange = (event: SelectChangeEvent<string>): void => {
 		const target: string = event.target.value;
 		const arrCitySelect: City[] = cityListForRegion?.filter(item => item.cityName === target);
 		const newIdCity: number = arrCitySelect.length > 0 ? arrCitySelect[0].id : 0;
-		dispatch(addCityId(newIdCity));
-		// dispatch(addLocation(target));
-		setSelectedOption(target);
+		if (newIdCity > 0) {
+			dispatch(addCityId(newIdCity));
+			// dispatch(addLocation(target));
+			setSelectedOption(target);
+		} else {
+			dispatch(addCityId(null));
+		}
 	};
 
 	return (

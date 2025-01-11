@@ -12,8 +12,6 @@ type productListType = {
 	title: string
 }
 
-type ProductItemType = ProductType | "";
-
 const ProductTyperSelection: FC = () => {
 
 	const productTypeList: productListType[] = [
@@ -46,20 +44,30 @@ const ProductTyperSelection: FC = () => {
 
 	useEffect(() => {
 		if (paramsType && paramsType !== "") {
-			dispatch(addProductType(paramsType));
+			const checkTypeObj: productListType | undefined = productTypeList.find(item => item.type === paramsType);
+			if (checkTypeObj) {
+				const params: ProductType = checkTypeObj.type;
+				dispatch(addProductType(params));
+			}
 		} else {
 			setSelectedOption('');
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [paramsType]);
 
-	const options: string[] = productTypeList.map(item => item.title);
+	const options: string[] = ["Всі оголошення", ...productTypeList.map(item => item.title)];
 
 	const handleChange = (event: SelectChangeEvent<string>) => {
 		const target: string = event.target.value;
 		const arrProductTypeSelect: productListType[] = productTypeList?.filter(item => item.title === target);
-		const newProductType: string = arrProductTypeSelect.length > 0 ? arrProductTypeSelect[0].type : '';
-		dispatch(addProductType(newProductType));
-		setSelectedOption(target);
+		const newProductType: ProductType | "" = arrProductTypeSelect.length > 0
+			? arrProductTypeSelect[0].type : "";
+		if (newProductType.length > 0) {
+			dispatch(addProductType(newProductType));
+			setSelectedOption(target);
+		} else {
+			dispatch(addProductType(''));
+		}
 	};
 
 	return (

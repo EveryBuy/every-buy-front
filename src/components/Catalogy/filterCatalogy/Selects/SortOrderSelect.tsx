@@ -28,7 +28,9 @@ const SortOrderSelection: FC = () => {
 	const searchParams = useSearchParams() as unknown as Map<keyof InitialState, string | null>;
 	const dispatch = useAppDispatch();
 
-	const paramsSort: SortOrder | "" = searchParams.has('sortOrder') ? searchParams.get('sortOrder') : "";
+	const paramsSort: string | null | undefined = searchParams.has('sortOrder')
+		? searchParams.get('sortOrder') : "";
+
 	const initialParams: sortOrderListType[] = paramsSort && paramsSort.length > 0
 		? sortOrderList.filter(item => item.type === paramsSort) : [];
 
@@ -38,20 +40,29 @@ const SortOrderSelection: FC = () => {
 
 	useEffect(() => {
 		if (paramsSort && paramsSort.length > 0) {
-			dispatch(addSortOrder(paramsSort));
+			const checkSortObj: sortOrderListType | undefined = sortOrderList.find(item => item.type === paramsSort);
+			if (checkSortObj) {
+				const params: SortOrder = checkSortObj.type;
+				dispatch(addSortOrder(params));
+			}
 		} else {
 			setSelectedOption('');
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [paramsSort]);
 
-	const options: string[] = sortOrderList.map(item => item.title);
+	const options: string[] = ["Рекомендоване", ...sortOrderList.map(item => item.title)];
 
 	const handleChange = (event: SelectChangeEvent<string>) => {
 		const target: string = event.target.value;
 		const arrSortSelect: sortOrderListType[] = sortOrderList?.filter(item => item.title === target);
 		const newTypeSort: SortOrder | "" = arrSortSelect.length > 0 ? arrSortSelect[0].type : "";
-		dispatch(addSortOrder(newTypeSort));
-		setSelectedOption(target);
+		if (newTypeSort.length > 0) {
+			dispatch(addSortOrder(newTypeSort));
+			setSelectedOption(target);
+		} else {
+			dispatch(addSortOrder(''));
+		}
 	};
 
 	return (

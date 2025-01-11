@@ -24,6 +24,7 @@ const CategoriesSelect: FC = () => {
 		if (paramsCategoryId && paramsCategoryId > 0) {
 			dispatch(addCategory(paramsCategoryId));
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	const categoriesList: Category[] = useAppSelector(selectCategories);
@@ -36,6 +37,7 @@ const CategoriesSelect: FC = () => {
 			const arrCategory = categoriesList.filter(item => item.id === paramsCategoryId);
 			setInitialParams(arrCategory);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [categoriesList]);
 
 	useEffect(() => {
@@ -57,17 +59,23 @@ const CategoriesSelect: FC = () => {
 			setSelectedOption('');
 			setInitialParams([]);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [categoryIdStore]);
 
 	// const options = ["Option 1", "Option 2", "Option 3"];
-	const options: string[] = categoriesList.map(item => item.nameUkr);
+	const options: string[] = ["Всі категорії", ...categoriesList.map(item => item.nameUkr)];
 
 	const handleChange = (event: SelectChangeEvent<string>) => {
 		const target: string = event.target.value;
 		const arrCategorySelect: Category[] = categoriesList?.filter(item => item.nameUkr === target);
 		const newIdCategory: number = arrCategorySelect.length > 0 ? arrCategorySelect[0].id : 0;
-		dispatch(addCategory(newIdCategory));
-		setSelectedOption(target);
+		if (newIdCategory > 0) {
+			dispatch(addCategory(newIdCategory));
+			setSelectedOption(target);
+		} else {
+			dispatch(addCategory(null));
+		}
+
 	};
 
 	return (

@@ -58,6 +58,7 @@ const Search: FC<SearchProps> = (props: SearchProps) => {
 		if (word && word.length > 0) {
 			dispatch(addKeyWord(word));
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	useEffect(() => {
@@ -71,7 +72,12 @@ const Search: FC<SearchProps> = (props: SearchProps) => {
 					}
 				});
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [word]);
+
+	const handlerClearWord = (): void => {
+		setWord("");
+	}
 
 	return (
 		<div className={styles.searchContainer}>
@@ -84,12 +90,29 @@ const Search: FC<SearchProps> = (props: SearchProps) => {
 						onChange={handlerSetWord}
 					/>
 					<div className={styles.searchInputIconWrapper}>
-						<CommonIcon
-							id="icon-search"
-							width="28"
-							height="28"
-							className={styles.searchInputIcon}
-						/>
+						{
+							word && word.length > 0
+								? <CommonButton
+									type="button"
+									title=""
+									color="transparent"
+									className={styles.closeBtn}
+									onClick={handlerClearWord}
+								>
+									<CommonIcon
+										id="icon-close"
+										width="29"
+										height="30"
+										className={styles.searchInputIcon}
+									/>
+								</ CommonButton>
+								: <CommonIcon
+									id="icon-search"
+									width="28"
+									height="28"
+									className={styles.searchInputIcon}
+								/>
+						}
 					</div>
 				</div>
 				<CommonButton

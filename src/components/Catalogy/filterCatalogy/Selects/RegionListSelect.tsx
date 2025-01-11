@@ -33,17 +33,22 @@ const RegionListSelect: FC = () => {
 		} else {
 			setSelectedOption('');
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [paramsRegionId]);
 
 	// const options = ["Option 1", "Option 2", "Option 3"];
-	const options: string[] = regionList.map(item => item.regionName).sort();
+	const options: string[] = ["Вся Україна", ...regionList.map(item => item.regionName).sort()];
 
 	const handleChange = (event: SelectChangeEvent<string>) => {
 		const target: string = event.target.value;
 		const arrRegoinSelect: RegionListType[] = regionList?.filter(item => item.regionName === target);
 		const newIdRegion: number = arrRegoinSelect.length > 0 ? arrRegoinSelect[0].id : 0;
-		dispatch(addRegionId(newIdRegion));
-		setSelectedOption(target);
+		if (newIdRegion > 0) {
+			dispatch(addRegionId(newIdRegion));
+			setSelectedOption(target);
+		} else {
+			dispatch(addRegionId(null));
+		}
 	};
 
 	return (

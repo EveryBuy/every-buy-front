@@ -32,35 +32,44 @@ const TopSubCategoriesSelect: FC = () => {
 		if (paramsTopCategoryId && paramsTopCategoryId > 0) {
 			dispatch(addTopSubCateroryId(paramsTopCategoryId));
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [categoryID]);
 
 	useEffect(() => {
 		if (paramsTopCategoryId && paramsTopCategoryId > 0) {
 			dispatch(addTopSubCateroryId(paramsTopCategoryId));
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [paramsTopCategoryId]);
 
 	useEffect(() => {
 		if (subCategoriesList.length > 0 && paramsTopCategoryId !== null && paramsTopCategoryId > 0) {
 			setInitialParams(subCategoriesList.filter(item => item.id === paramsTopCategoryId));
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [subCategoriesList]);
 
 	useEffect(() => {
 		if (initialParams && initialParams.length > 0) {
 			setSelectedOption(initialParams[0].subCategoryNameUkr)
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [initialParams]);
 
 	// const options = ["Option 1", "Option 2", "Option 3"];
-	const options: string[] = subCategoriesList.map(item => item.subCategoryNameUkr) || [];
+	const options: string[] = ["Всі підкатегорії", ...subCategoriesList.map(item => item.subCategoryNameUkr)];
 
 	const handleChange = (event: SelectChangeEvent<string>): void => {
 		const target: string = event.target.value;
 		const arrTopCategorySelect: TopSubCategory[] = subCategoriesList?.filter(item => item.subCategoryNameUkr === target);
 		const newIdTopCategory: number = arrTopCategorySelect.length > 0 ? arrTopCategorySelect[0].id : 0;
-		dispatch(addTopSubCateroryId(newIdTopCategory));
-		setSelectedOption(target);
+		if (newIdTopCategory > 0) {
+			dispatch(addTopSubCateroryId(newIdTopCategory));
+			setSelectedOption(target);
+		} else {
+			dispatch(addTopSubCateroryId(null));
+			setSelectedOption('');
+		}
 	};
 
 	return (

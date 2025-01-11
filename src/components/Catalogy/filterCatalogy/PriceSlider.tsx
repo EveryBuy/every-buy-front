@@ -56,7 +56,7 @@ const PriceSlider: FC = () => {
 				...priceObj
 			});
 		}
-
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [paramsMinPrice, paramsMaxPrice]);
 
 	const handleChangePriceSlider = (event: Event, newValue: number | number[]) => {
