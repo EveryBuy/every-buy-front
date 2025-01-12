@@ -179,4 +179,8 @@
   fill: #ff5656;
   stroke: black;
   // background-color: #FF5656;
+
+  @include media-max($breakpoint-mobile) {
+    padding-top: 10px;
+  }
 }

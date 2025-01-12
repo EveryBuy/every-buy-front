@@ -168,8 +168,16 @@
 .sliderContainer {
   margin-top: 20px;
   margin: auto;
+
   @include media-min($breakpoint-tablet) {
     width: calc((100% - 46px) / 2);
+  }
+
+  @include media-max($breakpoint-mobile) {
+    :global(.slick-dots) {
+      margin-top: 10px; 
+      margin-bottom: 20px; 
+    }
   }
 
   :global(.slick-current) {
@@ -199,9 +207,11 @@
     :global(.slick-dots) {
       z-index: 999;
       position: absolute;
-      bottom: 10 px;
+      bottom: 10px;
     }
+    
   }
+
   .mainSlide {
     width: 375px !important; // Ширина слайдера
     height: 260px !important;
@@ -238,6 +248,7 @@
     gap: 10px;
     margin-top: 15px;
     width: 540px;
+
     @media (max-width: 768px) {
       display: none;
     }
@@ -256,7 +267,8 @@
 
     border: 2px solid transparent;
     cursor: pointer;
-    transition: transform 0.3s, border-color 0.3s;
+    transition: transform 0.3s,
+    border-color 0.3s;
 
     &:hover {
       transform: scale(1.1);
@@ -274,3 +286,5 @@
     }
   }
 }
+
+
