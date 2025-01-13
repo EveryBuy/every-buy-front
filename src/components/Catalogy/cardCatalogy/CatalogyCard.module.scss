@@ -1,0 +1,27 @@
+@import "@/styles/breakpoints";
+@import "@/styles/mixins";
+
+.containerMiddleCardsList {
+	width: 100%;
+}
+
+.middleCardsList {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 15px 9px;
+	justify-content: space-around;
+
+	@include media-min($breakpoint-tablet) {
+		gap: 24px 9px;
+	}
+
+	@include media-min($breakpoint-laptop) {
+		gap: 36px 9px;
+	}
+}
+
+.middleCardsItem {
+	@include media-min($breakpoint-laptop) {
+		width: 48%;
+	}
+}
