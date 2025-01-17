@@ -25,6 +25,12 @@ type createQuerySettingsType = {
 	queryObj: Object
 }
 
+type categotyTopAndLowType = {
+	categoryName: string,
+	topCategoryName: string,
+	lowCategoryName: string
+}
+
 const styles = {
 	display: 'flex',
 	flexDirection: 'column',
@@ -62,6 +68,11 @@ export const CatalogyPage: React.FC = (): JSX.Element => {
 	const [isListOpen, setListOpen] = useState<boolean>(false);
 	const [dataArray, setDataArray] = useState<[] | string>([]);
 	const [loading, setLoading] = useState<boolean>(false);
+	const [categName, setCategName] = useState<categotyTopAndLowType>({
+		categoryName: "",
+		topCategoryName: "",
+		lowCategoryName: ""
+	});  // name categoty, topCategory and lowCategory
 	const [page, setPage] = useState<number>(1);
 
 	const makeLinkOpen = (): void => {
@@ -78,7 +89,7 @@ export const CatalogyPage: React.FC = (): JSX.Element => {
 		sortOrder,
 		regionId,
 		cityId,
-		topSubCateroryId,
+		topSubCateroryId: topSubCategoryId,
 		lowSubCategoryId,
 		productType,
 		keyword,
@@ -94,7 +105,7 @@ export const CatalogyPage: React.FC = (): JSX.Element => {
 		if (sortOrder !== "") queryArray.push(`sortOrder=${sortOrder}`);
 		if (regionId !== null) queryArray.push(`regionId=${regionId}`);
 		if (cityId !== null) queryArray.push(`cityId=${cityId}`);
-		if (topSubCateroryId !== null) queryArray.push(`topSubCategoryId=${topSubCateroryId}`);
+		if (topSubCategoryId !== null) queryArray.push(`topSubCategoryId=${topSubCategoryId}`);
 		if (lowSubCategoryId !== null) queryArray.push(`lowSubCategoryId=${lowSubCategoryId}`);
 		if (productType !== "") queryArray.push(`productType=${productType}`);
 		if (keyword !== "") queryArray.push(`keyword=${keyword}`);
@@ -160,6 +171,41 @@ export const CatalogyPage: React.FC = (): JSX.Element => {
 		}, 0);
 	};
 
+
+
+	const catArr = useAppSelector(state => state.advertisement.category);
+	const catTopArr = useAppSelector(state => state.advertisement.topSubCategory);
+	const catLowpArr = useAppSelector(state => state.advertisement.lowSubCategory);
+
+	useEffect(() => {
+		let catName: string, catTopName: string, catLowName: string;
+
+		if (catArr.length > 0 && categoryId && categoryId > 0) {
+			catName = catArr.filter(item => item.id === categoryId)[0].nameUkr;
+		} else {
+			catName = "";
+		}
+		if (catTopArr.length > 0 && topSubCategoryId && topSubCategoryId > 0) {
+			catTopName = catTopArr.filter(item => item.id === topSubCategoryId)[0].subCategoryNameUkr;
+		} else {
+			catTopName = "";
+		}
+		if (catLowpArr.length > 0 && lowSubCategoryId && lowSubCategoryId > 0) {
+			catLowName = catLowpArr.filter(item => item.id === lowSubCategoryId)[0].subCategoryNameUkr;
+		} else {
+			catLowName = "";
+		}
+
+		setCategName({
+			categoryName: catName,
+			topCategoryName: catTopName,
+			lowCategoryName: catLowName,
+		});
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [categoryId, topSubCategoryId, lowSubCategoryId]);
+
+
 	const handlerPage = (num: number) => {
 		if (num > 0) {
 			setPage(num);
@@ -170,7 +216,11 @@ export const CatalogyPage: React.FC = (): JSX.Element => {
 	return (
 		<Container sx={{ marginTop: '1rem' }}>
 			<Box className='custom-separator' maxWidth={'sm'}>
-				<CustomSeparator category="Moda" />
+				<CustomSeparator
+					category={categName.categoryName}
+					topSubCaterory={categName.topCategoryName}
+					lowSubCategory={categName.lowCategoryName}
+				/>
 			</Box>
 			<Box sx={{ margin: "2em 1em" }}>
 				<Search hideSuggest={true} />

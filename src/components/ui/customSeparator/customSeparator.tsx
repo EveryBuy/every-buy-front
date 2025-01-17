@@ -8,7 +8,13 @@ function handleClick(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
 	console.info('You clicked a breadcrumb.');
 }
 
-export function CustomSeparator(props) {
+type Props = {
+	category?: string | null,
+	topSubCaterory?: string | null,
+	lowSubCategory?: string | null,
+}
+
+export function CustomSeparator(props: Props) {
 	const breadcrumbs = [
 		<Link
 			underline='hover'
@@ -23,6 +29,18 @@ export function CustomSeparator(props) {
 			{props.category || "Усі категорії"}
 		</Typography>,
 	];
+
+	if (props.topSubCaterory) {
+		breadcrumbs.push(<Typography key='3' sx={{ color: '#9D9D9D' }}>
+			{props.topSubCaterory}
+		</Typography>);
+	}
+
+	if (props.lowSubCategory) {
+		breadcrumbs.push(<Typography key='4' sx={{ color: '#9D9D9D' }}>
+			{props.lowSubCategory}
+		</Typography>);
+	}
 
 	return (
 		<Stack spacing={1}>
