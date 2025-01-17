@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from "@/redux/store";
 import { getFilteredAdverts } from '@/redux/advertisement/operations';
 import { useRouter } from 'next/navigation';
-import { resetFilters } from '@/redux/filters/slice';
+import { addPage, resetFilters } from '@/redux/filters/slice';
 
 import { CatalogyCard } from "../../Catalogy/cardCatalogy/CatalogyCard";
 import { Container, Box, Typography } from '@mui/material';
@@ -14,6 +14,8 @@ import {
 	CategoryList,
 	Search,
 } from '@/components';
+import { CommonPagination } from '@/components/ui/CommonPagination/CommonPagination';
+
 import Image from 'next/image';
 import imgSearchEmpty from '@/assets/Svg/searchEmpty.svg';
 // import { searchGoods } from '@/mock-data/searchGoods';
@@ -60,6 +62,7 @@ export const CatalogyPage: React.FC = (): JSX.Element => {
 	const [isListOpen, setListOpen] = useState<boolean>(false);
 	const [dataArray, setDataArray] = useState<[] | string>([]);
 	const [loading, setLoading] = useState<boolean>(false);
+	const [page, setPage] = useState<number>(1);
 
 	const makeLinkOpen = (): void => {
 		setListOpen((prev) => !prev);
@@ -79,7 +82,7 @@ export const CatalogyPage: React.FC = (): JSX.Element => {
 		lowSubCategoryId,
 		productType,
 		keyword,
-		page
+		// page
 	} = filtersSetting;
 
 
@@ -138,7 +141,7 @@ export const CatalogyPage: React.FC = (): JSX.Element => {
 			setDataArray([]);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [filtersSetting, router]);  //min, max, categoryId, sortOrder, productType, ...
+	}, [filtersSetting, page, router]);  //min, max, categoryId, sortOrder, productType, ...
 
 	const handlerResetFilters = (event?: React.FormEvent<HTMLFormElement> | undefined): void => {
 		event?.preventDefault();
@@ -156,6 +159,13 @@ export const CatalogyPage: React.FC = (): JSX.Element => {
 			}
 		}, 0);
 	};
+
+	const handlerPage = (num: number) => {
+		if (num > 0) {
+			setPage(num);
+			// dispatch(addPage(num))
+		}
+	}
 
 	return (
 		<Container sx={{ marginTop: '1rem' }}>
@@ -190,6 +200,12 @@ export const CatalogyPage: React.FC = (): JSX.Element => {
 								Ми знайшли понад 1000 оголошень
 							</Typography>
 								<CatalogyCard item={dataArray} />
+								<Box style={{ marginTop: "32px", fontSize: "20px" }}>
+									<CommonPagination
+										page={page}
+										pages={5}  // change when data will come from the backend
+										changePage={(num) => handlerPage(num)} />
+								</Box>
 							</>
 							: <EmptyData />
 			}
