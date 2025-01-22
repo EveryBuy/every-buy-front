@@ -35,6 +35,25 @@ const ChatsBlock: FC<ChatsBlockType> = ({
   const { data: favoritesChats } = useGetFavoritesChatsQuery();
   const { data: archivedChats } = useGetArchivedChatsQuery();
 
+  // filter chats and hidden them if they are in the archive
+  let updatedBuyChats;
+  let updatedSellChats;
+  if (buyChats && archivedChats && sellChats) {
+    updatedBuyChats = buyChats.filter(
+      (itemBuyChat) =>
+        !archivedChats.some(
+          (itemArchivedChats) => itemBuyChat.chatId === itemArchivedChats.chatId
+        )
+    );
+    updatedSellChats = sellChats.filter(
+      (itemSellChat) =>
+        !archivedChats.some(
+          (itemArchivedChats) =>
+            itemSellChat.chatId === itemArchivedChats.chatId
+        )
+    );
+  }
+
   let chats;
   if (favoritesChats || archivedChats) {
     chats = isHeartSelected
@@ -42,8 +61,8 @@ const ChatsBlock: FC<ChatsBlockType> = ({
       : isFolderSelected
       ? archivedChats
       : activeButton === 1
-      ? buyChats
-      : sellChats;
+      ? updatedBuyChats
+      : updatedSellChats;
   }
 
   const handleButtonClick = (buttonId: number) => {

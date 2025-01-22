@@ -39,7 +39,6 @@ const ChatsList: FC<ChatsListType> = ({ chats, setSelectedChatId }) => {
               lastMessage={lastMessage}
               userData={userData}
               lastMessageDate={lastMessageDate}
-              // handleChatClick={setSelectedChatId}
               chatId={chatId}
             />
           </Box>

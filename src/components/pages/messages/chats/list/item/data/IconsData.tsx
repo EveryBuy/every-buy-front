@@ -7,7 +7,6 @@ import {
   useAddChatToFavoritesMutation,
   useRemoveChatFromFavoritesMutation,
   useGetFavoritesChatsQuery,
-  useGetArchivedChatsQuery,
 } from "@/redux/messages/chatApi";
 import style from "./IconsData.module.scss";
 interface IconsDataType {
@@ -67,7 +66,6 @@ const IconsData: FC<IconsDataType> = ({ chatId }) => {
     <>
       <Box className={style.iconsDataWrapper}>
         <CommonIcon
-          // id="icon-heart"
           id={isHeartSelected ? "icon-heart-selected" : "icon-heart"}
           className={`${style.icon} ${style.trash}`}
           // @ts-ignore

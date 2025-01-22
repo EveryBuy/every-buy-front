@@ -3,8 +3,8 @@ import style from "@/components/pages/messages/chats/Icons/Icons.module.scss";
 interface IconsBlockType {
   scss?: keyof typeof style;
   isItTopBlock: boolean;
-  statusHeartHandler?: () => void;
-  statusFolderHandler?: () => void;
+  statusHeartHandler?: VoidFunction;
+  statusFolderHandler?: VoidFunction;
   isHeartSelected?: boolean;
   handlerHeartSelected?: (
     selectedChatId: number,
