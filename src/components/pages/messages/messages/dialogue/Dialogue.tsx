@@ -23,7 +23,6 @@ type DialogueType = {
 
 const Dialogue: FC<DialogueType> = ({ chatId }) => {
   const [displayedMessages, setDisplayedMessages] = useState<MessageType[]>([]);
-  console.log(displayedMessages);
 
   const {
     data: messages,
@@ -79,6 +78,22 @@ const Dialogue: FC<DialogueType> = ({ chatId }) => {
     setDisplayedMessages((prev) => [...prev, tempMessage]);
     scrollToBottom();
   };
+  const handleSendFile = async (
+    newFile: string,
+    userId: number,
+    userPhotoUrl: string | null
+  ) => {
+    const tempMessage: MessageType = {
+      id: Date.now(),
+      fileUrl: newFile,
+      creationTime: new Date().toISOString(),
+      userId: userId,
+      chatId: chatId,
+      userPhotoUrl: userPhotoUrl,
+    };
+    setDisplayedMessages((prev) => [...prev, tempMessage]);
+    scrollToBottom();
+  };
   //
 
   if (isLoading || (isFetching && displayedMessages.length === 0)) {
@@ -110,7 +125,11 @@ const Dialogue: FC<DialogueType> = ({ chatId }) => {
           ))
         )}
       </Box>
-      <DialogueInput onSendMessage={handleSendMessage} chatId={chatId} />
+      <DialogueInput
+        onSendMessage={handleSendMessage}
+        onSendFile={handleSendFile}
+        chatId={chatId}
+      />
     </Box>
   );
 };

@@ -21,6 +21,7 @@ const ChatsList: FC<ChatsListType> = ({ chats, setSelectedChatId }) => {
     setSelectedChatId(chatId);
     // console.log(chatId);
   };
+  console.log(chats);
 
   return (
     <Box className={style.listWrapper}>

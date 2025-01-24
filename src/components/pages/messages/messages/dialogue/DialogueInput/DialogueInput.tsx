@@ -15,10 +15,19 @@ type DialogueInputProps = {
     userId: number,
     userPhotoUrl: string | null
   ) => void;
+  onSendFile: (
+    newFile: string,
+    userId: number,
+    userPhotoUrl: string | null
+  ) => void;
   chatId: number | null;
 };
 
-const DialogueInput: FC<DialogueInputProps> = ({ onSendMessage, chatId }) => {
+const DialogueInput: FC<DialogueInputProps> = ({
+  onSendMessage,
+  onSendFile,
+  chatId,
+}) => {
   const [message, setMessage] = useState<string>("");
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [addMessageToChat] = useAddMessageToChatMutation();
@@ -35,7 +44,6 @@ const DialogueInput: FC<DialogueInputProps> = ({ onSendMessage, chatId }) => {
           text: message,
           chatId: chatId,
         });
-        console.log(response);
 
         if (response.data) {
           // const userId = response.data.userId;
@@ -77,8 +85,7 @@ const DialogueInput: FC<DialogueInputProps> = ({ onSendMessage, chatId }) => {
         const response = await uploadFileToChat({ chatId, formData }).unwrap();
         if (response) {
           const { userId, userPhotoUrl, fileUrl } = response[0];
-          onSendMessage(fileUrl, userId, userPhotoUrl);
-          console.log(response[0]);
+          onSendFile(fileUrl, userId, userPhotoUrl);
         }
       } catch (error) {
         console.error("Помилка завантаження файлу:", error);
