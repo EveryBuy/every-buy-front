@@ -1,9 +1,12 @@
 "use client";
 
-import { FC, useState } from "react";
+import { FC, useState, useRef } from "react";
 import { Box, TextField } from "@mui/material";
 import { CommonIcon } from "@/components";
-import { useAddMessageToChatMutation } from "@/redux/messages/chatApi";
+import {
+  useAddMessageToChatMutation,
+  useUploadFileToChatMutation,
+} from "@/redux/messages/chatApi";
 import style from "./DialogueInput.module.scss";
 
 type DialogueInputProps = {
@@ -17,7 +20,9 @@ type DialogueInputProps = {
 
 const DialogueInput: FC<DialogueInputProps> = ({ onSendMessage, chatId }) => {
   const [message, setMessage] = useState<string>("");
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [addMessageToChat] = useAddMessageToChatMutation();
+  const [uploadFileToChat] = useUploadFileToChatMutation();
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setMessage(event.target.value);
@@ -30,9 +35,12 @@ const DialogueInput: FC<DialogueInputProps> = ({ onSendMessage, chatId }) => {
           text: message,
           chatId: chatId,
         });
+        console.log(response);
+
         if (response.data) {
-          const userId = response.data.userId;
-          const userPhotoUrl = response.data.userPhotoUrl;
+          // const userId = response.data.userId;
+          // const userPhotoUrl = response.data.userPhotoUrl;
+          const { userId, userPhotoUrl } = response.data;
           console.log("Message sent:", message);
           onSendMessage(message, userId, userPhotoUrl);
         }
@@ -48,6 +56,36 @@ const DialogueInput: FC<DialogueInputProps> = ({ onSendMessage, chatId }) => {
     }
   };
 
+  const handleIconClick = (type: "picture" | "document") => {
+    if (fileInputRef.current) {
+      fileInputRef.current.accept = type === "picture" ? "image/*" : "*/*";
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleUploadFile = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const files = event.target.files;
+    if (files && files.length > 0 && chatId) {
+      try {
+        const formData = new FormData();
+        Array.from(files).forEach((file) => {
+          formData.append("files", file);
+        });
+
+        const response = await uploadFileToChat({ chatId, formData }).unwrap();
+        if (response) {
+          const { userId, userPhotoUrl, fileUrl } = response[0];
+          onSendMessage(fileUrl, userId, userPhotoUrl);
+          console.log(response[0]);
+        }
+      } catch (error) {
+        console.error("Помилка завантаження файлу:", error);
+      }
+    }
+  };
+
   return (
     <Box className={style.blockBackground}>
       <Box className={style.inputBlockWrapper}>
@@ -55,12 +93,18 @@ const DialogueInput: FC<DialogueInputProps> = ({ onSendMessage, chatId }) => {
           <CommonIcon
             id="picture"
             className={style.iconPic}
-            // onClick={handleIconHeartClick}
+            onClick={() => handleIconClick("picture")}
           />
           <CommonIcon
             id="paper-clip"
             className={style.iconClip}
-            // onClick={handleIconHeartClick}
+            onClick={() => handleIconClick("document")}
+          />
+          <input
+            type="file"
+            ref={fileInputRef}
+            style={{ display: "none" }}
+            onChange={handleUploadFile}
           />
         </Box>
         {/* <Box className={style.inputWrapper}> */}

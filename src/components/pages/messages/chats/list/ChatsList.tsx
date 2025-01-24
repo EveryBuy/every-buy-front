@@ -19,7 +19,7 @@ interface ChatsListType {
 const ChatsList: FC<ChatsListType> = ({ chats, setSelectedChatId }) => {
   const handleChatClick = (chatId: number) => {
     setSelectedChatId(chatId);
-    console.log(chatId);
+    // console.log(chatId);
   };
 
   return (

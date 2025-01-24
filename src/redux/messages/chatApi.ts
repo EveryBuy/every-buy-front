@@ -88,6 +88,19 @@ export const chatApi = createApi({
         body: { text },
       }),
     }),
+    uploadFileToChat: builder.mutation({
+      query: ({
+        chatId,
+        formData,
+      }: {
+        chatId: number;
+        formData: FormData;
+      }) => ({
+        url: `/chat/${chatId}/file-upload`,
+        method: "POST",
+        body: formData,
+      }),
+    }),
   }),
 });
 
@@ -103,4 +116,5 @@ export const {
   useAddChatToArchiveMutation,
   useRemoveChatFromArchiveMutation,
   useAddMessageToChatMutation,
+  useUploadFileToChatMutation,
 } = chatApi;

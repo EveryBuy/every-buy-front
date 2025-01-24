@@ -24,12 +24,13 @@
   border-radius: 10px;
   padding: 0px 10px;
   @include media-min($breakpoint-tablet) {
-    padding: 0px 20px 2px;
-    height: 65px;
+    padding: 0px 15px 2px;
+    height: 54px;
   }
   & .input {
     & div:first-child {
       height: 100%;
+      // padding: 10px 14px;
     }
   }
   & label::after {
@@ -38,7 +39,7 @@
 }
 
 .inputIconsWrapper {
-  width: 20%;
+  // width: 20%;
   display: flex;
   justify-content: space-between;
   align-items: center;

@@ -54,6 +54,7 @@ const ChatsBlock: FC<ChatsBlockType> = ({
     );
   }
 
+  // choose the chat depends on what button you clicked
   let chats;
   if (favoritesChats || archivedChats) {
     chats = isHeartSelected

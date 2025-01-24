@@ -23,6 +23,8 @@ type DialogueType = {
 
 const Dialogue: FC<DialogueType> = ({ chatId }) => {
   const [displayedMessages, setDisplayedMessages] = useState<MessageType[]>([]);
+  console.log(displayedMessages);
+
   const {
     data: messages,
     error,

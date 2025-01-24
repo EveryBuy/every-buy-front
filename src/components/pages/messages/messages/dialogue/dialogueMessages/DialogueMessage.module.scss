@@ -80,6 +80,14 @@
   & .text {
     word-break: break-word;
   }
+  & .file {
+    width: 50px;
+    height: 50px;
+    & svg {
+      width: 50px;
+      height: 50px;
+    }
+  }
   & .time {
     display: flex;
     align-items: flex-end;
