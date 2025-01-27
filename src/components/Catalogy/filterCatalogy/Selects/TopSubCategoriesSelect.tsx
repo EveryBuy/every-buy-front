@@ -6,7 +6,7 @@ import { useAppSelector, useAppDispatch } from "@/redux/store";
 import { selectTopSubCategories } from "@/redux/advertisement/selectors";
 import { TopSubCategory } from '@/redux/advertisement/slice';
 import { getTopSubCategory } from '@/redux/advertisement/operations';
-import { addTopSubCateroryId, InitialState } from '@/redux/filters/slice';
+import { addTopSubCategoryId, InitialState } from '@/redux/filters/slice';
 import CommonSelect from '@/components/ui/CommonSelect/CommonSelect';
 import { SelectChangeEvent } from '@mui/material';
 
@@ -15,29 +15,32 @@ const TopSubCategoriesSelect: FC = () => {
 	const searchParams = useSearchParams() as unknown as Map<keyof InitialState, string | null>;
 	const dispatch = useAppDispatch();
 
-	const categoryID: number | null = useAppSelector(state => state.filters.categoryId) || null;
-	const paramsTopCategoryId: number | null = searchParams.has('topSubCateroryId')
-		? Number(searchParams.get('topSubCateroryId')) : null;
-
 	const subCategoriesList: TopSubCategory[] = useAppSelector(selectTopSubCategories);
+
+	// const paramsCategoryId: number | null = searchParams.has('categoryId')
+	// 	? Number(searchParams.get('categoryId')) : null;
+
+	const paramsTopCategoryId: number | null = searchParams.has('topSubCategoryId')
+		? Number(searchParams.get('topSubCategoryId')) : null;
 
 	const [initialParams, setInitialParams] = useState<TopSubCategory[]>([]);
 	const [selectedOption, setSelectedOption] = useState<string>("");
+
+	const categoryID: number | null = useAppSelector(state => state.filters.categoryId) || null;
 
 	useEffect(() => {
 		setSelectedOption('');
 		if (categoryID && categoryID > 0) {
 			dispatch(getTopSubCategory(categoryID));
-		}
-		if (paramsTopCategoryId && paramsTopCategoryId > 0) {
-			dispatch(addTopSubCateroryId(paramsTopCategoryId));
+		} else {
+			dispatch(addTopSubCategoryId(null));
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [categoryID]);
 
 	useEffect(() => {
 		if (paramsTopCategoryId && paramsTopCategoryId > 0) {
-			dispatch(addTopSubCateroryId(paramsTopCategoryId));
+			dispatch(addTopSubCategoryId(paramsTopCategoryId));
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [paramsTopCategoryId]);
@@ -51,7 +54,7 @@ const TopSubCategoriesSelect: FC = () => {
 
 	useEffect(() => {
 		if (initialParams && initialParams.length > 0) {
-			setSelectedOption(initialParams[0].subCategoryNameUkr)
+			setSelectedOption(initialParams[0].subCategoryNameUkr);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [initialParams]);
@@ -64,10 +67,10 @@ const TopSubCategoriesSelect: FC = () => {
 		const arrTopCategorySelect: TopSubCategory[] = subCategoriesList?.filter(item => item.subCategoryNameUkr === target);
 		const newIdTopCategory: number = arrTopCategorySelect.length > 0 ? arrTopCategorySelect[0].id : 0;
 		if (newIdTopCategory > 0) {
-			dispatch(addTopSubCateroryId(newIdTopCategory));
+			dispatch(addTopSubCategoryId(newIdTopCategory));
 			setSelectedOption(target);
 		} else {
-			dispatch(addTopSubCateroryId(null));
+			dispatch(addTopSubCategoryId(null));
 			setSelectedOption('');
 		}
 	};

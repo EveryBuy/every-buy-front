@@ -5,7 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import { useAppSelector, useAppDispatch } from "@/redux/store";
 import { selectCategories } from "@/redux/advertisement/selectors";
 import { getCategory } from '@/redux/advertisement/operations';
-import { addCategory, InitialState, addTopSubCateroryId, addLowSubCategoryId } from '@/redux/filters/slice';
+import { addCategory, InitialState, addTopSubCategoryId, addLowSubCategoryId } from '@/redux/filters/slice';
 import CommonSelect from '@/components/ui/CommonSelect/CommonSelect';
 import { SelectChangeEvent } from '@mui/material';
 import { Category } from '@/redux/advertisement/slice';
@@ -47,7 +47,7 @@ const CategoriesSelect: FC = () => {
 	}, [initialParams]);
 
 	useEffect(() => {
-		dispatch(addTopSubCateroryId(null));
+		dispatch(addTopSubCategoryId(null));
 		dispatch(addLowSubCategoryId(null));
 		if (categoryIdStore && categoryIdStore > 0 && categoriesList.length > 0) {
 			const arrCategoryIdSelect: Category[] = categoriesList?.filter(item => item.id === categoryIdStore);

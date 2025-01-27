@@ -14,9 +14,11 @@ const CityListSelect: FC = () => {
 	const searchParams = useSearchParams() as unknown as Map<keyof InitialState, string | null>;
 	const dispatch = useAppDispatch();
 
-	const regionId: number | null = useAppSelector(state => state.filters.regionId);
+	const paramsRegionId: number | null = searchParams.has('regionId')
+		? Number(searchParams.get('regionId'))
+		: null;
 
-	const paramsCityId: number | null = searchParams.has('cityId') && regionId !== null
+	const paramsCityId: number | null = searchParams.has('cityId') && paramsRegionId !== null
 		? Number(searchParams.get('cityId'))
 		: null;
 
@@ -24,9 +26,13 @@ const CityListSelect: FC = () => {
 		? cityList.filter(item => item.id === paramsCityId) : [];
 
 	const [cityListForRegion, setCityListForRegion] = useState<City[]>(
-		regionId && regionId > 0 ? cityList.filter(item => item.region.id === regionId) : []
+		paramsRegionId && paramsRegionId > 0 ? cityList.filter(item => item.region.id === paramsRegionId) : []
 	);
-	const [selectedOption, setSelectedOption] = useState<string>("");
+	const [selectedOption, setSelectedOption] = useState<string>(
+		(paramsCityId && paramsCityId > 0) ? initialParams[0]?.cityName : ""
+	);
+
+	const regionId: number | null = useAppSelector(state => state.filters.regionId);
 
 	useEffect(() => {
 		if (paramsCityId && paramsCityId > 0) {
@@ -40,11 +46,17 @@ const CityListSelect: FC = () => {
 
 	useEffect(() => {
 		if (regionId && regionId > 0) {
-			const newList: City[] = cityList.filter(item => item.region.id === regionId);
-			setCityListForRegion(newList);
+			const findRegion = cityListForRegion.find(item => item.region.id === regionId);
+			if (!findRegion) {
+				const newList: City[] = cityList.filter(item => item.region.id === regionId);
+				setCityListForRegion(newList);
+				setSelectedOption('');
+				dispatch(addCityId(null));
+			}
+		} else {
+			setSelectedOption('');
+			dispatch(addCityId(null));
 		}
-		setSelectedOption('');
-		dispatch(addCityId(null));
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [regionId]);
 

@@ -4,14 +4,23 @@ import { Breadcrumbs, Typography, Link, Stack } from '@mui/material';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 function handleClick(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
-	event.preventDefault();
-	console.info('You clicked a breadcrumb.');
+	// event.preventDefault();
+	// console.info('You clicked a breadcrumb.');
+}
+
+type CategoryBreadcrumbType = {
+	id: number,
+	title: string,
+	link: string
+	// for category href={`/catalogy?categoryId=${category.id}`}
+	// for topSubCategory href={`/catalogy?categoryId=${categoryId}&topSubCategoryId=${topSubCategory.id}`
+	// for lowSubCategory href={`/catalogy?categoryId=${categoryId}&topSubCategoryId=${topSubCategoryId}&lowSubCategoryId=${lowSubCategory.id}`
 }
 
 type Props = {
-	category?: string | null,
-	topSubCaterory?: string | null,
-	lowSubCategory?: string | null,
+	category?: CategoryBreadcrumbType | null,
+	topSubCategory?: CategoryBreadcrumbType | null,
+	lowSubCategory?: CategoryBreadcrumbType | null,
 }
 
 export function CustomSeparator(props: Props) {
@@ -25,25 +34,47 @@ export function CustomSeparator(props: Props) {
 		>
 			Головна
 		</Link>,
-		<Typography key='2' sx={{ color: '#9D9D9D' }}>
-			{props.category || "Усі категорії"}
-		</Typography>,
+		<Link
+			underline='hover'
+			key='2'
+			color='#9D9D9D'
+			href={props.category?.link || '/'}
+			onClick={handleClick}
+		>
+			{props.category?.id ? props.category?.title : "Усі категорії"}
+		</Link>,
 	];
 
-	if (props.topSubCaterory) {
-		breadcrumbs.push(<Typography key='3' sx={{ color: '#9D9D9D' }}>
-			{props.topSubCaterory}
-		</Typography>);
+	if (props.topSubCategory && props.topSubCategory.id) {
+		breadcrumbs.push(
+			<Link
+				underline='hover'
+				key='3'
+				color='#9D9D9D'
+				href={props.topSubCategory.link}
+				onClick={handleClick}
+			>
+				{props.topSubCategory.title}
+			</Link>
+		);
 	}
 
-	if (props.lowSubCategory) {
-		breadcrumbs.push(<Typography key='4' sx={{ color: '#9D9D9D' }}>
-			{props.lowSubCategory}
-		</Typography>);
+	if (props.lowSubCategory && props.lowSubCategory.id) {
+		breadcrumbs.push(
+			<Link
+				underline='hover'
+				key='4'
+				color='#9D9D9D'
+				href={props.lowSubCategory.link}
+				onClick={handleClick}
+			>
+				{props.lowSubCategory.title}
+			</Link>
+		);
 	}
 
 	return (
-		<Stack spacing={1}>
+		<Stack spacing={1} sx={{ maxWidth: "95%" }}>
 			<Breadcrumbs
 				separator={<NavigateNextIcon fontSize='small' />}
 				aria-label='breadcrumb'
