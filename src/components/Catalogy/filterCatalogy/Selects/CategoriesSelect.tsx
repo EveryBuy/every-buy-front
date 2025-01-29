@@ -18,6 +18,8 @@ const CategoriesSelect: FC = () => {
 	const paramsCategoryId: number | null = searchParams.has('categoryId') ? Number(searchParams.get('categoryId')) : null;
 
 	const categoryIdStore: number = useAppSelector((state) => state.filters.categoryId) || 0;
+	const topCategoryID = useAppSelector((state) => state.filters.topSubCategoryId);
+	const lowCategoryID = useAppSelector((state) => state.filters.lowSubCategoryId);
 
 	useEffect(() => {
 		dispatch(getCategory());
@@ -47,8 +49,8 @@ const CategoriesSelect: FC = () => {
 	}, [initialParams]);
 
 	useEffect(() => {
-		dispatch(addTopSubCategoryId(null));
-		dispatch(addLowSubCategoryId(null));
+		topCategoryID && dispatch(addTopSubCategoryId(null));
+		lowCategoryID && dispatch(addLowSubCategoryId(null));
 		if (categoryIdStore && categoryIdStore > 0 && categoriesList.length > 0) {
 			const arrCategoryIdSelect: Category[] = categoriesList?.filter(item => item.id === categoryIdStore);
 			if (arrCategoryIdSelect.length > 0) {
