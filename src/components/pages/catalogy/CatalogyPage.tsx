@@ -16,6 +16,7 @@ import {
 } from '@/components';
 import { CommonPagination } from '@/components/ui/CommonPagination/CommonPagination';
 import { CommonSectionSelector } from '@/components/ui/CommonSectionSelector/CommonSectionSelector';
+import { CategotyTopAndLowType } from '@/types/categoryBreadcrumbType';
 import style from './CatalogyPage.module.scss';
 
 import Image from 'next/image';
@@ -27,20 +28,7 @@ type createQuerySettingsType = {
 	queryObj: Object
 }
 
-type CategoryBreadcrumbType = {
-	id: number,
-	title: string,
-	link: string
-	// for category href={`/catalogy?categoryId=${category.id}`}
-	// for topSubCategory href={`/catalogy?categoryId=${categoryId}&topSubCategoryId=${topSubCategory.id}`
-	// for lowSubCategory href={`/catalogy?categoryId=${categoryId}&topSubCategoryId=${topSubCategoryId}&lowSubCategoryId=${lowSubCategory.id}`
-}
 
-type categotyTopAndLowType = {
-	category: CategoryBreadcrumbType | null,
-	topCategory: CategoryBreadcrumbType | null,
-	lowCategory: CategoryBreadcrumbType | null
-}
 
 const EmptyData = (): JSX.Element => {
 	return (
@@ -70,7 +58,7 @@ export const CatalogyPage: React.FC = (): JSX.Element => {
 	const [isListOpen, setListOpen] = useState<boolean>(false);
 	const [dataArray, setDataArray] = useState<[] | string>([]);
 	const [loading, setLoading] = useState<boolean>(false);
-	const [breadcrumbsObj, setBreadcrumbsObj] = useState<categotyTopAndLowType>({
+	const [breadcrumbsObj, setBreadcrumbsObj] = useState<CategotyTopAndLowType>({
 		category: null,
 		topCategory: null,
 		lowCategory: null
@@ -136,11 +124,11 @@ export const CatalogyPage: React.FC = (): JSX.Element => {
 		setLoading(false);
 		cleanPagination && setPage(1);
 		const { queryString, queryObj } = createQuerySettings();
-		console.log('query', queryObj);
+		// console.log('query', queryObj);
 		dispatch(getFilteredAdverts(queryObj))
 			.then((data) => {
 				const newData: [] | string = data.payload.advertisements;
-				console.log(data);
+				// console.log(data);
 				if (newData && newData.length > 0) {
 					setDataArray(newData);
 					setTotalPages(data.payload.totalPages);
@@ -152,7 +140,7 @@ export const CatalogyPage: React.FC = (): JSX.Element => {
 				} else {
 					setDataArray([]);
 					setTotalPages(0);
-					console.log('not data');
+					// console.log('not data');
 				}
 			});
 		setLoading(true);

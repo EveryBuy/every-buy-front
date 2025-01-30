@@ -2,25 +2,21 @@
 
 import { Breadcrumbs, Typography, Link, Stack } from '@mui/material';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import { CategoryBreadcrumbType } from '@/types/categoryBreadcrumbType';
 
 function handleClick(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
 	// event.preventDefault();
 	// console.info('You clicked a breadcrumb.');
 }
 
-type CategoryBreadcrumbType = {
-	id: number,
-	title: string,
-	link: string
-	// for category href={`/catalogy?categoryId=${category.id}`}
-	// for topSubCategory href={`/catalogy?categoryId=${categoryId}&topSubCategoryId=${topSubCategory.id}`
-	// for lowSubCategory href={`/catalogy?categoryId=${categoryId}&topSubCategoryId=${topSubCategoryId}&lowSubCategoryId=${lowSubCategory.id}`
-}
+// for category link={`/catalogy?categoryId=${category.id}`}
+// for topSubCategory link={`/catalogy?categoryId=${categoryId}&topSubCategoryId=${topSubCategory.id}`
+// for lowSubCategory link={`/catalogy?categoryId=${categoryId}&topSubCategoryId=${topSubCategoryId}&lowSubCategoryId=${lowSubCategory.id}`
 
 type Props = {
-	category?: CategoryBreadcrumbType | null,
-	topSubCategory?: CategoryBreadcrumbType | null,
-	lowSubCategory?: CategoryBreadcrumbType | null,
+	category: CategoryBreadcrumbType | null,
+	topSubCategory: CategoryBreadcrumbType | null,
+	lowSubCategory: CategoryBreadcrumbType | null,
 }
 
 export function CustomSeparator(props: Props) {
