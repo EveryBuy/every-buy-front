@@ -76,7 +76,7 @@ export { default as Button } from "./pages/messages/chats/Buttons/Button";
 export { default as Icons } from "./pages/messages/chats/Icons/Icons";
 
 // Catalogy
-export { FilterCatalogySearch } from './Catalogy/filterCatalogy/FilterCatalogy';
+export { FilterCatalogy } from './Catalogy/filterCatalogy/FilterCatalogy';
 export { CustomSeparator } from './ui';
 export { CategoryList } from './Catalogy/CategoryList';
 export { CatalogyCard } from './Catalogy/cardCatalogy/CatalogyCard';

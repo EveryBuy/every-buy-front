@@ -4,16 +4,21 @@ import React, { useState, useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from "@/redux/store";
 import { getFilteredAdverts } from '@/redux/advertisement/operations';
 import { useRouter } from 'next/navigation';
-import { resetFilters } from '@/redux/filters/slice';
+import { addPage, addPrice, resetFilters } from '@/redux/filters/slice';
 
 import { CatalogyCard } from "../../Catalogy/cardCatalogy/CatalogyCard";
 import { Container, Box, Typography } from '@mui/material';
 import {
 	CustomSeparator,
-	FilterCatalogySearch,
+	FilterCatalogy,
 	CategoryList,
 	Search,
 } from '@/components';
+import { CommonPagination } from '@/components/ui/CommonPagination/CommonPagination';
+import { CommonSectionSelector } from '@/components/ui/CommonSectionSelector/CommonSectionSelector';
+import { CategotyTopAndLowType } from '@/types/categoryBreadcrumbType';
+import style from './CatalogyPage.module.scss';
+
 import Image from 'next/image';
 import imgSearchEmpty from '@/assets/Svg/searchEmpty.svg';
 // import { searchGoods } from '@/mock-data/searchGoods';
@@ -23,14 +28,7 @@ type createQuerySettingsType = {
 	queryObj: Object
 }
 
-const styles = {
-	display: 'flex',
-	flexDirection: 'column',
-};
 
-const stylesHide = {
-	display: 'none',
-}
 
 const EmptyData = (): JSX.Element => {
 	return (
@@ -60,6 +58,15 @@ export const CatalogyPage: React.FC = (): JSX.Element => {
 	const [isListOpen, setListOpen] = useState<boolean>(false);
 	const [dataArray, setDataArray] = useState<[] | string>([]);
 	const [loading, setLoading] = useState<boolean>(false);
+	const [breadcrumbsObj, setBreadcrumbsObj] = useState<CategotyTopAndLowType>({
+		category: null,
+		topCategory: null,
+		lowCategory: null
+	});
+	const [page, setPage] = useState<number>(1);
+	const [totalAdvert, setTotalAdvert] = useState<number>(0);
+	const [totalPages, setTotalPages] = useState<number>(1);
+	const [section, setSection] = useState<string>("SELL");
 
 	const makeLinkOpen = (): void => {
 		setListOpen((prev) => !prev);
@@ -75,11 +82,11 @@ export const CatalogyPage: React.FC = (): JSX.Element => {
 		sortOrder,
 		regionId,
 		cityId,
-		topSubCateroryId,
+		topSubCategoryId,
 		lowSubCategoryId,
 		productType,
 		keyword,
-		page
+		// page
 	} = filtersSetting;
 
 
@@ -91,10 +98,11 @@ export const CatalogyPage: React.FC = (): JSX.Element => {
 		if (sortOrder !== "") queryArray.push(`sortOrder=${sortOrder}`);
 		if (regionId !== null) queryArray.push(`regionId=${regionId}`);
 		if (cityId !== null) queryArray.push(`cityId=${cityId}`);
-		if (topSubCateroryId !== null) queryArray.push(`topSubCategoryId=${topSubCateroryId}`);
+		if (topSubCategoryId !== null) queryArray.push(`topSubCategoryId=${topSubCategoryId}`);
 		if (lowSubCategoryId !== null) queryArray.push(`lowSubCategoryId=${lowSubCategoryId}`);
 		if (productType !== "") queryArray.push(`productType=${productType}`);
 		if (keyword !== "") queryArray.push(`keyword=${keyword}`);
+		if (section !== "SELL") queryArray.push(`section=${section}`);
 		if (page !== 1) queryArray.push(`page=${page}`);
 
 		const queryString: string = queryArray.length > 0 ? "?" + queryArray.join('&') : "";
@@ -112,33 +120,49 @@ export const CatalogyPage: React.FC = (): JSX.Element => {
 		};
 	}
 
-	useEffect(() => {
+	const updateDataAdvert = (cleanPagination?: boolean) => {
 		setLoading(false);
+		cleanPagination && setPage(1);
 		const { queryString, queryObj } = createQuerySettings();
-		console.log('query', queryObj);
+		// console.log('query', queryObj);
+		dispatch(getFilteredAdverts(queryObj))
+			.then((data) => {
+				const newData: [] | string = data.payload.advertisements;
+				// console.log(data);
+				if (newData && newData.length > 0) {
+					setDataArray(newData);
+					setTotalPages(data.payload.totalPages);
+					setTotalAdvert(data.payload.totalAdvertisements);
+					// dispatch(addPrice({
+					// 	min: data.payload.minPrice,
+					// 	max: data.payload.maxPrice
+					// }));
+				} else {
+					setDataArray([]);
+					setTotalPages(0);
+					// console.log('not data');
+				}
+			});
+		setLoading(true);
 		if (queryString.length > 0) {
-			dispatch(getFilteredAdverts(queryObj))
-				.then((data) => {
-					const newData: [] | string = data.payload;
-					console.log(newData);
-					if (newData && newData.length > 0) {
-						setDataArray(newData);
-					} else {
-						setDataArray([]);
-						console.log('not data');
-					}
-				});
-			setLoading(true);
-			setTimeout(() => {
-				router.push(`${queryString}`, {
-					scroll: false,
-				});
-			}, 0);
+			router.push(queryString);
+			// router.push(queryString, {
+			// 	scroll: false,
+			// });
 		} else {
-			setDataArray([]);
+			router.push('/catalogy');
 		}
+	}
+
+	useEffect(() => {
+		updateDataAdvert(true);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [filtersSetting, router]);  //min, max, categoryId, sortOrder, productType, ...
+	}, [filtersSetting, section]);  //min, max, categoryId, sortOrder, productType, ...
+
+	useEffect(() => {
+		updateDataAdvert();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [page]);
 
 	const handlerResetFilters = (event?: React.FormEvent<HTMLFormElement> | undefined): void => {
 		event?.preventDefault();
@@ -157,15 +181,88 @@ export const CatalogyPage: React.FC = (): JSX.Element => {
 		}, 0);
 	};
 
+
+	// For Breadcrumbs
+	const catArr = useAppSelector(state => state.advertisement.category);
+	const catTopArr = useAppSelector(state => state.advertisement.topSubCategory);
+	const catLowpArr = useAppSelector(state => state.advertisement.lowSubCategory);
+
+	useEffect(() => {
+		let catName: string, catTopName: string, catLowName: string;
+
+		if (catArr.length > 0 && categoryId && categoryId > 0) {
+			catName = catArr.filter(item => item.id === categoryId)[0].nameUkr;
+		} else {
+			catName = "";
+		}
+		if (catTopArr.length > 0 && topSubCategoryId && topSubCategoryId > 0) {
+			catTopName = catTopArr.filter(item => item.id === topSubCategoryId)[0].subCategoryNameUkr;
+		} else {
+			catTopName = "";
+		}
+		if (catLowpArr.length > 0 && lowSubCategoryId && lowSubCategoryId > 0) {
+			catLowName = catLowpArr.filter(item => item.id === lowSubCategoryId)[0].subCategoryNameUkr;
+		} else {
+			catLowName = "";
+		}
+
+		setBreadcrumbsObj({
+			category: categoryId ? {
+				id: categoryId,
+				title: catName,
+				link: `/catalogy?categoryId=${categoryId}`
+			} : null,
+			topCategory: topSubCategoryId ? {
+				id: topSubCategoryId,
+				title: catTopName,
+				link: `/catalogy?categoryId=${categoryId}&topSubCategoryId=${topSubCategoryId}`
+			} : null,
+			lowCategory: lowSubCategoryId ? {
+				id: lowSubCategoryId,
+				title: catLowName,
+				link: `/catalogy?categoryId=${categoryId}&topSubCategoryId=${topSubCategoryId}&lowSubCategoryId=${lowSubCategoryId}`
+			} : null,
+		});
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [categoryId, topSubCategoryId, lowSubCategoryId, catArr, catTopArr, catLowpArr]);
+
+
+	const countAdvert = (num: number): string => {
+		if (num < 10) {
+			return "до 10";
+		} else if (num >= 10 && num < 100) {
+			return `понад ${Math.floor(num / 10) * 10}`;
+		} else if (num >= 100 && num < 1000) {
+			return `понад ${Math.floor(num / 100) * 100}`;
+		} else {
+			return "понад 1000";
+		}
+	}
+
+	const handlerPage = (num: number) => {
+		if (num > 0) {
+			setPage(num);
+			// dispatch(addPage(num));
+		}
+	}
+
 	return (
 		<Container sx={{ marginTop: '1rem' }}>
 			<Box className='custom-separator' maxWidth={'sm'}>
-				<CustomSeparator category="Moda" />
+				<CustomSeparator
+					category={breadcrumbsObj.category}
+					topSubCategory={breadcrumbsObj.topCategory}
+					lowSubCategory={breadcrumbsObj.lowCategory}
+				/>
 			</Box>
 			<Box sx={{ margin: "2em 1em" }}>
 				<Search hideSuggest={true} />
 			</Box>
-			<Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: "space-between", alignItems: "center", margin: '2.5rem 0' }}>
+			<div className={style.wrapperSelectSection}>
+				<CommonSectionSelector section={section} setSection={setSection} />
+			</div>
+			<div className={style.wrapperFilters}>
 				<Typography variant='h3' sx={{ fontSize: '2.3em' }}>
 					Фільтри
 				</Typography>
@@ -174,10 +271,10 @@ export const CatalogyPage: React.FC = (): JSX.Element => {
 					onClick={makeLinkOpen}>
 					{isListOpen ? "Згорнути" : "Розгорнути"}
 				</Typography>
-			</Box>
-			<Box style={isListOpen ? styles : stylesHide}>
-				<FilterCatalogySearch heandlerClick={handlerResetFilters} />
-			</Box>
+			</div>
+			<div className={isListOpen ? style.showListFilters : style.hideListFilters}>
+				<FilterCatalogy heandlerClick={handlerResetFilters} />
+			</div>
 
 			<CategoryList />
 			{
@@ -187,9 +284,15 @@ export const CatalogyPage: React.FC = (): JSX.Element => {
 						? <div style={{ fontSize: "32px" }}>Помилка сервера</div>
 						: Array.isArray(dataArray) && dataArray.length > 0
 							? <><Typography variant='h3' sx={{ margin: '1rem 0 2.3rem', fontSize: '2.3em' }}>
-								Ми знайшли понад 1000 оголошень
+								Ми знайшли {countAdvert(totalAdvert)} оголошень
 							</Typography>
 								<CatalogyCard item={dataArray} />
+								<Box style={{ marginTop: "32px", fontSize: "20px" }}>
+									<CommonPagination
+										page={page}
+										pages={totalPages}
+										changePage={(num) => handlerPage(num)} />
+								</Box>
 							</>
 							: <EmptyData />
 			}

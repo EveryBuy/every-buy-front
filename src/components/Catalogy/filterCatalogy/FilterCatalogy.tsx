@@ -20,10 +20,10 @@ type ResetFiltersType = {
 	heandlerClick: () => void
 }
 
-export function FilterCatalogySearch(props: ResetFiltersType) {
+export function FilterCatalogy(props: ResetFiltersType) {
 
 	const categoryId = useAppSelector(state => state.filters.categoryId);
-	const topSubCateroryId = useAppSelector(state => state.filters.topSubCateroryId);
+	const topSubCategoryId = useAppSelector(state => state.filters.topSubCategoryId);
 	const regionId = useAppSelector(state => state.filters.regionId);
 
 	const dispatch = useAppDispatch();
@@ -45,7 +45,7 @@ export function FilterCatalogySearch(props: ResetFiltersType) {
 				categoryId && categoryId > 0 && <TopSubCategoriesSelect />
 			}
 			{
-				topSubCateroryId && topSubCateroryId > 0 && <LowSubCategoriesSelect />
+				topSubCategoryId && topSubCategoryId > 0 && <LowSubCategoriesSelect />
 			}
 			<ProductTyperSelection />
 			<RegionListSelect />

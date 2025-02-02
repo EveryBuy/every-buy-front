@@ -40,20 +40,36 @@
 	}
 }
 
+.wrapperButton {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+}
+
 .heart,
 .heartSelect {
-	position: absolute;
-	bottom: 65px;
-	left: 16px;
-	width: 24px;
-	height: 24px;
+	width: 30px;
+	height: 28px;
+	margin-left: -5px;
+
+	.icon_heart {
+		width: 24px;
+		height: 24px;
+	}
 
 	@include media-min($breakpoint-tablet) {
-		width: 28px;
-		height: 28px;
+		position: absolute;
 		top: 30px;
 		left: auto;
 		right: 20px;
+		bottom: auto;
+		width: 38px;
+		height: 38px;
+
+		.icon_heart {
+			width: 28px;
+			height: 28px;
+		}
 	}
 }
 
@@ -68,22 +84,21 @@
 }
 
 .arrowButton {
-	position: absolute;
-	bottom: 65px;
-	right: 16px;
 	width: 24px;
 	height: 24px;
+	margin: 5px 12px 0 10px;
 
 	@include media-min($breakpoint-tablet) {
+		position: absolute;
 		width: 58px;
 		height: 58px;
-		right: 20px;
+		right: 14px;
 		bottom: 40px;
 	}
 }
 
 .dateText {
-	margin-top: 15px;
+	// margin-top: 15px;
 	font-size: var(--body-mobile-text-small);
 	color: var(--input-text);
 	position: relative;

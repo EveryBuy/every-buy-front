@@ -1,6 +1,6 @@
 import React, { FC, useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { useAppDispatch } from "@/redux/store";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { addPrice, Price } from '@/redux/filters/slice';
 import {
 	Grid2,
