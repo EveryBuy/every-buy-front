@@ -6,64 +6,64 @@ import { messagesReducer } from "./messages/slice";
 import { advertisementReducer } from "./advertisement/slice";
 // import storage from "redux-persist/lib/storage";
 import {
-  persistStore,
-  persistReducer,
-  FLUSH,
-  REHYDRATE,
-  PAUSE,
-  PERSIST,
-  PURGE,
-  REGISTER,
+	persistStore,
+	persistReducer,
+	FLUSH,
+	REHYDRATE,
+	PAUSE,
+	PERSIST,
+	PURGE,
+	REGISTER,
 } from "redux-persist";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 import { chatApi } from "./messages/chatApi";
+import { filtersReducer } from "./filters/slice";
+import { version } from "os";
 
 const createNoopStorage = () => {
-  return {
-    getItem(_key: any) {
-      return Promise.resolve(null);
-    },
-    setItem(_key: any, value: any) {
-      return Promise.resolve(value);
-    },
-    removeItem(_key: any) {
-      return Promise.resolve();
-    },
-  };
+	return {
+		getItem(_key: any) {
+			return Promise.resolve(null);
+		},
+		setItem(_key: any, value: any) {
+			return Promise.resolve(value);
+		},
+		removeItem(_key: any) {
+			return Promise.resolve();
+		},
+	};
 };
 
 const storage =
-  typeof window !== "undefined"
-    ? createWebStorage("local")
-    : createNoopStorage();
+	typeof window !== "undefined"
+		? createWebStorage("local")
+		: createNoopStorage();
 
-const persistConfig = {
-  key: "root",
-  version: 1,
-  storage,
-  // whitelist: ["token"],
+const authPersistConfig = {
+	key: "root",
+	version: 1,
+	storage,
 };
 
-const persistedAuthReducer = persistReducer(persistConfig, authReducer);
+const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
 
 export const makeStore = () => {
-  return configureStore({
-    reducer: {
-      auth: persistedAuthReducer,
-      messages: messagesReducer,
-      advertisement: advertisementReducer,
-      // ui: persistedUiReducer,
-      // filters: filtersReducer,
-      [chatApi.reducerPath]: chatApi.reducer,
-    },
-    middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware({
-        serializableCheck: {
-          ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-        },
-      }).concat(chatApi.middleware),
-  });
+	return configureStore({
+		reducer: {
+			auth: persistedAuthReducer,
+			messages: messagesReducer,
+			advertisement: advertisementReducer,
+			filters: filtersReducer,
+			[chatApi.reducerPath]: chatApi.reducer,
+		},
+		middleware: (getDefaultMiddleware) =>
+			getDefaultMiddleware({
+				serializableCheck: {
+					ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+				},
+			}).concat(chatApi.middleware),
+	});
 };
 
 // export const persistor = persistStore(makeStore)

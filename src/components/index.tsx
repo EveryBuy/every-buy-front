@@ -13,7 +13,7 @@ export { default as DropdownMenu } from "./header/DropdownMenu";
 export { default as Footer } from "../components/footer/Footer";
 export { default as Item } from "./footer/Item/Item";
 export { default as FooterMobile } from "./footer/FooterMobile/FooterMobile";
-export { default as Search } from "./Search/Search";
+export { default as Search } from "./Catalogy/Search/Search";
 
 // Main page
 export { default as SliderContainer } from "./pages/main/Slider/SliderContainer/SliderContainer";
@@ -74,3 +74,10 @@ export { default as IconsData } from "./pages/messages/chats/list/item/data/Icon
 export { default as Buttons } from "./pages/messages/chats/Buttons/Buttons";
 export { default as Button } from "./pages/messages/chats/Buttons/Button";
 export { default as Icons } from "./pages/messages/chats/Icons/Icons";
+
+// Catalogy
+export { FilterCatalogy } from './Catalogy/filterCatalogy/FilterCatalogy';
+export { CustomSeparator } from './ui';
+export { CategoryList } from './Catalogy/CategoryList';
+export { CatalogyCard } from './Catalogy/cardCatalogy/CatalogyCard';
+export { CatalogyPage } from './pages/catalogy/CatalogyPage';

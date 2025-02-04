@@ -41,7 +41,7 @@ const CommonInput: FC<CommonInputProps> = ({
 
       {/* <div className={styles.inputWrapper}> */}
       <input
-        type={typeInput ? "text" : "password"}
+        type={typeInput === "text" ? "text" : "password"}
         // id="password"
         value={value}
         name={typeTitle}

@@ -8,8 +8,10 @@ import {
     getAdvertisementById,
     getAllFavouriteAdvert,
     getCategory,
+    getCitiesByRegionId,
     getCity,
     getLowSubCategory,
+    getRegion,
     getTopSubCategory,
     getUserActiveAdverts,
     getUserInactiveAdverts,
@@ -37,13 +39,15 @@ export type LowSubCategory = {
     subCategoryNameUkr: string,
 }
 
-export type CityList = {
+export type Region = {
+    id: number,
+    regionName: string,
+}
+
+export type City = {
     id: number,
     cityName: string,
-    region: {
-        id: number,
-        regionName: string,
-      }
+    region: Region,
 }
 
 export type Advertisement = {
@@ -69,7 +73,7 @@ export type Advertisement = {
 export type FavouriteAdvertisement = {
     advertisementId: number,
     category: Category,
-    city: CityList,
+    city: City,
     mainPhotoUrl: string,
     price: number,
     productType: "NEW" | "USED" | "OTHER",
@@ -82,7 +86,9 @@ export type AdvertisementState = {
     category: Category[],
     topSubCategory: TopSubCategory[],
     lowSubCategory: LowSubCategory[],
-    cityList: CityList[],
+    cityList: City[],
+    regionList: Region[],
+    citiesListByRegion: City[],
     myAdvertisements: Advertisement[],
     activeAdvertisement: Advertisement | null,
     advertisementById: Advertisement | null,
@@ -97,6 +103,8 @@ const initialState: AdvertisementState = {
     topSubCategory: [],
     lowSubCategory: [],
     cityList: [],
+    regionList: [],
+    citiesListByRegion: [],
     myAdvertisements: [],
     activeAdvertisement: null,
     advertisementById: null,
@@ -146,6 +154,22 @@ const advertisementSlice = createSlice({
                 state.cityList = action.payload.data;
             })
             .addCase(getCity.rejected, (state) => {
+                state.isLoading = false;
+            })
+            .addCase(getRegion.pending, handlePending)
+            .addCase(getRegion.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.regionList = action.payload.data;
+            })
+            .addCase(getRegion.rejected, (state) => {
+                state.isLoading = false;
+            })
+            .addCase(getCitiesByRegionId.pending, handlePending)
+            .addCase(getCitiesByRegionId.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.citiesListByRegion = action.payload.data;
+            })
+            .addCase(getCitiesByRegionId.rejected, (state) => {
                 state.isLoading = false;
             })
             .addCase(createAdvertisement.pending, handlePending)

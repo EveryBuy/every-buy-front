@@ -19,6 +19,7 @@ import {
   validateInput,
   validatePassword,
 } from "@/utils/validate";
+import clsx from "clsx";
 
 type ErrorsType = {
   emailOrPhone: string;
@@ -69,10 +70,10 @@ const Login: React.FC = () => {
     }
     try {
       await dispatch(
-          login({
-            login: emailOrPhone,
-            password: password,
-          })
+        login({
+          login: emailOrPhone,
+          password: password,
+        })
       ).unwrap();
     } catch (error: any) {
       if (error.response) {
@@ -174,32 +175,46 @@ const Login: React.FC = () => {
           </button>
         </CommonInput>
 
-        <button className={styles.submitButton} type="submit">
+        <button
+          className={clsx(
+            styles.submitButton,
+            emailOrPhone && password && styles.activeColor
+          )}
+          type="submit"
+        >
           Увійти
         </button>
       </form>
 
-      {
-        loginServerErrorModal && <ErrorModal
-              onClose={() => {setLoginServerErrorModal(false); router.refresh();}}
-              title={"Упс! Проблеми на сервері!"}
-              buttonText={"Перезавантажити сторінку"}
-          />
-      }
-      {
-        loginUserErrorModal && <ErrorModal
-              onClose={() => {setLoginUserErrorModal(false); router.refresh();}}
-              title={"Користувача з таким телефоном/імейлом та паролем не знайдено!"}
-              buttonText={"Повернутися"}
-          />
-      }
-      {
-          unknownErrorModalOpen && <ErrorModal
-              onClose={() => router.push("/")}
-              title={"Упс! Невідома помилка!"}
-              buttonText={"На головну"}
-          />
-      }
+      {loginServerErrorModal && (
+        <ErrorModal
+          onClose={() => {
+            setLoginServerErrorModal(false);
+            router.refresh();
+          }}
+          title={"Упс! Проблеми на сервері!"}
+          buttonText={"Перезавантажити сторінку"}
+        />
+      )}
+      {loginUserErrorModal && (
+        <ErrorModal
+          onClose={() => {
+            setLoginUserErrorModal(false);
+            router.refresh();
+          }}
+          title={
+            "Користувача з таким телефоном/імейлом та паролем не знайдено!"
+          }
+          buttonText={"Повернутися"}
+        />
+      )}
+      {unknownErrorModalOpen && (
+        <ErrorModal
+          onClose={() => router.push("/")}
+          title={"Упс! Невідома помилка!"}
+          buttonText={"На головну"}
+        />
+      )}
     </>
   );
 };
