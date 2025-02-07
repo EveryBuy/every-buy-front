@@ -145,10 +145,12 @@ export const CatalogyPage: React.FC = (): JSX.Element => {
 			});
 		setLoading(true);
 		if (queryString.length > 0) {
-			router.push(queryString);
-			// router.push(queryString, {
-			// 	scroll: false,
-			// });
+			cleanPagination
+				? router.push(queryString, {
+					scroll: false,
+				})
+				: router.push(queryString);
+
 		} else {
 			router.push('/catalogy');
 		}

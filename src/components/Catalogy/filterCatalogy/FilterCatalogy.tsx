@@ -37,7 +37,6 @@ export function FilterCatalogy(props: ResetFiltersType) {
 
 	return (
 		<Grid2 container direction="row" spacing={2} sx={{ justifyContent: "center", alignItems: "flex-end", }}>
-
 			<PriceSlider />
 			<SortOrderSelection />
 			<CategoriesSelect />
