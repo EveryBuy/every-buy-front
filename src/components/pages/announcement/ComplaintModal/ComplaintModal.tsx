@@ -1,24 +1,22 @@
 "use client";
 
 import { FC, useState } from "react";
+import { useSelector } from "react-redux";
 import { CommonButton } from "@/components";
 import Image from "next/image";
 import { Backdrop } from "@mui/material";
 import xClose from "@/assets/Svg/xClose.svg";
 import styles from "./ComplaintModal.module.scss";
+import { selectAdvertisementById } from "@/redux/advertisement/selectors";
+import { RootState } from "@/redux/store";
 
-interface ComplaintModalProps {
-  announcement: {
-    title: string;
-    nameUkr: string;
-  };
-}
-
-const ComplaintModal: FC<ComplaintModalProps> = ({ announcement }) => {
+const ComplaintModal: FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedReason, setSelectedReason] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+
+  const advertisementById = useSelector((state: RootState) => selectAdvertisementById(state));
 
   const reasons = [
     "Спам",
@@ -55,6 +53,8 @@ const ComplaintModal: FC<ComplaintModalProps> = ({ announcement }) => {
   const handleConfirmSubmit = () => {
     setSubmitted(true);
   };
+
+  if (!advertisementById) return null;
 
   return (
     <div>
@@ -115,8 +115,8 @@ const ComplaintModal: FC<ComplaintModalProps> = ({ announcement }) => {
                       <li className={styles.confirmReasons}>{selectedReason}</li>
                     )}
                     <li className={styles.confirmReasons}>
-                      Предмет скарги: Оголошення "{announcement.title}" від
-                      продавця {announcement.nameUkr}.
+                      Предмет скарги: Оголошення "{advertisementById.data.title}" від
+                      продавця {advertisementById.data.userDto.fullName}.
                     </li>
                   </ul>
                   <div className={styles.buttonContainer}>

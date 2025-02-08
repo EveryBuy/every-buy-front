@@ -27,14 +27,6 @@
   //  @media (min-width: 1024px) {
   //      margin: 100px 60px 0px;
   //  }
-
-  @include media-max($breakpoint-mobile) {
-    margin-top: 40px;
-    max-width: 320px;
-    padding: 0 32px;
-    gap: 30px 46px;
-    width: 320px;
-  }
 }
 
 .sectionContainer {
@@ -50,10 +42,6 @@
   @media (min-width: 1024px) {
     margin: 100px 60px 0px;
   }
-
-  @media (max-width: 480px) {
-    // margin: 100px 60px 0px;
-  }
 }
 
 // .item {
@@ -61,3 +49,11 @@
 //     width: calc((100% - 46px) / 2);
 //   }
 // }
+
+
+.preloaderContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+}
