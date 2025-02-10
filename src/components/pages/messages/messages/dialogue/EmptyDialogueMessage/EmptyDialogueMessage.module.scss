@@ -1,17 +1,25 @@
+@import "@/styles/mixins";
+@import "@/styles/breakpoints";
+
 .noticeWrapper {
-  width: 263px;
-  height: 263px;
-  padding: 32px 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  border-radius: 25px;
-  border: 1px solid var(--border);
-  position: absolute;
-  // top: 50%;
-  left: 50%;
-  transform: translate(-50%, 35%);
+  display: none;
+  @include media-min($breakpoint-tablet) {
+    width: 263px;
+    height: 263px;
+    padding: 32px 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 25px;
+    border: 1px solid var(--border);
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 5%);
+  }
+  @include media-min($breakpoint-laptop-large) {
+    transform: translate(-50%, 30%);
+  }
 
   & p {
     text-align: center;

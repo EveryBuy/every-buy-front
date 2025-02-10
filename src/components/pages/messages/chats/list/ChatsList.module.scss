@@ -2,14 +2,13 @@
 @import "@/styles/breakpoints";
 
 .listWrapper {
-  // height: calc(100vh - 240px);
   overflow-y: auto;
   margin-top: 20px;
   padding: 0px 20px;
 
   @include media-min($breakpoint-tablet) {
-    height: 635px;
-    padding: 10px 0px;
+    height: 550px;
+    padding: 8px 0px;
     border-radius: 10px;
     border: 1px solid var(--border);
     margin-top: 0px;
@@ -28,6 +27,10 @@
       background-color: #b3c638;
     }
   }
+  @include media-min($breakpoint-laptop-large) {
+    height: 639px;
+    padding: 10px 0px;
+  }
 }
 
 .listItem {
@@ -36,3 +39,7 @@
     border-bottom: none;
   }
 }
+
+// .hidden {
+//   display: none;
+// }

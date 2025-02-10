@@ -1,27 +1,27 @@
+"use client"
+
+import { useState } from "react";
 import { CommonIcon, CommonButton } from "@/components";
 import styles from "./Contacts.module.scss";
 
-interface Location {
-  city: string;
-  region: string;
-}
-
-interface ResBackend {
-  delivery: string[];
-  publicDate: string;
-  cost: number;
-}
-
 interface ContactsProps {
-  contactsInfo: ResBackend;
+  contactsInfo: {
+    publicDate: string;
+    cost: number;
+    delivery: string[];
+    title: string;
+    phoneNumber: string; 
+  };
 }
 
 export default function Contacts({ contactsInfo }: ContactsProps) {
-  const { publicDate, cost, delivery } = contactsInfo;
+  const { publicDate, cost, delivery, title, phoneNumber } = contactsInfo;
+
+  const [showNumber, setShowNumber] = useState(false);
+
   return (
     <div className={styles.list}>
       <div className={styles.titleItem}>
-        {" "}
         <CommonIcon
           id="heart"
           width="30"
@@ -32,7 +32,7 @@ export default function Contacts({ contactsInfo }: ContactsProps) {
           <p className={styles.public}>Опубліковано {publicDate}</p>
           <p className={styles.public}>Продаж</p>
         </div>
-        <h2 className={styles.title}>Стильна жіноча сукня</h2>
+        <h2 className={styles.title}>{title}</h2>
         <div>
           <p className={styles.changeWidth}>Вартість</p>
           <p className={styles.price}>{cost} грн</p>
@@ -40,7 +40,7 @@ export default function Contacts({ contactsInfo }: ContactsProps) {
         <div className={styles.descVersion}>
           <div>
             <p className={styles.deliveryTitle}>Спосіб доставки</p>
-            <p className={styles.text}>{delivery.join(", ")}</p>
+            <p className={styles.text}>{delivery}</p>
           </div>
           <div className={styles.buttonsItem}>
             <CommonButton
@@ -51,44 +51,21 @@ export default function Contacts({ contactsInfo }: ContactsProps) {
             >
               Надіслати повідомлення
             </CommonButton>
-            <CommonButton
-              type="button"
-              color="transparent"
-              title={""}
-              className={styles.yellowBorderButton}
-            >
-              Показати телефон
-            </CommonButton>
+            {!showNumber && (
+              <CommonButton
+                type="button"
+                color="transparent"
+                title=""
+                className={styles.yellowBorderButton}
+                onClick={() => setShowNumber(true)} 
+              >
+                Показати телефон
+              </CommonButton>
+            )}
+            {showNumber && <p className={styles.phoneNumber}>0976709876</p>}
           </div>
         </div>
       </div>
-      <div className={`${styles.buttonsItem} ${styles.mobileButtons}`}>
-        <CommonButton
-          type="button"
-          color="transparent"
-          title=""
-          className={styles.yellowBorderButton}
-        >
-          Надіслати повідомлення
-        </CommonButton>
-
-        <CommonButton
-          type="button"
-          color="transparent"
-          title=""
-          className={styles.yellowBorderButton}
-        >
-          Показати телефон
-        </CommonButton>
-      </div>
-      {/* <div className={styles.item}>
-        <h3>Вартість</h3>
-        <p>1250 грн</p>
-      </div> */}
-      {/* <div className={styles.item}>
-        <h3>Спосіб доставки</h3>
-        <p>Стильна жіноча сукня</p>
-      </div> */}
     </div>
   );
 }
