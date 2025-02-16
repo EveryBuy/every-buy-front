@@ -7,7 +7,7 @@ import { getAdvertisementById } from "@/redux/advertisement/operations";
 import { selectAdvertisementById } from "@/redux/advertisement/selectors";
 import { RootState } from "@/redux/store";
 import { AppDispatch } from "@/redux/store";
-import { Contacts, Info, Seller, AnnouncementSlider, CommonPreloader } from "@/components";
+import { Contacts, Info, Seller, AnnouncementSlider, CommonPreloader, CustomSeparator } from "@/components";
 import styles from "./Announcement.module.scss";
 import { setHeaderAuthToken } from "@/utils/axios";
 
@@ -31,19 +31,19 @@ export default function Announcement() {
       const persistData = localStorage.getItem("persist:root");
       if (persistData) {
         const parsedPersistData = JSON.parse(persistData);
-        const authToken = JSON.parse(parsedPersistData.token); 
+        const authToken = JSON.parse(parsedPersistData.token);
 
         if (authToken) {
           setHeaderAuthToken(authToken);
         } else {
           console.error("No token found in persist:root");
           setIsFetching(false);
-          return; 
+          return;
         }
       } else {
         console.error("No persist data found in localStorage");
         setIsFetching(false);
-        return; 
+        return;
       }
 
       try {
@@ -81,34 +81,66 @@ export default function Announcement() {
   }).format(creationDate);
 
   return (
-    <div className={styles.container}>
-      <AnnouncementSlider images={advertisementById?.data?.photoUrls || []} />
-      <Contacts
-        contactsInfo={{
-          publicDate: formattedDate,
-          cost: advertisementById.data.price,
-          delivery: advertisementById.data.deliveryMethods,
-          title: advertisementById.data.title,
-        }}
-      />
-      <Info
-        articleInfo={{
-          description: advertisementById.data.description,
-          location: {
-            city: advertisementById.data.city.cityName,
-            region: advertisementById.data.city.region.regionName,
-          },
-          delivery: advertisementById.data.deliveryMethods,
-        }}
-      />
-      <Seller
-        sellerInfo={{
-          imageUrl: advertisementById.data.userDto.photoUrl,
-          nameUkr: advertisementById.data.userDto.fullName,
-          online: advertisementById.data.isEnabled,
-          linkToAllAdvert: `/seller/${advertisementById.data.userId}`,
-        }}
-      />
-    </div>
+    <>
+      <div className={styles.breadcrumbsContainer}>
+        <CustomSeparator
+          category={{
+            id: advertisementById.data.category.id,
+            title: advertisementById.data.category.nameUkr,
+            link: `/catalogy?categoryId=${advertisementById.data.category.id}`,
+          }}
+          topSubCategory={
+            advertisementById.data.topSubCategory
+              ? {
+                id: advertisementById.data.topSubCategory.id,
+                title: advertisementById.data.topSubCategory.subCategoryNameUkr,
+                link: `/catalogy?categoryId=${advertisementById.data.category.id}&topSubCategoryId=${advertisementById.data.topSubCategory.id}`,
+              }
+              : null
+          }
+          lowSubCategory={
+            advertisementById.data.lowSubCategory
+              ? {
+                id: advertisementById.data.lowSubCategory.id,
+                title: advertisementById.data.lowSubCategory.subCategoryNameUkr,
+                link: `/catalogy?categoryId=${advertisementById.data.category.id}&topSubCategoryId=${advertisementById.data.topSubCategory.id}&lowSubCategoryId=${advertisementById.data.lowSubCategory.id}`,
+              }
+              : null
+          }
+          title={advertisementById.data.title}
+        />
+      </div>
+
+      <div className={styles.container}>
+        <AnnouncementSlider images={advertisementById?.data?.photoUrls || []} />
+        <Contacts
+          contactsInfo={{
+            publicDate: formattedDate,
+            cost: advertisementById.data.price,
+            delivery: advertisementById.data.deliveryMethods,
+            title: advertisementById.data.title,
+            section: advertisementById.data.section,
+          }}
+        />
+        <Info
+          articleInfo={{
+            description: advertisementById.data.description,
+            location: {
+              city: advertisementById.data.city.cityName,
+              region: advertisementById.data.city.region.regionName,
+            },
+            deliveryMethods: advertisementById.data.deliveryMethods,
+          }}
+        />
+        <Seller
+          sellerInfo={{
+            imageUrl: advertisementById.data.userDto.photoUrl,
+            nameUkr: advertisementById.data.userDto.fullName,
+            online: advertisementById.data.isEnabled,
+            linkToAllAdvert: `/seller/${advertisementById.data.userId}`,
+          }}
+        />
+      </div>
+    </>
   );
 }

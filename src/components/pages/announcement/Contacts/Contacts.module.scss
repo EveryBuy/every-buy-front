@@ -148,6 +148,7 @@
 
 .text {
   font-size: 14px;
+  white-space: nowrap;
 
   @include media-min($breakpoint-tablet) {
     font-size: 16px;
@@ -156,6 +157,10 @@
   @include media-min($breakpoint-laptop) {
     font-size: 20px;
   }
+}
+
+.deliveryItem {
+  display: inline; 
 }
 
 .buttonsItem > .yellowBorderButton {
