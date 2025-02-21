@@ -25,9 +25,9 @@ const CheckboxComponents: React.FC<CheckboxProps> = ({
     className={checkboxClassName}
   >
     {options.map(({ name, label, value, inputClassName, labelClassName }) => (
-      <label key={name} className={labelClassName}>
+      <label key={value} className={labelClassName}>
         <Field
-          type="checkbox"
+          type="radio"
           name={name}
           value={value}
           className={inputClassName}
@@ -39,39 +39,3 @@ const CheckboxComponents: React.FC<CheckboxProps> = ({
 );
 
 export default CheckboxComponents;
-
-// ======================================================
-
-// interface CheckboxOption {
-//   name: string;
-//   label: string;
-//   value?: string;
-//   inputClassName?: string; // класс для Field
-//   labelClassName?: string; // класс для label
-// }
-
-// interface CheckboxGroupProps {
-//   options: CheckboxOption[];
-//   groupName: string;
-//   groupClassName?: string;
-// }
-
-// const CheckboxGroup: React.FC<CheckboxGroupProps> = ({
-//   options,
-//   groupName,
-//   groupClassName,
-// }) => (
-//   <div role="group" aria-labelledby={groupName} className={groupClassName}>
-//     {options.map(({ name, label, value, inputClassName, labelClassName }) => (
-//       <label key={name} className={labelClassName}>
-//         <Field
-//           type="checkbox"
-//           name={name}
-//           value={value}
-//           className={inputClassName} // класс применяется только к Field
-//         />
-//         {label}
-//       </label>
-//     ))}
-//   </div>
-// );

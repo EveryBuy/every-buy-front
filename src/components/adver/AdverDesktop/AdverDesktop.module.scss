@@ -1,6 +1,5 @@
 .adWrapper {
   width: 1440px;
-  // padding: 0px 60px 142px 60px;
   padding-left: 60px;
   padding-right: 60px;
   margin-top: 20px;
@@ -20,12 +19,6 @@
   display: flex;
   gap: 18px;
   list-style: none;
-
-  // li {
-  //   font-size: var(--f-size-h4);
-  // }
-
-  // justify-content: space-between;
 }
 
 .linkItem {
@@ -45,7 +38,6 @@
   height: 4px;
   border-radius: 2px;
   background-color: #9d9d9d;
-  // color: #d80027;
 }
 
 .adTitle {
@@ -75,7 +67,7 @@
   margin-top: 55px;
 }
 
-.adventButton {
+.adverButton {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -90,21 +82,12 @@
 
   width: 347px;
   height: 61px;
-  // padding: 16px 47px;
-  // font-size: 24px;
-  line-height: 29px;
 
-  //   @media (max-width: 480) {
-  //     font-size: 16px;
-  //     padding: 12px 20px;
-  //   }
-  //   @media (min-width: 1024px) {
-  //     width: 347px;
-  //     height: 61px;
-  //     // padding: 16px 47px;
-  //     font-size: 24px;
-  //     line-height: 29px;
-  //   }
+  line-height: 29px;
+}
+
+.adverButtonAd {
+  background: var(--background);
 }
 
 // =============================================================
@@ -120,22 +103,6 @@
     line-height: 24px;
   }
 }
-
-// .styledForm {
-//   // padding: 60px;
-//   // display: grid;
-//   // grid-template-columns: 1fr 1fr 1fr;
-//   // width: 364px;
-//   // height: 196px;
-
-//   // @media screen and (min-width: 768px) {
-//   //   // width: 364px;
-//   //   // height: 196px;
-
-//   //   width: auto;
-//   //   height: auto;
-//   // }
-// }
 
 .styledField {
   display: flex;
@@ -203,144 +170,67 @@
   height: 280px;
 }
 
-.messageError {
-  display: flex;
-  gap: 4px;
-
-  // width: 140px;
-
-  margin-top: 5px;
-  font-feature-settings: "clig" off, "liga" off;
-  font-family: Roboto;
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 150%;
-  letter-spacing: 0.12px;
-
-  color: #d80027;
+// ================= radio ===================
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  white-space: nowrap;
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
 }
 
-.messageSuccess {
-  display: flex;
-  gap: 4px;
-
-  margin-top: 5px;
-  font-feature-settings: "clig" off, "liga" off;
-  font-family: Roboto;
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 150%;
-  letter-spacing: 0.12px;
-
-  color: #3cbf61;
-}
-
-.adventButtonAd {
-  background: var(--background);
-
-  //   display: flex;
-  //   align-items: center;
-  //   justify-content: center;
-
-  //   border-radius: 10px;
-  //   padding: 12px 28px;
-  //   //   margin-right: 35px;
-  //   color: var(--label);
-
-  //   width: 347px;
-  //   height: 61px;
-  //   padding: 16px 94px;
-  //   font-size: 24px;
-  // ==================================
-
-  //   @media (max-width: 480) {
-  //     font-size: 16px;
-  //     padding: 12px 20px;
-  //   }
-  //   @media (min-width: 1024px) {
-  //     width: 347px;
-  //     height: 61px;
-  //     padding: 16px 94px;
-  //     font-size: 24px;
-  //     // margin-right: 50px;
-  //   }
-}
-
-.checkboxWrapper {
+.radioboxWrapper {
   display: flex;
   gap: 160px;
 }
 
-.checkboxGroup {
+.radioboxGroup {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  margin-bottom: 10px;
 }
 
-.checkboxInput {
+.radioboxInput {
   margin-right: 16px;
+
   width: 32px;
   height: 32px;
 }
 
-.checkboxLabel {
+.radioBox {
+  position: absolute;
+  margin-left: -48px;
+  width: 32px;
+  height: 32px;
+}
+
+.radioboxLabel {
   display: flex;
   align-items: center;
 }
 
-.adventPhoto {
-  h3 {
-    font-size: var(--f-size-h3);
-    font-weight: 400;
-    line-height: 39px;
-    margin-bottom: 24px;
-  }
-
-  p {
-    font-size: var(--body-text);
-    font-weight: 400;
-    margin-bottom: 12px;
-
-    span {
-      font-weight: 600;
-      font-size: var(--body-text);
-    }
-  }
+.check {
+  padding-left: 48px;
 }
 
-// .adventPhotoList {
-//   display: flex;
-//   flex-wrap: wrap;
-//   align-items: center;
-//   justify-content: center;
-//   gap: 30px;
-
-//   li {
-//     display: flex;
-//     align-items: center;
-//     justify-content: center;
-
-//     width: 240px;
-//     height: 200px;
-//     border: 1px solid var(--label);
-//     border-radius: 8px;
-//     background: #ffffff;
-//   }
-// }
-
-.adventPhotoListText {
-  margin-top: 12px;
-  margin-bottom: 0 !important;
+.radioUnchecked {
+  display: block;
 }
 
-// .adventPhotoItem {
-//   background: #f5ffb6 !important;
+.radioChecked {
+  display: none;
+}
 
-//   p {
-//     font-size: 20px;
-//     font-weight: 400;
-//     line-height: 24px;
-//   }
-// }
+.visuallyHidden:checked + .radioBox .radioUnchecked {
+  display: none;
+}
+
+.visuallyHidden:checked + .radioBox .radioChecked {
+  display: block;
+}

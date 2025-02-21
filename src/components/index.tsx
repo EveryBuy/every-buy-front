@@ -76,7 +76,7 @@ export { default as Button } from "./pages/messages/chats/Buttons/Button";
 export { default as Icons } from "./pages/messages/chats/Icons/Icons";
 
 export { default as AdverPhotoList } from "./adver/AdverPhotoList/AdverPhotoList";
-export { default as AdverCheckboxGroup } from "./adver/AdverCheckboxGroup/AdverCheckboxGroup";
+export { default as RadioButtonGroup } from "./adver/RadioButtonGroup/RadioButtonGroup";
 export { default as AdverDesktop } from "./adver/AdverDesktop/AdverDesktop";
 export { default as AdverMobile } from "./adver/AdverMobile/AdverMobile";
 export { default as ErrorMessage } from "./adver/ErrorMessage/ErrorMessage";

@@ -7,9 +7,6 @@ import ArowDown from "@/assets/Svg/icon-chevron-arow-down.svg";
 import Camera from "@/assets/Svg/camera.svg";
 import styles from "./AdverMobile.module.scss";
 
-// import { AdverTextInput } from "@/components";
-// import { AdverPhotoList } from "@/components";
-
 const AdverMobile = () => {
   const initialValues = {
     product: "",
@@ -27,13 +24,15 @@ const AdverMobile = () => {
 
   const optionsStatus = [
     {
-      name: "New",
+      name: "condition",
+      value: "New",
       label: "Нове",
       inputClassName: styles.checkboxInput,
       labelClassName: styles.checkboxLabel,
     },
     {
-      name: "Used",
+      name: "condition",
+      value: "Used",
       label: "Вживане",
       inputClassName: styles.checkboxInput,
       labelClassName: styles.checkboxLabel,
@@ -42,19 +41,22 @@ const AdverMobile = () => {
 
   const optionsDelivery = [
     {
-      name: "New_mail",
+      name: "delivery",
+      value: "New_mail",
       label: "Нова пошта",
       inputClassName: styles.checkboxInput,
       labelClassName: styles.checkboxLabel,
     },
     {
-      name: "Ukrposhta",
+      name: "delivery",
+      value: "Ukrposhta",
       label: "Укрпошта",
       inputClassName: styles.checkboxInput,
       labelClassName: styles.checkboxLabel,
     },
     {
-      name: "Meest_Express",
+      name: "delivery",
+      value: "Meest_Express",
       label: "Meest Express",
       inputClassName: styles.checkboxInput,
       labelClassName: styles.checkboxLabel,
@@ -83,10 +85,6 @@ const AdverMobile = () => {
         {({ handleBlur }) => (
           <Form autoComplete="off" className={styles.styledForm}>
             <div className={styles.wrapperInput}>
-              {/* <AdverTextInput handleBlur={handleBlur} /> */}
-
-              {/* <AdverCheckboxGroup /> */}
-
               <section className={styles.formWrapper}>
                 <div>
                   <label>
@@ -174,31 +172,6 @@ const AdverMobile = () => {
                   checkboxName="checkbox-group"
                   checkboxClassName={styles.checkboxGroup}
                 />
-
-                {/* <div
-                  role="group"
-                  aria-labelledby="checkbox-group"
-                  className={styles.checkboxGroup}
-                > */}
-                {/* <label className={styles.checkboxLabel}>
-                    <Field
-                      type="checkbox"
-                      name="New"
-                      // value="New"
-                      className={styles.checkboxInput}
-                    />
-                    Нове
-                  </label>
-                  <label className={styles.checkboxLabel}>
-                    <Field
-                      type="checkbox"
-                      name="Used"
-                      // value="Used"
-                      className={styles.checkboxInput}
-                    />
-                    Вживане
-                  </label> */}
-                {/* </div> */}
               </section>
 
               <div className={styles.adventPhotoItem}>
@@ -228,7 +201,6 @@ const AdverMobile = () => {
                   </p>
                 </label>
               </div>
-              {/* </section> */}
 
               <div
                 className={`${styles.formWrapper} ${styles.formWrapperLocation}`}
@@ -257,42 +229,7 @@ const AdverMobile = () => {
                   checkboxName="checkbox-group"
                   checkboxClassName={styles.checkboxGroup}
                 />
-
-                {/* <div
-                  role="group"
-                  aria-labelledby="checkbox-group"
-                  className={styles.checkboxGroup}
-                >
-                  <label className={styles.checkboxLabel}>
-                    <Field
-                      type="checkbox"
-                      name="New_mail"
-                      // value="New_mail"
-                      className={styles.checkboxInput}
-                    />
-                    Нова пошта
-                  </label>
-                  <label className={styles.checkboxLabel}>
-                    <Field
-                      type="checkbox"
-                      name="Ukrposhta"
-                      // value="Ukrposhta"
-                      className={styles.checkboxInput}
-                    />
-                    Укрпошта
-                  </label>
-                  <label className={styles.checkboxLabel}>
-                    <Field
-                      type="checkbox"
-                      name="Meest_Express"
-                      // value="Meest_Express"
-                      className={styles.checkboxInput}
-                    />
-                    Meest Express
-                  </label>
-                </div> */}
               </section>
-              {/* </section> */}
             </div>
 
             <div className={styles.buttonWrapper}>

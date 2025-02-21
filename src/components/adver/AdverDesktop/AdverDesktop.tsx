@@ -1,22 +1,27 @@
 "use client";
+import { useState } from "react";
 import Image from "next/image";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field, FormikHelpers } from "formik";
+import * as Yup from "yup";
+
 import { CommonButton } from "@/components";
-import ArowDown from "@/assets/Svg/icon-chevron-arow-down.svg";
-import styles from "./AdverDesktop.module.scss";
-
+import { RadioButtonGroup } from "@/components";
 import { AdverPhotoList } from "@/components";
-
 import { ErrorMessage } from "@/components";
 
-import { FormikHelpers } from "formik";
+import ArowDown from "@/assets/Svg/icon-chevron-arow-down.svg";
+import radioboxIcon from "@/assets/Svg/checkboxIcon.svg";
+import checkIcon from "@/assets/Svg/checkIcon.svg";
+
+import styles from "./AdverDesktop.module.scss";
 
 // -----------------------------------------
-import * as Yup from "yup";
-// import IconError from "@/assets/Svg/icon-checkbox-error.svg";
-// import IconSucces from "@/assets/Svg/icon-checkbox-success.svg";
+
+import { ClassNames } from "@emotion/react";
 
 const AdverDesktop = () => {
+  const [images, setImages] = useState<{ file: File; url: string }[]>([]);
+
   const initialValues = {
     product: "",
     price: "",
@@ -25,15 +30,8 @@ const AdverDesktop = () => {
     subcategory: "",
     location: "",
 
-    condition: {
-      New: false,
-      Used: false,
-    },
-    delivery: {
-      New_mail: false,
-      Ukrposhta: false,
-      Meest_Express: false,
-    },
+    condition: "",
+    delivery: "",
   };
 
   const AuthSchema = Yup.object().shape({
@@ -44,37 +42,36 @@ const AdverDesktop = () => {
     subcategory: Yup.string().required("Будь ласка, зазначте підкатегорію"),
     location: Yup.string().required("Будь ласка, вкажіть місцезнаходження"),
 
-    condition: Yup.object()
-      .shape({
-        New: Yup.boolean(),
-        Used: Yup.boolean(),
-      })
-      .test(
-        "condition-test",
-        "Будь ласка, оберіть стан товару",
-        (value) => value.New || value.Used
-      ),
+    condition: Yup.string()
+      .oneOf(["New", "Used"], "Будь ласка, оберіть стан товару")
+      .required("Будь ласка, оберіть стан товару"),
 
-    delivery: Yup.object()
-      .shape({
-        New_mail: Yup.boolean(),
-        Ukrposhta: Yup.boolean(),
-        Meest_Express: Yup.boolean(),
-      })
-      .test(
-        "delivery-test",
-        "Будь ласка, оберіть спосіб доставки",
-        (value) => value.New_mail || value.Ukrposhta || value.Meest_Express
-      ),
+    delivery: Yup.string()
+      .oneOf(
+        ["New_mail", "Ukrposhta", "Meest_Express"],
+        "Будь ласка, оберіть спосіб доставки"
+      )
+      .required("Будь ласка, оберіть спосіб доставки"),
   });
 
-  const handleSubmit = (
+  const handleSubmit = async (
     values: typeof initialValues,
     actions: FormikHelpers<typeof initialValues>
   ) => {
-    console.log(values);
-    // console.log(actions);
+    const formData = new FormData();
+    Object.entries(values).forEach(([key, value]) => {
+      formData.append(key, value as string);
+    });
+
+    images.forEach((image, index) => {
+      formData.append(`photos[${index}]`, image.file);
+    });
+
+    console.log("formData", formData);
+    console.log("Данные формы:", values);
+    console.log("Отправляемые фотографии:", images);
     actions.resetForm();
+    setImages([]);
   };
 
   return (
@@ -89,7 +86,6 @@ const AdverDesktop = () => {
             <p className={styles.linkItemText}>Продам</p>
           </li>
         </ul>
-        {/* </div> */}
       </div>
 
       <h3 className={styles.adTitle}>Подробиці товару</h3>
@@ -98,9 +94,6 @@ const AdverDesktop = () => {
         initialValues={initialValues}
         validationSchema={AuthSchema}
         onSubmit={handleSubmit}
-        // onSubmit={(values) => {
-        //   console.log(values);
-        // }}
       >
         {({ handleBlur, touched, errors }) => (
           <Form autoComplete="off" className={styles.styledForm}>
@@ -257,167 +250,76 @@ const AdverDesktop = () => {
                   />
                 </div>
 
-                <section className={styles.checkboxWrapper}>
+                <section className={styles.radioboxWrapper}>
                   <div>
-                    <div
-                      role="group"
-                      aria-labelledby="checkbox-group"
-                      className={styles.checkboxGroup}
-                    >
-                      <h2>
-                        Стан товару
-                        <span style={{ color: "red", marginLeft: "4px" }}>
-                          *
-                        </span>
-                      </h2>
-                      <label className={styles.checkboxLabel}>
-                        <Field
-                          type="checkbox"
-                          name="condition.New"
-                          // value="New"
-                          className={styles.checkboxInput}
-                        />
-                        Нове
-                      </label>
-                      <label className={styles.checkboxLabel}>
-                        <Field
-                          type="checkbox"
-                          // name="New"
-                          name="condition.Used"
-                          // value="Used"
-                          className={styles.checkboxInput}
-                        />
-                        Вживане
-                      </label>
-                    </div>
+                    <RadioButtonGroup
+                      name="condition"
+                      title="Стан товару"
+                      options={[
+                        { value: "New", label: "Нове" },
+                        { value: "Used", label: "Вживане" },
+                      ]}
+                      groupClass={styles.radioboxGroup}
+                      labelClass={`${styles.radioboxLabel} ${styles.check}`}
+                      inputClass={`${styles.visuallyHidden} ${styles.radioboxInput}`}
+                      radioBoxClass={styles.radioBox}
+                      radioUncheckedClass={styles.radioUnchecked}
+                      radioCheckedClass={styles.radioChecked}
+                      uncheckedIcon={radioboxIcon}
+                      checkedIcon={checkIcon}
+                    />
 
                     <ErrorMessage
                       touched={touched.condition}
                       error={errors.condition}
                       successMessage="Стан товару успішно додано"
                     />
-
-                    {/* {touched.condition &&
-                    (touched.condition.New || touched.condition.Used) &&
-                    errors.condition ? (
-                      <div className={styles.messageError}>
-                        <Image
-                          src={IconError}
-                          alt="Error Icon"
-                          width={16}
-                          height={16}
-                        />
-                        {errors.condition}
-                      </div>
-                    ) : touched.condition &&
-                      (touched.condition.New || touched.condition.Used) ? (
-                      <div className={styles.messageSuccess}>
-                        <Image
-                          src={IconSucces}
-                          alt="Success Icon"
-                          width={16}
-                          height={16}
-                        />
-                        Success name
-                      </div>
-                    ) : null} */}
                   </div>
 
                   <div>
-                    <div
-                      role="group"
-                      aria-labelledby="checkbox-group"
-                      className={styles.checkboxGroup}
-                    >
-                      <h2>
-                        Спосіб доставки
-                        <span style={{ color: "red", marginLeft: "4px" }}>
-                          *
-                        </span>
-                      </h2>
-                      <label className={styles.checkboxLabel}>
-                        <Field
-                          type="checkbox"
-                          name="delivery.New_mail"
-                          // value="New_mail"
-                          className={styles.checkboxInput}
-                        />
-                        Нова пошта
-                      </label>
-                      <label className={styles.checkboxLabel}>
-                        <Field
-                          type="checkbox"
-                          name="delivery.Ukrposhta"
-                          // value="Ukrposhta"
-                          className={styles.checkboxInput}
-                        />
-                        Укрпошта
-                      </label>
-                      <label className={styles.checkboxLabel}>
-                        <Field
-                          type="checkbox"
-                          name="delivery.Meest_Express"
-                          // value="Meest_Express"
-                          className={styles.checkboxInput}
-                        />
-                        Meest Express
-                      </label>
-                    </div>
+                    <RadioButtonGroup
+                      name="delivery"
+                      title="Спосіб доставки"
+                      options={[
+                        { value: "New_mail", label: "Нова пошта" },
+                        { value: "Ukrposhta", label: "Укрпошта" },
+                        { value: "Meest_Express", label: "Meest Express" },
+                      ]}
+                      groupClass={styles.radioboxGroup}
+                      labelClass={`${styles.radioboxLabel} ${styles.check}`}
+                      inputClass={`${styles.visuallyHidden} ${styles.radioboxInput}`}
+                      radioBoxClass={styles.radioBox}
+                      radioUncheckedClass={styles.radioUnchecked}
+                      radioCheckedClass={styles.radioChecked}
+                      uncheckedIcon={radioboxIcon}
+                      checkedIcon={checkIcon}
+                    />
 
                     <ErrorMessage
                       touched={touched.delivery}
                       error={errors.delivery}
                       successMessage="Спосіб доставки успішно додано"
                     />
-
-                    {/* {touched.delivery &&
-                    (touched.delivery.New_mail ||
-                      touched.delivery.Ukrposhta ||
-                      touched.delivery.Meest_Express) &&
-                    errors.delivery ? (
-                      <div className={styles.messageError}>
-                        <Image
-                          src={IconError}
-                          alt="Error Icon"
-                          width={16}
-                          height={16}
-                        />
-                        {errors.delivery}
-                      </div>
-                    ) : touched.delivery &&
-                      (touched.delivery.New_mail ||
-                        touched.delivery.Ukrposhta ||
-                        touched.delivery.Meest_Express) ? (
-                      <div className={styles.messageSuccess}>
-                        <Image
-                          src={IconSucces}
-                          alt="Success Icon"
-                          width={16}
-                          height={16}
-                        />
-                        Success name
-                      </div>
-                    ) : null} */}
                   </div>
                 </section>
               </section>
             </div>
 
-            <AdverPhotoList />
+            <AdverPhotoList images={images} setImages={setImages} />
 
             <div className={styles.buttonWrapper}>
               <CommonButton
                 type="submit"
                 title="Попередній перегляд"
                 color="yellow"
-                className={styles.adventButton}
+                className={styles.adverButton}
               />
 
               <CommonButton
                 type="submit"
                 title="Опублікувати"
                 color="yellow"
-                className={`${styles.adventButton} ${styles.adventButtonAd}`}
+                className={`${styles.adverButton} ${styles.adverButtonAd}`}
               />
             </div>
           </Form>
