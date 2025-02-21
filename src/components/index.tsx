@@ -6,6 +6,7 @@ export { default as CommonModal } from "./ui/commonModal/CommonModal";
 export { default as CommonPreloader } from "./ui/CommonPreloader/CommonPreloader";
 export { default as ErrorModal } from "./ui/commonModal/errorModal/ErrorModal";
 export { default as CommonSelect } from "./ui/CommonSelect/CommonSelect";
+export { default as CommonSectionSelector } from "./ui/CommonSectionSelector/CommonSectionSelector";
 
 // General
 export { default as Header } from "./header/Header";
