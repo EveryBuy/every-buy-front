@@ -40,51 +40,51 @@
 	}
 }
 
-.buttonsContainer {
-	display: flex;
-	justify-content: space-between;
-	gap: 18px;
+// .buttonsContainer {
+// 	display: flex;
+// 	justify-content: space-between;
+// 	gap: 18px;
 
-	@media (min-width: 1024px) {
-		gap: 10px;
-	}
-}
+// 	@media (min-width: 1024px) {
+// 		gap: 10px;
+// 	}
+// }
 
-.buyButton {
-	font-weight: 400;
-	border-bottom: 2px solid #9d9d9d;
-	cursor: pointer;
+// .buyButton {
+// 	font-weight: 400;
+// 	border-bottom: 2px solid #9d9d9d;
+// 	cursor: pointer;
 
-	@media (min-width: 768px) {
-		font-size: var(--f-size-h4);
-	}
+// 	@media (min-width: 768px) {
+// 		font-size: var(--f-size-h4);
+// 	}
 
-	@media (min-width: 1024px) {
-		font-size: var(--f-size-h3);
-	}
-}
+// 	@media (min-width: 1024px) {
+// 		font-size: var(--f-size-h3);
+// 	}
+// }
 
-.buyButton:hover {
-	border-bottom: 2px solid #e5ff46;
-}
+// .buyButton:hover {
+// 	border-bottom: 2px solid #e5ff46;
+// }
 
-.sellButton {
-	font-weight: 400;
-	border-bottom: 2px solid #9d9d9d;
-	cursor: pointer;
+// .sellButton {
+// 	font-weight: 400;
+// 	border-bottom: 2px solid #9d9d9d;
+// 	cursor: pointer;
 
-	@media (min-width: 768px) {
-		font-size: var(--f-size-h4);
-	}
+// 	@media (min-width: 768px) {
+// 		font-size: var(--f-size-h4);
+// 	}
 
-	@media (min-width: 1024px) {
-		font-size: var(--f-size-h3);
-	}
-}
+// 	@media (min-width: 1024px) {
+// 		font-size: var(--f-size-h3);
+// 	}
+// }
 
-.sellButton:hover {
-	border-bottom: 2px solid #e5ff46;
-}
+// .sellButton:hover {
+// 	border-bottom: 2px solid #e5ff46;
+// }
 
 .wrapperHiddenText {
 	display: flex;
