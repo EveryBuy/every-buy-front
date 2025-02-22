@@ -1,13 +1,39 @@
-import { FC } from "react";
+"use client";
+
+import { FC, useState } from "react";
 import React from "react";
 import Image from "next/image";
 import { CommonIcon, CommonButton, FooterMobile } from "@/components";
 import Logo from "@/assets/Svg/logo.svg";
 import styles from "./Footer.module.scss";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { subscribeUser } from "@/redux/auth/operations";
+import toast from "react-hot-toast";
 
 const Footer: FC = () => {
+  const [email, setEmail] = useState("");
+  const dispatch = useAppDispatch();
+  const { error } = useAppSelector((state) => state.auth);
+
+  const handleSubscribe = () => {
+    if (!email.trim()) {
+      toast.error("Please enter a valid email.");
+      return;
+    }
+
+    dispatch(subscribeUser(email))
+      .unwrap()
+      .then(() => {
+        toast.success("Subscription successful!");
+        setEmail(""); 
+      })
+      .catch((err) => {
+        toast.error(err.message || "An error occurred.");
+      });
+  };
+
   return (
-    <footer className={`${styles.footerTag}`}>
+    <footer className={styles.footerTag}>
       <div className={styles.footerContainer}>
         <div className={styles.wrapperLogo}>
           <Image
@@ -22,32 +48,30 @@ const Footer: FC = () => {
             <a href="tel:+380(63)0000000" className={styles.contactText}>
               +380(63)0000000
             </a>
-            <a
-              href="mailto:EveryBuymarket@gmail.com"
-              className={styles.contactText}
-            >
+            <a href="mailto:EveryBuymarket@gmail.com" className={styles.contactText}>
               EveryBuymarket@gmail.com
             </a>
           </div>
         </div>
         <div className={styles.wrapperSearch}>
           <p className={styles.footerText}>
-            {" "}
-            Бажаєте отримувати <br className={styles.hidden} /> повідомлення про
-            новинки?
+            Бажаєте отримувати <br className={styles.hidden} /> повідомлення про новинки?
           </p>
           <div className={styles.wrapperContent}>
             <div className={styles.mailWrapper}>
               <input
-                type="text"
+                type="email"
                 placeholder="Введіть свій e-mail"
                 className={styles.emailInput}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
               <CommonButton
                 type="button"
                 title="Підписатись"
                 color="yellow"
                 className={styles.buttonSubscribe}
+                onClick={handleSubscribe}
               />
             </div>
             <div className={styles.social}>
