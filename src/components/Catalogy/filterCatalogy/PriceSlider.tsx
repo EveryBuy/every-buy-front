@@ -41,10 +41,6 @@ const PriceSlider: FC = () => {
     ? Number(searchParams.get("maxPrice"))
     : priceObj.max;
 
-  const [price, setPrice] = useState({
-    min: paramsMinPrice,
-    max: paramsMaxPrice,
-  });
   const priceStore = useAppSelector((state) => state.filters.price);
 
   const [price, setPrice] = useState<Price>({

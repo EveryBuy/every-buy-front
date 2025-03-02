@@ -1,6 +1,6 @@
 "use client";
 
-import React, { use, useId, useState } from "react";
+import React, { useId, useState } from "react";
 import { useAppDispatch } from "@/redux/store";
 import { useRouter } from "next/navigation";
 import { CommonModal } from "@/components";

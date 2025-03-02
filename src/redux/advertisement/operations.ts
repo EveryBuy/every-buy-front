@@ -106,7 +106,7 @@ export const getActiveAdvertisement = createAsyncThunk('advert/getActive',
 	});
 
 export const getAdvertisementById = createAsyncThunk('advert/getById',
-	async (id, thunkAPI) => {
+	async (id: number, thunkAPI) => {
 		try {
 			const response = await API.get(`/ad/${id}`);
 			return response.data;

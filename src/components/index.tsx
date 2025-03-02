@@ -72,13 +72,13 @@ export { default as Chat } from "./pages/messages/chats/list/item/Chat";
 export { default as ChatData } from "./pages/messages/chats/list/item/data/ChatData";
 export { default as TimeData } from "./pages/messages/chats/list/item/data/TimeData";
 export { default as IconsData } from "./pages/messages/chats/list/item/data/IconsData";
-export { default as Buttons } from "./pages/messages/chats/Buttons/Buttons";
-export { default as Button } from "./pages/messages/chats/Buttons/Button";
+export { default as Buttons } from "./pages/messages/chats/buttons/Buttons";
+export { default as Button } from "./pages/messages/chats/buttons/Button";
 export { default as Icons } from "./pages/messages/chats/Icons/Icons";
 
 // Catalogy
-export { FilterCatalogy } from './Catalogy/filterCatalogy/FilterCatalogy';
-export { CustomSeparator } from './ui';
-export { CategoryList } from './Catalogy/CategoryList';
-export { CatalogyCard } from './Catalogy/cardCatalogy/CatalogyCard';
-export { CatalogyPage } from './pages/catalogy/CatalogyPage';
+export { FilterCatalogy } from "./Catalogy/filterCatalogy/FilterCatalogy";
+export { CustomSeparator } from "./ui";
+export { CategoryList } from "./Catalogy/CategoryList";
+export { CatalogyCard } from "./Catalogy/cardCatalogy/CatalogyCard";
+export { CatalogyPage } from "./pages/catalogy/CatalogyPage";
