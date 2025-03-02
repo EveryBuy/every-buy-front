@@ -13,16 +13,22 @@ import { setHeaderAuthToken } from "@/utils/axios";
 import { clearHeaderAuthToken } from "@/utils/axios";
 import { RootState } from "../store";
 
+const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
 export const register = createAsyncThunk(
   "auth/register",
   async (userRegisterData: UserRegData, thunkAPI) => {
     
     try {
-      const { data } = await API.post("/auth/registration", userRegisterData);
-      setHeaderAuthToken(data.data.token);
+      const response = await API.post("/auth/registration", userRegisterData);
+      console.log("Response", response);
+      setHeaderAuthToken(response.data.data.token);
+      await delay(3000);
       const userData = await API.get("/user");
-      return { data: userData.data.data, token: data.data.token };
+      return { data: userData.data.data, token: response.data.data.token };
     } catch (error: any) {
+      console.log("Error", error);
+      
       return thunkAPI.rejectWithValue({
         message: error.response?.data?.message || error.message,
         status: error.response?.status,

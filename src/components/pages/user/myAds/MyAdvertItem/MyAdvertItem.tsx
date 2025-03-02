@@ -7,7 +7,7 @@ import eye from "@/assets/Svg/Eye.svg";
 import bin from "@/assets/Svg/bin.svg";
 import CommonButton from "@/components/ui/CommonButton/CommonButton";
 import { AdvertItem } from "@/types/myAdvertisementsTypes";
-import styles from "./MyAdvertItem.module.css";
+import styles from "./MyAdvertItem.module.scss";
 import { useAppDispatch } from "@/redux/store";
 import {
   changeAdvertisementStatus,

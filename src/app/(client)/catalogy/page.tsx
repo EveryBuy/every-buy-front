@@ -1,7 +1,12 @@
+import { Suspense } from "react";
 import { CatalogyPage } from "../../../components/pages/catalogy/CatalogyPage";
 
 function Page() {
-	return <CatalogyPage />;
+  return (
+    <Suspense>
+      <CatalogyPage />;
+    </Suspense>
+  );
 }
 
 export default Page;
