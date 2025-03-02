@@ -2,7 +2,7 @@
 
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '@/redux/store';
-import { resetFilters } from '@/redux/filters/slice';
+import { resetFilters, addKeyWord } from '@/redux/filters/slice';
 
 
 import PriceSlider from './PriceSlider';
@@ -31,6 +31,7 @@ export function FilterCatalogy(props: ResetFiltersType) {
 	useEffect(() => {
 		return () => {
 			dispatch(resetFilters(1)); // clean redux for filters
+			dispatch(addKeyWord(''));
 		};
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);

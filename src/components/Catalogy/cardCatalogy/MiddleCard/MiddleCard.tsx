@@ -50,7 +50,7 @@ export const MiddleCard: FC<ItemProps> = ({ item }: ItemProps) => {
 				>
 					<CommonIcon
 						id={heartSelect ? "heart" : "icon-heart"}
-						className={styles.icon_heart}
+						className={heartSelect ? styles.icon_heart_select : styles.icon_heart}
 						width="28px"
 						height="28px"
 					/>

@@ -1,5 +1,10 @@
+import { Suspense } from "react";
 import { Announcement } from "@/components";
 
 export default function Page() {
-  return <Announcement />;
+	return (
+		<Suspense>
+			<Announcement />
+		</Suspense>
+	);
 }

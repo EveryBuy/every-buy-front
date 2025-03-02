@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { useAppSelector, useAppDispatch } from "@/redux/store";
 import { getFilteredAdverts } from '@/redux/advertisement/operations';
 import { useRouter } from 'next/navigation';
@@ -54,6 +55,7 @@ export const CatalogyPage: React.FC = (): JSX.Element => {
 
 	const dispatch = useAppDispatch();
 	const router = useRouter();
+	const searchParams = useSearchParams();
 
 	const [isListOpen, setListOpen] = useState<boolean>(false);
 	const [dataArray, setDataArray] = useState<[] | string>([]);
@@ -120,50 +122,70 @@ export const CatalogyPage: React.FC = (): JSX.Element => {
 		};
 	}
 
+	const [triggerEffect, setTriggerEffect] = useState<boolean>(false);
+	const timeoutRef: { current: NodeJS.Timeout | null } = useRef(null); //
+
 	const updateDataAdvert = (cleanPagination?: boolean) => {
 		setLoading(false);
 		cleanPagination && setPage(1);
 		const { queryString, queryObj } = createQuerySettings();
-		// console.log('query', queryObj);
-		if (queryString.length > 0) {
-			dispatch(getFilteredAdverts(queryObj))
-				.then((data) => {
-					const newData: [] | string = data.payload.advertisements;
-					// console.log(data);
-					if (newData && newData.length > 0) {
-						// console.log('newData', newData);
-						setDataArray(newData);
-						setTotalPages(data.payload.totalPages);
-						setTotalAdvert(data.payload.totalAdvertisements);
-						// dispatch(addPrice({
-						// 	min: data.payload.minPrice,
-						// 	max: data.payload.maxPrice
-						// }));
-					} else {
-						setDataArray([]);
-						setTotalPages(0);
-						// console.log('not data');
-						// console.log('dataArray', dataArray);
-					}
-				})
-				.catch(error => console.error('Error: ', error))
-				.finally(() => setLoading(true));
+		console.log('query', queryObj);
+		//  if (queryString.length > 0) { searchParams.size
+		dispatch(getFilteredAdverts(queryObj))
+			.then((data) => {
+				const newData: [] | string = data.payload.advertisements;
+				console.log(data);
+				if (newData && newData.length > 0) {
+					console.log('newData', newData);
+					setDataArray(newData);
+					setTotalPages(data.payload.totalPages);
+					setTotalAdvert(data.payload.totalAdvertisements);
+					// dispatch(addPrice({
+					// 	min: data.payload.minPrice,
+					// 	max: data.payload.maxPrice
+					// }));
+				} else {
+					setDataArray([]);
+					setTotalPages(0);
+					console.log('not data');
+					// console.log('dataArray', dataArray);
+				}
+			})
+			.catch(error => console.error('Error: ', error))
+			.finally(() => setLoading(true));
 
-			cleanPagination
-				? router.push(queryString, {
-					scroll: false,
-				})
-				: router.push(queryString);
-		}
+		cleanPagination
+			? router.push(queryString, {
+				scroll: false,
+			})
+			: router.push(queryString);
+		// }
 	}
 
 	useEffect(() => {
-		updateDataAdvert(true);
+		if (timeoutRef.current) {
+			clearTimeout(timeoutRef.current);
+		}
+
+		timeoutRef.current = setTimeout(() => {
+			setTriggerEffect((prev) => !prev);
+		}, 0);
+	}, []);
+
+	useEffect(() => {
+		console.log('triggerEffect', triggerEffect);
+		if (searchParams.size === 0) {
+			updateDataAdvert(true);
+		} else if (triggerEffect) {
+			updateDataAdvert(true);
+		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [filtersSetting, section]);  //min, max, categoryId, sortOrder, productType, ...
 
 	useEffect(() => {
-		updateDataAdvert();
+		if (triggerEffect) {
+			updateDataAdvert();
+		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [page]);
 
