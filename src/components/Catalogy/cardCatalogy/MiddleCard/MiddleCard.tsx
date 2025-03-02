@@ -1,9 +1,11 @@
-import { FC } from "react";
+"use client"
+
+import { FC, useState } from "react";
 import styles from "./MiddleCard.module.scss";
 import MiniCard from "../MinCard/MinCard";
 import Image from "next/image";
 import Link from 'next/link';
-import { CommonButton } from "@/components";
+import { CommonButton, CommonIcon } from "@/components";
 import arrowButton from "@/assets/Svg/arrowButton.svg";
 import heart from "@/assets/Svg/heartDefault.svg";
 import formatAdvertisementDate from "@/utils/formatAdvertisementDate";
@@ -16,11 +18,13 @@ type ItemProps = {
 
 export const MiddleCard: FC<ItemProps> = ({ item }: ItemProps) => {
 	// console.log(item);
+	const [heartSelect, setHeartSelect] = useState<boolean>(false);
 
-	// const addSelectGood = (e: React.FormEvent<HTMLFormElement>): void => {
-	// 	e.preventDefault();
-	// 	console.log("select good");
-	// }
+	const addSelectGood = (): void => {  // e: React.FormEvent<HTMLFormElement>
+		// e.preventDefault();
+		setHeartSelect(prev => !prev);
+		console.log("select good");
+	}
 
 	const linkHref = `/announcement?id=${item.advertisementId}`;
 
@@ -37,29 +41,30 @@ export const MiddleCard: FC<ItemProps> = ({ item }: ItemProps) => {
 
 			<p className={styles.description}>{item.description}</p>
 
-			<CommonButton
-				type="submit"
-				title=""
-			// onClick={addSelectGood}
-			>
-				<Image
+			<div className={styles.wrapperButton}>
+				<CommonButton
+					type="submit"
+					title=""
 					className={styles.heart}
-					src={heart}
-					// src="/images/heartSelect.svg"
-					alt="heart"
-					width={28}
-					height={28}
-				/>
-			</CommonButton>
-			<Link className={styles.link} href={linkHref}>
-				<Image
-					className={styles.arrowButton}
-					src={arrowButton}
-					alt="arrow Button"
-					width={58}
-					height={58}
-				/>
-			</Link>
+					onClick={addSelectGood}
+				>
+					<CommonIcon
+						id={heartSelect ? "heart" : "icon-heart"}
+						className={styles.icon_heart}
+						width="28px"
+						height="28px"
+					/>
+				</CommonButton>
+				<Link className={styles.link} href={linkHref}>
+					<Image
+						className={styles.arrowButton}
+						src={arrowButton}
+						alt="arrow Button"
+						width={58}
+						height={58}
+					/>
+				</Link>
+			</div>
 
 			<p className={styles.dateText}>
 				{`${formatAdvertisementDate(item.updateDate)}`}

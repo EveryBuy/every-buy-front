@@ -44,6 +44,8 @@ const CommonInput: FC<CommonInputProps> = ({
         type={typeInput === true ? "text" : "password"}
         // id="password"
         value={value}
+        name={typeTitle}
+        autoComplete={typeTitle}
         onChange={setValue}
         onBlur={setOnBlur}
         className={styles.input}

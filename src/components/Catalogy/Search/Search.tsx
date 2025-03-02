@@ -82,7 +82,7 @@ const Search: FC<SearchProps> = (props: SearchProps) => {
         })
       ).then((data) => {
         if (data) {
-          setSearchArr(data.payload);
+          setSearchArr(data.payload.advertisements);
         }
       });
     }

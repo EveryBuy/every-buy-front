@@ -7,8 +7,8 @@ import { useGetMessagesByChatIdQuery } from "@/redux/messages/chatApi";
 import styles from "./MessagesWrapper.module.scss";
 
 const MessagesWrapper: FC = () => {
+  // for mobile version
   const [selectedChatId, setSelectedChatId] = useState<number | null>(null);
-
   useGetMessagesByChatIdQuery(selectedChatId as number, {
     skip: selectedChatId === null,
   });
@@ -18,12 +18,12 @@ const MessagesWrapper: FC = () => {
       <h1 className={`title ${styles.headline}`}>Повідомлення</h1>
       <Box className={styles.chatBlockWrapper}>
         <ChatsBlock
-          onclick={setSelectedChatId}
+          setSelectedChatId={setSelectedChatId}
           selectedChatId={selectedChatId}
         />
         <MessagesBlock
           chatId={selectedChatId}
-          setSelectedChatId={setSelectedChatId}
+          setSelectedChatId={setSelectedChatId} // for mobile version
         />
       </Box>
     </div>

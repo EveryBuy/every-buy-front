@@ -5,7 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import { useAppSelector, useAppDispatch } from "@/redux/store";
 import { selectCategories } from "@/redux/advertisement/selectors";
 import { getCategory } from '@/redux/advertisement/operations';
-import { addCategory, InitialState, addTopSubCateroryId, addLowSubCategoryId } from '@/redux/filters/slice';
+import { addCategory, InitialState, addTopSubCategoryId, addLowSubCategoryId } from '@/redux/filters/slice';
 import CommonSelect from '@/components/ui/CommonSelect/CommonSelect';
 import { SelectChangeEvent } from '@mui/material';
 import { Category } from '@/redux/advertisement/slice';
@@ -18,6 +18,8 @@ const CategoriesSelect: FC = () => {
 	const paramsCategoryId: number | null = searchParams.has('categoryId') ? Number(searchParams.get('categoryId')) : null;
 
 	const categoryIdStore: number = useAppSelector((state) => state.filters.categoryId) || 0;
+	const topCategoryID = useAppSelector((state) => state.filters.topSubCategoryId);
+	const lowCategoryID = useAppSelector((state) => state.filters.lowSubCategoryId);
 
 	useEffect(() => {
 		dispatch(getCategory());
@@ -47,8 +49,8 @@ const CategoriesSelect: FC = () => {
 	}, [initialParams]);
 
 	useEffect(() => {
-		dispatch(addTopSubCateroryId(null));
-		dispatch(addLowSubCategoryId(null));
+		topCategoryID && dispatch(addTopSubCategoryId(null));
+		lowCategoryID && dispatch(addLowSubCategoryId(null));
 		if (categoryIdStore && categoryIdStore > 0 && categoriesList.length > 0) {
 			const arrCategoryIdSelect: Category[] = categoriesList?.filter(item => item.id === categoryIdStore);
 			if (arrCategoryIdSelect.length > 0) {

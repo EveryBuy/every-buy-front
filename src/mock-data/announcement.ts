@@ -9,6 +9,7 @@ const announcement = {
   linkToAllAdvert: "someLink",
   publicDate: "07.04.2024",
   cost: 1250,
+  title: "Стильна жіноча сукня",
 };
 
 export default announcement;

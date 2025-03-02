@@ -3,31 +3,30 @@ import arrowUrl from "../../../../assets/Svg/rightArrow.svg";
 import imageUrl from "../../../../assets/pc.png";
 import styles from "./Seller.module.scss";
 
-interface resSellerObj {
-  nameUkr: string;
-  //   photoUrl: string;
-  online: boolean;
-  linkToAllAdvert: string;
+interface SellerProps {
+  sellerInfo: {
+    nameUkr: string;
+    online: boolean;
+    linkToAllAdvert: string;
+    imageUrl: string;
+  };
 }
 
-interface ResSeller {
-  sellerInfo: resSellerObj;
-}
+export default function Seller({ sellerInfo }: SellerProps) {
+  if (!sellerInfo) {
+    return <div className={styles.container}>Error fetching seller info</div>;
+  }
 
-export default function Seller({ sellerInfo }: ResSeller) {
-  const { nameUkr, online, linkToAllAdvert } = sellerInfo;
+  const { nameUkr, online, linkToAllAdvert, imageUrl } = sellerInfo;
+
   return (
     <div className={styles.container}>
       <h3 className={styles.title}>Продавець</h3>
       <div className={styles.sellerInfo}>
-        <Image src={imageUrl} alt="Seller" className={styles.sellerImage} />
+        <Image width={83} height={83} src={imageUrl} alt="Seller" className={styles.sellerImage} />
         <div>
           <h4 className={styles.name}>{nameUkr}</h4>
-          <p
-            className={`${styles.status} ${
-              online ? styles.online : styles.offline
-            }`}
-          >
+          <p className={`${styles.status} ${online ? styles.online : styles.offline}`}>
             {online ? "Зараз онлайн" : "Зараз офлайн"}
           </p>
         </div>

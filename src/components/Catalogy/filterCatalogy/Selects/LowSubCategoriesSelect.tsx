@@ -15,19 +15,21 @@ const LowSubCategoriesSelect: FC = () => {
 	const dispatch = useAppDispatch();
 
 	const categoryID: number | null = useAppSelector(state => state.filters.categoryId) || null;
-	const topCategoryID: number | null = useAppSelector(state => state.filters.topSubCateroryId) || null;
+	const topCategoryID: number | null = useAppSelector(state => state.filters.topSubCategoryId) || null;
 	const paramsLowCategoryId: number | null = searchParams.has('lowSubCategoryId') ? Number(searchParams.get('lowSubCategoryId')) : null;
 
 	const lowSubCategoriesList: LowSubCategory[] = useAppSelector(selectLowSubCategories);
+	const lowCategoryIdStory: number | null = useAppSelector(state => state.filters.lowSubCategoryId) || null;
 
 	const [initialParams, setInitialParams] = useState<LowSubCategory[]>([]);
 	const [selectedOption, setSelectedOption] = useState<string>("");
 
 	useEffect(() => {
 		setSelectedOption('');
-		dispatch(addLowSubCategoryId(null));
 		if (topCategoryID && topCategoryID > 0) {
 			dispatch(getLowSubCategory(topCategoryID));
+		} else {
+			lowCategoryIdStory && dispatch(addLowSubCategoryId(null));
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [topCategoryID]);

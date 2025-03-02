@@ -5,10 +5,11 @@ type UserDataType = {
 };
 
 type MessageType = {
-  chatId: number;
+  chatId: number | null;
   creationTime: string;
   id: number;
-  text: string;
+  text?: string;
+  fileUrl?: string;
   userId: number;
   userPhotoUrl: string | null;
 };

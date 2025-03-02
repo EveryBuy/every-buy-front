@@ -108,6 +108,10 @@
   @include media-min($breakpoint-laptop) {
     margin-top: 60px;
   }
+
+  @include media-max($breakpoint-mobile) {
+    margin-top: 60px;
+  }
 }
 
 .deliveryTitle {
@@ -129,7 +133,7 @@
 }
 
 .descVersion {
-  display: none;
+  // display: none;
 
   @include media-min($breakpoint-tablet) {
     display: block;
@@ -179,4 +183,21 @@
   fill: #ff5656;
   stroke: black;
   // background-color: #FF5656;
+}
+
+.phoneNumber {
+  text-align: center;
+  font-size: 24px;
+  padding: 16px 0px;
+  // border: 1px solid transparent;
+  height: 54.4px;
+
+  @include media-max($breakpoint-tablet) {
+    font-size: 16px;
+  }
+
+  @include media-min($breakpoint-laptop) {
+    height: 64px;
+  }
+
 }
