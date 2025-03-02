@@ -20,6 +20,7 @@ import {
 import { SuccessRegisterModal, ErrorModal } from "@/components";
 import { useSelector } from "react-redux";
 import clsx from "clsx";
+import { clearErrors } from "@/redux/auth/slice";
 
 type ErrorsType = {
   phone: string;
@@ -54,12 +55,14 @@ const Register: React.FC = () => {
   const isError = useSelector(selectError);
 
   useEffect(() => {
+    // if (isLoggedIn) dispatch(clearErrors());
     if (isLoggedIn && !showSuccessRegisterModal.current) {
       router.push("/user");
     } else {
       showSuccessRegisterModal.current = true;
     }
     if (isLoggedIn && showSuccessRegisterModal.current) {
+      setServerErrorModalOpen(false);
       setSuccessRegisterModalOpen(true);
     }
   }, [isLoggedIn, router]);
@@ -107,7 +110,7 @@ const Register: React.FC = () => {
   // check for submit
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    dispatch(clearErrors());
     const newErrors = {
       phone: "",
       email: "",
@@ -146,7 +149,7 @@ const Register: React.FC = () => {
     );
 
     if (isError) {
-      // console.log("Error", isError);
+      console.log("Error", isError);
       switch (isError.status) {
         case 500:
           setServerErrorModalOpen(true);
@@ -158,31 +161,6 @@ const Register: React.FC = () => {
           setUnknownErrorModalOpen(true);
       }
     }
-
-    // try {
-    //   await dispatch(
-    //     register({
-    //       email: email,
-    //       phone: phone,
-    //       password: password,
-    //     })
-    //   ).unwrap();
-    // } catch (error: any) {
-    //   if (error.response) {
-    //     switch (error.response.status) {
-    //       case 500:
-    //         setServerErrorModalOpen(true);
-    //         break;
-    //       case 409:
-    //         setUserErrorModalOpen(true);
-    //         break;
-    //       default:
-    //         setUnknownErrorModalOpen(true);
-    //     }
-    //   } else {
-    //     setUnknownErrorModalOpen(true);
-    //   }
-    // }
   };
 
   const getInputClass = (field: string) => {
@@ -217,7 +195,7 @@ const Register: React.FC = () => {
         <CommonInput
           typeTitle="phone"
           text="Телефон"
-          typeInput="text"
+          typeInput={true}
           required={true}
           value={phone}
           setValue={(e) => setPhone(e.target.value)}
@@ -254,7 +232,7 @@ const Register: React.FC = () => {
         <CommonInput
           typeTitle="email"
           text="Email"
-          typeInput="email"
+          typeInput={true}
           value={email}
           required={true}
           setValue={(e) => setEmail(e.target.value)}

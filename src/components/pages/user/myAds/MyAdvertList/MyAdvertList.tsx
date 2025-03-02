@@ -11,6 +11,8 @@ type AdvertList = {
 };
 
 export const MyAdvertList: FC<AdvertList> = ({ advertList }) => {
+  console.log("Advertlist", advertList);
+
   const [isActivated, setIsActivated] = useState(true);
   const pathname = usePathname();
 
