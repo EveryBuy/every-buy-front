@@ -16,7 +16,9 @@ const ComplaintModal: FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  const advertisementById = useSelector((state: RootState) => selectAdvertisementById(state));
+  const advertisementById = useSelector((state: RootState) =>
+    selectAdvertisementById(state)
+  );
 
   const reasons = [
     "Спам",
@@ -112,11 +114,13 @@ const ComplaintModal: FC = () => {
                   <p className={styles.confirmationContent}>Зміст скарги:</p>
                   <ul>
                     {selectedReason && (
-                      <li className={styles.confirmReasons}>{selectedReason}</li>
+                      <li className={styles.confirmReasons}>
+                        {selectedReason}
+                      </li>
                     )}
                     <li className={styles.confirmReasons}>
-                      Предмет скарги: Оголошення "{advertisementById.data.title}" від
-                      продавця {advertisementById.data.userDto.fullName}.
+                      {`Предмет скарги: Оголошення "${advertisementById.data.title}" від
+                      продавця ${advertisementById.data.userDto.fullName}.`}
                     </li>
                   </ul>
                   <div className={styles.buttonContainer}>
