@@ -14,7 +14,7 @@ import { setHeaderAuthToken } from "@/utils/axios";
 export default function Announcement() {
   const dispatch = useDispatch<AppDispatch>();
   const searchParams = useSearchParams();
-  const id = searchParams.get("id");
+  const id = Number(searchParams.get("id") ?? 0);
 
   const [isFetching, setIsFetching] = useState(true);
 
@@ -47,7 +47,7 @@ export default function Announcement() {
       }
 
       try {
-        await dispatch(getAdvertisementById(Number(id))).unwrap();
+        await dispatch(getAdvertisementById(id)).unwrap();
       } catch (error) {
         console.error("Error during fetching:", error);
       } finally {
@@ -67,7 +67,9 @@ export default function Announcement() {
   }
 
   if (!advertisementById) {
-    return <div className={styles.container}>No advertisement data available</div>;
+    return (
+      <div className={styles.container}>No advertisement data available</div>
+    );
   }
 
   const creationDate = new Date(advertisementById.data.creationDate);

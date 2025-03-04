@@ -29,7 +29,12 @@ export default function Info({ articleInfo }: InfoProps) {
         <div>
           <p className={styles.locationTitle}>Місцезнаходження</p>
           <div className={styles.locationInfo}>
-            <CommonIcon id="location" width="25" height="25" className={styles.locationSvg} />
+            <CommonIcon
+              id="location"
+              width="25"
+              height="25"
+              className={styles.locationSvg}
+            />
             <div>
               <p className={styles.city}>{location.city}</p>
               <p className={styles.region}>{location.region}</p>
@@ -41,7 +46,9 @@ export default function Info({ articleInfo }: InfoProps) {
           <p className={styles.text}>{delivery}</p>
         </div>
       </div>
-      <ComplaintModal announcement={articleInfo} />
+      <ComplaintModal
+      // announcement={articleInfo}
+      />
     </div>
   );
 }

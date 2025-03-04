@@ -8,6 +8,10 @@
   background-color: #ffffff;
   padding: 12px 40px;
   @include media-min($breakpoint-tablet) {
+    margin: 8px 0px 15px;
+    padding: 10px 20px;
+  }
+  @include media-min($breakpoint-laptop-large) {
     margin: 8px 0px;
     padding: 12px 40px;
   }
@@ -16,7 +20,6 @@
 .picture,
 .noPicture {
   margin-right: 8px;
-  // object-fit: cover;
   border-radius: 10%;
 }
 

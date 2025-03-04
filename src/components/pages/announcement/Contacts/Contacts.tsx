@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useState } from "react";
 import { CommonIcon, CommonButton } from "@/components";
@@ -78,7 +78,7 @@ export default function Contacts({ contactsInfo }: ContactsProps) {
                 color="transparent"
                 title=""
                 className={styles.yellowBorderButton}
-                onClick={() => setShowNumber(true)} 
+                onClick={() => setShowNumber(true)}
               >
                 Показати телефон
               </CommonButton>
