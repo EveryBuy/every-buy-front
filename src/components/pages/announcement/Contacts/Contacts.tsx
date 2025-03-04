@@ -10,7 +10,7 @@ interface ContactsProps {
     cost: number;
     delivery: string[];
     title: string;
-    phoneNumber: string; 
+    phoneNumber?: string; 
     section: string;
   };
 }
