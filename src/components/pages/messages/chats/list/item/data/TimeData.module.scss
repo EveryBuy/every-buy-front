@@ -7,6 +7,9 @@
   justify-content: space-between;
   align-items: center;
   @include media-min($breakpoint-tablet) {
+    width: 60px;
+  }
+  @include media-min($breakpoint-laptop-large) {
     width: 81px;
   }
 }
@@ -15,6 +18,10 @@
   width: 8px;
   height: 6px;
   @include media-min($breakpoint-tablet) {
+    width: 14px;
+    height: 8px;
+  }
+  @include media-min($breakpoint-laptop-large) {
     width: 19px;
     height: 12px;
   }
@@ -23,6 +30,9 @@
 .time {
   font-size: var(--body-mobile-text-small);
   @include media-min($breakpoint-tablet) {
+    font-size: 12px;
+  }
+  @include media-min($breakpoint-laptop-large) {
     font-size: var(--body-text);
   }
 }

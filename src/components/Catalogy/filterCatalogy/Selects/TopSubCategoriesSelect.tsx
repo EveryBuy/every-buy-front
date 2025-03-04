@@ -27,13 +27,14 @@ const TopSubCategoriesSelect: FC = () => {
 	const [selectedOption, setSelectedOption] = useState<string>("");
 
 	const categoryID: number | null = useAppSelector(state => state.filters.categoryId) || null;
+	const topCategoryIdStory: number | null = useAppSelector(state => state.filters.topSubCategoryId) || null;
 
 	useEffect(() => {
 		setSelectedOption('');
 		if (categoryID && categoryID > 0) {
 			dispatch(getTopSubCategory(categoryID));
 		} else {
-			dispatch(addTopSubCategoryId(null));
+			topCategoryIdStory && dispatch(addTopSubCategoryId(null));
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [categoryID]);

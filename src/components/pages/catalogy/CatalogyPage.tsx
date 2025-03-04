@@ -125,32 +125,35 @@ export const CatalogyPage: React.FC = (): JSX.Element => {
 		cleanPagination && setPage(1);
 		const { queryString, queryObj } = createQuerySettings();
 		// console.log('query', queryObj);
-		dispatch(getFilteredAdverts(queryObj))
-			.then((data) => {
-				const newData: [] | string = data.payload.advertisements;
-				// console.log(data);
-				if (newData && newData.length > 0) {
-					setDataArray(newData);
-					setTotalPages(data.payload.totalPages);
-					setTotalAdvert(data.payload.totalAdvertisements);
-					// dispatch(addPrice({
-					// 	min: data.payload.minPrice,
-					// 	max: data.payload.maxPrice
-					// }));
-				} else {
-					setDataArray([]);
-					setTotalPages(0);
-					// console.log('not data');
-				}
-			});
-		setLoading(true);
 		if (queryString.length > 0) {
-			router.push(queryString);
-			// router.push(queryString, {
-			// 	scroll: false,
-			// });
-		} else {
-			router.push('/catalogy');
+			dispatch(getFilteredAdverts(queryObj))
+				.then((data) => {
+					const newData: [] | string = data.payload.advertisements;
+					// console.log(data);
+					if (newData && newData.length > 0) {
+						// console.log('newData', newData);
+						setDataArray(newData);
+						setTotalPages(data.payload.totalPages);
+						setTotalAdvert(data.payload.totalAdvertisements);
+						// dispatch(addPrice({
+						// 	min: data.payload.minPrice,
+						// 	max: data.payload.maxPrice
+						// }));
+					} else {
+						setDataArray([]);
+						setTotalPages(0);
+						// console.log('not data');
+						// console.log('dataArray', dataArray);
+					}
+				})
+				.catch(error => console.error('Error: ', error))
+				.finally(() => setLoading(true));
+
+			cleanPagination
+				? router.push(queryString, {
+					scroll: false,
+				})
+				: router.push(queryString);
 		}
 	}
 

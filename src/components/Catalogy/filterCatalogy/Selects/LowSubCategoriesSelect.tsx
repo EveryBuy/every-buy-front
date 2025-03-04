@@ -19,6 +19,7 @@ const LowSubCategoriesSelect: FC = () => {
 	const paramsLowCategoryId: number | null = searchParams.has('lowSubCategoryId') ? Number(searchParams.get('lowSubCategoryId')) : null;
 
 	const lowSubCategoriesList: LowSubCategory[] = useAppSelector(selectLowSubCategories);
+	const lowCategoryIdStory: number | null = useAppSelector(state => state.filters.lowSubCategoryId) || null;
 
 	const [initialParams, setInitialParams] = useState<LowSubCategory[]>([]);
 	const [selectedOption, setSelectedOption] = useState<string>("");
@@ -28,7 +29,7 @@ const LowSubCategoriesSelect: FC = () => {
 		if (topCategoryID && topCategoryID > 0) {
 			dispatch(getLowSubCategory(topCategoryID));
 		} else {
-			dispatch(addLowSubCategoryId(null));
+			lowCategoryIdStory && dispatch(addLowSubCategoryId(null));
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [topCategoryID]);

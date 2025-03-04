@@ -114,7 +114,7 @@ const Login: React.FC = () => {
         <CommonInput
           typeTitle="emailOrPhone"
           text="Телефон або e-mail"
-          typeInput="text"
+          typeInput={true}
           value={emailOrPhone}
           setValue={(e) => setEmailOrPhone(e.target.value)}
           required={true}

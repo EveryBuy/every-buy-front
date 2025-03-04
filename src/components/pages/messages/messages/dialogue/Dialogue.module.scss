@@ -8,11 +8,12 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-
   @include media-min($breakpoint-tablet) {
-    height: 515px;
-    margin-top: 18px;
+    height: 382px;
     border-top: 1px solid var(--border);
+  }
+  @include media-min($breakpoint-laptop-large) {
+    height: 525px;
   }
 }
 
@@ -43,7 +44,6 @@
   border-radius: 25px;
   border: 1px solid var(--border);
   position: absolute;
-  // top: 50%;
   left: 50%;
   transform: translate(-50%, 35%);
 
@@ -53,14 +53,15 @@
 }
 
 .dialogueWrapper {
-  display: grid;
+  // display: grid;
   width: 100%;
-  padding: 20px 20px 0px;
+  height: 100%;
+  padding: 20px 10px 0px;
   overflow-y: auto;
 
   @include media-min($breakpoint-tablet) {
-    height: 455px;
-    padding: 20px 40px 0px;
+    padding: 10px 20px 0px;
+    margin-top: 10px;
     &::-webkit-scrollbar {
       width: 8px;
     }
@@ -73,6 +74,20 @@
     }
     &::-webkit-scrollbar-thumb:hover {
       background-color: #b3c638;
+    }
+  }
+  @include media-min($breakpoint-laptop-large) {
+    // height: 455px;
+    height: 440px;
+    padding: 10px 40px 0px;
+  }
+
+  & div:first-child {
+    @include media-min($breakpoint-tablet) {
+      margin-top: 0px;
+    }
+    @include media-min($breakpoint-laptop-large) {
+      margin-top: 16px;
     }
   }
 }

@@ -51,6 +51,7 @@ export type City = {
 }
 
 export type Advertisement = {
+    data: any;
     id: number,
     title: string,
     description: string,

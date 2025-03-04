@@ -5,16 +5,18 @@ import { ChatsList, Buttons, Icons, CommonIcon } from "@/components";
 import {
   useGetBuyChatsQuery,
   useGetSellChatsQuery,
+  useGetFavoritesChatsQuery,
+  useGetArchivedChatsQuery,
 } from "@/redux/messages/chatApi";
 import style from "./ChatsBlock.module.scss";
 
-type MessageListBlockType = {
-  onclick: (selectedChatId: number) => void;
+type ChatsBlockType = {
+  setSelectedChatId: (selectedChatId: number) => void;
   selectedChatId: number | null;
 };
 
-const MessageListBlock: FC<MessageListBlockType> = ({
-  onclick,
+const ChatsBlock: FC<ChatsBlockType> = ({
+  setSelectedChatId,
   selectedChatId,
 }) => {
   const [activeButton, setActiveButton] = useState<number | null>(1);
@@ -22,16 +24,47 @@ const MessageListBlock: FC<MessageListBlockType> = ({
   const [isFolderSelected, setFolderSelected] = useState<boolean>(false);
   const {
     data: buyChats,
-    isLoading: isBuyChatsLoading,
-    isError: isBuyChatsError,
+    // isLoading: isBuyChatsLoading,
+    // isError: isBuyChatsError,
   } = useGetBuyChatsQuery();
   const {
     data: sellChats,
-    isLoading: isSellChatsLoading,
-    isError: isSellChatsError,
+    // isLoading: isSellChatsLoading,
+    // isError: isSellChatsError,
   } = useGetSellChatsQuery();
+  const { data: favoritesChats } = useGetFavoritesChatsQuery();
+  const { data: archivedChats } = useGetArchivedChatsQuery();
 
-  const chats = activeButton === 1 ? buyChats : sellChats;
+  // filter chats and hidden them if they are in the archive
+  let updatedBuyChats;
+  let updatedSellChats;
+  if (buyChats && archivedChats && sellChats) {
+    updatedBuyChats = buyChats.filter(
+      (itemBuyChat) =>
+        !archivedChats.some(
+          (itemArchivedChats) => itemBuyChat.chatId === itemArchivedChats.chatId
+        )
+    );
+    updatedSellChats = sellChats.filter(
+      (itemSellChat) =>
+        !archivedChats.some(
+          (itemArchivedChats) =>
+            itemSellChat.chatId === itemArchivedChats.chatId
+        )
+    );
+  }
+
+  // choose the chat depends on what button you clicked
+  let chats;
+  if (favoritesChats || archivedChats) {
+    chats = isHeartSelected
+      ? favoritesChats
+      : isFolderSelected
+      ? archivedChats
+      : activeButton === 1
+      ? updatedBuyChats
+      : updatedSellChats;
+  }
 
   const handleButtonClick = (buttonId: number) => {
     setActiveButton(buttonId);
@@ -92,7 +125,7 @@ const MessageListBlock: FC<MessageListBlockType> = ({
             />
             <Box className={style.iconsWrapper}>
               <Icons
-                // status={isHeartSelected}
+                isItTopBlock={true}
                 statusHeartHandler={handleIconHeartClick}
                 statusFolderHandler={handleIconFolderClick}
               />
@@ -100,11 +133,13 @@ const MessageListBlock: FC<MessageListBlockType> = ({
           </>
         )}
       </Box>
-      {/* <Box className={style.listWrapper}> */}
-      <ChatsList chats={chats} onclick={onclick} />
-      {/* </Box> */}
+      <ChatsList
+        chats={chats}
+        setSelectedChatId={setSelectedChatId}
+        selectedChatId={selectedChatId}
+      />
     </Box>
   );
 };
 
-export default MessageListBlock;
+export default ChatsBlock;

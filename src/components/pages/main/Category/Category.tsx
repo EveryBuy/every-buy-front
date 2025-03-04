@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { CommonPreloader } from "@/components";
+import { CommonPreloader, CommonSectionSelector } from "@/components";
 import { fetchCategoryData } from "@/api/fetchCategoryData";
 // import Fold from "@/assets/Svg/fold.svg";
 import CategoryItem from "@/types/categoryItemType";
@@ -13,6 +13,7 @@ const Category: React.FC = () => {
 	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
 	const [isListOpen, setListOpen] = useState(false);
+	const [section, setSection] = useState<string>("BUY");
 
 	const makeLinkOpen = () => {
 		setListOpen((prev) => !prev);
@@ -51,10 +52,7 @@ const Category: React.FC = () => {
 			<div className={styles.sectionContainer}>
 				<div className={styles.titleContainer}>
 					<h2 className={styles.title}></h2>
-					<div className={styles.buttonsContainer}>
-						<div className={styles.buyButton}>Куплю</div>
-						<div className={styles.sellButton}>Продам</div>
-					</div>
+					<CommonSectionSelector section={section} setSection={setSection} />
 				</div>
 				<div className={styles.wrapperHiddenText}>
 					<h2 className={styles.hiddenText} onClick={makeLinkOpen}>

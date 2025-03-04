@@ -1,23 +1,42 @@
+@import "@/styles/mixins";
+@import "@/styles/breakpoints";
+
 .icon {
   margin: 0;
   width: 32px;
   height: 30px;
+  @include media-min($breakpoint-tablet) {
+    width: 24px;
+    height: 22px;
+  }
+  @include media-min($breakpoint-laptop-large) {
+    width: 32px;
+    height: 30px;
+  }
 }
 
 .iconsData {
   height: 18px;
-}
-
-.folder {
-  display: none;
-  @media (min-width: 768px) {
-    display: block;
+  @include media-min($breakpoint-tablet) {
+    width: 18px;
+    height: 16px;
+  }
+  @include media-min($breakpoint-laptop) {
+    width: 20px;
+    height: 18px;
   }
 }
 
-.trash {
-  display: block;
-  @media (min-width: 768px) {
-    display: none;
-  }
-}
+// .folder {
+//   display: none;
+//   @media (min-width: 768px) {
+//     display: block;
+//   }
+// }
+
+// .trash {
+//   display: block;
+//   @media (min-width: 768px) {
+//     display: none;
+//   }
+// }

@@ -3,22 +3,25 @@
 import { FC } from "react";
 import { Box } from "@mui/material";
 import { Chat, CommonPreloader } from "@/components";
-import { ChatType } from "@/types/messages/chats";
+import {
+  ChatType,
+  FavoritesChatType,
+  ArchivedChatType,
+} from "@/types/messages/chats";
 import style from "./ChatsList.module.scss";
 
-// TODO create slice
-// TODO onclick => make request, take messages by id => save to redux
-
-interface ListChatsType {
-  chats?: ChatType[] | undefined;
-  onclick: (chatId: number) => void;
+interface ChatsListType {
+  chats?: ChatType[] | FavoritesChatType[] | ArchivedChatType[] | undefined;
+  setSelectedChatId: (chatId: number) => void;
+  selectedChatId: number | null;
 }
 
-const ChatsList: FC<ListChatsType> = ({ chats, onclick }) => {
+const ChatsList: FC<ChatsListType> = ({ chats, setSelectedChatId }) => {
   const handleChatClick = (chatId: number) => {
-    // setSelectedChatId(chatId);
-    onclick(chatId);
+    setSelectedChatId(chatId);
+    // console.log(chatId);
   };
+  console.log(chats);
 
   return (
     <Box className={style.listWrapper}>
@@ -37,6 +40,7 @@ const ChatsList: FC<ListChatsType> = ({ chats, onclick }) => {
               lastMessage={lastMessage}
               userData={userData}
               lastMessageDate={lastMessageDate}
+              chatId={chatId}
             />
           </Box>
         ))
