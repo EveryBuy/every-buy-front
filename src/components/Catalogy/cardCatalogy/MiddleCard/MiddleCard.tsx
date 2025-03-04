@@ -35,11 +35,19 @@ export const MiddleCard: FC<ItemProps> = ({ item }: ItemProps) => {
 		price: item.price,
 	};
 
+	const shortStr = (str: string): string => {
+		if (str.length < 120) {
+			return str;
+		} else {
+			return str.substring(0, 120) + " ...";
+		}
+	}
+
 	return (
 		<div className={styles.containerMiddleCard}>
 			<MiniCard item={minCardProps} />
 
-			<p className={styles.description}>{item.description}</p>
+			<p className={styles.description}>{shortStr(item.description)}</p>
 
 			<div className={styles.wrapperButton}>
 				<CommonButton
