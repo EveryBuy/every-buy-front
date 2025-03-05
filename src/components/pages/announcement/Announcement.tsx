@@ -47,6 +47,7 @@ export default function Announcement() {
 	useEffect(() => {
 		if (!id) return;
 		fetchData();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [dispatch, id]);
 
 	if (isFetching || loading) {

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { useAppSelector, useAppDispatch } from "@/redux/store";
 import { getFilteredAdverts } from '@/redux/advertisement/operations';
 import { useRouter } from 'next/navigation';
@@ -54,6 +55,7 @@ export const CatalogyPage: React.FC = (): JSX.Element => {
 
 	const dispatch = useAppDispatch();
 	const router = useRouter();
+	const searchParams = useSearchParams();
 
 	const [isListOpen, setListOpen] = useState<boolean>(false);
 	const [dataArray, setDataArray] = useState<[] | string>([]);
@@ -67,6 +69,8 @@ export const CatalogyPage: React.FC = (): JSX.Element => {
 	const [totalAdvert, setTotalAdvert] = useState<number>(0);
 	const [totalPages, setTotalPages] = useState<number>(1);
 	const [section, setSection] = useState<string>("SELL");
+
+	const [isLoadingPage, setIsLoadingPage] = useState(useAppSelector(state => state.advertisement.isLoading));
 
 	const makeLinkOpen = (): void => {
 		setListOpen((prev) => !prev);
@@ -88,7 +92,6 @@ export const CatalogyPage: React.FC = (): JSX.Element => {
 		keyword,
 		// page
 	} = filtersSetting;
-
 
 	const createQuerySettings = (): createQuerySettingsType => {
 		let queryArray: string[] = [];
@@ -120,40 +123,55 @@ export const CatalogyPage: React.FC = (): JSX.Element => {
 		};
 	}
 
-	const updateDataAdvert = (cleanPagination?: boolean) => {
+	const dispatchDataAdvert = (str: string, obj: {} | '', cleanPagination: boolean): void => {
+		dispatch(getFilteredAdverts(obj))
+			.then((data) => {
+				const newData: [] | string = data.payload.advertisements;
+				// console.log(data);
+				if (newData && newData.length > 0) {
+					// console.log('newData', newData);
+					setDataArray(newData);
+					setTotalPages(data.payload.totalPages);
+					setTotalAdvert(data.payload.totalAdvertisements);
+					// dispatch(addPrice({
+					// 	min: data.payload.minPrice,
+					// 	max: data.payload.maxPrice
+					// }));
+				} else {
+					setDataArray([]);
+					setTotalPages(0);
+					// console.log('not data');
+					// console.log('dataArray', dataArray);
+				}
+			})
+			.catch(error => console.error('Error: ', error))
+			.finally(() => {
+				setLoading(true);
+				cleanPagination
+					? router.push(str, { scroll: false })
+					: router.push(str);
+				setIsLoadingPage(true);
+			});
+	}
+
+	const updateDataAdvert = (cleanPagination: boolean) => {
 		setLoading(false);
 		cleanPagination && setPage(1);
 		const { queryString, queryObj } = createQuerySettings();
-		// console.log('query', queryObj);
-		if (queryString.length > 0) {
-			dispatch(getFilteredAdverts(queryObj))
-				.then((data) => {
-					const newData: [] | string = data.payload.advertisements;
-					// console.log(data);
-					if (newData && newData.length > 0) {
-						// console.log('newData', newData);
-						setDataArray(newData);
-						setTotalPages(data.payload.totalPages);
-						setTotalAdvert(data.payload.totalAdvertisements);
-						// dispatch(addPrice({
-						// 	min: data.payload.minPrice,
-						// 	max: data.payload.maxPrice
-						// }));
-					} else {
-						setDataArray([]);
-						setTotalPages(0);
-						// console.log('not data');
-						// console.log('dataArray', dataArray);
-					}
-				})
-				.catch(error => console.error('Error: ', error))
-				.finally(() => setLoading(true));
-
-			cleanPagination
-				? router.push(queryString, {
-					scroll: false,
-				})
-				: router.push(queryString);
+		if (searchParams.size === 0 && queryString.length === 0) {  // show all data
+			dispatchDataAdvert('', '', cleanPagination);
+		} else {
+			if (queryString.length > 0) {
+				// console.log('query', queryObj);
+				dispatchDataAdvert(queryString, queryObj, cleanPagination);
+			} else {
+				if (isLoadingPage) {  // searchParams > 0, query empty
+					setTimeout(() => {
+						dispatchDataAdvert('', '', cleanPagination);
+						router.push(queryString, { scroll: false });
+					}, 50);
+				}
+			}
 		}
 	}
 
@@ -163,7 +181,7 @@ export const CatalogyPage: React.FC = (): JSX.Element => {
 	}, [filtersSetting, section]);  //min, max, categoryId, sortOrder, productType, ...
 
 	useEffect(() => {
-		updateDataAdvert();
+		updateDataAdvert(false);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [page]);
 
@@ -191,41 +209,47 @@ export const CatalogyPage: React.FC = (): JSX.Element => {
 	const catLowpArr = useAppSelector(state => state.advertisement.lowSubCategory);
 
 	useEffect(() => {
-		let catName: string, catTopName: string, catLowName: string;
 
-		if (catArr.length > 0 && categoryId && categoryId > 0) {
-			catName = catArr.filter(item => item.id === categoryId)[0].nameUkr;
-		} else {
-			catName = "";
-		}
-		if (catTopArr.length > 0 && topSubCategoryId && topSubCategoryId > 0) {
-			catTopName = catTopArr.filter(item => item.id === topSubCategoryId)[0].subCategoryNameUkr;
-		} else {
-			catTopName = "";
-		}
-		if (catLowpArr.length > 0 && lowSubCategoryId && lowSubCategoryId > 0) {
-			catLowName = catLowpArr.filter(item => item.id === lowSubCategoryId)[0].subCategoryNameUkr;
-		} else {
-			catLowName = "";
+		try {
+			let catName: string, catTopName: string, catLowName: string;
+
+			if (catArr.length > 0 && categoryId && categoryId > 0) {
+				catName = catArr.filter(item => item.id === categoryId)[0].nameUkr;
+			} else {
+				catName = "";
+			}
+			if (catTopArr.length > 0 && topSubCategoryId && topSubCategoryId > 0) {
+				catTopName = catTopArr.filter(item => item.id === topSubCategoryId)[0].subCategoryNameUkr;
+			} else {
+				catTopName = "";
+			}
+			if (catLowpArr.length > 0 && lowSubCategoryId && lowSubCategoryId > 0) {
+				catLowName = catLowpArr.filter(item => item.id === lowSubCategoryId)[0].subCategoryNameUkr;
+			} else {
+				catLowName = "";
+			}
+
+			setBreadcrumbsObj({
+				category: categoryId ? {
+					id: categoryId,
+					title: catName,
+					link: `/catalogy?categoryId=${categoryId}`
+				} : null,
+				topCategory: topSubCategoryId ? {
+					id: topSubCategoryId,
+					title: catTopName,
+					link: `/catalogy?categoryId=${categoryId}&topSubCategoryId=${topSubCategoryId}`
+				} : null,
+				lowCategory: lowSubCategoryId ? {
+					id: lowSubCategoryId,
+					title: catLowName,
+					link: `/catalogy?categoryId=${categoryId}&topSubCategoryId=${topSubCategoryId}&lowSubCategoryId=${lowSubCategoryId}`
+				} : null,
+			});
+		} catch (e) {
+			// console.log('Error categoty id', e);
 		}
 
-		setBreadcrumbsObj({
-			category: categoryId ? {
-				id: categoryId,
-				title: catName,
-				link: `/catalogy?categoryId=${categoryId}`
-			} : null,
-			topCategory: topSubCategoryId ? {
-				id: topSubCategoryId,
-				title: catTopName,
-				link: `/catalogy?categoryId=${categoryId}&topSubCategoryId=${topSubCategoryId}`
-			} : null,
-			lowCategory: lowSubCategoryId ? {
-				id: lowSubCategoryId,
-				title: catLowName,
-				link: `/catalogy?categoryId=${categoryId}&topSubCategoryId=${topSubCategoryId}&lowSubCategoryId=${lowSubCategoryId}`
-			} : null,
-		});
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [categoryId, topSubCategoryId, lowSubCategoryId, catArr, catTopArr, catLowpArr]);
@@ -259,21 +283,24 @@ export const CatalogyPage: React.FC = (): JSX.Element => {
 					lowSubCategory={breadcrumbsObj.lowCategory}
 				/>
 			</Box>
-			<Box sx={{ margin: "2em 1em" }}>
+			<Box sx={{ margin: "2.5rem 0.5rem 0" }}>
 				<Search hideSuggest={true} />
 			</Box>
-			<div className={style.wrapperSelectSection}>
-				<CommonSectionSelector section={section} setSection={setSection} />
-			</div>
+			{/* <div className={style.wrapperSelectSection}>
+
+			</div> */}
 			<div className={style.wrapperFilters}>
-				<Typography variant='h3' sx={{ fontSize: '2.3em' }}>
-					Фільтри
-				</Typography>
-				<Typography variant='h3'
-					sx={{ fontSize: '1em', cursor: "pointer" }}
-					onClick={makeLinkOpen}>
-					{isListOpen ? "Згорнути" : "Розгорнути"}
-				</Typography>
+				<Box sx={{ margin: "2em 0.1em" }}>
+					<Typography variant='h3' sx={{ fontSize: '2.3em' }}>
+						Фільтри
+					</Typography>
+					<Typography variant='h3'
+						sx={{ fontSize: '1em', cursor: "pointer", margin: "5px 0 0 25px" }}
+						onClick={makeLinkOpen}>
+						{isListOpen ? "Згорнути" : "Розгорнути"}
+					</Typography>
+				</Box>
+				<CommonSectionSelector section={section} setSection={setSection} />
 			</div>
 			<div className={isListOpen ? style.showListFilters : style.hideListFilters}>
 				<FilterCatalogy heandlerClick={handlerResetFilters} />

@@ -35,11 +35,19 @@ export const MiddleCard: FC<ItemProps> = ({ item }: ItemProps) => {
 		price: item.price,
 	};
 
+	const shortStr = (str: string): string => {
+		if (str.length < 120) {
+			return str;
+		} else {
+			return str.substring(0, 120) + " ...";
+		}
+	}
+
 	return (
 		<div className={styles.containerMiddleCard}>
 			<MiniCard item={minCardProps} />
 
-			<p className={styles.description}>{item.description}</p>
+			<p className={styles.description}>{shortStr(item.description)}</p>
 
 			<div className={styles.wrapperButton}>
 				<CommonButton
@@ -50,7 +58,7 @@ export const MiddleCard: FC<ItemProps> = ({ item }: ItemProps) => {
 				>
 					<CommonIcon
 						id={heartSelect ? "heart" : "icon-heart"}
-						className={styles.icon_heart}
+						className={heartSelect ? styles.icon_heart_select : styles.icon_heart}
 						width="28px"
 						height="28px"
 					/>

@@ -57,6 +57,10 @@
 		height: 24px;
 	}
 
+	.icon_heart_select {
+		fill: var(--error);
+	}
+
 	@include media-min($breakpoint-tablet) {
 		position: absolute;
 		top: 30px;

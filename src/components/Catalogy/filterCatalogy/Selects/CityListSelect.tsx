@@ -68,17 +68,18 @@ const CityListSelect: FC = () => {
 		const arrCitySelect: City[] = cityListForRegion?.filter(item => item.cityName === target);
 		const newIdCity: number = arrCitySelect.length > 0 ? arrCitySelect[0].id : 0;
 		if (newIdCity > 0) {
+			setSelectedOption(target);
 			dispatch(addCityId(newIdCity));
 			// dispatch(addLocation(target));
-			setSelectedOption(target);
 		} else {
+			setSelectedOption('');
 			dispatch(addCityId(null));
 		}
 	};
 
 	return (
 		<CommonSelect
-			label="Месцезнаходження"
+			label="Місто"
 			options={options}
 			size={{
 				//mobile: "0",  0 - якщо не відображається на даному екрані

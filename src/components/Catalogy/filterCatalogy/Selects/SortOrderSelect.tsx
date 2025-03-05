@@ -58,9 +58,10 @@ const SortOrderSelection: FC = () => {
 		const arrSortSelect: sortOrderListType[] = sortOrderList?.filter(item => item.title === target);
 		const newTypeSort: SortOrder | "" = arrSortSelect.length > 0 ? arrSortSelect[0].type : "";
 		if (newTypeSort.length > 0) {
-			dispatch(addSortOrder(newTypeSort));
 			setSelectedOption(target);
+			dispatch(addSortOrder(newTypeSort));
 		} else {
+			setSelectedOption('');
 			dispatch(addSortOrder(''));
 		}
 	};

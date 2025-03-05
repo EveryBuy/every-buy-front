@@ -14,24 +14,24 @@ export const getCategory = createAsyncThunk('advert/getCategory', async (_, thun
 });
 
 export const getTopSubCategory = createAsyncThunk('advert/getTopSubCategory',
-    async (categoryId: number, thunkAPI) => {
-    try {
-        const response = await API.get(`/ad/category/${categoryId}/top-level-subcategories`);
-        return response.data;
-    } catch (error: any) {
-        return thunkAPI.rejectWithValue(error.message);
-    }
-});
+	async (categoryId: number, thunkAPI) => {
+		try {
+			const response = await API.get(`/ad/category/${categoryId}/top-level-subcategories`);
+			return response.data;
+		} catch (error: any) {
+			return thunkAPI.rejectWithValue(error.message);
+		}
+	});
 
 export const getLowSubCategory = createAsyncThunk('advert/getLowSubCategory',
-    async (subcategoryId: number, thunkAPI) => {
-    try {
-        const response = await API.get(`/ad/subcategory/${subcategoryId}/low-level-subcategories`);
-        return response.data;
-    } catch (error: any) {
-        return thunkAPI.rejectWithValue(error.message);
-    }
-});
+	async (subcategoryId: number, thunkAPI) => {
+		try {
+			const response = await API.get(`/ad/subcategory/${subcategoryId}/low-level-subcategories`);
+			return response.data;
+		} catch (error: any) {
+			return thunkAPI.rejectWithValue(error.message);
+		}
+	});
 
 export const getCity = createAsyncThunk('advert/getCity',
 	async (_, thunkAPI) => {
@@ -96,7 +96,7 @@ export const updateAdvertisement = createAsyncThunk('advert/update',
 	});
 
 export const getActiveAdvertisement = createAsyncThunk('advert/getActive',
-	async (id, thunkAPI) => {
+	async (id: number, thunkAPI) => {
 		try {
 			const response = await API.get(`/ad/${id}/active`);
 			return response.data;

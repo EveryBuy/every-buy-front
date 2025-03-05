@@ -68,11 +68,11 @@ const TopSubCategoriesSelect: FC = () => {
 		const arrTopCategorySelect: TopSubCategory[] = subCategoriesList?.filter(item => item.subCategoryNameUkr === target);
 		const newIdTopCategory: number = arrTopCategorySelect.length > 0 ? arrTopCategorySelect[0].id : 0;
 		if (newIdTopCategory > 0) {
-			dispatch(addTopSubCategoryId(newIdTopCategory));
 			setSelectedOption(target);
+			dispatch(addTopSubCategoryId(newIdTopCategory));
 		} else {
-			dispatch(addTopSubCategoryId(null));
 			setSelectedOption('');
+			dispatch(addTopSubCategoryId(null));
 		}
 	};
 

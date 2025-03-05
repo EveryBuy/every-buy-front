@@ -72,9 +72,10 @@ const CategoriesSelect: FC = () => {
 		const arrCategorySelect: Category[] = categoriesList?.filter(item => item.nameUkr === target);
 		const newIdCategory: number = arrCategorySelect.length > 0 ? arrCategorySelect[0].id : 0;
 		if (newIdCategory > 0) {
-			dispatch(addCategory(newIdCategory));
 			setSelectedOption(target);
+			dispatch(addCategory(newIdCategory));
 		} else {
+			setSelectedOption('');
 			dispatch(addCategory(null));
 		}
 
