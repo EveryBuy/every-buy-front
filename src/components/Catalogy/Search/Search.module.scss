@@ -35,7 +35,7 @@
 
 .searchInput {
 	width: 100%;
-	padding: 10px;
+	padding: 2px 10px;
 	font-size: 1rem;
 	border: 1px solid #e5ff46;
 	border-radius: 10px;
@@ -45,15 +45,17 @@
 		border: none;
 		background-color: #b4b4b4;
 		color: #ffffff;
-		padding: 10px;
+		padding-right: 50px;
 	}
 
 	@include media-min($breakpoint-tablet) {
-		padding: 15.5px;
+		padding: 12px 15.5px;
+		padding-right: 50px;
 	}
 
 	@media (min-width: 1024px) {
-		padding: 20px;
+		padding: 12px 20px;
+		padding-right: 50px;
 	}
 }
 
@@ -89,11 +91,11 @@
 	}
 
 	@include media-min($breakpoint-tablet) {
-		padding: 14px 31.5px;
+		padding: 19px 31.5px;
 	}
 
 	@media (min-width: 1024px) {
-		padding: 18px 40px;
+		padding: 19px 40px;
 	}
 }
 

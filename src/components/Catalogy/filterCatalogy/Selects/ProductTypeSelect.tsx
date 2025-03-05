@@ -63,9 +63,10 @@ const ProductTyperSelection: FC = () => {
 		const newProductType: ProductType | "" = arrProductTypeSelect.length > 0
 			? arrProductTypeSelect[0].type : "";
 		if (newProductType.length > 0) {
-			dispatch(addProductType(newProductType));
 			setSelectedOption(target);
+			dispatch(addProductType(newProductType));
 		} else {
+			setSelectedOption('');
 			dispatch(addProductType(''));
 		}
 	};

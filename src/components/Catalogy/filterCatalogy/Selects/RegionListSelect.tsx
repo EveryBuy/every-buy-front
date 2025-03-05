@@ -44,9 +44,10 @@ const RegionListSelect: FC = () => {
 		const arrRegoinSelect: RegionListType[] = regionList?.filter(item => item.regionName === target);
 		const newIdRegion: number = arrRegoinSelect.length > 0 ? arrRegoinSelect[0].id : 0;
 		if (newIdRegion > 0) {
-			dispatch(addRegionId(newIdRegion));
 			setSelectedOption(target);
+			dispatch(addRegionId(newIdRegion));
 		} else {
+			setSelectedOption('');
 			dispatch(addRegionId(null));
 		}
 	};

@@ -68,11 +68,11 @@ const LowSubCategoriesSelect: FC = () => {
 		const arrLowCategorySelect: LowSubCategory[] = lowSubCategoriesList?.filter(item => item.subCategoryNameUkr === target);
 		const newIdLowCategory: number = arrLowCategorySelect.length > 0 ? arrLowCategorySelect[0].id : 0;
 		if (newIdLowCategory > 0) {
-			dispatch(addLowSubCategoryId(newIdLowCategory));
 			setSelectedOption(target);
+			dispatch(addLowSubCategoryId(newIdLowCategory));
 		} else {
-			dispatch(addLowSubCategoryId(null));
 			setSelectedOption('');
+			dispatch(addLowSubCategoryId(null));
 		}
 	};
 

@@ -70,6 +70,8 @@ export const CatalogyPage: React.FC = (): JSX.Element => {
 	const [totalPages, setTotalPages] = useState<number>(1);
 	const [section, setSection] = useState<string>("SELL");
 
+	const [isLoadingPage, setIsLoadingPage] = useState(useAppSelector(state => state.advertisement.isLoading));
+
 	const makeLinkOpen = (): void => {
 		setListOpen((prev) => !prev);
 	};
@@ -90,7 +92,6 @@ export const CatalogyPage: React.FC = (): JSX.Element => {
 		keyword,
 		// page
 	} = filtersSetting;
-
 
 	const createQuerySettings = (): createQuerySettingsType => {
 		let queryArray: string[] = [];
@@ -147,10 +148,9 @@ export const CatalogyPage: React.FC = (): JSX.Element => {
 			.finally(() => {
 				setLoading(true);
 				cleanPagination
-					? router.push(str, {
-						scroll: false,
-					})
+					? router.push(str, { scroll: false })
 					: router.push(str);
+				setIsLoadingPage(true);
 			});
 	}
 
@@ -158,15 +158,19 @@ export const CatalogyPage: React.FC = (): JSX.Element => {
 		setLoading(false);
 		cleanPagination && setPage(1);
 		const { queryString, queryObj } = createQuerySettings();
-		if (searchParams.size === 0 && queryString.length === 0) {
-			// console.log('show all data');
+		if (searchParams.size === 0 && queryString.length === 0) {  // show all data
 			dispatchDataAdvert('', '', cleanPagination);
 		} else {
 			if (queryString.length > 0) {
 				// console.log('query', queryObj);
 				dispatchDataAdvert(queryString, queryObj, cleanPagination);
 			} else {
-				console.log('Треба щось зробити, щоб показати всі данні, але, щоб вони не завантажувалися одразу при загрузки сторінки');
+				if (isLoadingPage) {  // searchParams > 0, query empty
+					setTimeout(() => {
+						dispatchDataAdvert('', '', cleanPagination);
+						router.push(queryString, { scroll: false });
+					}, 50);
+				}
 			}
 		}
 	}
@@ -174,7 +178,7 @@ export const CatalogyPage: React.FC = (): JSX.Element => {
 	useEffect(() => {
 		updateDataAdvert(true);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [filtersSetting, section, router]);  //min, max, categoryId, sortOrder, productType, ...
+	}, [filtersSetting, section]);  //min, max, categoryId, sortOrder, productType, ...
 
 	useEffect(() => {
 		updateDataAdvert(false);
