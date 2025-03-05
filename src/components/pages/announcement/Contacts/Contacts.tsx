@@ -10,14 +10,30 @@ interface ContactsProps {
     cost: number;
     delivery: string[];
     title: string;
-    phoneNumber?: string;
+    phoneNumber?: string; 
+    section: string;
   };
 }
 
 export default function Contacts({ contactsInfo }: ContactsProps) {
-  const { publicDate, cost, delivery, title, phoneNumber } = contactsInfo;
+  const { publicDate, cost, delivery, title, phoneNumber, section } = contactsInfo;
 
   const [showNumber, setShowNumber] = useState(false);
+
+  const sectionLabel = section === "SELL" ? "Продаж" : section === "BUY" ? "Купівля" : "Невідомо";
+
+  const mapDeliveryType = (deliveryType: string) => {
+    switch (deliveryType) {
+      case "NOVA_POST":
+        return "Нова пошта";
+      case "UKR_POST":
+        return "Укр пошта";
+      case "OTHER":
+        return "Інше";
+      default:
+        return deliveryType;
+    }
+  };
 
   return (
     <div className={styles.list}>
@@ -30,7 +46,7 @@ export default function Contacts({ contactsInfo }: ContactsProps) {
         />
         <div className={styles.publicBox}>
           <p className={styles.public}>Опубліковано {publicDate}</p>
-          <p className={styles.public}>Продаж</p>
+          <p className={styles.public}>{sectionLabel}</p>
         </div>
         <h2 className={styles.title}>{title}</h2>
         <div>
@@ -40,7 +56,12 @@ export default function Contacts({ contactsInfo }: ContactsProps) {
         <div className={styles.descVersion}>
           <div>
             <p className={styles.deliveryTitle}>Спосіб доставки</p>
-            <p className={styles.text}>{delivery}</p>
+            <p className={styles.text}>{delivery.map((type, index) => (
+                <p key={index} className={styles.deliveryItem}>
+                  {mapDeliveryType(type)}
+                  {index < delivery.length - 1 && ", "}
+                </p>
+              ))}</p>
           </div>
           <div className={styles.buttonsItem}>
             <CommonButton

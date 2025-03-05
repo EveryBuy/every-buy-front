@@ -17,15 +17,25 @@ export default function Seller({ sellerInfo }: SellerProps) {
     return <div className={styles.container}>Error fetching seller info</div>;
   }
 
-  const { nameUkr, online, linkToAllAdvert, imageUrl } = sellerInfo;
+  const { nameUkr, online, linkToAllAdvert, imageUrl: sellerImageUrl } = sellerInfo;
+
+  const sellerName = nameUkr || "Невідомо";
+
+  const imageSrc = sellerImageUrl || imageUrl;
 
   return (
     <div className={styles.container}>
       <h3 className={styles.title}>Продавець</h3>
       <div className={styles.sellerInfo}>
-        <Image width={83} height={83} src={imageUrl} alt="Seller" className={styles.sellerImage} />
+        <Image
+          width={83}
+          height={83}
+          src={imageSrc}
+          alt="Seller"
+          className={styles.sellerImage}
+        />
         <div>
-          <h4 className={styles.name}>{nameUkr}</h4>
+          <h4 className={styles.name}>{sellerName}</h4>
           <p className={`${styles.status} ${online ? styles.online : styles.offline}`}>
             {online ? "Зараз онлайн" : "Зараз офлайн"}
           </p>

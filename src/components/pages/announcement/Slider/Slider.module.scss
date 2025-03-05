@@ -80,7 +80,6 @@
 
     .slick-slide {
       padding: 0;
-
       // background-color: lightcoral;
 
       @include media-min($breakpoint-laptop) {
@@ -199,7 +198,9 @@
     :global(.slick-dots) {
       z-index: 999;
       position: absolute;
-      bottom: 10 px;
+      // bottom: 10px;
+      margin-bottom: 30px;
+
     }
   }
   .mainSlide {
