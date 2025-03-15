@@ -206,3 +206,9 @@
   }
 
 }
+
+.deliveryBox {
+  @include media-max($breakpoint-mobile) {
+    display: none; 
+  }
+}

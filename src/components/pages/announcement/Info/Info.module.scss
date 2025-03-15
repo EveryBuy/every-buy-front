@@ -15,6 +15,12 @@
   @include media-min($breakpoint-laptop) {
     padding: 30px 40px;
   }
+
+  @include media-max($breakpoint-mobile) {
+    padding: 30px 40px;
+    margin-top: 25px;
+  }
+
 }
 
 .list {

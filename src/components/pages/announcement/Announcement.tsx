@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { getActiveAdvertisement } from "@/redux/advertisement/operations";
 import { RootState, useAppSelector, useAppDispatch } from "@/redux/store";
 import { Advertisement } from '@/redux/advertisement/slice';
-import { Contacts, Info, Seller, AnnouncementSlider, CommonPreloader } from "@/components";
+import { Contacts, Info, Seller, AnnouncementSlider, CommonPreloader, CustomSeparator } from "@/components";
 import styles from "./Announcement.module.scss";
 import { setHeaderAuthToken } from "@/utils/axios";
 
@@ -18,8 +18,6 @@ export default function Announcement() {
 
 	const advertisementById: Advertisement | null = useAppSelector((state: RootState) => state.advertisement.activeAdvertisement);
 	const loading = useAppSelector((state: RootState) => state.advertisement.isLoading);
-	// console.log(advertisementById, loading);
-	// console.log(localStorage.getItem("persist:root"));
 
 	const fetchData = async () => {
 		setIsFetching(true);
@@ -47,7 +45,6 @@ export default function Announcement() {
 	useEffect(() => {
 		if (!id) return;
 		fetchData();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [dispatch, id]);
 
 	if (isFetching || loading) {
@@ -72,36 +69,66 @@ export default function Announcement() {
 		}).format(creationDate);
 
 		return (
-			<div className={styles.container}>
-				<AnnouncementSlider images={advertisementById?.data?.photoUrls || []} />
-				<Contacts
-					contactsInfo={{
-						publicDate: formattedDate,
-						cost: advertisementById.data.price,
-						delivery: advertisementById.data.deliveryMethods,
-						title: advertisementById.data.title,
-						section: advertisementById.data.section,
-					}}
-				/>
-				<Info
-					articleInfo={{
-						description: advertisementById.data.description,
-						location: {
-							city: advertisementById.data.city.cityName,
-							region: advertisementById.data.city.region.regionName,
-						},
-						delivery: advertisementById.data.deliveryMethods,
-					}}
-				/>
-				<Seller
-					sellerInfo={{
-						imageUrl: advertisementById.data.userDto.photoUrl,
-						nameUkr: advertisementById.data.userDto.fullName,
-						online: advertisementById.data.isEnabled,
-						linkToAllAdvert: `/seller/${advertisementById.data.userId}`,
-					}}
-				/>
-			</div>
+			<>
+				<div className={styles.breadcrumbsContainer}>
+					<CustomSeparator
+						category={{
+							id: advertisementById.data.category.id,
+							title: advertisementById.data.category.nameUkr,
+							link: `/catalogy?categoryId=${advertisementById.data.category.id}`,
+						}}
+						topSubCategory={
+							advertisementById.data.topSubCategory
+								? {
+									id: advertisementById.data.topSubCategory.id,
+									title: advertisementById.data.topSubCategory.subCategoryNameUkr,
+									link: `/catalogy?categoryId=${advertisementById.data.category.id}&topSubCategoryId=${advertisementById.data.topSubCategory.id}`,
+								}
+								: null
+						}
+						lowSubCategory={
+							advertisementById.data.lowSubCategory
+								? {
+									id: advertisementById.data.lowSubCategory.id,
+									title: advertisementById.data.lowSubCategory.subCategoryNameUkr,
+									link: `/catalogy?categoryId=${advertisementById.data.category.id}&topSubCategoryId=${advertisementById.data.topSubCategory.id}&lowSubCategoryId=${advertisementById.data.lowSubCategory.id}`,
+								}
+								: null
+						}
+					/>
+				</div>
+
+				<div className={styles.container}>
+					<AnnouncementSlider images={advertisementById?.data?.photoUrls || []} />
+					<Contacts
+						contactsInfo={{
+							publicDate: formattedDate,
+							cost: advertisementById.data.price,
+							delivery: advertisementById.data.deliveryMethods,
+							title: advertisementById.data.title,
+							section: advertisementById.data.section,
+						}}
+					/>
+					<Info
+						articleInfo={{
+							description: advertisementById.data.description,
+							location: {
+								city: advertisementById.data.city.cityName,
+								region: advertisementById.data.city.region.regionName,
+							},
+							delivery: advertisementById.data.deliveryMethods,
+						}}
+					/>
+					<Seller
+						sellerInfo={{
+							imageUrl: advertisementById.data.userDto.photoUrl,
+							nameUkr: advertisementById.data.userDto.fullName,
+							online: advertisementById.data.isEnabled,
+							linkToAllAdvert: `/seller/${advertisementById.data.userId}`,
+						}}
+					/>
+				</div>
+			</>
 		);
 	}
 }
