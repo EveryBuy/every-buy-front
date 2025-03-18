@@ -6,6 +6,9 @@ import MiniCard from "../MinCard/MinCard";
 import Image from "next/image";
 import Link from 'next/link';
 import { CommonButton, CommonIcon } from "@/components";
+import { useAppSelector, useAppDispatch } from "@/redux/store";
+import { setHeaderAuthToken } from "@/utils/axios";
+import { addAdvertToFavourite } from "@/redux/advertisement/operations";
 import arrowButton from "@/assets/Svg/arrowButton.svg";
 import heart from "@/assets/Svg/heartDefault.svg";
 import formatAdvertisementDate from "@/utils/formatAdvertisementDate";
@@ -18,12 +21,43 @@ type ItemProps = {
 
 export const MiddleCard: FC<ItemProps> = ({ item }: ItemProps) => {
 	// console.log(item);
-	const [heartSelect, setHeartSelect] = useState<boolean>(false);
 
-	const addSelectGood = (): void => {  // e: React.FormEvent<HTMLFormElement>
+	const [heartSelect, setHeartSelect] = useState<boolean>(false);
+	const [isFetching, setIsFetching] = useState(true);
+	const dispatch = useAppDispatch();
+
+	console.log(localStorage.getItem("persist:root"));
+	// const tokenRedux = useAppSelector(state => state.auth.token);
+	// console.log('token in redux', tokenRedux);
+
+	const fetchData = async (id: number) => {
+		setIsFetching(true);
+		const persistData = localStorage.getItem("persist:root");
+		if (persistData) {
+			const parsedPersistData = JSON.parse(persistData);
+			const authToken = JSON.parse(parsedPersistData.token);
+
+			if (authToken) {
+				setHeaderAuthToken(authToken);
+			}
+		} else {
+			console.error("No persist data found in localStorage");
+		}
+
+		try {
+			await dispatch(addAdvertToFavourite(id)).unwrap();
+		} catch (error) {
+			console.error("Error during fetching:", error);
+		} finally {
+			setIsFetching(false);
+		}
+	};
+
+	const addSelectGood = (id: number): void => {  // e: React.FormEvent<HTMLFormElement>
 		// e.preventDefault();
 		setHeartSelect(prev => !prev);
-		console.log("select good");
+		console.log("select good with id", id);
+		// fetchData(id);
 	}
 
 	const linkHref = `/announcement?id=${item.advertisementId}`;
@@ -43,6 +77,8 @@ export const MiddleCard: FC<ItemProps> = ({ item }: ItemProps) => {
 		}
 	}
 
+
+
 	return (
 		<div className={styles.containerMiddleCard}>
 			<MiniCard item={minCardProps} />
@@ -54,7 +90,7 @@ export const MiddleCard: FC<ItemProps> = ({ item }: ItemProps) => {
 					type="submit"
 					title=""
 					className={styles.heart}
-					onClick={addSelectGood}
+					onClick={() => addSelectGood(item.advertisementId)}
 				>
 					<CommonIcon
 						id={heartSelect ? "heart" : "icon-heart"}
