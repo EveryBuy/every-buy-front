@@ -199,7 +199,7 @@ const advertisementSlice = createSlice({
 			}).addCase(getActiveAdvertisement.pending, handlePending)
 			.addCase(getActiveAdvertisement.fulfilled, (state, action) => {
 				state.isLoading = false;
-				state.activeAdvertisement = action.payload;
+				state.activeAdvertisement = action.payload.data;
 			})
 			.addCase(getActiveAdvertisement.rejected, (state) => {
 				state.isLoading = false;
