@@ -12,7 +12,8 @@ import { setHeaderAuthToken } from "@/utils/axios";
 export default function Announcement() {
 	const dispatch = useAppDispatch();
 	const searchParams = useSearchParams();
-	const id = searchParams.get("id");
+	const preId: number = Number(searchParams.get("id")) || 0;
+	const id: number = isNaN(preId) ? 0 : preId;
 
 	const [isFetching, setIsFetching] = useState(true);
 
@@ -34,7 +35,7 @@ export default function Announcement() {
 		}
 
 		try {
-			await dispatch(getActiveAdvertisement(Number(id))).unwrap();
+			await dispatch(getActiveAdvertisement(id)).unwrap();
 		} catch (error) {
 			console.error("Error during fetching:", error);
 		} finally {
@@ -45,6 +46,7 @@ export default function Announcement() {
 	useEffect(() => {
 		if (!id) return;
 		fetchData();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [dispatch, id]);
 
 	if (isFetching || loading) {
@@ -58,7 +60,7 @@ export default function Announcement() {
 	if (!advertisementById) {
 		return <div className={styles.container}>Оголошення було видалено, або його не існувало.</div>;
 	} else {
-		const creationDate = new Date(advertisementById.data.creationDate);
+		const creationDate = new Date(advertisementById.creationDate);
 		const formattedDate = new Intl.DateTimeFormat("uk-UA", {
 			day: "2-digit",
 			month: "2-digit",
@@ -73,25 +75,25 @@ export default function Announcement() {
 				<div className={styles.breadcrumbsContainer}>
 					<CustomSeparator
 						category={{
-							id: advertisementById.data.category.id,
-							title: advertisementById.data.category.nameUkr,
-							link: `/catalogy?categoryId=${advertisementById.data.category.id}`,
+							id: advertisementById.category.id,
+							title: advertisementById.category.nameUkr,
+							link: `/catalogy?categoryId=${advertisementById.category.id}`,
 						}}
 						topSubCategory={
-							advertisementById.data.topSubCategory
+							advertisementById.topSubCategory
 								? {
-									id: advertisementById.data.topSubCategory.id,
-									title: advertisementById.data.topSubCategory.subCategoryNameUkr,
-									link: `/catalogy?categoryId=${advertisementById.data.category.id}&topSubCategoryId=${advertisementById.data.topSubCategory.id}`,
+									id: advertisementById.topSubCategory.id,
+									title: advertisementById.topSubCategory.subCategoryNameUkr,
+									link: `/catalogy?categoryId=${advertisementById.category.id}&topSubCategoryId=${advertisementById.topSubCategory.id}`,
 								}
 								: null
 						}
 						lowSubCategory={
-							advertisementById.data.lowSubCategory
+							advertisementById.lowSubCategory
 								? {
-									id: advertisementById.data.lowSubCategory.id,
-									title: advertisementById.data.lowSubCategory.subCategoryNameUkr,
-									link: `/catalogy?categoryId=${advertisementById.data.category.id}&topSubCategoryId=${advertisementById.data.topSubCategory.id}&lowSubCategoryId=${advertisementById.data.lowSubCategory.id}`,
+									id: advertisementById.lowSubCategory.id,
+									title: advertisementById.lowSubCategory.subCategoryNameUkr,
+									link: `/catalogy?categoryId=${advertisementById.category.id}&topSubCategoryId=${advertisementById.topSubCategory.id}&lowSubCategoryId=${advertisementById.lowSubCategory.id}`,
 								}
 								: null
 						}
@@ -99,32 +101,32 @@ export default function Announcement() {
 				</div>
 
 				<div className={styles.container}>
-					<AnnouncementSlider images={advertisementById?.data?.photoUrls || []} />
+					<AnnouncementSlider images={advertisementById?.photoUrls || []} />
 					<Contacts
 						contactsInfo={{
 							publicDate: formattedDate,
-							cost: advertisementById.data.price,
-							delivery: advertisementById.data.deliveryMethods,
-							title: advertisementById.data.title,
-							section: advertisementById.data.section,
+							cost: advertisementById.price,
+							delivery: advertisementById.deliveryMethods,
+							title: advertisementById.title,
+							section: advertisementById.section,
 						}}
 					/>
 					<Info
 						articleInfo={{
-							description: advertisementById.data.description,
+							description: advertisementById.description,
 							location: {
-								city: advertisementById.data.city.cityName,
-								region: advertisementById.data.city.region.regionName,
+								city: advertisementById.city.cityName,
+								region: advertisementById.city.region.regionName,
 							},
-							delivery: advertisementById.data.deliveryMethods,
+							delivery: advertisementById.deliveryMethods,
 						}}
 					/>
 					<Seller
 						sellerInfo={{
-							imageUrl: advertisementById.data.userDto.photoUrl,
-							nameUkr: advertisementById.data.userDto.fullName,
-							online: advertisementById.data.isEnabled,
-							linkToAllAdvert: `/seller/${advertisementById.data.userId}`,
+							imageUrl: advertisementById.userDto.photoUrl,
+							nameUkr: advertisementById.userDto.fullName,
+							online: advertisementById.isEnabled,
+							linkToAllAdvert: `/seller/${advertisementById.userId}`,
 						}}
 					/>
 				</div>

@@ -99,7 +99,7 @@ export const getActiveAdvertisement = createAsyncThunk('advert/getActive',
 	async (id: number, thunkAPI) => {
 		try {
 			const response = await API.get(`/ad/${id}/active`);
-			return response.data;
+			return response.data.data;
 		} catch (error: any) {
 			return thunkAPI.rejectWithValue(error.message);
 		}
@@ -139,7 +139,7 @@ export const changeAdvertisementStatus = createAsyncThunk('advert/changeStatus',
 );
 
 export const addAdvertToFavourite = createAsyncThunk('advert/addToFavourite',
-	async (id, thunkAPI) => {
+	async (id: number, thunkAPI) => {
 		try {
 			const response = await API.post(`/ad/${id}/add-to-favourite`);
 			return response.data;
