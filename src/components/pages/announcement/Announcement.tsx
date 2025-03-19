@@ -5,21 +5,20 @@ import { useSearchParams } from "next/navigation";
 import { getActiveAdvertisement } from "@/redux/advertisement/operations";
 import { RootState, useAppSelector, useAppDispatch } from "@/redux/store";
 import { Advertisement } from '@/redux/advertisement/slice';
-import { Contacts, Info, Seller, AnnouncementSlider, CommonPreloader } from "@/components";
+import { Contacts, Info, Seller, AnnouncementSlider, CommonPreloader, CustomSeparator } from "@/components";
 import styles from "./Announcement.module.scss";
 import { setHeaderAuthToken } from "@/utils/axios";
 
 export default function Announcement() {
 	const dispatch = useAppDispatch();
 	const searchParams = useSearchParams();
-	const id = searchParams.get("id");
+	const preId: number = Number(searchParams.get("id")) || 0;
+	const id: number = isNaN(preId) ? 0 : preId;
 
 	const [isFetching, setIsFetching] = useState(true);
 
 	const advertisementById: Advertisement | null = useAppSelector((state: RootState) => state.advertisement.activeAdvertisement);
 	const loading = useAppSelector((state: RootState) => state.advertisement.isLoading);
-	// console.log(advertisementById, loading);
-	// console.log(localStorage.getItem("persist:root"));
 
 	const fetchData = async () => {
 		setIsFetching(true);
@@ -36,7 +35,7 @@ export default function Announcement() {
 		}
 
 		try {
-			await dispatch(getActiveAdvertisement(Number(id))).unwrap();
+			await dispatch(getActiveAdvertisement(id)).unwrap();
 		} catch (error) {
 			console.error("Error during fetching:", error);
 		} finally {
@@ -61,7 +60,7 @@ export default function Announcement() {
 	if (!advertisementById) {
 		return <div className={styles.container}>Оголошення було видалено, або його не існувало.</div>;
 	} else {
-		const creationDate = new Date(advertisementById.data.creationDate);
+		const creationDate = new Date(advertisementById.creationDate);
 		const formattedDate = new Intl.DateTimeFormat("uk-UA", {
 			day: "2-digit",
 			month: "2-digit",
@@ -72,36 +71,66 @@ export default function Announcement() {
 		}).format(creationDate);
 
 		return (
-			<div className={styles.container}>
-				<AnnouncementSlider images={advertisementById?.data?.photoUrls || []} />
-				<Contacts
-					contactsInfo={{
-						publicDate: formattedDate,
-						cost: advertisementById.data.price,
-						delivery: advertisementById.data.deliveryMethods,
-						title: advertisementById.data.title,
-						section: advertisementById.data.section,
-					}}
-				/>
-				<Info
-					articleInfo={{
-						description: advertisementById.data.description,
-						location: {
-							city: advertisementById.data.city.cityName,
-							region: advertisementById.data.city.region.regionName,
-						},
-						delivery: advertisementById.data.deliveryMethods,
-					}}
-				/>
-				<Seller
-					sellerInfo={{
-						imageUrl: advertisementById.data.userDto.photoUrl,
-						nameUkr: advertisementById.data.userDto.fullName,
-						online: advertisementById.data.isEnabled,
-						linkToAllAdvert: `/seller/${advertisementById.data.userId}`,
-					}}
-				/>
-			</div>
+			<>
+				<div className={styles.breadcrumbsContainer}>
+					<CustomSeparator
+						category={{
+							id: advertisementById.category.id,
+							title: advertisementById.category.nameUkr,
+							link: `/catalogy?categoryId=${advertisementById.category.id}`,
+						}}
+						topSubCategory={
+							advertisementById.topSubCategory
+								? {
+									id: advertisementById.topSubCategory.id,
+									title: advertisementById.topSubCategory.subCategoryNameUkr,
+									link: `/catalogy?categoryId=${advertisementById.category.id}&topSubCategoryId=${advertisementById.topSubCategory.id}`,
+								}
+								: null
+						}
+						lowSubCategory={
+							advertisementById.lowSubCategory
+								? {
+									id: advertisementById.lowSubCategory.id,
+									title: advertisementById.lowSubCategory.subCategoryNameUkr,
+									link: `/catalogy?categoryId=${advertisementById.category.id}&topSubCategoryId=${advertisementById.topSubCategory.id}&lowSubCategoryId=${advertisementById.lowSubCategory.id}`,
+								}
+								: null
+						}
+					/>
+				</div>
+
+				<div className={styles.container}>
+					<AnnouncementSlider images={advertisementById?.photoUrls || []} />
+					<Contacts
+						contactsInfo={{
+							publicDate: formattedDate,
+							cost: advertisementById.price,
+							delivery: advertisementById.deliveryMethods,
+							title: advertisementById.title,
+							section: advertisementById.section,
+						}}
+					/>
+					<Info
+						articleInfo={{
+							description: advertisementById.description,
+							location: {
+								city: advertisementById.city.cityName,
+								region: advertisementById.city.region.regionName,
+							},
+							delivery: advertisementById.deliveryMethods,
+						}}
+					/>
+					<Seller
+						sellerInfo={{
+							imageUrl: advertisementById.userDto.photoUrl,
+							nameUkr: advertisementById.userDto.fullName,
+							online: advertisementById.isEnabled,
+							linkToAllAdvert: `/seller/${advertisementById.userId}`,
+						}}
+					/>
+				</div>
+			</>
 		);
 	}
 }

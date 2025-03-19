@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { CommonIcon, CommonButton } from "@/components";
 import styles from "./Contacts.module.scss";
+import { deliveryToString } from "../deliveryToString";
 
 interface ContactsProps {
 	contactsInfo: {
@@ -20,20 +21,7 @@ export default function Contacts({ contactsInfo }: ContactsProps) {
 
 	const [showNumber, setShowNumber] = useState(false);
 
-	const sectionLabel = section === "SELL" ? "Продаж" : section === "BUY" ? "Купівля" : "Невідомо";
-
-	const mapDeliveryType = (deliveryType: string) => {
-		switch (deliveryType) {
-			case "NOVA_POST":
-				return "Нова пошта";
-			case "UKR_POST":
-				return "Укр пошта";
-			case "OTHER":
-				return "Інше";
-			default:
-				return deliveryType;
-		}
-	};
+	const sectionLabel = section === "SELL" ? "Купівля" : section === "BUY" ? "Продаж" : "Невідомо";
 
 	return (
 		<div className={styles.list}>
@@ -48,20 +36,15 @@ export default function Contacts({ contactsInfo }: ContactsProps) {
 					<p className={styles.public}>Опубліковано {publicDate}</p>
 					<p className={styles.public}>{sectionLabel}</p>
 				</div>
-				<h2 className={styles.title}>{title}</h2>
+				<h1 className={styles.title}>{title}</h1>
 				<div>
 					<p className={styles.changeWidth}>Вартість</p>
 					<p className={styles.price}>{cost} грн</p>
 				</div>
 				<div className={styles.descVersion}>
-					<div>
+					<div className={styles.deliveryBox}>
 						<p className={styles.deliveryTitle}>Спосіб доставки</p>
-						<div className={styles.text}>{delivery.map((type, index) => (
-							<p key={index} className={styles.deliveryItem}>
-								{mapDeliveryType(type)}
-								{index < delivery.length - 1 && ", "}
-							</p>
-						))}</div>
+						<p className={styles.text}>{deliveryToString(delivery)}</p>
 					</div>
 					<div className={styles.buttonsItem}>
 						<CommonButton

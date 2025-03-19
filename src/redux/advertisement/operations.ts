@@ -139,7 +139,7 @@ export const changeAdvertisementStatus = createAsyncThunk('advert/changeStatus',
 );
 
 export const addAdvertToFavourite = createAsyncThunk('advert/addToFavourite',
-	async (id, thunkAPI) => {
+	async (id: number, thunkAPI) => {
 		try {
 			const response = await API.post(`/ad/${id}/add-to-favourite`);
 			return response.data;

@@ -8,7 +8,7 @@ import { Backdrop } from "@mui/material";
 import xClose from "@/assets/Svg/xClose.svg";
 import styles from "./ComplaintModal.module.scss";
 import { selectAdvertisementById } from "@/redux/advertisement/selectors";
-import { RootState } from "@/redux/store";
+import { RootState, useAppSelector, useAppDispatch } from "@/redux/store";
 
 const ComplaintModal: FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -16,9 +16,7 @@ const ComplaintModal: FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  const advertisementById = useSelector((state: RootState) =>
-    selectAdvertisementById(state)
-  );
+  const advertisementById = useAppSelector((state: RootState) => state.advertisement.activeAdvertisement);
 
   const reasons = [
     "Спам",
