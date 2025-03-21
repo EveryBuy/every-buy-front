@@ -1,7 +1,7 @@
 "use client";
 
 import { FC } from "react";
-import styles from "./CommonSectionSelector.module.css";
+import styles from "./CommonSectionSelector.module.scss";
 
 // If an advertisement is created, then the BUY/SELL criterion is recorded in the database according to the owner of the advertisement.
 // "BUY" means to sell, and "SELL" means to buy for other buyers.
@@ -25,11 +25,11 @@ export const CommonSectionSelector: FC<Props> = ({ section, setSection }) => {
 		<section className={styles.sectionContainer}>
 			<ul className={styles.buttonList}>
 				<li>
-					<button onClick={handleSell}>Куплю</button>
+					<button onClick={handleSell}>Купують </button>
 					{section === "SELL" && <div className={styles.toggle}></div>}
 				</li>
 				<li>
-					<button onClick={handleBuy}>Продам</button>
+					<button onClick={handleBuy}>Продають</button>
 					{section === "BUY" && <div className={styles.toggle}></div>}
 				</li>
 			</ul>

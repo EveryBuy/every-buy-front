@@ -28,7 +28,11 @@ export type Advertisement = {
 	section?: string,
 	city: {},
 	description: string,
-	lowSubCategory: {},
+	lowSubCategory?: {
+		id: number,
+		subCategoryName: string,
+		subCategoryNameUkr: string
+	},
 	mainPhotoUrl: string,
 	price: string,
 	productType: string,
@@ -37,4 +41,4 @@ export type Advertisement = {
 }
 
 export type ListItemsForSearch = Pick<Advertisement,
-	"advertisementId" | "title" | "category" | "topSubCategory" | "section">;
+	"advertisementId" | "title" | "category" | "topSubCategory" | "section" | "lowSubCategory">;

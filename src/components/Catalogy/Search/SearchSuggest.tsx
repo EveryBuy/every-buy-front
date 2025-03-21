@@ -8,7 +8,8 @@ import Image from 'next/image';
 import imgSearchEmpty from '@/assets/Svg/searchEmpty.svg';
 
 type SearchSuggestProps = {
-	searchArr: Advertisement[]
+	searchArr: Advertisement[],
+	searchArrBuy: Advertisement[]
 };
 
 type ItemSearchProps = {
@@ -18,14 +19,28 @@ type ItemSearchProps = {
 const SearchSuggest = (props: SearchSuggestProps): JSX.Element => {
 
 	const searchArr = props.searchArr;
+	const searchArrBuy = props.searchArrBuy;
+
 	return (
 		<div className={styles.searchSuggest}>
 			<div className={styles.searchTitle}>Рекомендації</div>
 			{
-				searchArr && Array.isArray(searchArr) && searchArr.length > 0
-					? <ul className={styles.searchSuggestList}>
-						{searchArr.map((item) => <SuggestItem key={item.advertisementId} item={item} />)}
-					</ul>
+				searchArr && Array.isArray(searchArr) && searchArr.length > 0 ||
+					searchArrBuy && Array.isArray(searchArrBuy) && searchArrBuy.length > 0
+					? <>
+						{searchArr && searchArr.length > 0 && <>
+							<p className={styles.searchSection}>Продають</p>
+							<ul className={styles.searchSuggestList}>
+								{searchArr.slice(0, 10).map((item) => <SuggestItem key={item.advertisementId} item={item} />)}
+							</ul>
+						</>}
+						{searchArrBuy && searchArrBuy.length > 0 && <>
+							<p className={styles.searchSection}>Купують</p>
+							<ul className={styles.searchSuggestList}>
+								{searchArrBuy.slice(0, 10).map((item) => <SuggestItem key={item.advertisementId} item={item} />)}
+							</ul>
+						</>}
+					</>
 					: <div className={styles.searchEmptyWrapper}>
 						<div className={styles.searchEmptyTitle}>Нажаль ми не знайшли жодного оголошення</div>
 						<Image
@@ -47,7 +62,8 @@ const SuggestItem = (props: ItemSearchProps): JSX.Element => {
 		advertisementId,
 		title,
 		category,
-		topSubCategory
+		topSubCategory,
+		lowSubCategory
 	} = props.item;
 
 	return (
@@ -55,7 +71,8 @@ const SuggestItem = (props: ItemSearchProps): JSX.Element => {
 			<Link href={`/announcement?id=${advertisementId}`}>
 				<span className={styles.searchLinkItem}>{title}</span>
 				<span className={styles.searchItemCategory}>{category.nameUkr}
-					/ {topSubCategory.subCategoryNameUkr}</span>
+					/ {topSubCategory.subCategoryNameUkr}
+					{lowSubCategory && " / " + lowSubCategory.subCategoryNameUkr}</span>
 			</Link>
 		</li>
 	)
