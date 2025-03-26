@@ -33,8 +33,15 @@ type createQuerySettingsType = {
 
 const EmptyData = (): JSX.Element => {
 	return (
-		<Box sx={{ margin: "52px 2em 0", textAlign: "center" }}>
-			<Typography sx={{ fontSize: '2em', marginBottom: "60px" }}>
+		<Box sx={{
+			margin: { xs: "32px 2em 0", sm: "52px 2em 0" },
+			textAlign: "center"
+		}}>
+			<Typography
+				sx={{
+					fontSize: { xs: '1.5em', sm: '2em' },
+					marginBottom: { xs: '40px', sm: '60px' }
+				}}>
 				Нажаль ми не знайшли жодного оголошення за вашим запитом.
 			</Typography>
 			<Image
@@ -43,7 +50,10 @@ const EmptyData = (): JSX.Element => {
 				height={350}
 				alt="не має оголошення"
 			/>
-			<Typography sx={{ fontSize: '2em', marginTop: "60px" }}>
+			<Typography sx={{
+				fontSize: { xs: '1.5em', sm: '2em' },
+				marginTop: { xs: '40px', sm: '60px' }
+			}}>
 				Перевірте правильність запиту <br />
 				або оберіть будь-яку категорію для перегляду оголошень.
 			</Typography>
@@ -68,7 +78,7 @@ export const CatalogyPage: React.FC = (): JSX.Element => {
 	const [page, setPage] = useState<number>(1);
 	const [totalAdvert, setTotalAdvert] = useState<number>(0);
 	const [totalPages, setTotalPages] = useState<number>(1);
-	const [section, setSection] = useState<string>("SELL");
+	const [section, setSection] = useState<string>(useAppSelector(state => state.filters.section));
 
 	const [isLoadingPage, setIsLoadingPage] = useState(useAppSelector(state => state.advertisement.isLoading));
 
@@ -291,16 +301,18 @@ export const CatalogyPage: React.FC = (): JSX.Element => {
 			</div> */}
 			<div className={style.wrapperFilters}>
 				<Box sx={{ margin: "2em 0.1em" }}>
-					<Typography variant='h3' sx={{ fontSize: '2.3em' }}>
+					<Typography variant='h3' sx={{ fontSize: { xs: '1.5em', sm: '2.3em' } }}>
 						Фільтри
 					</Typography>
-					<Typography variant='h3'
-						sx={{ fontSize: '1em', cursor: "pointer", margin: "5px 0 0 25px" }}
+					<Typography
+						sx={{ fontSize: '1em', cursor: "pointer", margin: { xs: "5px 0 0 2px", sm: "5px 0 0 25px" } }}
 						onClick={makeLinkOpen}>
 						{isListOpen ? "Згорнути" : "Розгорнути"}
 					</Typography>
 				</Box>
-				<CommonSectionSelector section={section} setSection={setSection} />
+				<Box sx={{ margin: "2em 0.1em" }}>
+					<CommonSectionSelector section={section} setSection={setSection} />
+				</Box>
 			</div>
 			<div className={isListOpen ? style.showListFilters : style.hideListFilters}>
 				<FilterCatalogy heandlerClick={handlerResetFilters} />
@@ -313,7 +325,11 @@ export const CatalogyPage: React.FC = (): JSX.Element => {
 					: typeof (dataArray) === "string"
 						? <div style={{ fontSize: "32px" }}>Помилка сервера</div>
 						: Array.isArray(dataArray) && dataArray.length > 0
-							? <><Typography variant='h3' sx={{ margin: '1rem 0 2.3rem', fontSize: '2.3em' }}>
+							? <><Typography variant='h3'
+								sx={{
+									margin: '1rem 0 2.3rem',
+									fontSize: { xs: '1.5em', sm: '2.3em' }
+								}}>
 								Ми знайшли {countAdvert(totalAdvert)} оголошень
 							</Typography>
 								<CatalogyCard item={dataArray} />

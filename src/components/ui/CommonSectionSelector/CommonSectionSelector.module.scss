@@ -1,0 +1,43 @@
+@import "@/styles/_mixins";
+@import "@/styles/_breakpoints";
+
+/* .sectionContainer {
+  
+} */
+
+.buttonList {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	font-size: 16px;
+
+	@include media-min($breakpoint-mobile) {
+		font-size: 24px;
+	}
+
+	@include media-min($breakpoint-laptop) {
+		font-size: 32px;
+	}
+}
+
+.buttonList li {
+	position: relative;
+}
+
+.buttonList li:first-child {
+	margin-right: 18px;
+}
+
+.toggle {
+	position: absolute;
+	width: 100%;
+	height: 4px;
+	border: 2px solid var(--button);
+	z-index: 999;
+}
+
+.separator {
+	width: 100%;
+	height: 2px;
+	border: 1px solid var(--input-text);
+}

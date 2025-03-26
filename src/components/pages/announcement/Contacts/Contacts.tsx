@@ -21,7 +21,7 @@ export default function Contacts({ contactsInfo }: ContactsProps) {
 
 	const [showNumber, setShowNumber] = useState(false);
 
-	const sectionLabel = section === "SELL" ? "Купівля" : section === "BUY" ? "Продаж" : "Невідомо";
+	const sectionLabel = section === "SELL" ? "Продаж" : section === "BUY" ? "Купівля" : "Невідомо";
 
 	return (
 		<div className={styles.list}>
