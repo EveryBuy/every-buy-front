@@ -24,30 +24,49 @@ const ChatsList: FC<ChatsListType> = ({ chats, setSelectedChatId }) => {
   console.log(chats);
 
   return (
-    <Box className={style.listWrapper}>
+    <Box>
       {chats ? (
-        chats.map(({ chatId, userData, lastMessage, lastMessageDate }) => (
+        chats.length > 0 ? (
+          <Box className={style.listWrapper}>
+            {chats.map(({ chatId, userData, lastMessage, lastMessageDate }) => (
+              <Box
+                key={chatId}
+                className={style.listItem}
+                onClick={() => {
+                  if (chatId) {
+                    handleChatClick(chatId);
+                  }
+                }}
+              >
+                <Chat
+                  lastMessage={lastMessage}
+                  userData={userData}
+                  lastMessageDate={lastMessageDate}
+                  chatId={chatId}
+                />
+              </Box>
+            ))}
+          </Box>
+        ) : (
           <Box
-            className={style.listItem}
-            key={chatId}
-            onClick={() => {
-              if (chatId) {
-                handleChatClick(chatId);
-              }
+            className={style.listWrapper}
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              color: "#9d9d9d",
             }}
           >
-            <Chat
-              lastMessage={lastMessage}
-              userData={userData}
-              lastMessageDate={lastMessageDate}
-              chatId={chatId}
-            />
+            You have no messages yet
           </Box>
-        ))
+        )
       ) : (
         <Box
+          className={style.listWrapper}
           sx={{
-            paddingTop: "50%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
           <CommonPreloader sx={{ color: "#9d9d9d" }} />
@@ -55,6 +74,39 @@ const ChatsList: FC<ChatsListType> = ({ chats, setSelectedChatId }) => {
       )}
     </Box>
   );
+
+  // return (
+  //   <Box className={style.listWrapper}>
+  //     {chats ? (
+  //       chats.map(({ chatId, userData, lastMessage, lastMessageDate }) => (
+  //         <Box
+  //           className={style.listItem}
+  //           key={chatId}
+  //           onClick={() => {
+  //             if (chatId) {
+  //               handleChatClick(chatId);
+  //             }
+  //           }}
+  //         >
+  //           <Chat
+  //             lastMessage={lastMessage}
+  //             userData={userData}
+  //             lastMessageDate={lastMessageDate}
+  //             chatId={chatId}
+  //           />
+  //         </Box>
+  //       ))
+  //     ) : (
+  //       <Box
+  //         sx={{
+  //           paddingTop: "50%",
+  //         }}
+  //       >
+  //         <CommonPreloader sx={{ color: "#9d9d9d" }} />
+  //       </Box>
+  //     )}
+  //   </Box>
+  // );
 };
 
 export default ChatsList;

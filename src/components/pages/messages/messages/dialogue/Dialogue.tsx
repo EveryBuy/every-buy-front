@@ -5,7 +5,7 @@ import { Box } from "@mui/material";
 import {
   CommonPreloader,
   DialogueMessage,
-  EmptyDialogueMessage,
+  // EmptyDialogueMessage,
   LastMessageDate,
   DialogueInput,
 } from "@/components";
@@ -115,15 +115,38 @@ const Dialogue: FC<DialogueType> = ({ chatId }) => {
   return (
     <Box className={style.blockWrapper}>
       {messages ? <LastMessageDate messages={messages} /> : null}
+      {/* <Box className={style.dialogueWrapper} ref={dialogueWrapperRef}>
+        {displayedMessages.map((message) => (
+          <DialogueMessage message={message} key={message.id} />
+        ))}
+
+        <DialogueInput
+          onSendMessage={handleSendMessage}
+          onSendFile={handleSendFile}
+          chatId={chatId}
+        />
+      </Box> */}
+
+      {/* {!messages ? (
+        <EmptyDialogueMessage />
+      ) : (
+        <Box className={style.dialogueWrapper} ref={dialogueWrapperRef}>
+          {displayedMessages.map((message) => (
+            <DialogueMessage message={message} key={message.id} />
+          ))}
+
+          <DialogueInput
+            onSendMessage={handleSendMessage}
+            onSendFile={handleSendFile}
+            chatId={chatId}
+          />
+        </Box>
+      )} */}
 
       <Box className={style.dialogueWrapper} ref={dialogueWrapperRef}>
-        {!messages ? (
-          <EmptyDialogueMessage />
-        ) : (
-          displayedMessages.map((message) => (
-            <DialogueMessage message={message} key={message.id} />
-          ))
-        )}
+        {displayedMessages.map((message) => (
+          <DialogueMessage message={message} key={message.id} />
+        ))}
       </Box>
       <DialogueInput
         onSendMessage={handleSendMessage}

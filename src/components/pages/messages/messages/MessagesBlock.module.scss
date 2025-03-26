@@ -4,7 +4,8 @@
 .blockWrapper {
   display: none;
   @include media-min($breakpoint-tablet) {
-    width: 60%;
+    // width: 60%;
+    width: 827px;
     display: flex;
     flex-direction: column;
     border: 1px solid var(--border);
@@ -12,6 +13,19 @@
   }
   @include media-min($breakpoint-laptop-large) {
     width: 65%;
+  }
+}
+
+.noMessagesBlockWrapper {
+  width: 64%;
+  // width: 827px;
+  display: none;
+  position: relative;
+  @include media-min($breakpoint-tablet) {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border);
+    border-radius: 10px;
   }
 }
 
