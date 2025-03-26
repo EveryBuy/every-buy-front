@@ -29,13 +29,13 @@ const SearchSuggest = (props: SearchSuggestProps): JSX.Element => {
 					searchArrBuy && Array.isArray(searchArrBuy) && searchArrBuy.length > 0
 					? <>
 						{searchArr && searchArr.length > 0 && <>
-							<p className={styles.searchSection}>Продають</p>
+							<p className={styles.searchSection}>Продаж</p>
 							<ul className={styles.searchSuggestList}>
 								{searchArr.slice(0, 10).map((item) => <SuggestItem key={item.advertisementId} item={item} />)}
 							</ul>
 						</>}
 						{searchArrBuy && searchArrBuy.length > 0 && <>
-							<p className={styles.searchSection}>Купують</p>
+							<p className={styles.searchSection}>Купівля</p>
 							<ul className={styles.searchSuggestList}>
 								{searchArrBuy.slice(0, 10).map((item) => <SuggestItem key={item.advertisementId} item={item} />)}
 							</ul>

@@ -84,7 +84,7 @@ const Search: FC<SearchProps> = (props: SearchProps) => {
 			).then((data) => {
 				if (data) {
 					setSearchArr(data.payload.advertisements);
-					console.log('sell', data.payload.advertisements);
+					// console.log('sell', data.payload.advertisements);
 				}
 			});
 			dispatch(
@@ -95,7 +95,7 @@ const Search: FC<SearchProps> = (props: SearchProps) => {
 			).then((data) => {
 				if (data) {
 					setSearchArrBuy(data.payload.advertisements);
-					console.log('buy', data.payload.advertisements);
+					// console.log('buy', data.payload.advertisements);
 				}
 			});
 		}

@@ -21,6 +21,7 @@ export type InitialState = {
 	topSubCategoryId: number | null,
 	lowSubCategoryId: number | null,
 	page: number,
+	section: "SELL" | "BUY",
 }
 
 const initialState: InitialState = {
@@ -39,6 +40,7 @@ const initialState: InitialState = {
 	topSubCategoryId: null,
 	lowSubCategoryId: null,
 	page: 1,
+	section: "SELL",
 }
 
 const filtersSlice = createSlice({
@@ -165,6 +167,16 @@ const filtersSlice = createSlice({
 				}
 			}
 		},
+		addSection: {
+			reducer(state, action: PayloadAction<'SELL' | 'BUY'>) {
+				state.section = action.payload;
+			},
+			prepare(section: 'SELL' | 'BUY') {
+				return {
+					payload: section,
+				}
+			}
+		},
 		resetFilters(state, _) {
 			state.price.min = 0;
 			state.price.max = 100000;
@@ -196,6 +208,7 @@ export const {
 	addTopSubCategoryId,
 	addLowSubCategoryId,
 	addPage,
+	addSection,
 	resetFilters,
 } = filtersSlice.actions;
 

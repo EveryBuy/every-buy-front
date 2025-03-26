@@ -78,7 +78,7 @@ export const CatalogyPage: React.FC = (): JSX.Element => {
 	const [page, setPage] = useState<number>(1);
 	const [totalAdvert, setTotalAdvert] = useState<number>(0);
 	const [totalPages, setTotalPages] = useState<number>(1);
-	const [section, setSection] = useState<string>("SELL");
+	const [section, setSection] = useState<string>(useAppSelector(state => state.filters.section));
 
 	const [isLoadingPage, setIsLoadingPage] = useState(useAppSelector(state => state.advertisement.isLoading));
 
