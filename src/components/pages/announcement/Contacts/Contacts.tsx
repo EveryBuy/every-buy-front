@@ -32,44 +32,7 @@ export default function Contacts({
   const [showNumber, setShowNumber] = useState(false);
 
   const sectionLabel =
-    section === "SELL" ? "Купівля" : section === "BUY" ? "Продаж" : "Невідомо";
-
-  const token = useSelector((state: RootState) => state.auth.token);
-  const router = useRouter();
-
-  const sendFirstMessage = async (id: number) => {
-    try {
-      if (token) {
-        setAuthToken(token);
-      }
-
-      const createRes = await axios.post(
-        `https://service-chat-t47s.onrender.com/chat/create?advertisementId=${id}`
-      );
-
-      const chatId = createRes.data?.data?.id;
-
-      if (chatId) {
-        const text = "Hello!";
-        const messageRes = await axios.post(
-          `https://service-chat-t47s.onrender.com/chat/${chatId}/send-message`,
-          { text }
-        );
-        console.log("messageRes:", messageRes.data);
-        if (messageRes.data) {
-          router.push(`/messages`);
-        }
-      } else {
-        console.warn("Chat ID not found in response");
-      }
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        console.error("Axios error:", error.response?.data || error.message);
-      } else {
-        console.error("Unexpected error:", error);
-      }
-    }
-  };
+    section === "SELL" ? "Продаж" : section === "BUY" ? "Купівля" : "Невідомо";
 
   return (
     <div className={styles.list}>

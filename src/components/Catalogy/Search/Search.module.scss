@@ -40,6 +40,8 @@
   border: 1px solid #e5ff46;
   border-radius: 10px;
   transition: all 0.3s ease;
+  height: 39px;
+  box-sizing: border-box;
 
   @include media-min($breakpoint-mobile) {
     border: none;
@@ -51,6 +53,7 @@
   @include media-min($breakpoint-tablet) {
     padding: 12px 15.5px;
     padding-right: 50px;
+    height: 58px;
   }
 
   @media (min-width: 1024px) {
@@ -107,12 +110,6 @@
   }
 }
 
-@include media-min($breakpoint-mobile) {
-  .searchButtonIcon {
-    display: none;
-  }
-}
-
 .searchInputIconWrapper {
   position: absolute;
   right: 1%;
@@ -120,16 +117,17 @@
   align-items: center;
   width: 28px;
   height: 28px;
-  margin-right: 10px;
-
-  @media (max-width: 480px) {
-    display: none;
-  }
+  margin-right: 4px;
 
   & svg {
-    width: 28px;
+    width: 24px;
     margin: 0px;
     cursor: default;
+
+    @include media-min($breakpoint-mobile) {
+      width: 28px;
+      margin-right: 10px;
+    }
   }
 }
 

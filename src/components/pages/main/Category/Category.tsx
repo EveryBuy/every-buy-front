@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useAppSelector } from "@/redux/store";
 import { CommonPreloader, CommonSectionSelector } from "@/components";
 import { fetchCategoryData } from "@/api/fetchCategoryData";
 // import Fold from "@/assets/Svg/fold.svg";
@@ -13,7 +14,7 @@ const Category: React.FC = () => {
 	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
 	const [isListOpen, setListOpen] = useState(false);
-	const [section, setSection] = useState<string>("BUY");
+	const [section, setSection] = useState<string>(useAppSelector(state => state.filters.section));
 
 	const makeLinkOpen = () => {
 		setListOpen((prev) => !prev);

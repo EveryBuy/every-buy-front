@@ -50,6 +50,7 @@ const Search: FC<SearchProps> = (props: SearchProps) => {
   }
 
   const [searchArr, setSearchArr] = useState<[]>([]);
+  const [searchArrBuy, setSearchArrBuy] = useState<[]>([]);
   const router = useRouter();
 
   const handlerSetWord = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -83,6 +84,18 @@ const Search: FC<SearchProps> = (props: SearchProps) => {
       ).then((data) => {
         if (data) {
           setSearchArr(data.payload.advertisements);
+          // console.log('sell', data.payload.advertisements);
+        }
+      });
+      dispatch(
+        getFilteredAdverts({
+          keyword: word,
+          section: "BUY",
+        })
+      ).then((data) => {
+        if (data) {
+          setSearchArrBuy(data.payload.advertisements);
+          // console.log('buy', data.payload.advertisements);
         }
       });
     }
@@ -91,6 +104,7 @@ const Search: FC<SearchProps> = (props: SearchProps) => {
 
   const handlerClearWord = (): void => {
     setWord("");
+    dispatch(addKeyWord(""));
   };
 
   return (
@@ -104,29 +118,32 @@ const Search: FC<SearchProps> = (props: SearchProps) => {
             onChange={handlerSetWord}
           />
           <div className={styles.searchInputIconWrapper}>
-            {word && word.length > 0 ? (
-              <CommonButton
-                type="button"
-                title=""
-                color="transparent"
-                className={styles.closeBtn}
-                onClick={handlerClearWord}
-              >
-                <CommonIcon
-                  id="icon-close"
-                  width="29"
-                  height="30"
-                  className={styles.searchInputIcon}
-                />
-              </CommonButton>
-            ) : (
-              <CommonIcon
-                id="icon-search"
-                width="28"
-                height="28"
-                className={styles.searchInputIcon}
-              />
-            )}
+            {
+              word && word.length > 0 ? (
+                <CommonButton
+                  type="button"
+                  title=""
+                  color="transparent"
+                  className={styles.closeBtn}
+                  onClick={handlerClearWord}
+                >
+                  <CommonIcon
+                    id="icon-close"
+                    width="29"
+                    height="30"
+                    className={styles.searchInputIcon}
+                  />
+                </CommonButton>
+              ) : null
+              // (
+              // 	<CommonIcon
+              // 		id="icon-search"
+              // 		width="28"
+              // 		height="28"
+              // 		className={styles.searchInputIcon}
+              // 	/>
+              // )
+            }
           </div>
         </div>
         <CommonButton
@@ -144,7 +161,7 @@ const Search: FC<SearchProps> = (props: SearchProps) => {
           />
         </CommonButton>
         {hideSearchSuggest ? null : word.length > 0 ? (
-          <SearchSuggest searchArr={searchArr} />
+          <SearchSuggest searchArr={searchArr} searchArrBuy={searchArrBuy} />
         ) : null}
       </form>
     </div>
