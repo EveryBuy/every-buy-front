@@ -7,12 +7,8 @@
   width: 100%;
 
   @include media-min($breakpoint-tablet) {
-    // width: 36%;
-    width: 458px;
+    width: 36%;
   }
-  // @include media-min($breakpoint-laptop-large) {
-  //   width: 35%;
-  // }
 }
 
 .buttonsWrapper {

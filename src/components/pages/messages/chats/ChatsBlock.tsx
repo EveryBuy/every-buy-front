@@ -82,65 +82,6 @@ const ChatsBlock: FC<ChatsBlockType> = ({
     };
   };
 
-  // return chats && chats?.length === 0 ? null : (
-  //   <Box
-  //     className={
-  //       selectedChatId
-  //         ? `${style.blockWrapper} ${style.hidden}`
-  //         : style.blockWrapper
-  //     }
-  //   >
-  //     <Box className={style.buttonsWrapper}>
-  //       {isHeartSelected ? (
-  //         <Box className={style.savedMessagesHeaderBlock}>
-  //           <Box className={style.text}>
-  //             <CommonIcon
-  //               id="message-left-arrow"
-  //               className={style.arrow}
-  //               onClick={handleIconHeartClick}
-  //             />
-  //             <p>Збережені повідомлення</p>
-  //           </Box>
-  //           <CommonIcon id="icon-heart-selected" className={style.iconHeart} />
-  //         </Box>
-  //       ) : isFolderSelected ? (
-  //         <Box className={style.savedMessagesHeaderBlock}>
-  //           <Box className={style.text}>
-  //             <CommonIcon
-  //               id="message-left-arrow"
-  //               className={style.arrow}
-  //               onClick={handleIconFolderClick}
-  //             />
-  //             <p>Архівовані повідомлення</p>
-  //           </Box>
-  //           <CommonIcon id="folder" className={style.iconFolder} />
-  //         </Box>
-  //       ) : (
-  //         <>
-  //           <Buttons
-  //             typeHandle={handleButtonClick}
-  //             styleButton={getButtonStyle}
-  //             typeButtonBuyStatus={activeButton === 1}
-  //             typeButtonSellStatus={activeButton === 2}
-  //           />
-  //           <Box className={style.iconsWrapper}>
-  //             <Icons
-  //               isItTopBlock={true}
-  //               statusHeartHandler={handleIconHeartClick}
-  //               statusFolderHandler={handleIconFolderClick}
-  //             />
-  //           </Box>
-  //         </>
-  //       )}
-  //     </Box>
-  //     <ChatsList
-  //       chats={chats}
-  //       setSelectedChatId={setSelectedChatId}
-  //       selectedChatId={selectedChatId}
-  //     />
-  //   </Box>
-  // );
-
   return (
     <Box
       className={

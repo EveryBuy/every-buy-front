@@ -19,8 +19,8 @@ interface ChatsListType {
 const ChatsList: FC<ChatsListType> = ({ chats, setSelectedChatId }) => {
   const handleChatClick = (chatId: number) => {
     setSelectedChatId(chatId);
-    // console.log(chatId);
   };
+  // I still need it
   console.log(chats);
 
   return (
@@ -74,39 +74,6 @@ const ChatsList: FC<ChatsListType> = ({ chats, setSelectedChatId }) => {
       )}
     </Box>
   );
-
-  // return (
-  //   <Box className={style.listWrapper}>
-  //     {chats ? (
-  //       chats.map(({ chatId, userData, lastMessage, lastMessageDate }) => (
-  //         <Box
-  //           className={style.listItem}
-  //           key={chatId}
-  //           onClick={() => {
-  //             if (chatId) {
-  //               handleChatClick(chatId);
-  //             }
-  //           }}
-  //         >
-  //           <Chat
-  //             lastMessage={lastMessage}
-  //             userData={userData}
-  //             lastMessageDate={lastMessageDate}
-  //             chatId={chatId}
-  //           />
-  //         </Box>
-  //       ))
-  //     ) : (
-  //       <Box
-  //         sx={{
-  //           paddingTop: "50%",
-  //         }}
-  //       >
-  //         <CommonPreloader sx={{ color: "#9d9d9d" }} />
-  //       </Box>
-  //     )}
-  //   </Box>
-  // );
 };
 
 export default ChatsList;

@@ -33,18 +33,6 @@ const MessagesBlock: FC<MessagesBlockType> = ({
       <Dialogue chatId={chatId} />
     </Box>
   );
-  // return (
-  //   <Box
-  //     className={
-  //       chatId ? `${style.blockWrapper} ${style.visible}` : style.blockWrapper
-  //     }
-  //   >
-  //     {/* setSelectedChatId - for mobile version */}
-  //     <Companion setSelectedChatId={setSelectedChatId} />
-  //     <Product />
-  //     <Dialogue chatId={chatId} />
-  //   </Box>
-  // );
 };
 
 export default MessagesBlock;

@@ -46,8 +46,6 @@ const DialogueInput: FC<DialogueInputProps> = ({
         });
 
         if (response.data) {
-          // const userId = response.data.userId;
-          // const userPhotoUrl = response.data.userPhotoUrl;
           const { userId, userPhotoUrl } = response.data;
           console.log("Message sent:", message);
           onSendMessage(message, userId, userPhotoUrl);
@@ -55,8 +53,6 @@ const DialogueInput: FC<DialogueInputProps> = ({
       } catch (error) {
         console.error("Помилка надсилання повідомлення:", error);
       }
-      //
-      // console.log("Message sent:", message);
       // onSendMessage(message);
       setMessage("");
     } else {
