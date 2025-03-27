@@ -6,11 +6,13 @@ import { FullChatType } from "@/types/messages/chats";
 
 interface InitialStateType {
   chat: FullChatType | null;
+  chatId: number | null;
   loading: boolean;
   error: null | string;
 }
 const initialState: InitialStateType = {
   // chats: [],
+  chatId: null,
   chat: null,
   // messages: [],
   loading: false,
@@ -20,7 +22,11 @@ const initialState: InitialStateType = {
 const messagesSlice = createSlice({
   name: "messages",
   initialState,
-  reducers: {},
+  reducers: {
+    setNewChatId: (state, action) => {
+      state.chatId = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       // .addMatcher(
@@ -45,3 +51,4 @@ const messagesSlice = createSlice({
 });
 
 export const messagesReducer = messagesSlice.reducer;
+export const { setNewChatId } = messagesSlice.actions;

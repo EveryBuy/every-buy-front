@@ -1,15 +1,13 @@
 "use client";
 
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { CommonIcon, CommonButton } from "@/components";
 import styles from "./Contacts.module.scss";
 import { deliveryToString } from "../deliveryToString";
-import setAuthToken from "@/utils/setAuthToken";
-import { RootState } from "@/redux/store";
-import axios from "axios";
-
+import { useCreateChatMutation } from "@/redux/messages/chatApi";
+import { useDispatch } from "react-redux";
+import { setNewChatId } from "@/redux/messages/slice";
 interface ContactsProps {
   contactsInfo: {
     publicDate: string;
@@ -30,46 +28,35 @@ export default function Contacts({
     contactsInfo;
 
   const [showNumber, setShowNumber] = useState(false);
+  const [createChat] = useCreateChatMutation();
+  const [chatId, setChatId] = useState<number | null>(null);
+  const router = useRouter();
+  const dispatch = useDispatch();
 
   const sectionLabel =
     section === "SELL" ? "Продаж" : section === "BUY" ? "Купівля" : "Невідомо";
 
-  const token = useSelector((state: RootState) => state.auth.token);
-  const router = useRouter();
-
-  const sendFirstMessage = async (id: number) => {
+  const getNewChatIdHandler = async () => {
     try {
-      if (token) {
-        setAuthToken(token);
-      }
+      if (advertisementId) {
+        const response = await createChat({ advId: advertisementId }).unwrap();
+        console.log(response);
 
-      const createRes = await axios.post(
-        `https://service-chat-t47s.onrender.com/chat/create?advertisementId=${id}`
-      );
-
-      const chatId = createRes.data?.data?.id;
-
-      if (chatId) {
-        const text = "Hello!";
-        const messageRes = await axios.post(
-          `https://service-chat-t47s.onrender.com/chat/${chatId}/send-message`,
-          { text }
-        );
-        console.log("messageRes:", messageRes.data);
-        if (messageRes.data) {
-          router.push(`/messages`);
+        const newChatId = response?.id;
+        if (newChatId) {
+          setChatId(newChatId);
+          dispatch(setNewChatId(newChatId));
         }
-      } else {
-        console.warn("Chat ID not found in response");
       }
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        console.error("Axios error:", error.response?.data || error.message);
-      } else {
-        console.error("Unexpected error:", error);
-      }
+      console.error(error);
     }
   };
+  useEffect(() => {
+    if (chatId) {
+      router.push(`/messages`);
+    }
+  }, [chatId, router]);
 
   return (
     <div className={styles.list}>
@@ -100,7 +87,7 @@ export default function Contacts({
               title=""
               color="transparent"
               className={styles.yellowBorderButton}
-              onClick={() => sendFirstMessage(advertisementId!)}
+              onClick={() => getNewChatIdHandler()}
             >
               Надіслати повідомлення
             </CommonButton>

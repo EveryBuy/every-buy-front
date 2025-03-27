@@ -24,16 +24,19 @@ const ChatsBlock: FC<ChatsBlockType> = ({
   const [isFolderSelected, setFolderSelected] = useState<boolean>(false);
   const {
     data: buyChats,
+    isFetching: isBuyChatsFetching,
     // isLoading: isBuyChatsLoading,
     // isError: isBuyChatsError,
   } = useGetBuyChatsQuery();
   const {
     data: sellChats,
+    isFetching: isSellChatsFetching,
     // isLoading: isSellChatsLoading,
     // isError: isSellChatsError,
   } = useGetSellChatsQuery();
   const { data: favoritesChats } = useGetFavoritesChatsQuery();
   const { data: archivedChats } = useGetArchivedChatsQuery();
+  console.log(buyChats);
 
   // filter chats and hidden them if they are in the archive
   let updatedBuyChats;
@@ -137,6 +140,8 @@ const ChatsBlock: FC<ChatsBlockType> = ({
         chats={chats}
         setSelectedChatId={setSelectedChatId}
         selectedChatId={selectedChatId}
+        isBuyChatsLoading={isBuyChatsFetching}
+        isSellChatsLoading={isSellChatsFetching}
       />
     </Box>
   );

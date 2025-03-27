@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { RootState } from "@/redux/store";
 import {
+  NewChatType,
   ChatsType,
   FullChatType,
   FavoritesChatType,
@@ -24,11 +25,20 @@ export const chatApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["Chat"],
+  tagTypes: ["Chat", "BuyChats"],
   endpoints: (builder) => ({
+    createChat: builder.mutation<NewChatType, { advId: number }>({
+      query: ({ advId }) => ({
+        url: `/chat/create?advertisementId=${advId}`,
+        method: "POST",
+      }),
+      transformResponse: (response: { status: number; data: NewChatType }) =>
+        response.data,
+      invalidatesTags: ["Chat"],
+    }),
     getBuyChats: builder.query<ChatsType, void>({
       query: () => "/chat/get-buy-users-chats",
-      providesTags: ["Chat"],
+      providesTags: ["BuyChats"],
     }),
     getSellChats: builder.query<ChatsType, void>({
       query: () => "/chat/get-sell-users-chats",
@@ -87,6 +97,7 @@ export const chatApi = createApi({
         method: "POST",
         body: { text },
       }),
+      invalidatesTags: ["Chat", "BuyChats"],
     }),
     uploadFileToChat: builder.mutation({
       query: ({
@@ -105,6 +116,7 @@ export const chatApi = createApi({
 });
 
 export const {
+  useCreateChatMutation,
   useGetBuyChatsQuery,
   useGetSellChatsQuery,
   useGetChatQuery,

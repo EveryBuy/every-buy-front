@@ -17,6 +17,22 @@ type ChatType = {
   // handleChatClick: (chatId: number) => void;
 };
 
+type NewChatType = {
+  id: number;
+  advertisementId: number;
+  creationDate: string;
+  buyerId: number;
+  sellerId: number;
+};
+
+// type NewMessageType = {
+//   id: number;
+//   advertisementId: number;
+//   creationDate: string;
+//   buyerId: number;
+//   sellerId: number;
+// };
+
 type FullChatType = {
   id: number;
   section: string;
@@ -60,6 +76,7 @@ type ArchivedChatType = {
 
 export {
   UserDataType,
+  NewChatType,
   ChatType,
   FullChatType,
   ChatsType,
