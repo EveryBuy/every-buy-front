@@ -10,6 +10,7 @@ export type SortOrder = "ASC" | "DESC";
 
 export type InitialState = {
 	price: Price,
+	limitPrice: Price,
 	productType: ProductType | '',
 	sortOrder: SortOrder | '',
 	location: string,
@@ -26,6 +27,10 @@ export type InitialState = {
 
 const initialState: InitialState = {
 	price: {
+		min: 0,
+		max: 100000,
+	},
+	limitPrice: {
 		min: 0,
 		max: 100000,
 	},
@@ -54,6 +59,16 @@ const filtersSlice = createSlice({
 			prepare(price: Price) {
 				return {
 					payload: price,
+				}
+			},
+		},
+		addLimitPrice: {
+			reducer(state, action: PayloadAction<Price>) {
+				state.limitPrice = action.payload;
+			},
+			prepare(limitPrice: Price) {
+				return {
+					payload: limitPrice,
 				}
 			},
 		},
@@ -178,8 +193,8 @@ const filtersSlice = createSlice({
 			}
 		},
 		resetFilters(state, _) {
-			state.price.min = 0;
-			state.price.max = 100000;
+			state.price.min = state.limitPrice.min || 0;
+			state.price.max = state.limitPrice.max || 100000;
 			state.productType = '';
 			state.sortOrder = '';
 			state.location = '';
@@ -197,6 +212,7 @@ const filtersSlice = createSlice({
 
 export const {
 	addPrice,
+	addLimitPrice,
 	addProductType,
 	addSortOrder,
 	addLocation,

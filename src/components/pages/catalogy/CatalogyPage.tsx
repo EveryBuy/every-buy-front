@@ -5,7 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import { useAppSelector, useAppDispatch } from "@/redux/store";
 import { getFilteredAdverts } from '@/redux/advertisement/operations';
 import { useRouter } from 'next/navigation';
-import { addPage, addPrice, resetFilters } from '@/redux/filters/slice';
+import { addPage, addLimitPrice, resetFilters } from '@/redux/filters/slice';
 
 import { CatalogyCard } from "../../Catalogy/cardCatalogy/CatalogyCard";
 import { Container, Box, Typography } from '@mui/material';
@@ -103,11 +103,14 @@ export const CatalogyPage: React.FC = (): JSX.Element => {
 		// page
 	} = filtersSetting;
 
+	const minLimitPrice = useAppSelector(state => state.filters.limitPrice.min);
+	const maxLimitPrice = useAppSelector(state => state.filters.limitPrice.max);
+
 	const createQuerySettings = (): createQuerySettingsType => {
 		let queryArray: string[] = [];
 		if (categoryId !== null) queryArray.push(`categoryId=${categoryId}`);
-		if (minPrice !== 0) queryArray.push(`minPrice=${minPrice}`);
-		if (maxPrice !== 100000) queryArray.push(`maxPrice=${maxPrice}`);
+		if (minPrice !== minLimitPrice) queryArray.push(`minPrice=${minPrice}`);
+		if (maxPrice !== maxLimitPrice) queryArray.push(`maxPrice=${maxPrice}`);
 		if (sortOrder !== "") queryArray.push(`sortOrder=${sortOrder}`);
 		if (regionId !== null) queryArray.push(`regionId=${regionId}`);
 		if (cityId !== null) queryArray.push(`cityId=${cityId}`);
@@ -139,11 +142,13 @@ export const CatalogyPage: React.FC = (): JSX.Element => {
 				const newData: [] | string = data.payload.advertisements;
 				// console.log(data);
 				if (newData && newData.length > 0) {
-					// console.log('newData', newData);
+					console.log('newData', newData);
 					setDataArray(newData);
 					setTotalPages(data.payload.totalPages);
 					setTotalAdvert(data.payload.totalAdvertisements);
-					// dispatch(addPrice({
+					console.log('min', data.payload.minPrice);
+					console.log('max', data.payload.maxPrice);
+					// dispatch(addLimitPrice({
 					// 	min: data.payload.minPrice,
 					// 	max: data.payload.maxPrice
 					// }));
