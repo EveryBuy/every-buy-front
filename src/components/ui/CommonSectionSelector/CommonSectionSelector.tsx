@@ -10,38 +10,38 @@ import styles from "./CommonSectionSelector.module.scss";
 // default - "SELL"
 
 type Props = {
-	section: string;
-	setSection: (section: string) => void;
+  section: string;
+  setSection: (section: string) => void;
 };
 
 export const CommonSectionSelector: FC<Props> = ({ section, setSection }) => {
-	const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
 
-	const handleBuy = () => {
-		setSection("BUY");
-		dispatch(addSection("BUY"));
-	};
+  const handleBuy = () => {
+    setSection("BUY");
+    dispatch(addSection("BUY"));
+  };
 
-	const handleSell = () => {
-		setSection("SELL");
-		dispatch(addSection("SELL"));
-	};
+  const handleSell = () => {
+    setSection("SELL");
+    dispatch(addSection("SELL"));
+  };
 
-	return (
-		<section className={styles.sectionContainer}>
-			<ul className={styles.buttonList}>
-				<li>
-					<button onClick={handleBuy}>Купують </button>
-					{section === "BUY" && <div className={styles.toggle}></div>}
-				</li>
-				<li>
-					<button onClick={handleSell}>Продають</button>
-					{section === "SELL" && <div className={styles.toggle}></div>}
-				</li>
-			</ul>
-			<div className={styles.separator}></div>
-		</section>
-	);
+  return (
+    <section className={styles.sectionContainer}>
+      <ul className={styles.buttonList}>
+        <li>
+          <button onClick={handleBuy}>Купують </button>
+          {section === "BUY" && <div className={styles.toggle}></div>}
+        </li>
+        <li>
+          <button onClick={handleSell}>Продають</button>
+          {section === "SELL" && <div className={styles.toggle}></div>}
+        </li>
+      </ul>
+      <div className={styles.separator}></div>
+    </section>
+  );
 };
 
 export default CommonSectionSelector;

@@ -12,7 +12,9 @@ const LastMessageDate: FC<LastMessageDate> = ({ messages }) => {
   return (
     <Box className={style.dateWrapper}>
       <Box className={style.date}>
-        {formatMessageDate(messages[messages.length - 1].creationTime)}
+        {messages?.length
+          ? formatMessageDate(messages[messages.length - 1].creationTime)
+          : ""}
       </Box>
     </Box>
   );

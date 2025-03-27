@@ -5,7 +5,7 @@ import { Box } from "@mui/material";
 import {
   CommonPreloader,
   DialogueMessage,
-  EmptyDialogueMessage,
+  // EmptyDialogueMessage,
   LastMessageDate,
   DialogueInput,
 } from "@/components";
@@ -100,7 +100,7 @@ const Dialogue: FC<DialogueType> = ({ chatId }) => {
     return (
       <Box
         sx={{
-          paddingTop: "25%",
+          paddingTop: "15%",
         }}
       >
         <CommonPreloader sx={{ color: "#9d9d9d" }} />
@@ -117,13 +117,9 @@ const Dialogue: FC<DialogueType> = ({ chatId }) => {
       {messages ? <LastMessageDate messages={messages} /> : null}
 
       <Box className={style.dialogueWrapper} ref={dialogueWrapperRef}>
-        {!messages ? (
-          <EmptyDialogueMessage />
-        ) : (
-          displayedMessages.map((message) => (
-            <DialogueMessage message={message} key={message.id} />
-          ))
-        )}
+        {displayedMessages.map((message) => (
+          <DialogueMessage message={message} key={message.id} />
+        ))}
       </Box>
       <DialogueInput
         onSendMessage={handleSendMessage}

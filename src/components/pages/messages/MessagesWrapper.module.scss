@@ -18,7 +18,7 @@
   padding-left: 20px;
   padding-right: 20px;
   @include media-min($breakpoint-tablet) {
-    padding: 0px 20px 31px;
+    padding: 0px 60px 31px;
   }
 }
 
@@ -35,10 +35,4 @@
     padding: 0px 60px;
     column-gap: 35px;
   }
-  // @media (min-width: 1024px) {
-  //   height: 720px;
-  //   margin: 26px 0px 0px;
-  //   padding: 0px 60px;
-  //   column-gap: 35px;
-  // }
 }

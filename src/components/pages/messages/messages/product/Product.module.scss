@@ -48,7 +48,6 @@
 }
 
 .name {
-  // font-size: var(--large-body-medium);
   @include media-min($breakpoint-tablet) {
     font-size: var(--large-body-medium);
   }
