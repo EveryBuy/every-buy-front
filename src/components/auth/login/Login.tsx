@@ -61,8 +61,8 @@ const Login: React.FC = () => {
       newErrors.emailOrPhone = "невірний формат телефону чи e-mail";
     }
     if (!validatePassword(password)) {
-      newErrors.password = "Невірний формат пароля";
-      // "Пароль повинен включати: Великі літери: A-Z. Маленькі літери: a-z. Цифри: 0-9. Символи: ~! @#$%^&*()_-+={[}]|\\:;\"'<,>.?/ ";
+      newErrors.password =
+        "Пароль має містити великі і малі літери, цифри і символи";
     }
     setErrors(newErrors);
     if (newErrors.emailOrPhone || newErrors.password) {
@@ -186,7 +186,7 @@ const Login: React.FC = () => {
         </button>
       </form>
 
-      {loginServerErrorModal && (
+      {/* {loginServerErrorModal && (
         <ErrorModal
           onClose={() => {
             setLoginServerErrorModal(false);
@@ -195,8 +195,8 @@ const Login: React.FC = () => {
           title={"Упс! Проблеми на сервері!"}
           buttonText={"Перезавантажити сторінку"}
         />
-      )}
-      {loginUserErrorModal && (
+      )} */}
+      {/* {loginUserErrorModal && (
         <ErrorModal
           onClose={() => {
             setLoginUserErrorModal(false);
@@ -207,14 +207,14 @@ const Login: React.FC = () => {
           }
           buttonText={"Повернутися"}
         />
-      )}
-      {unknownErrorModalOpen && (
+      )} */}
+      {/* {unknownErrorModalOpen && (
         <ErrorModal
           onClose={() => router.push("/")}
           title={"Упс! Невідома помилка!"}
           buttonText={"На головну"}
         />
-      )}
+      )} */}
     </>
   );
 };
