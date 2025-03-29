@@ -151,22 +151,22 @@ export const CatalogyPage: React.FC = (): JSX.Element => {
 		dispatch(getFilteredAdverts(obj))
 			.then((data) => {
 				const newData: [] | string = data.payload.advertisements;
-				// console.log(data);
+				console.log(data);
 				if (newData && newData.length > 0) {
 					// console.log('newData', newData);
 					setDataArray(newData);
 					setTotalPages(data.payload.totalPages);
 					setTotalAdvert(data.payload.totalAdvertisements);
-					// dispatch(addPrice({
-					// 	min: data.payload.minPrice,
-					// 	max: data.payload.maxPrice
-					// }));
 				} else {
 					setDataArray([]);
 					setTotalPages(0);
 					// console.log('not data');
 					// console.log('dataArray', dataArray);
 				}
+				dispatch(addLimitPrice({
+					min: Math.floor(data.payload.minPrice),
+					max: Math.ceil(data.payload.maxPrice)
+				}));
 			})
 			.catch((error) => console.error("Error: ", error))
 			.finally(() => {
@@ -204,7 +204,7 @@ export const CatalogyPage: React.FC = (): JSX.Element => {
 	useEffect(() => {
 		updateDataAdvert(true);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [filtersSetting, section]); //min, max, categoryId, sortOrder, productType, ...
+	}, [categoryId, maxPrice, minPrice, sortOrder, regionId, cityId, topSubCategoryId, lowSubCategoryId, productType, keyword, section]); // filtersSetting: min, max, categoryId, sortOrder, productType, ...
 
 	useEffect(() => {
 		updateDataAdvert(false);
