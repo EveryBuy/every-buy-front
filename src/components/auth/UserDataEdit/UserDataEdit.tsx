@@ -142,7 +142,7 @@ export const UserDataEdit: FC<Props> = ({ onEdit }: Props) => {
           <h3> Введіть пароль для підтвердження зміни номеру телефону</h3>
           <div className={styles.imageWrapper}>
             <CommonInput
-              typeInput={showPwd ? "text" : "password"}
+              typeInput={showPwd ? true : "password"}
               setValue={(e) => setPassword(e.target.value)}
             />
             <Image
@@ -177,7 +177,20 @@ export const UserDataEdit: FC<Props> = ({ onEdit }: Props) => {
           onClose={() => setIsOpenEmailModal(false)}
         >
           <h3> Введіть пароль для підтвердження зміни email</h3>
-          <CommonInput setValue={(e) => setPassword(e.target.value)} />
+          <div className={styles.imageWrapper}>
+            <CommonInput
+              typeInput={showPwd ? true : "password"}
+              setValue={(e) => setPassword(e.target.value)}
+            />
+            <Image
+              className={styles.EyePassword}
+              src={!showPwd ? EyeInvisibleFilled : EyeFilled}
+              alt="showPassword"
+              width={24}
+              height={24}
+              onClick={toggleShowPwd}
+            />
+          </div>
           <CommonButton
             type="button"
             title="Підтвердити"
@@ -205,7 +218,7 @@ export const UserDataEdit: FC<Props> = ({ onEdit }: Props) => {
       <form>
         <div className={styles.inputWrapper}>
           <CommonInput
-            typeInput="text"
+            typeInput={true}
             id="name"
             value={name}
             setValue={(e) => setName(e.target.value)}
@@ -237,7 +250,7 @@ export const UserDataEdit: FC<Props> = ({ onEdit }: Props) => {
         </div>
         <div className={styles.inputWrapper}>
           <CommonInput
-            typeInput="text"
+            typeInput={true}
             id="phone"
             value={phone}
             setValue={(e) => setPhone(e.target.value)}
@@ -269,7 +282,7 @@ export const UserDataEdit: FC<Props> = ({ onEdit }: Props) => {
         </div>
         <div className={styles.inputWrapper}>
           <CommonInput
-            typeInput="text"
+            typeInput={true}
             id="email"
             value={email}
             setValue={(e) => setEmail(e.target.value)}

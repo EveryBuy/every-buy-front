@@ -10,17 +10,15 @@ import styles from "./Register.module.scss";
 import CommonInput from "@/components/ui/CommonInput/CommonInput";
 import Image from "next/image";
 import { register } from "@/redux/auth/operations";
-import { selectError, selectIsLoggedIn } from "@/redux/auth/selectors";
+import { selectIsLoggedIn } from "@/redux/auth/selectors";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import {
   validatePhone,
   validateEmail,
   validatePassword,
 } from "@/utils/validate";
-import { SuccessRegisterModal, ErrorModal } from "@/components";
-import { useSelector } from "react-redux";
+import { SuccessRegisterModal } from "@/components";
 import clsx from "clsx";
-import { clearErrors } from "@/redux/auth/slice";
 
 type ErrorsType = {
   phone: string;
@@ -47,99 +45,23 @@ const Register: React.FC = () => {
   });
   const [successRegisterModalOpen, setSuccessRegisterModalOpen] =
     useState(false);
-  const [serverErrorModalOpen, setServerErrorModalOpen] = useState(false);
-  const [unknownErrorModalOpen, setUnknownErrorModalOpen] = useState(false);
-  const [userErrorModalOpen, setUserErrorModalOpen] = useState(false);
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const showSuccessRegisterModal = useRef(false);
-  const isError = useSelector(selectError);
 
   useEffect(() => {
-    // if (isLoggedIn) dispatch(clearErrors());
     if (isLoggedIn && !showSuccessRegisterModal.current) {
       router.push("/user");
     } else {
       showSuccessRegisterModal.current = true;
     }
     if (isLoggedIn && showSuccessRegisterModal.current) {
-      setServerErrorModalOpen(false);
       setSuccessRegisterModalOpen(true);
     }
   }, [isLoggedIn, router]);
 
-  // check before submit
-  const handleBlur = (field: string) => {
-    const newErrors = { ...errors };
-
-    if (field === "phone") {
-      if (!validatePhone(phone)) {
-        newErrors.phone = "Невірний формат телефону";
-      } else {
-        newErrors.phone = "";
-      }
-    }
-
-    if (field === "email") {
-      if (!validateEmail(email)) {
-        newErrors.email = "Невірний формат e-mail";
-      } else {
-        newErrors.email = "";
-      }
-    }
-
-    if (field === "password") {
-      if (!validatePassword(password)) {
-        newErrors.password = "Невірний формат пароля";
-        // "Пароль повинен включати: Великі літери: A-Z. Маленькі літери: a-z. Цифри: 0-9. Символи: ~!@#$%^&*()_-+={[}]|\\:;\"'<,>.?/ ";
-      } else {
-        newErrors.password = "";
-      }
-    }
-
-    if (field === "confirmPassword") {
-      if (password !== confirmPassword) {
-        newErrors.confirmPassword = "Паролі не співпадають";
-      } else {
-        newErrors.confirmPassword = "";
-      }
-    }
-
-    setErrors(newErrors);
-  };
-
-  // check for submit
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(clearErrors());
-    const newErrors = {
-      phone: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-    };
-    if (!validatePhone(phone)) {
-      newErrors.phone = "Невірний формат телефону";
-    }
-    if (!validateEmail(email)) {
-      newErrors.email = "Невірний формат e-mail";
-    }
-    if (!validatePassword(password)) {
-      newErrors.password =
-        // "Пароль повинен включати: Великі літери: A-Z. Маленькі літери: a-z. Цифри: 0-9. Символи: ~! @#$%^&*()_-+={[}]|\\:;\"'<,>.?/ ";
-        "Невірний формат пароля";
-    }
-    if (password !== confirmPassword) {
-      newErrors.confirmPassword = "Паролі не співпадають";
-    }
-    setErrors(newErrors);
-    if (
-      newErrors.phone ||
-      newErrors.email ||
-      newErrors.password ||
-      newErrors.confirmPassword
-    ) {
-      return;
-    }
+
     await dispatch(
       register({
         email: email,
@@ -147,39 +69,52 @@ const Register: React.FC = () => {
         password: password,
       })
     );
-
-    if (isError) {
-      console.log("Error", isError);
-      switch (isError.status) {
-        case 500:
-          setServerErrorModalOpen(true);
-          break;
-        case 409:
-          setUserErrorModalOpen(true);
-          break;
-        default:
-          setUnknownErrorModalOpen(true);
-      }
-    }
   };
 
-  const getInputClass = (field: string) => {
-    if (errors[field]) {
-      return "invalid";
-    } else if (field === "phone" && validatePhone(phone)) {
-      return "valid";
-    } else if (field === "email" && validateEmail(email)) {
-      return "valid";
-    } else if (field === "password" && validatePassword(password)) {
-      return "valid";
-    } else if (
-      field === "confirmPassword" &&
-      password === confirmPassword &&
-      confirmPassword !== ""
-    ) {
-      return "valid";
-    }
-    return "";
+  const handlePhone = (evt: React.ChangeEvent<HTMLInputElement>) => {
+    const inputValue = evt.target.value.replace(/\D/g, ""); // Видаляємо всі нецифрові символи
+    const phoneWithoutPrefix = inputValue.replace(/^380/, ""); // Прибираємо 380, якщо юзер випадково вводить
+
+    setPhone(phoneWithoutPrefix); // Оновлюємо лише змінну після +380
+
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      phone: validatePhone(`+380${phoneWithoutPrefix}`)
+        ? ""
+        : "Невірний формат телефону",
+    }));
+  };
+
+  const handleEmail = (evt: React.ChangeEvent<HTMLInputElement>) => {
+    const newEmail = evt.target.value;
+    setEmail(newEmail);
+
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      email: validateEmail(newEmail) ? "" : "Невірний фомат email.",
+    }));
+  };
+
+  const handlePassword = (evt: React.ChangeEvent<HTMLInputElement>) => {
+    const newPassword = evt.target.value;
+
+    setPassword(newPassword);
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      password: validatePassword(newPassword) ? "" : "Невірний формат паролю.",
+    }));
+  };
+
+  const handleConfirmPass = (evt: React.ChangeEvent<HTMLInputElement>) => {
+    const newConfirmPass = evt.target.value;
+
+    setConfirmPassword(newConfirmPass);
+
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      confirmPassword:
+        password === newConfirmPass ? "" : "Паролі не співпадають.",
+    }));
   };
 
   const changeEyeShowPasswordStatus = () => {
@@ -197,11 +132,8 @@ const Register: React.FC = () => {
           text="Телефон"
           typeInput={true}
           required={true}
-          value={phone}
-          setValue={(e) => setPhone(e.target.value)}
-          className={getInputClass("phone")}
-          placeholder="+380"
-          setOnBlur={() => handleBlur("phone")}
+          value={`+380${phone}`}
+          setValue={(evt) => handlePhone(evt)}
           errorsMessage={
             errors.phone && (
               <span className={styles.errorMessage}>{errors.phone}</span>
@@ -235,9 +167,7 @@ const Register: React.FC = () => {
           typeInput={true}
           value={email}
           required={true}
-          setValue={(e) => setEmail(e.target.value)}
-          setOnBlur={() => handleBlur("email")}
-          className={getInputClass("email")}
+          setValue={(evt) => handleEmail(evt)}
           placeholder="введіть email"
           errorsMessage={
             errors.email && (
@@ -271,9 +201,7 @@ const Register: React.FC = () => {
           text="Введіть пароль"
           typeInput={showPassword}
           value={password}
-          setValue={(e) => setPassword(e.target.value)}
-          setOnBlur={() => handleBlur("password")}
-          className={getInputClass("password")}
+          setValue={(evt) => handlePassword(evt)}
           required={true}
           placeholder="введіть свій пароль"
           errorsMessage={
@@ -301,9 +229,7 @@ const Register: React.FC = () => {
           text="Введіть пароль ще раз"
           typeInput={showConfirmPassword}
           value={confirmPassword}
-          setValue={(e) => setConfirmPassword(e.target.value)}
-          setOnBlur={() => handleBlur("confirmPassword")}
-          className={getInputClass("confirmPassword")}
+          setValue={(evt) => handleConfirmPass(evt)}
           required={true}
           placeholder="введіть свій пароль"
           errorsMessage={
@@ -333,36 +259,17 @@ const Register: React.FC = () => {
             phone && email && password && confirmPassword && styles.activeColor
           )}
           type="submit"
+          disabled={
+            errors.phone || errors.email || errors.confirmPassword
+              ? true
+              : false
+          }
         >
           Зареєструватись
         </button>
       </form>
 
       {successRegisterModalOpen && <SuccessRegisterModal />}
-      {serverErrorModalOpen && (
-        <ErrorModal
-          onClose={() => {
-            setServerErrorModalOpen(false);
-            router.refresh();
-          }}
-          title={"Упс! Проблеми на сервері!"}
-          buttonText={"Перезавантажити сторінку"}
-        />
-      )}
-      {userErrorModalOpen && (
-        <ErrorModal
-          onClose={() => router.push("/login")}
-          title={"Користувач з таким телефоном/імейлом вже зареєстрований!"}
-          buttonText={"Вхід"}
-        />
-      )}
-      {unknownErrorModalOpen && (
-        <ErrorModal
-          onClose={() => router.push("/")}
-          title={"Упс! Невідома помилка!"}
-          buttonText={"На головну"}
-        />
-      )}
     </>
   );
 };
