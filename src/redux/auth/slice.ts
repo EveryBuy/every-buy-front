@@ -22,7 +22,7 @@ import {
   User,
   UserFullName,
 } from "@/types/stateTypes";
-import { changeNameMessages, changePhoneMessages, unsubscribeMessages } from "@/utils/errorMessages";
+import { changeEmailMessages, changeNameMessages, changePhoneMessages, loginMessages, registerMessages, unsubscribeMessages } from "@/utils/errorMessages";
 
 const initialState: AuthState = {
   user: {
@@ -70,8 +70,8 @@ const authSlice = createSlice({
       .addCase(register.rejected, (state, action: PayloadAction<any>) => {
         state.isLoggedIn = false;
         state.error = action.payload;
-        // here can be error notification like
-        // toast.error(`Holly shit happends! Error:${payload}`)
+        const message = registerMessages(action.payload.status);
+        toast.error(message);
       })
       .addCase(login.fulfilled, (state, { payload }) => {
         state.user = payload.data;
@@ -79,10 +79,10 @@ const authSlice = createSlice({
         state.isLoggedIn = true;
         // console.log(state);
       })
-      .addCase(login.rejected, (state, action) => {
+      .addCase(login.rejected, (state, action: PayloadAction<any>) => {
         state.isLoggedIn = false;
-        // here can be error notification like
-        // toast.error(`Holly shit happends! Error:${payload}`)
+        const message = loginMessages(action.payload.status);
+        toast.error(message)
       })
       .addCase(logout.fulfilled, (state) => {
         state.user = {
@@ -152,11 +152,15 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(changeUserEmail.fulfilled, (state, action: PayloadAction<any>) => {
-        state.user = action.payload;
+        console.log(action.payload);
+        state.user = action.payload.data;
+        state.token = action.payload.token;
         toast.success("Email successfully changed!");
       })
-      .addCase(changeUserEmail.rejected, (state, action) => {
+      .addCase(changeUserEmail.rejected, (state, action: PayloadAction<any>) => {
         state.error = action.payload;
+        const message = changeEmailMessages(action.payload.status);
+        toast.error(message);
       })
       .addCase(changeUserPhoto.fulfilled, (state, action) => {
         state.user.userPhotoUrl = action.payload.data.userPhotoUrl

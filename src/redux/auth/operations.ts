@@ -21,9 +21,8 @@ export const register = createAsyncThunk(
     
     try {
       const response = await API.post("/auth/registration", userRegisterData);
-      console.log("Response", response);
       setHeaderAuthToken(response.data.data.token);
-      await delay(3000);
+      await delay(4000);
       const userData = await API.get("/user");
       return { data: userData.data.data, token: response.data.data.token };
     } catch (error: any) {
@@ -175,7 +174,13 @@ export const changeUserEmail = createAsyncThunk(
       const state = getState() as RootState;
       setHeaderAuthToken(state.auth.token);
       const response = await API.put("/auth/change-email", changeEmailData);
-      return response.data;
+      console.log(response.data.data.token);
+      
+      setHeaderAuthToken(response.data.data.token);
+      await delay(1000);
+      const userData = await API.get("/user");
+      return { data: userData.data.data, token: response.data.data.token };
+
     } catch (error: any) {
       return rejectWithValue({
         message: error.response?.data?.message || error.message,
