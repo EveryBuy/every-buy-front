@@ -1,3 +1,10 @@
+export const registerMessages = (status: number) => {
+    if (status === 400) return 'Введено не коректні дані.'
+    if (status === 409) return 'Такий номер телефону або email вже використовується.'
+    if (status === 500) return 'Помилка сервера. Спробуйте ще раз.'
+    else return 'Невідома помилка. Спробуйте пізніше.'
+}
+
 export const loginMessages = (status: number) => {
     if (status === 400) return 'Введено не коректні дані.'
     if (status === 401) return 'Помилка авторизації. Перевірте логін або пароль.'

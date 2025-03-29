@@ -22,7 +22,7 @@ import {
   User,
   UserFullName,
 } from "@/types/stateTypes";
-import { changeEmailMessages, changeNameMessages, changePhoneMessages, loginMessages, unsubscribeMessages } from "@/utils/errorMessages";
+import { changeEmailMessages, changeNameMessages, changePhoneMessages, loginMessages, registerMessages, unsubscribeMessages } from "@/utils/errorMessages";
 
 const initialState: AuthState = {
   user: {
@@ -70,8 +70,8 @@ const authSlice = createSlice({
       .addCase(register.rejected, (state, action: PayloadAction<any>) => {
         state.isLoggedIn = false;
         state.error = action.payload;
-        // here can be error notification like
-        // toast.error(`Holly shit happends! Error:${payload}`)
+        const message = registerMessages(action.payload.status);
+        toast.error(message);
       })
       .addCase(login.fulfilled, (state, { payload }) => {
         state.user = payload.data;
