@@ -21,8 +21,8 @@ import { CommonSectionSelector } from "@/components/ui/CommonSectionSelector/Com
 import { CategotyTopAndLowType } from "@/types/categoryBreadcrumbType";
 import style from "./CatalogyPage.module.scss";
 
-import Image from "next/image";
-import imgSearchEmpty from "@/assets/Svg/searchEmpty.svg";
+import { EmptyData } from "@/components/Catalogy/EmptyData";
+
 // import { searchGoods } from '@/mock-data/searchGoods';
 
 type createQuerySettingsType = {
@@ -30,40 +30,6 @@ type createQuerySettingsType = {
 	queryObj: Object;
 };
 
-const EmptyData = (): JSX.Element => {
-	return (
-		<Box
-			sx={{
-				margin: { xs: "32px 2em 0", sm: "52px 2em 0" },
-				textAlign: "center",
-			}}
-		>
-			<Typography
-				sx={{
-					fontSize: { xs: "1.5em", sm: "2em" },
-					marginBottom: { xs: "40px", sm: "60px" },
-				}}
-			>
-				Нажаль ми не знайшли жодного оголошення за вашим запитом.
-			</Typography>
-			<Image
-				src={imgSearchEmpty}
-				width={288}
-				height={350}
-				alt="не має оголошення"
-			/>
-			<Typography
-				sx={{
-					fontSize: { xs: "1.5em", sm: "2em" },
-					marginTop: { xs: "40px", sm: "60px" },
-				}}
-			>
-				Перевірте правильність запиту <br />
-				або оберіть будь-яку категорію для перегляду оголошень.
-			</Typography>
-		</Box>
-	);
-};
 
 export const CatalogyPage: React.FC = (): JSX.Element => {
 	const dispatch = useAppDispatch();
@@ -93,10 +59,10 @@ export const CatalogyPage: React.FC = (): JSX.Element => {
 		setListOpen((prev) => !prev);
 	};
 
-	const filtersSetting = useAppSelector((state) => state.filters);
 	const {
 		categoryId,
 		price: { max: maxPrice, min: minPrice },
+		limitPrice: { max: maxLimitPrice, min: minLimitPrice },
 		sortOrder,
 		regionId,
 		cityId,
@@ -105,10 +71,13 @@ export const CatalogyPage: React.FC = (): JSX.Element => {
 		productType,
 		keyword,
 		// page
-	} = filtersSetting;
+	} = useAppSelector((state) => state.filters);
 
-	const minLimitPrice = useAppSelector(state => state.filters.limitPrice.min);
-	const maxLimitPrice = useAppSelector(state => state.filters.limitPrice.max);
+	// const myState = useAppSelector((state) => state.filters);
+	// console.log('myState', myState);
+
+	// const minLimitPrice = useAppSelector(state => state.filters.limitPrice.min);
+	// const maxLimitPrice = useAppSelector(state => state.filters.limitPrice.max);
 
 	const createQuerySettings = (): createQuerySettingsType => {
 		let queryArray: string[] = [];
@@ -127,16 +96,20 @@ export const CatalogyPage: React.FC = (): JSX.Element => {
 
 		const queryString: string =
 			queryArray.length > 0 ? "?" + queryArray.join("&") : "";
-		let queryObj: {} = queryArray.reduce((obj, item) => {
-			const itemArr = item.split("=");
-			const valueNumber = Number.isNaN(Number(itemArr[1]))
-				? itemArr[1]
-				: Number(itemArr[1]);
-			const newQueryObj = {
-				[itemArr[0]]: valueNumber,
-			};
-			return Object.assign(obj, newQueryObj);
-		}, {});
+		let queryObj: {} | '' = '';
+		if (queryString.length > 0) {
+			queryObj = queryArray.reduce((obj, item) => {
+				const itemArr = item.split("=");
+				const valueNumber = Number.isNaN(Number(itemArr[1]))
+					? itemArr[1]
+					: Number(itemArr[1]);
+				const newQueryObj = {
+					[itemArr[0]]: valueNumber,
+				};
+				return Object.assign(obj, newQueryObj);
+			}, {});
+		}
+
 		return {
 			queryString: queryString,
 			queryObj: queryObj,
@@ -146,12 +119,13 @@ export const CatalogyPage: React.FC = (): JSX.Element => {
 	const dispatchDataAdvert = (
 		str: string,
 		obj: {} | "",
-		cleanPagination: boolean
+		cleanPagination: boolean,
+		changePrices?: boolean
 	): void => {
 		dispatch(getFilteredAdverts(obj))
 			.then((data) => {
 				const newData: [] | string = data.payload.advertisements;
-				console.log(data);
+				// console.log(data);
 				if (newData && newData.length > 0) {
 					// console.log('newData', newData);
 					setDataArray(newData);
@@ -163,10 +137,14 @@ export const CatalogyPage: React.FC = (): JSX.Element => {
 					// console.log('not data');
 					// console.log('dataArray', dataArray);
 				}
-				dispatch(addLimitPrice({
-					min: Math.floor(data.payload.minPrice),
-					max: Math.ceil(data.payload.maxPrice)
-				}));
+				if (!changePrices) {
+					const minP = Math.floor(data.payload.minPrice);
+					const maxP = Math.ceil(data.payload.maxPrice);
+					dispatch(addLimitPrice({
+						min: isNaN(minP) ? 0 : minP,
+						max: isNaN(maxP) ? 0 : maxP
+					}));
+				}
 			})
 			.catch((error) => console.error("Error: ", error))
 			.finally(() => {
@@ -178,17 +156,22 @@ export const CatalogyPage: React.FC = (): JSX.Element => {
 			});
 	};
 
-	const updateDataAdvert = (cleanPagination: boolean) => {
+	const updateDataAdvert = (cleanPagination: boolean, changePrices?: boolean) => {
 		setLoading(false);
 		cleanPagination && setPage(1);
 		const { queryString, queryObj } = createQuerySettings();
+		// console.log('queryString', queryString, queryObj);
 		if (searchParams.size === 0 && queryString.length === 0) {
 			// show all data
 			dispatchDataAdvert("", "", cleanPagination);
 		} else {
 			if (queryString.length > 0) {
 				// console.log('query', queryObj);
-				dispatchDataAdvert(queryString, queryObj, cleanPagination);
+				if (changePrices) {
+					dispatchDataAdvert(queryString, queryObj, cleanPagination, true);
+				} else {
+					dispatchDataAdvert(queryString, queryObj, cleanPagination);
+				}
 			} else {
 				if (isLoadingPage) {
 					// searchParams > 0, query empty
@@ -204,7 +187,12 @@ export const CatalogyPage: React.FC = (): JSX.Element => {
 	useEffect(() => {
 		updateDataAdvert(true);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [categoryId, maxPrice, minPrice, sortOrder, regionId, cityId, topSubCategoryId, lowSubCategoryId, productType, keyword, section]); // filtersSetting: min, max, categoryId, sortOrder, productType, ...
+	}, [categoryId, sortOrder, regionId, cityId, topSubCategoryId, lowSubCategoryId, productType, keyword, section]); // filtersSetting: min, max, categoryId, sortOrder, productType, ...
+
+	useEffect(() => {
+		updateDataAdvert(true, true);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [maxPrice, minPrice]);
 
 	useEffect(() => {
 		updateDataAdvert(false);

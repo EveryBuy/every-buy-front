@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useState, useEffect, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { addPrice, Price } from '@/redux/filters/slice';
@@ -29,6 +29,8 @@ function valuetext(value: number) {
 const PriceSlider: FC = () => {
 
 	const priceObj: Price = useAppSelector(state => state.filters.limitPrice);
+
+	// const [priceObj, setPriceObj] = useState<Price>(useAppSelector(state => state.filters.limitPrice));
 
 	const searchParams = useSearchParams();
 	const dispatch = useAppDispatch();
@@ -76,8 +78,11 @@ const PriceSlider: FC = () => {
 		}
 	};
 
+	const inputMinRef = useRef<HTMLInputElement>(null);
+
 	const handleKeyPressMinPrice = (event: React.KeyboardEvent<HTMLInputElement>): void => {
-		if (event.key === 'Enter') {
+
+		if (event.key === 'Enter' && inputMinRef.current) {
 			event.preventDefault();
 			const newValue = Number((event.target as HTMLInputElement).value);
 			if (newValue >= 0) {
@@ -87,6 +92,7 @@ const PriceSlider: FC = () => {
 				});
 				setPrice(targetObj);
 				dispatch(addPrice(targetObj));
+				inputMinRef.current.blur();
 			}
 		}
 	};
@@ -98,8 +104,10 @@ const PriceSlider: FC = () => {
 		}
 	};
 
+	const inputMaxRef = useRef<HTMLInputElement>(null);
+
 	const handleKeyPressMaxPrice = (event: React.KeyboardEvent<HTMLInputElement>): void => {
-		if (event.key === 'Enter') {
+		if (event.key === 'Enter' && inputMaxRef.current) {
 			event.preventDefault();
 			const newValue = Number((event.target as HTMLInputElement).value);
 			if (newValue >= 0) {
@@ -109,6 +117,7 @@ const PriceSlider: FC = () => {
 				});
 				setPrice(targetObj);
 				dispatch(addPrice(targetObj));
+				inputMaxRef.current.blur();
 			}
 		}
 	};
@@ -123,6 +132,13 @@ const PriceSlider: FC = () => {
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [paramsMinPrice, paramsMaxPrice]);
+
+	useEffect(() => {
+		// setPriceObj(priceObj);
+		setPrice(priceObj);
+		dispatch(addPrice(priceObj));
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [priceObj]);
 
 	const handleChangePriceSlider = (event: Event, newValue: number | number[]) => {
 		if (Array.isArray(newValue)) {
@@ -155,19 +171,23 @@ const PriceSlider: FC = () => {
 					variant='outlined'
 					size='small'
 					value={inputMin}
-					style={{ borderRadius: "6px", border: "none", backgroundColor: "#fff" }}
+					sx={{ '& .MuiInputBase-root': { border: "none", padding: "6px 0" } }}
+					style={{ borderRadius: "6px", border: "none", backgroundColor: "#fff", padding: 0 }}
 					onChange={handleChangeMinPrice}
 					onKeyDown={handleKeyPressMinPrice}
 					label='Мін'
+					inputRef={inputMinRef}
 				/>
 				<BootstrapInput
 					variant='outlined'
 					size='small'
 					value={inputMax}
-					style={{ borderRadius: "6px", border: "none", backgroundColor: "#fff" }}
+					sx={{ '& .MuiInputBase-root': { border: "none", padding: "6px 0" } }}
+					style={{ borderRadius: "6px", border: "none", backgroundColor: "#fff", padding: 0 }}
 					onChange={handleChangeMaxPrice}
 					onKeyDown={handleKeyPressMaxPrice}
 					label='Макс'
+					inputRef={inputMaxRef}
 				/>
 			</Box>
 		</Grid2 >
