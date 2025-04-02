@@ -4,7 +4,7 @@ import { CatalogyPage } from "../../../components/pages/catalogy/CatalogyPage";
 function Page() {
   return (
     <Suspense>
-      <CatalogyPage />;
+      <CatalogyPage />
     </Suspense>
   );
 }

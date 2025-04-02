@@ -21,10 +21,11 @@ export const MinCard = (props: ItemProps): JSX.Element => {
 			<div className={styles.imageWrapper}>
 				<Image
 					fill
-					sizes="(max-width: 768px) 134px, 94px, (max-width: 2600px) 179px, 182px"
+					sizes="100vh"
 					className={styles.image}
 					src={mainPhotoUrl || noPhotoCard}
 					alt={title || "img"}
+					priority
 				/>
 			</div>
 			<div className={styles.WrapperTitleStatePrice}>

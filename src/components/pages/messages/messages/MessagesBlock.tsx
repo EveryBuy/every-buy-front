@@ -1,6 +1,11 @@
 import { FC } from "react";
 import { Box } from "@mui/material";
-import { Companion, Product, Dialogue, CommonPreloader } from "@/components";
+import {
+  Companion,
+  Product,
+  Dialogue,
+  EmptyDialogueMessage,
+} from "@/components";
 import style from "./MessagesBlock.module.scss";
 
 type MessagesBlockType = {
@@ -12,7 +17,11 @@ const MessagesBlock: FC<MessagesBlockType> = ({
   chatId,
   setSelectedChatId,
 }) => {
-  return (
+  return !chatId ? (
+    <Box className={style.noMessagesBlockWrapper}>
+      <EmptyDialogueMessage />
+    </Box>
+  ) : (
     <Box
       className={
         chatId ? `${style.blockWrapper} ${style.visible}` : style.blockWrapper

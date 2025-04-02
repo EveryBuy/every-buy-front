@@ -45,10 +45,11 @@ export function CategoryList() {
 
 	return (
 		<Box
-			display='flex'
-			flexWrap='wrap'
-			gap={2}
-			mt={3}
+			// display='flex'
+			// flexWrap='wrap'
+			// gap={2}
+			// mt={3}
+			sx={{ marginTop: { xs: 0, sm: 2 } }}
 			mb={3}
 		>
 			{categories.map(({ id, nameUkr }) => (
@@ -56,7 +57,7 @@ export function CategoryList() {
 					key={id}
 					variant='body2'
 					fontSize='1rem'
-					mr={2}
+					// mr={2}
 					onClick={() => handleCategoryClick(id)}
 					sx={{
 						color:
@@ -67,7 +68,12 @@ export function CategoryList() {
 						'&:hover': {
 							color: '#000',
 						},
+						// mr: 2,
+						// mb: 1.5,
+						marginRight: { xs: 2, sm: 3 },
+						marginBottom: { xs: 1.5, sm: 2 },
 						transition: 'color 0.3s ease',
+						display: 'inline-block'
 					}}
 				>
 					{nameUkr}

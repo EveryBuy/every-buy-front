@@ -81,10 +81,11 @@ export const MiddleCard: FC<ItemProps> = ({ item }: ItemProps) => {
 
 	return (
 		<div className={styles.containerMiddleCard}>
-			<MiniCard item={minCardProps} />
+			<Link href={linkHref}>
+				<MiniCard item={minCardProps} />
 
-			<p className={styles.description}>{shortStr(item.description)}</p>
-
+				<p className={styles.description}>{shortStr(item.description)}</p>
+			</Link>
 			<div className={styles.wrapperButton}>
 				<CommonButton
 					type="submit"

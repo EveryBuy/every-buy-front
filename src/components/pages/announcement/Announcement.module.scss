@@ -39,7 +39,7 @@
     margin: 100px 40px 0px;
   }
 
-  @include media-min($breakpoint-laptop){
+  @include media-min($breakpoint-laptop) {
     margin: 100px 60px 0px;
   }
 }
@@ -50,7 +50,6 @@
 //   }
 // }
 
-
 .preloaderContainer {
   display: flex;
   justify-content: center;
@@ -59,14 +58,13 @@
 }
 
 .breadcrumbsContainer {
-  display: none; 
+  display: none;
 
   @include media-min($breakpoint-laptop) {
     margin: 50px 20px 0px;
-    display: block; 
+    display: block;
     width: 100%;
     padding: 10px 60px;
     margin-bottom: 10px;
   }
 }
-

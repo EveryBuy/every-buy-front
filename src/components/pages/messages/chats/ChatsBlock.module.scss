@@ -7,10 +7,7 @@
   width: 100%;
 
   @include media-min($breakpoint-tablet) {
-    width: 40%;
-  }
-  @include media-min($breakpoint-laptop-large) {
-    width: 35%;
+    width: 36%;
   }
 }
 

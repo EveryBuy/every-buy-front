@@ -1,34 +1,33 @@
 @import "@/styles/breakpoints";
 @import "@/styles/mixins";
 
-
 .wrapperFilters {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
 }
 
 .wrapperSelectSection {
-	display: flex;
-	justify-content: center;
-	margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
 
-	@include media-min($breakpoint-tablet) {
-		position: relative;
-		left: 50%;
-		top: 80px;
-		margin-left: -92px;
-		margin-top: -60px;
-		width: 200px;
-	}
+  @include media-min($breakpoint-tablet) {
+    position: relative;
+    left: 50%;
+    top: 80px;
+    margin-left: -92px;
+    margin-top: -60px;
+    width: 200px;
+  }
 }
 
 .showListFilters {
-	display: flex;
-	flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .hideListFilters {
-	display: none;
+  display: none;
 }
