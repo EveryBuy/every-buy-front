@@ -5,10 +5,11 @@ import styles from "./MiddleCard.module.scss";
 import MiniCard from "../MinCard/MinCard";
 import Image from "next/image";
 import Link from 'next/link';
-import { CommonButton, CommonIcon } from "@/components";
+import { CommonButton, CommonIcon, DoLoginModal } from "@/components";
 import { useAppSelector, useAppDispatch } from "@/redux/store";
 import { setHeaderAuthToken } from "@/utils/axios";
-import { addAdvertToFavourite } from "@/redux/advertisement/operations";
+import { selectIsLoggedIn } from "@/redux/auth/selectors";
+import { addAdvertToFavourite, removeAdvertFromFavourite } from "@/redux/advertisement/operations";
 import arrowButton from "@/assets/Svg/arrowButton.svg";
 import heart from "@/assets/Svg/heartDefault.svg";
 import formatAdvertisementDate from "@/utils/formatAdvertisementDate";
@@ -17,47 +18,37 @@ import { MinCardType } from '@/types/minCardType';
 
 type ItemProps = {
 	item: MiddleCardType;
+	favourite: boolean
 };
 
-export const MiddleCard: FC<ItemProps> = ({ item }: ItemProps) => {
+export const MiddleCard: FC<ItemProps> = ({ item, favourite }: ItemProps) => {
 	// console.log(item);
 
-	const [heartSelect, setHeartSelect] = useState<boolean>(false);
-	const [isFetching, setIsFetching] = useState(true);
+	const [heartSelect, setHeartSelect] = useState<boolean>(favourite);
 	const dispatch = useAppDispatch();
 
-	console.log(localStorage.getItem("persist:root"));
-	// const tokenRedux = useAppSelector(state => state.auth.token);
-	// console.log('token in redux', tokenRedux);
-
-	const fetchData = async (id: number) => {
-		setIsFetching(true);
-		const persistData = localStorage.getItem("persist:root");
-		if (persistData) {
-			const parsedPersistData = JSON.parse(persistData);
-			const authToken = JSON.parse(parsedPersistData.token);
-
-			if (authToken) {
-				setHeaderAuthToken(authToken);
-			}
-		} else {
-			console.error("No persist data found in localStorage");
-		}
-
+	const fetchData = async (id: number, isFamouse: boolean) => {
 		try {
-			await dispatch(addAdvertToFavourite(id)).unwrap();
+			if (isFamouse) {
+				await dispatch(removeAdvertFromFavourite(id)).unwrap();
+			} else {
+				await dispatch(addAdvertToFavourite(id)).unwrap();
+			}
+			setHeartSelect(prev => !prev);
 		} catch (error) {
 			console.error("Error during fetching:", error);
-		} finally {
-			setIsFetching(false);
 		}
+	};
+
+	const [successRegisterModalOpen, setSuccessRegisterModalOpen] = useState(false);
+	const isLoggedIn = useAppSelector(selectIsLoggedIn);
+	const openWindowHandle = () => {
+		!isLoggedIn ? setSuccessRegisterModalOpen((prev) => !prev) : null;
 	};
 
 	const addSelectGood = (id: number): void => {  // e: React.FormEvent<HTMLFormElement>
 		// e.preventDefault();
-		setHeartSelect(prev => !prev);
-		console.log("select good with id", id);
-		// fetchData(id);
+		isLoggedIn ? fetchData(id, heartSelect) : openWindowHandle();
 	}
 
 	const linkHref = `/announcement?id=${item.advertisementId}`;
@@ -99,6 +90,7 @@ export const MiddleCard: FC<ItemProps> = ({ item }: ItemProps) => {
 						width="28px"
 						height="28px"
 					/>
+
 				</CommonButton>
 				<Link className={styles.link} href={linkHref}>
 					<Image
@@ -110,6 +102,13 @@ export const MiddleCard: FC<ItemProps> = ({ item }: ItemProps) => {
 					/>
 				</Link>
 			</div>
+
+			{successRegisterModalOpen && (
+				<DoLoginModal
+					doModalOpen={setSuccessRegisterModalOpen}
+					openWindowHandle={openWindowHandle}
+				/>
+			)}
 
 			<p className={styles.dateText}>
 				{`${formatAdvertisementDate(item.updateDate)}`}
