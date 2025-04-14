@@ -60,6 +60,13 @@ const DialogueInput: FC<DialogueInputProps> = ({
     }
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      handleSendMessage();
+    }
+  };
+
   const handleIconClick = (type: "picture" | "document") => {
     if (fileInputRef.current) {
       fileInputRef.current.accept = type === "picture" ? "image/*" : "*/*";
@@ -119,6 +126,7 @@ const DialogueInput: FC<DialogueInputProps> = ({
           placeholder="напишіть повідомлення..."
           value={message}
           onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
         />
         {/* </Box> */}
         <Box className={style.sendIconWrapper}>

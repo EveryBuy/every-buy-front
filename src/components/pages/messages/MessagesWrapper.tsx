@@ -11,13 +11,15 @@ import styles from "./MessagesWrapper.module.scss";
 const MessagesWrapper: FC = () => {
   // for mobile version
   const [selectedChatId, setSelectedChatId] = useState<number | null>(null);
+  console.log(selectedChatId);
+
   const newChatId = useSelector((state: RootState) => state.messages.chatId);
   const activeChatId = selectedChatId ?? newChatId;
   // useGetMessagesByChatIdQuery(selectedChatId as number, {
-  //   skip: selectedChatId === null,
+  //   skip: activeChatId === null,
   // });
-  useGetMessagesByChatIdQuery(selectedChatId as number, {
-    skip: activeChatId === null,
+  useGetMessagesByChatIdQuery(activeChatId as number, {
+    skip: !activeChatId,
   });
 
   return (
@@ -25,6 +27,7 @@ const MessagesWrapper: FC = () => {
       <h1 className={`title ${styles.headline}`}>Повідомлення</h1>
       <Box className={styles.chatBlockWrapper}>
         <ChatsBlock
+          activeChatId={activeChatId}
           setSelectedChatId={setSelectedChatId}
           selectedChatId={selectedChatId}
         />

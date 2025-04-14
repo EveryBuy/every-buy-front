@@ -13,7 +13,7 @@ import style from "./ChatsList.module.scss";
 interface ChatsListType {
   chats?: ChatType[] | FavoritesChatType[] | ArchivedChatType[] | undefined;
   setSelectedChatId: (chatId: number) => void;
-  selectedChatId: number | null;
+  // selectedChatId: number | null;
   isBuyChatsLoading: boolean;
   isSellChatsLoading: boolean;
 }
@@ -40,7 +40,7 @@ const ChatsList: FC<ChatsListType> = ({
             alignItems: "center",
           }}
         >
-          <CommonPreloader sx={{ color: "#9d9d9d" }} />
+          <CommonPreloader sx={{ color: "#e5ff46" }} />
         </Box>
       ) : chats && chats.length > 0 ? (
         <Box className={style.listWrapper}>
