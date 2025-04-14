@@ -1,14 +1,14 @@
 "use client";
 import { createTheme } from "@mui/material/styles";
 
-import { Inter } from "next/font/google";
+// import { Inter } from "next/font/google";
 
-const inter = Inter({
-  weight: ["200", "300", "400", "500", "700"],
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-inter",
-});
+// const inter = Inter({
+//   weight: ["200", "300", "400", "500", "700"],
+//   subsets: ["latin"],
+//   display: "swap",
+//   variable: "--font-inter",
+// });
 
 const theme = createTheme({
   palette: {
@@ -24,9 +24,9 @@ const theme = createTheme({
       contrastText: "#FFFFFF",
     },
   },
-  typography: {
-    fontFamily: inter.style.fontFamily,
-  },
+  // typography: {
+  //   fontFamily: inter.style.fontFamily,
+  // },
   // typography: {
   //   h1: {
   //     fontSize: 20,
