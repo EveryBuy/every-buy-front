@@ -180,20 +180,22 @@
 	background-color: var(--button);
 }
 
-.favoriteSvg {
+// .favoriteSvg {}
+.favoriteBtn {
 	position: absolute;
-	top: 22px;
+	top: -70px;
 	right: 16px;
-	fill: #ff5656;
-	stroke: black;
+	// fill: #ff5656;
+	// stroke: black;
 	// background-color: #FF5656;
 
 	@include media-min($breakpoint-tablet) {
-		top: 28px;
+		top: 40px;
 	}
 
 	@include media-min($breakpoint-laptop) {
-		top: 16px;
+		top: 60px;
+		right: 32px;
 	}
 }
 
