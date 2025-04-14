@@ -103,7 +103,7 @@ const Dialogue: FC<DialogueType> = ({ chatId }) => {
           paddingTop: "15%",
         }}
       >
-        <CommonPreloader sx={{ color: "#9d9d9d" }} />
+        <CommonPreloader sx={{ color: "#e5ff46" }} />
       </Box>
     );
   }

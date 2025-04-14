@@ -60,7 +60,8 @@ const Companion: FC<CompanionBlockType> = ({ setSelectedChatId }) => {
         id="back-arrow"
         className={style.backArrow}
         // for mobile version
-        onClick={() => setSelectedChatId(null)}
+        // onClick={() => setSelectedChatId(null)}
+        onClick={() => setSelectedChatId(0)}
       />
       <Box className={style.companion}>
         {picture}

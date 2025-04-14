@@ -13,11 +13,13 @@ import style from "./ChatsBlock.module.scss";
 type ChatsBlockType = {
   setSelectedChatId: (selectedChatId: number) => void;
   selectedChatId: number | null;
+  activeChatId: number | null;
 };
 
 const ChatsBlock: FC<ChatsBlockType> = ({
   setSelectedChatId,
   selectedChatId,
+  activeChatId,
 }) => {
   const [activeButton, setActiveButton] = useState<number | null>(1);
   const [isHeartSelected, setHeardSelected] = useState<boolean>(false);
@@ -36,7 +38,7 @@ const ChatsBlock: FC<ChatsBlockType> = ({
   } = useGetSellChatsQuery();
   const { data: favoritesChats } = useGetFavoritesChatsQuery();
   const { data: archivedChats } = useGetArchivedChatsQuery();
-  console.log(buyChats);
+  // console.log(buyChats);
 
   // filter chats and hidden them if they are in the archive
   let updatedBuyChats;
@@ -88,7 +90,7 @@ const ChatsBlock: FC<ChatsBlockType> = ({
   return (
     <Box
       className={
-        selectedChatId
+        selectedChatId || activeChatId
           ? `${style.blockWrapper} ${style.hidden}`
           : style.blockWrapper
       }
@@ -139,7 +141,7 @@ const ChatsBlock: FC<ChatsBlockType> = ({
       <ChatsList
         chats={chats}
         setSelectedChatId={setSelectedChatId}
-        selectedChatId={selectedChatId}
+        // selectedChatId={selectedChatId}
         isBuyChatsLoading={isBuyChatsFetching}
         isSellChatsLoading={isSellChatsFetching}
       />
