@@ -169,7 +169,9 @@ export const getAllFavouriteAdvert = createAsyncThunk('advert/getAllFavourite',
 			const token = state.auth.token;
 			setHeaderAuthToken(token);
 			const endpoint = '/ad/favourite-ads';
-			const response = await API.get(endpoint, { params: { ...params } });
+			const response = await API.get(endpoint,
+				{ params: { ...params } }
+			);
 			return response.data;
 		} catch (error: any) {
 			return rejectWithValue(error.message)

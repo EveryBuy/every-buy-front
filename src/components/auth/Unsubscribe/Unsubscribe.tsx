@@ -11,7 +11,7 @@ import { selectUser } from "@/redux/auth/selectors";
 export const Unsubscribe = ({ children }: { children: string }) => {
   const [open, setOpen] = useState(false);
   const dispatch = useAppDispatch();
-  const { email } = useAppSelector(selectUser);
+  const { email } = useAppSelector(selectUser) || "";
   //   const router = useRouter();
 
   const handleOpen = () => {
