@@ -9,8 +9,9 @@ import { useCreateChatMutation } from "@/redux/messages/chatApi";
 import { useAppSelector, useAppDispatch } from "@/redux/store";
 import { setNewChatId } from "@/redux/messages/slice";
 import { FavouriteAdvertisement } from '@/redux/advertisement/slice';
-import { getAllFavouriteAdvert, addAdvertToFavourite, removeAdvertFromFavourite } from '@/redux/advertisement/operations';
+import { addAdvertToFavourite, removeAdvertFromFavourite } from '@/redux/advertisement/operations';
 import { selectIsLoggedIn } from "@/redux/auth/selectors";
+import { GetPhoneUser } from "@/api/getPhoneUser";
 
 interface ContactsProps {
 	contactsInfo: {
@@ -18,8 +19,9 @@ interface ContactsProps {
 		cost: number;
 		delivery: string[];
 		title: string;
-		phoneNumber?: string;
+		// phoneNumber?: string;
 		section: string;
+		userId: number;
 	};
 	advertisementId: number;
 }
@@ -28,10 +30,10 @@ export default function Contacts({
 	contactsInfo,
 	advertisementId,
 }: ContactsProps) {
-	const { publicDate, cost, delivery, title, phoneNumber, section } =
+	const { publicDate, cost, delivery, title, userId, section } =
 		contactsInfo;
 
-	const [showNumber, setShowNumber] = useState(false);
+	const [phoneNumber, setPhoneNumber] = useState<string | null>(null);
 	const [createChat] = useCreateChatMutation();
 	const [chatId, setChatId] = useState<number | null>(null);
 	const [heartSelect, setHeartSelect] = useState<boolean>(false);
@@ -48,13 +50,6 @@ export default function Contacts({
 	const openWindowHandle = () => {
 		!isLoggedIn ? setSuccessRegisterModalOpen((prev) => !prev) : null;
 	};
-
-	useEffect(() => {
-		if (isLoggedIn) {
-			dispatch(getAllFavouriteAdvert({ section }));
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [section]);
 
 	const getNewChatIdHandler = async () => {
 		if (!isLoggedIn) {
@@ -94,11 +89,21 @@ export default function Contacts({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [favourites]);
 
+	// const token = useAppSelector(state => state.auth.token);
 	const showPhoneNumber = (): void => {
 		if (!isLoggedIn) {
 			openWindowHandle()
 		} else {
-			setShowNumber(true);
+			// console.log(userId);
+			if (userId) {
+				GetPhoneUser(userId)
+					.then(result => {
+						console.log(result);
+						if (result) {
+							setPhoneNumber(result.data.phone);
+						}
+					})
+			}
 		}
 	}
 
@@ -116,7 +121,6 @@ export default function Contacts({
 	};
 
 	const addSelectGood = (id: number): void => {
-		// e.preventDefault();
 		isLoggedIn ? fetchDataHeart(id, heartSelect) : openWindowHandle();
 	}
 
@@ -131,7 +135,7 @@ export default function Contacts({
 					onClick={() => addSelectGood(advertisementId)}
 				>
 					<CommonIcon
-						id={heartSelect ? "heart" : "icon-heart"}
+						id={heartSelect ? "heart" : "not-favorite-heart"}
 						width="36"
 						height="36"
 						className={styles.favoriteSvg}
@@ -161,19 +165,20 @@ export default function Contacts({
 						>
 							Надіслати повідомлення
 						</CommonButton>
-						{!showNumber && (
+						{!phoneNumber ?
 							<CommonButton
 								type="button"
 								color="transparent"
 								title=""
 								className={styles.yellowBorderButton}
-								onClick={() => showPhoneNumber()}
+								onClick={showPhoneNumber}
 							>
 								Показати телефон
 							</CommonButton>
-						)}
-						{showNumber && <p className={styles.phoneNumber}>0976709876</p>}
 
+							: <p className={styles.phoneNumber}>
+								<a href={`tel:${phoneNumber}`}>{phoneNumber}</a>
+							</p>}
 						{successRegisterModalOpen && (
 							<DoLoginModal
 								doModalOpen={setSuccessRegisterModalOpen}

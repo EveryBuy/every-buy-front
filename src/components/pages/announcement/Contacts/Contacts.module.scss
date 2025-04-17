@@ -180,7 +180,6 @@
 	background-color: var(--button);
 }
 
-// .favoriteSvg {}
 .favoriteBtn {
 	position: absolute;
 	top: -70px;
@@ -197,6 +196,10 @@
 		top: 60px;
 		right: 32px;
 	}
+}
+
+.favoriteSvg {
+	fill: #fff;
 }
 
 .phoneNumber {

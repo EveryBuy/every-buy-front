@@ -14,6 +14,8 @@ import {
 	CustomSeparator,
 } from "@/components";
 import styles from "./Announcement.module.scss";
+import { getAllFavouriteAdvert } from '@/redux/advertisement/operations';
+import { selectIsLoggedIn } from "@/redux/auth/selectors";
 import { setHeaderAuthToken } from "@/utils/axios";
 
 export default function Announcement() {
@@ -64,6 +66,16 @@ export default function Announcement() {
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [id]);
+
+	const isLoggedIn = useAppSelector(selectIsLoggedIn);
+	useEffect(() => {
+		if (isLoggedIn && advertisementById) {
+			const section = advertisementById.section;
+			section ? dispatch(getAllFavouriteAdvert({ section })) : null;
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [advertisementById?.section]);
+
 
 	if (isFetching || loading) {
 		return (
@@ -123,16 +135,17 @@ export default function Announcement() {
 
 				<div className={styles.container}>
 					<AnnouncementSlider images={advertisementById?.photoUrls || []} />
-					{/* <Contacts
+					<Contacts
 						contactsInfo={{
 							publicDate: formattedDate,
 							cost: advertisementById.price,
 							delivery: advertisementById.deliveryMethods,
 							title: advertisementById.title,
 							section: advertisementById.section,
+							userId: advertisementById.userId
 						}}
 						advertisementId={advertisementId}
-					/> */}
+					/>
 					<Info
 						articleInfo={{
 							description: advertisementById.description,
@@ -149,6 +162,7 @@ export default function Announcement() {
 							nameUkr: advertisementById.userDto.fullName,
 							online: advertisementById.isEnabled,
 							linkToAllAdvert: `/seller/${advertisementById.userId}`,
+							section: advertisementById.section,
 						}}
 					/>
 				</div>
