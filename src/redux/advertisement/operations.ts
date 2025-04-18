@@ -162,8 +162,7 @@ export const removeAdvertFromFavourite = createAsyncThunk('advert/removeFromFavo
 
 export const getAllFavouriteAdvert = createAsyncThunk('advert/getAllFavourite',
 	async (params: {}, { rejectWithValue, getState }) => {
-		console.log("Params", params);
-
+		// console.log("Params", params);
 		try {
 			const state = getState() as RootState;
 			const token = state.auth.token;

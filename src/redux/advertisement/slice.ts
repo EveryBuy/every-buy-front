@@ -243,7 +243,7 @@ const advertisementSlice = createSlice({
 			.addCase(addAdvertToFavourite.pending, handlePending)
 			.addCase(addAdvertToFavourite.fulfilled, (state, action) => {
 				state.isLoading = false;
-				state.favouriteAdvertisements.push(action.payload);
+				state.favouriteAdvertisements.push(action.payload.data);
 			})
 			.addCase(addAdvertToFavourite.rejected, state => {
 				state.isLoading = false;

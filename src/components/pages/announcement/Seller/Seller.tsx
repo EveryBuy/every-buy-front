@@ -9,6 +9,7 @@ interface SellerProps {
 		online: boolean;
 		linkToAllAdvert: string;
 		imageUrl: string;
+		section: string;
 	};
 }
 
@@ -17,7 +18,7 @@ export default function Seller({ sellerInfo }: SellerProps) {
 		return <div className={styles.container}>Error fetching seller info</div>;
 	}
 
-	const { nameUkr, online, linkToAllAdvert, imageUrl: sellerImageUrl } = sellerInfo;
+	const { nameUkr, online, linkToAllAdvert, imageUrl: sellerImageUrl, section } = sellerInfo;
 
 	const sellerName = nameUkr || "Невідомо";
 
@@ -25,7 +26,9 @@ export default function Seller({ sellerInfo }: SellerProps) {
 
 	return (
 		<div className={styles.container}>
-			<h3 className={styles.title}>Продавець</h3>
+			<h3 className={styles.title}>
+				{section === "SELL" ? "Продавець" : "Покупець"}
+			</h3>
 			<div className={styles.sellerInfo}>
 				<div className={styles.sellerImage}>
 					<Image
