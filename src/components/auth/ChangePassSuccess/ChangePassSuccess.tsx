@@ -1,28 +1,30 @@
-import { CommonModal } from "@/components";
-import { Backdrop } from "@mui/material";
-import { useState } from "react";
+// ! we haven't used this component yet. Do we need to keep it?
 
-export const ChangePassSuccess = () => {
-  const [open, setOpen] = useState(true);
+// import { CommonModal } from "@/components";
+// import { Backdrop } from "@mui/material";
+// import { useState } from "react";
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+// export const ChangePassSuccess = () => {
+//   const [open, setOpen] = useState(true);
 
-  return (
-    <>
-      <Backdrop
-        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={open}
-        onClick={handleClose}
-      >
-        {/* <CircularProgress color="inherit" /> */}
-        <CommonModal onClose={handleClose}>
-          <h3>Зміна паролю</h3>
-        </CommonModal>
-      </Backdrop>
-    </>
-  );
-};
+//   const handleClose = () => {
+//     setOpen(false);
+//   };
 
-export default ChangePassSuccess;
+//   return (
+//     <>
+//       <Backdrop
+//         sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+//         open={open}
+//         onClick={handleClose}
+//       >
+//         {/* <CircularProgress color="inherit" /> */}
+//         <CommonModal onClose={handleClose}>
+//           <h3>Зміна паролю</h3>
+//         </CommonModal>
+//       </Backdrop>
+//     </>
+//   );
+// };
+
+// export default ChangePassSuccess;

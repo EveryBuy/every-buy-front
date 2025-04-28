@@ -10,9 +10,15 @@ import style from "./Companion.module.scss";
 
 type CompanionBlockType = {
   setSelectedChatId: (chatId: number | null) => void;
+  deleteChatWindowHandle: (() => void) | undefined;
+  blockUserWindowHandle: (() => void) | undefined;
 };
 
-const Companion: FC<CompanionBlockType> = ({ setSelectedChatId }) => {
+const Companion: FC<CompanionBlockType> = ({
+  setSelectedChatId,
+  deleteChatWindowHandle,
+  blockUserWindowHandle,
+}) => {
   const [isMenuVisible, setMenuVisible] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const companionPictureUrl = useSelector((state: RootState) =>
@@ -20,6 +26,9 @@ const Companion: FC<CompanionBlockType> = ({ setSelectedChatId }) => {
   );
   const companionName = useSelector((state: RootState) =>
     state.messages?.chat ? state.messages.chat.userData?.fullName : null
+  );
+  const companion = useSelector((state: RootState) =>
+    state.messages?.chat ? state.messages.chat : null
   );
 
   const picture = companionPictureUrl ? (
@@ -75,7 +84,12 @@ const Companion: FC<CompanionBlockType> = ({ setSelectedChatId }) => {
           <Box></Box>
           <Box></Box>
           <Box></Box>
-          <Menu status={isMenuVisible} changeStatus={menuHandle} />
+          <Menu
+            status={isMenuVisible}
+            changeStatus={menuHandle}
+            deleteChatWindowHandle={deleteChatWindowHandle}
+            blockUserWindowHandle={blockUserWindowHandle}
+          />
         </Box>
       </Box>
     </Box>

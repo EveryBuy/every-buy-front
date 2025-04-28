@@ -11,11 +11,15 @@ import style from "./MessagesBlock.module.scss";
 type MessagesBlockType = {
   chatId: number | null;
   setSelectedChatId: (chatId: number | null) => void;
+  deleteChatWindowHandle: () => void;
+  blockUserWindowHandle: () => void;
 };
 
 const MessagesBlock: FC<MessagesBlockType> = ({
   chatId,
   setSelectedChatId,
+  deleteChatWindowHandle,
+  blockUserWindowHandle,
 }) => {
   return !chatId ? (
     <Box className={style.noMessagesBlockWrapper}>
@@ -28,7 +32,11 @@ const MessagesBlock: FC<MessagesBlockType> = ({
       }
     >
       {/* setSelectedChatId - for mobile version */}
-      <Companion setSelectedChatId={setSelectedChatId} />
+      <Companion
+        setSelectedChatId={setSelectedChatId}
+        deleteChatWindowHandle={deleteChatWindowHandle}
+        blockUserWindowHandle={blockUserWindowHandle}
+      />
       <Product />
       <Dialogue chatId={chatId} />
     </Box>

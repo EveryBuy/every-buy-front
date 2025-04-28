@@ -75,6 +75,8 @@ export { default as IconsData } from "./pages/messages/chats/list/item/data/Icon
 export { default as Buttons } from "./pages/messages/chats/Buttons/Buttons";
 export { default as Button } from "./pages/messages/chats/Buttons/Button";
 export { default as Icons } from "./pages/messages/chats/Icons/Icons";
+export { default as DeleteChatWindow } from "./pages/messages/messages/windows/DeleteChatWindow/DeleteChatWindow";
+export { default as BlockUserWindow } from "./pages/messages/messages/windows/BlockUserWindow/BlockUserWindow";
 
 // Catalogy
 export { FilterCatalogy } from "./Catalogy/filterCatalogy/FilterCatalogy";

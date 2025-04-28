@@ -12,6 +12,13 @@ import { MessageType } from "@/types/messages/messages";
 interface ChatMessagesDataTypeInt {
   chatMessages: MessageType[];
 }
+interface BlockUserResponse {
+  status: number;
+  data: {
+    userId: number;
+    blockedUserId: number;
+  }[];
+}
 
 export const chatApi = createApi({
   reducerPath: "chatApi",
@@ -112,6 +119,20 @@ export const chatApi = createApi({
         body: formData,
       }),
     }),
+    blockUser: builder.mutation<BlockUserResponse, { userId: number }>({
+      query: ({ userId }) => ({
+        url: `/chat/black-list/block?blockedUserId=${userId}`,
+        method: "POST",
+      }),
+      invalidatesTags: ["Chat"],
+    }),
+    unblockUser: builder.mutation<void, { userId: number }>({
+      query: ({ userId }) => ({
+        url: `/chat/black-list/block?blockedUserId=${userId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Chat"],
+    }),
   }),
 });
 
@@ -129,4 +150,6 @@ export const {
   useRemoveChatFromArchiveMutation,
   useAddMessageToChatMutation,
   useUploadFileToChatMutation,
+  useBlockUserMutation,
+  useUnblockUserMutation,
 } = chatApi;

@@ -3,16 +3,21 @@
 import { FC, useState } from "react";
 import { useSelector } from "react-redux";
 import { Box } from "@mui/material";
-import { ChatsBlock, MessagesBlock } from "@/components";
+import {
+  ChatsBlock,
+  MessagesBlock,
+  DeleteChatWindow,
+  BlockUserWindow,
+} from "@/components";
 import { useGetMessagesByChatIdQuery } from "@/redux/messages/chatApi";
 import { RootState } from "@/redux/store";
 import styles from "./MessagesWrapper.module.scss";
 
 const MessagesWrapper: FC = () => {
+  const [isDeleteWindowVisible, setDeleteWindowVisible] = useState(false);
+  const [isBlockWindowVisible, setBlockWindowVisible] = useState(false);
   // for mobile version
   const [selectedChatId, setSelectedChatId] = useState<number | null>(null);
-  console.log(selectedChatId);
-
   const newChatId = useSelector((state: RootState) => state.messages.chatId);
   const activeChatId = selectedChatId ?? newChatId;
   // useGetMessagesByChatIdQuery(selectedChatId as number, {
@@ -21,6 +26,13 @@ const MessagesWrapper: FC = () => {
   useGetMessagesByChatIdQuery(activeChatId as number, {
     skip: !activeChatId,
   });
+
+  const deleteChatWindowHandle = () => {
+    setDeleteWindowVisible((prev) => !prev);
+  };
+  const blockUserWindowHandle = () => {
+    setBlockWindowVisible((prev) => !prev);
+  };
 
   return (
     <div className={styles.pageWrapper}>
@@ -35,7 +47,18 @@ const MessagesWrapper: FC = () => {
           // chatId={selectedChatId}
           chatId={activeChatId}
           setSelectedChatId={setSelectedChatId} // for mobile version
+          deleteChatWindowHandle={deleteChatWindowHandle}
+          blockUserWindowHandle={blockUserWindowHandle}
         />
+        {isDeleteWindowVisible && (
+          <DeleteChatWindow deleteChatWindowHandle={deleteChatWindowHandle} />
+        )}
+        {isBlockWindowVisible && (
+          <BlockUserWindow
+            blockUserWindowHandle={blockUserWindowHandle}
+            setBlockWindowVisible={setBlockWindowVisible}
+          />
+        )}
       </Box>
     </div>
   );

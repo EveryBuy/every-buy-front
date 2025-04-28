@@ -6,9 +6,16 @@ import style from "./Menu.module.scss";
 interface MenuType {
   status: boolean;
   changeStatus: () => void;
+  deleteChatWindowHandle: (() => void) | undefined;
+  blockUserWindowHandle: (() => void) | undefined;
 }
 
-const Menu: FC<MenuType> = ({ status, changeStatus }) => {
+const Menu: FC<MenuType> = ({
+  status,
+  changeStatus,
+  deleteChatWindowHandle,
+  blockUserWindowHandle,
+}) => {
   return (
     <ul
       className={status ? style.menuWrapper : "hidden"}
@@ -22,21 +29,27 @@ const Menu: FC<MenuType> = ({ status, changeStatus }) => {
       </li>
       <li>
         <Link href="#" className={style.link}>
+          <CommonIcon id="folder" width="20" height="19" />
+          <p>Додати до архіву</p>
+        </Link>
+      </li>
+      <li>
+        <Link href="#" className={style.link}>
           <CommonIcon id="flag" width="20" height="20" />
           <p>Поскаржитись</p>
         </Link>
       </li>
       <li>
-        <Link href="#" className={style.link}>
+        <p className={style.link} onClick={blockUserWindowHandle}>
           <CommonIcon id="no-entry-sign" width="20" height="20" />
-          <p>Заблокувати</p>
-        </Link>
+          Заблокувати
+        </p>
       </li>
       <li>
-        <Link href="#" className={style.link}>
+        <p className={style.link} onClick={deleteChatWindowHandle}>
           <CommonIcon id="icon-bin_basket" width="20" height="20" />
-          <p>Видалити</p>
-        </Link>
+          Видалити
+        </p>
       </li>
     </ul>
   );
