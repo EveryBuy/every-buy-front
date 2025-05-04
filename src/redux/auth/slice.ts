@@ -14,6 +14,7 @@ import {
   changeUserEmail,
   subscribeUser,
   unsubscribeUser,
+  validate,
 } from "./operations";
 import toast from "react-hot-toast";
 import {
@@ -60,6 +61,20 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(
+        validate.rejected,
+        (state, action) => {
+          state.user = {
+        userId: null,
+        fullName: null,
+        email: null,
+        phone: null,
+        userPhotoUrl: null,
+      };
+      state.token = null;
+      state.isLoggedIn = false;
+        }
+      )
+      .addCase(
         register.fulfilled,
         (state, action: PayloadAction<AuthResponse>) => {
           state.user = action.payload.data;
@@ -74,10 +89,9 @@ const authSlice = createSlice({
         toast.error(message);
       })
       .addCase(login.fulfilled, (state, { payload }) => {
-        state.user = payload.data;
+        // state.user = payload.data;
         state.token = payload.token;
         state.isLoggedIn = true;
-        // console.log(state);
       })
       .addCase(login.rejected, (state, action: PayloadAction<any>) => {
         state.isLoggedIn = false;
@@ -97,16 +111,22 @@ const authSlice = createSlice({
       })
       .addCase(logout.rejected, (state) => {
         state.isLoggedIn = false;
-        // here can be error notification like
-        // toast.error(`Holly shit happends! Error:${payload}`)
       })
       .addCase(refreshUser.fulfilled, (state, { payload }) => {
-        state.user = payload.data;
-        state.token = payload.token;
+        state.user = payload;
         state.isLoggedIn = true;
       })
       .addCase(refreshUser.rejected, (state) => {
         state.token = null;
+        state.isLoggedIn = false;
+        state.user = {
+        userId: null,
+        fullName: null,
+        email: null,
+        phone: null,
+        userPhotoUrl: null,
+        };
+        toast.error("Сесія завершена. Увійдіть знову.");
       })
       .addCase(deleteUser.fulfilled, (state, { payload }) => {
         state.isDeleted = true;

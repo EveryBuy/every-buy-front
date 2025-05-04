@@ -7,6 +7,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import theme from "../styles/mui/theme";
 import Message from "@/components/ui/Message/Message";
 import "./globals.scss";
+import AuthUpdater from "./(client)/(auth)/authUpdater";
 
 export default async function ClientLayout({
   children,
@@ -19,14 +20,16 @@ export default async function ClientLayout({
       <body>
         <AppRouterCacheProvider>
           <Providers>
-            <ThemeProvider theme={theme}>
-              {/* <AuthProvider> */}
-              <Header />
-              <main className="container">{children}</main>
-              <Footer />
-              <Message />
-              {/* </AuthProvider> */}
-            </ThemeProvider>
+            <AuthUpdater>
+              <ThemeProvider theme={theme}>
+                {/* <AuthProvider> */}
+                <Header />
+                <main className="container">{children}</main>
+                <Footer />
+                <Message />
+                {/* </AuthProvider> */}
+              </ThemeProvider>
+            </AuthUpdater>
           </Providers>
         </AppRouterCacheProvider>
       </body>
