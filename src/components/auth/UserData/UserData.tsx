@@ -5,7 +5,7 @@ import styles from "./UserData.module.scss";
 import Image from "next/image";
 import pencil from "@/assets/Svg/pencil.svg";
 import { useDispatch } from "react-redux";
-import { refreshUser } from "@/redux/auth/operations";
+// import { refreshUser } from "@/redux/auth/operations";
 
 type Props = {
   onEdit: () => void;
@@ -14,7 +14,7 @@ type Props = {
 export const UserData: React.FC<Props> = ({ onEdit }: Props) => {
   const user = useAppSelector(selectUser);
   const dispatch = useDispatch();
-  
+
   const handleClick = () => {
     onEdit();
   };

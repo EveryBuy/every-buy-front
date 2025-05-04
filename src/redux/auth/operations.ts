@@ -1,3 +1,7 @@
+import { RootState } from "../store";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { clearHeaderAuthToken } from "@/utils/axios";
+import { setHeaderAuthToken } from "@/utils/axios";
 import {
   UserRegData,
   UserLogData,
@@ -7,11 +11,7 @@ import {
   UserFullName,
   ChangeEmailData,
 } from "@/types/stateTypes";
-import { createAsyncThunk } from "@reduxjs/toolkit";
 import { API } from "@/utils/axios";
-import { setHeaderAuthToken } from "@/utils/axios";
-import { clearHeaderAuthToken } from "@/utils/axios";
-import { RootState } from "../store";
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -43,8 +43,10 @@ export const login = createAsyncThunk(
     try {
       const { data } = await API.post("/auth/auth", userLogData);
       setHeaderAuthToken(data.data.token);
-      const userData = await API.get("/user");
-      return { data: userData.data.data, token: data.data.token };
+      console.log(data);
+      return data.data;
+      // const userData = await API.get("/user");
+      // return { data: userData.data.data, token: data.data.token };
     } catch (error: any) {
       return thunkAPI.rejectWithValue({
         message: error.response?.data?.message || error.message,
@@ -57,12 +59,30 @@ export const login = createAsyncThunk(
 
 export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
   try {
-    // await API.get("/auth/validate");
     clearHeaderAuthToken();
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
   }
 });
+
+export const validate = createAsyncThunk(
+  "auth/validate",
+  async (_, thunkAPI) => {
+    const state: any = thunkAPI.getState();
+    const token = state.auth.token;
+    // console.log("Auth/validate-Token", token);
+    if (!token) return thunkAPI.rejectWithValue("No token!");
+
+    try {
+      setHeaderAuthToken(token);
+      const response = await API.get("auth/validate");
+      return response.data;
+    } catch (error: any) {
+      clearHeaderAuthToken();
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
 
 export const refreshUser = createAsyncThunk(
   "auth/refresh",
@@ -103,7 +123,6 @@ export const deleteUser = createAsyncThunk(
   "auth/deleteUser",
   async (deleteData: UserDeleteData, thunkAPI) => {
     try {
-      // receive { code, password }
       const { data } = await API.delete("/auth/delete", { data: deleteData });
       return data;
     } catch (error: any) {
@@ -116,7 +135,6 @@ export const changePassword = createAsyncThunk(
   "auth/changePassword",
   async (changeData: UserChgPwdData, thunkAPI) => {
     try {
-      // receive {"oldPassword": "string", "newPassword": "string" }
       const { data } = await API.put("/auth/change-password", changeData);
       return data;
     } catch (error: any) {
