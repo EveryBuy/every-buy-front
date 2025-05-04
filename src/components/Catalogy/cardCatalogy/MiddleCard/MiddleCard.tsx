@@ -10,6 +10,7 @@ import { useAppSelector, useAppDispatch } from "@/redux/store";
 import { setHeaderAuthToken } from "@/utils/axios";
 import { selectIsLoggedIn } from "@/redux/auth/selectors";
 import { addAdvertToFavourite, removeAdvertFromFavourite } from "@/redux/advertisement/operations";
+import { AdvertisementBuySeller } from '@/redux/advertisement/slice';
 import arrowButton from "@/assets/Svg/arrowButton.svg";
 import heart from "@/assets/Svg/heartDefault.svg";
 import formatAdvertisementDate from "@/utils/formatAdvertisementDate";
@@ -17,7 +18,7 @@ import { MiddleCardType } from "@/types/middleCardType";
 import { MinCardType } from '@/types/minCardType';
 
 type ItemProps = {
-	item: MiddleCardType;
+	item: AdvertisementBuySeller | MiddleCardType,
 	favourite: boolean
 };
 
@@ -111,7 +112,7 @@ export const MiddleCard: FC<ItemProps> = ({ item, favourite }: ItemProps) => {
 			)}
 
 			<p className={styles.dateText}>
-				{`${formatAdvertisementDate(item.updateDate)}`}
+				{`${item.updateDate && formatAdvertisementDate(item.updateDate)}`}
 				<br />
 				{`${item.city.cityName}, ${item.city.region.regionName}`}
 			</p>

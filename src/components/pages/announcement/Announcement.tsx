@@ -138,7 +138,7 @@ export default function Announcement() {
 					<Contacts
 						contactsInfo={{
 							publicDate: formattedDate,
-							cost: advertisementById.price,
+							cost: Number(advertisementById.price),
 							delivery: advertisementById.deliveryMethods,
 							title: advertisementById.title,
 							section: advertisementById.section,

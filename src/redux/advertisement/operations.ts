@@ -216,3 +216,18 @@ export const getFilteredAdverts = createAsyncThunk('advert/getFiltered',
 		}
 	}
 )
+
+export const getAdvertsBySellerId = createAsyncThunk('advert/getListBySellerId',
+	async (params: { userId: number, section?: string, page?: number }, thunkAPI) => {
+		const fiters = params.section ? { section: params.section } : {};
+		params.page ? { ...fiters, page: params.page } : null;
+		try {
+			const response = await API.get(`/ad/user/${params.userId}/ads`, {
+				params: { ...fiters },
+			});
+			return response.data;
+		} catch (error: any) {
+			return thunkAPI.rejectWithValue(error.message)
+		}
+	}
+)
