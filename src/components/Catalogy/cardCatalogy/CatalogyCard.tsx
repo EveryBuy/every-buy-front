@@ -6,24 +6,28 @@ import MiddleCard from "./MiddleCard/MiddleCard";
 import { goodsListSell } from "@/mock-data/catalogyCardsData";
 import { MiddleCardType } from "@/types/middleCardType";
 import { getAllFavouriteAdvert } from "@/redux/advertisement/operations";
-import { FavouriteAdvertisement } from '@/redux/advertisement/slice';
+import { FavouriteAdvertisement, AdvertisementBuySeller } from '@/redux/advertisement/slice';
 
 type ElemCard = MiddleCardType & {
 	[key: string]: any;
 };
 
 type ItemProps = {
-	item: ElemCard[];
+	item: AdvertisementBuySeller[] | null;
 };
 
 export const CatalogyCard = (props: ItemProps) => {
-	const items: ElemCard[] | null = props.item?.length > 0 ? props.item : null;
+	const items: AdvertisementBuySeller[] | null = props.item && props.item.length > 0 ? props.item : null;
 
 	const dispatch = useAppDispatch();
 	const section = useAppSelector(state => state.filters.section);
+	const token = useAppSelector(state => state.auth.token);
 
 	useEffect(() => {
-		dispatch(getAllFavouriteAdvert({ section }));
+		if (token) {
+			dispatch(getAllFavouriteAdvert({ section }));
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [dispatch, section]);
 
 	const favourites: FavouriteAdvertisement[] = useAppSelector(state => state.advertisement.favouriteAdvertisements);

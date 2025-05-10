@@ -16,7 +16,8 @@ import {
 	getUserActiveAdverts,
 	getUserInactiveAdverts,
 	removeAdvertFromFavourite,
-	updateAdvertisement
+	updateAdvertisement,
+	getAdvertsBySellerId
 } from "./operations";
 import { RootState } from "../store";
 
@@ -25,6 +26,12 @@ export type Category = {
 	categoryName: string,
 	nameUkr: string,
 	photoUrl: string
+}
+
+export type CategoryForSeller = {
+	categoryId: number,
+	nameUkr: string,
+	count: number,
 }
 
 export type TopSubCategory = {
@@ -61,7 +68,7 @@ export type Advertisement = {
 	id: number,
 	title: string,
 	description: string,
-	price: number,
+	price: string | number,
 	creationDate: string,
 	updateDate?: string,
 	isEnabled: boolean,
@@ -73,10 +80,14 @@ export type Advertisement = {
 	topSubCategory: TopSubCategory,
 	lowSubCategory: LowSubCategory,
 	productType: string,
-	section: string,
+	section: "SELL" | "BUY",
 	deliveryMethods: string[],
 	userDto: UserDto,
 }
+
+export type AdvertisementBuySeller = Omit<Advertisement, 'id'> & {
+	advertisementId: number;
+};
 
 export type FavouriteAdvertisement = {
 	advertisementId: number,
@@ -88,6 +99,19 @@ export type FavouriteAdvertisement = {
 	title: string,
 	updateDate: string,
 	userId: number,
+}
+
+export type AdvertsBySellerIdType = {
+	user: {
+		userId: number,
+		fullName: string,
+		photoUrl: string,
+	},
+	totalAdvertisements: number,
+	totalFilteredAdvertisements: number,
+	totalPages: number,
+	categories: CategoryForSeller[],
+	filteredAds: AdvertisementBuySeller[],
 }
 
 export type AdvertisementState = {
@@ -103,6 +127,7 @@ export type AdvertisementState = {
 	favouriteAdvertisements: FavouriteAdvertisement[],
 	userActiveAdverts: Advertisement[],
 	userInactiveAdverts: Advertisement[],
+	advertsBySellerId: AdvertsBySellerIdType | null,
 	isLoading: boolean,
 }
 
@@ -119,6 +144,7 @@ const initialState: AdvertisementState = {
 	favouriteAdvertisements: [],
 	userActiveAdverts: [],
 	userInactiveAdverts: [],
+	advertsBySellerId: null,
 	isLoading: false
 }
 
@@ -282,6 +308,14 @@ const advertisementSlice = createSlice({
 				state.userInactiveAdverts = action.payload.data;
 			})
 			.addCase(getUserInactiveAdverts.rejected, state => {
+				state.isLoading = false;
+			})
+			.addCase(getAdvertsBySellerId.pending, handlePending)
+			.addCase(getAdvertsBySellerId.fulfilled, (state, action) => {
+				state.isLoading = false;
+				state.advertsBySellerId = action.payload;
+			})
+			.addCase(getAdvertsBySellerId.rejected, (state) => {
 				state.isLoading = false;
 			})
 	},
