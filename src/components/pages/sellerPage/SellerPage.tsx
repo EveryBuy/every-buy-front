@@ -3,20 +3,20 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
-import { Search, CatalogyCard, CommonSectionSelector, CommonPreloader } from "@/components";
+import { Search, CatalogyCard, CommonSectionSelector, CommonPreloader, CommonPagination } from "@/components";
 import { getAdvertsBySellerId } from "@/redux/advertisement/operations";
 import { AdvertsBySellerIdType, CategoryForSeller } from "@/redux/advertisement/slice";
 import { useAppSelector, useAppDispatch } from "@/redux/store";
-import { MiddleCardType } from "@/types/middleCardType";
+// import { MiddleCardType } from "@/types/middleCardType";
 import styles from "./SellerPage.module.scss";
 import photoSeller from "@/assets/photo-seller.jpg";
-import { goodsListSell } from "@/mock-data/catalogyCardsData";
+// import { goodsListSell } from "@/mock-data/catalogyCardsData";
 
-// type CategoriesType = {
-// 	categoryId: number,
-// 	nameUkr: string,
-// 	count: number,
-// }
+type FilterQueryType = {
+	userId: number;
+	section?: string;
+	categoryId?: number;
+}
 
 export default function SellerPage() {
 	const params = useParams();
@@ -31,9 +31,19 @@ export default function SellerPage() {
 		useAppSelector((state) => state.filters.section)
 	);
 	const [selectCategoryId, setSelectCategoryId] = useState<number>(0);
+	const [page, setPage] = useState<number>(1);
 
 	const allDataSeller: AdvertsBySellerIdType | null =
 		useAppSelector((state) => state.advertisement.advertsBySellerId);
+	const isLoading: boolean = useAppSelector((state) => state.advertisement.isLoading);
+
+
+	function createFilterQuery(): FilterQueryType {
+		const filterQuery: FilterQueryType = { userId: idSeller };
+		if (section === "BUY") filterQuery.section = section;
+		if (selectCategoryId !== 0) filterQuery.categoryId = selectCategoryId;
+		return filterQuery;
+	}
 
 
 	useEffect(() => {
@@ -41,12 +51,10 @@ export default function SellerPage() {
 			router.push('/');
 		} else {
 			setIsFetching(true);
+			setPage(1);
 			try {
-				if (section === 'SELL') {
-					dispatch(getAdvertsBySellerId({ userId: idSeller }));
-				} else {
-					dispatch(getAdvertsBySellerId({ userId: idSeller, section: section }));
-				}
+				const query: FilterQueryType = createFilterQuery();
+				dispatch(getAdvertsBySellerId(query));
 			} catch (error) {
 				console.error(error);
 			} finally {
@@ -54,7 +62,23 @@ export default function SellerPage() {
 			}
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [idSeller, section]);
+	}, [idSeller, section, selectCategoryId]);
+
+	useEffect(() => {
+		if (page > 0) {
+			setIsFetching(true);
+			try {
+				const query: FilterQueryType = createFilterQuery();
+				dispatch(getAdvertsBySellerId({ ...query, page }));
+			} catch (error) {
+				console.error(error);
+			} finally {
+				setIsFetching(false);
+
+			}
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [page]);
 
 	useEffect(() => {
 		setSelectCategoryId(0);
@@ -71,14 +95,29 @@ export default function SellerPage() {
 
 		return (
 			allDataSeller && <>
-				<div onClick={() => setSelectCategoryId(0)}>
-					Усі огололення <span>{allDataSeller.totalFilteredAdvertisements}</span>
+				<div
+					onClick={
+						() => {
+							setSelectCategoryId(0);
+							setPage(1);
+						}
+					}>
+					Усі оголошення
+					<span>
+						{allDataSeller.categories.reduce((prev, item) => prev + item.count, 0)}
+					</span>
 				</div>
 				{
 					Array.isArray(newData) &&
 					newData.map(({ categoryId, nameUkr, count }) => {
 						return (
-							<div key={categoryId} onClick={() => setSelectCategoryId(categoryId)}>
+							<div key={categoryId}
+								onClick={
+									() => {
+										setSelectCategoryId(categoryId);
+										setPage(1);
+									}}
+								className={categoryId === selectCategoryId ? styles.categorySelect : ""}>
 								{nameUkr}
 								<span>{count}</span>
 							</div>
@@ -89,7 +128,7 @@ export default function SellerPage() {
 		);
 	};
 
-	if (isFetching) {
+	function showPreloader() {
 		return (
 			<div className={styles.preloaderContainer}>
 				<CommonPreloader sx={{ color: "#e5ff46" }} />
@@ -97,18 +136,35 @@ export default function SellerPage() {
 		);
 	}
 
+	const smoothScroll = () => {
+		setTimeout(() => {
+			const element = document.getElementById('filter');
+			if (element) {
+				element.scrollIntoView({ behavior: 'smooth' });
+			}
+		}, 200);
+	};
+
+	// if (isFetching) {
+	// 	showPreloader();
+	// }
+
 	if (!idSeller || idSeller === null) {
 		return (
 			<div className={styles.container}>
 				Користувача було видалено, або його не існувало.
 			</div>
 		);
-	} else if (!allDataSeller || !allDataSeller.user) {
-		return (
-			<div className={styles.container}>
-				Помилка сервера.
-			</div>
-		);
+	} else if ((!allDataSeller || !allDataSeller.user)) {
+		if (!isLoading) {
+			setTimeout(() => {
+				return (
+					<div className={styles.container}>
+						Помилка сервера.
+					</div>
+				);
+			}, 5000);
+		}
 	} else {
 
 		return (
@@ -132,30 +188,35 @@ export default function SellerPage() {
 						<p className={styles.nameSeller}>{allDataSeller.user.fullName || "Шахрай Зайченя"}</p>
 					</div>
 				</div>
-				<div className={styles.allCountText}>кількість знайдених оголошень: {allDataSeller.totalAdvertisements}</div>
+				<div className={styles.allCountText}>
+					кількість знайдених оголошень: {allDataSeller.totalAdvertisements}
+				</div>
 
-				<div className={styles.wrapperSection}>
+				<div className={styles.wrapperSection} id="filter">
 					<h1 className={styles.title}>Фільтрація по оголошенням</h1>
 					<CommonSectionSelector section={section} setSection={setSection} />
 				</div>
 				<div className={styles.wrapperFilter}>
-					{categoryList()}
+					{isLoading ? showPreloader() : categoryList()}
 					{/* <div>Мода та стиль <span>7</span></div>
 					<div>Дитячий світ <span>3</span></div> */}
 				</div>
 
 				{allDataSeller?.totalFilteredAdvertisements > 0
-					? <CatalogyCard item={
-						selectCategoryId
-							? allDataSeller.filteredAds.length > 0
-								? allDataSeller.filteredAds.filter(item => item.category.id === selectCategoryId)
-								: null
-							: allDataSeller.filteredAds
-
-					} />
+					? isLoading ? null : <CatalogyCard item={allDataSeller.filteredAds} />
 					: <div>Оголошення не знайдено</div>
 				}
-				{/* <CatalogyCard item={goodsListSell} /> */}
+				{
+					selectCategoryId === 0 && <div onClick={smoothScroll} className={styles.wrapperPagination}>
+						<CommonPagination
+							page={page}
+							pages={allDataSeller.totalPages || 1}
+							changePage={(num) => (num ? setPage(num) : null)}
+						/>
+					</div>
+				}
+
+				{/* <CatalogyCard item={goodsListSell} /> onClick={smoothScroll}*/}
 			</div>
 		);
 	}

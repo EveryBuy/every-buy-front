@@ -98,7 +98,7 @@ export default function Contacts({
 			if (userId) {
 				GetPhoneUser(userId)
 					.then(result => {
-						console.log(result);
+						// console.log(result);
 						if (result) {
 							setPhoneNumber(result.data.phone);
 						}

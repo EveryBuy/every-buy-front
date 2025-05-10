@@ -44,6 +44,7 @@ export { default as ComplaintModal } from "./pages/announcement/ComplaintModal/C
 
 // Seller page
 export { default as SellerPage } from "./pages/sellerPage/SellerPage";
+export { CommonPagination } from "./ui/CommonPagination/CommonPagination";
 
 // Auth
 export { default as Register } from "./auth/register/Register";
@@ -75,8 +76,8 @@ export { default as Chat } from "./pages/messages/chats/list/item/Chat";
 export { default as ChatData } from "./pages/messages/chats/list/item/data/ChatData";
 export { default as TimeData } from "./pages/messages/chats/list/item/data/TimeData";
 export { default as IconsData } from "./pages/messages/chats/list/item/data/IconsData";
-export { default as Buttons } from "./pages/messages/chats/buttons/Buttons";
-export { default as Button } from "./pages/messages/chats/buttons/Button";
+export { default as Buttons } from "./pages/messages/chats/Buttons/Buttons";
+export { default as Button } from "./pages/messages/chats/Buttons/Button";
 export { default as Icons } from "./pages/messages/chats/Icons/Icons";
 
 // Catalogy

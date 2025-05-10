@@ -67,31 +67,27 @@
 
 .wrapperSection {
 	display: flex;
-	flex-wrap: wrap;
-	flex-direction: column-reverse;
+	justify-content: flex-end;
+	// flex-wrap: wrap;
+	// flex-direction: column-reverse;
 	margin: 40px 0 16px;
 
-	section {
-		align-self: flex-end;
-	}
-
-	@include media-min($breakpoint-mobile) {
+	@include media-min($breakpoint-tablet) {
 		flex-wrap: nowrap;
 		flex-direction: row;
 		justify-content: space-between;
 		margin-bottom: 28px;
 
-		section {
-			align-self: flex-start;
-		}
 	}
 }
 
 .title {
-	font-size: var(--large-body-medium);
-	margin-top: 36px;
+	display: none;
+	// font-size: var(--large-body-medium);
+	// margin-top: 36px;
 
-	@include media-min($breakpoint-mobile) {
+	@include media-min($breakpoint-tablet) {
+		display: block;
 		font-size: var(--f-size-h4);
 		margin-top: 0;
 	}
@@ -104,9 +100,11 @@
 .wrapperFilter {
 	display: inline-block;
 	margin-bottom: 40px;
+	line-height: 1.5;
 
 	@include media-min($breakpoint-tablet) {
 		display: flex;
+		flex-wrap: wrap;
 	}
 
 	div {
@@ -135,50 +133,15 @@
 
 }
 
-
-
-
-.sectionContainer {
-	display: flex;
-	justify-content: center;
-	flex-direction: column;
-	margin: 50px 20px 0px;
-
-	@include media-min($breakpoint-tablet) {
-		margin: 100px 40px 0px;
-	}
-
-	@include media-min($breakpoint-laptop) {
-		margin: 100px 60px 0px;
-	}
+.categorySelect {
+	border-bottom: 1px solid var(--border);
 }
 
-// .item {
-//   @include media-min($breakpoint-tablet) {
-//     width: calc((100% - 46px) / 2);
-//   }
-// }
+.wrapperPagination {
+	display: block;
+	margin-top: 32px;
+}
 
 .preloaderContainer {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 70vh;
-}
-
-.breadcrumbsContainer {
-	// display: none;
-	display: block;
-	width: 100%;
-	padding: 10px 30px;
-	margin-bottom: 10px;
-
-	@include media-min($breakpoint-tablet) {
-		margin-top: 20px;
-		padding: 10px 60px;
-	}
-
-	@include media-min($breakpoint-laptop) {
-		margin-top: 50px;
-	}
+	margin: 20px 40%;
 }

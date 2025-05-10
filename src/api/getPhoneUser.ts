@@ -10,7 +10,8 @@ type PhoneUserType = {
 export const GetPhoneUser = async (userId: number): Promise<PhoneUserType | undefined> => {
 	const BASE_URL = "https://api-everybuy.onrender.com";
 	const persist = localStorage.getItem("persist:root");
-	const token = persist ? JSON.parse(persist).token : null;
+	const tokenWithQuotes = persist ? JSON.parse(persist).token : null;
+	const token = tokenWithQuotes ? tokenWithQuotes.slice(1, -1) : null;
 	setAuthToken(token);
 	try {
 		if (token) {
