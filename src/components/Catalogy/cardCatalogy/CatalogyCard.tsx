@@ -23,12 +23,12 @@ export const CatalogyCard = (props: ItemProps) => {
 	const section = useAppSelector(state => state.filters.section);
 	const token = useAppSelector(state => state.auth.token);
 
-	useEffect(() => {
-		if (token) {
-			dispatch(getAllFavouriteAdvert({ section }));
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [dispatch, section]);
+	// useEffect(() => {
+	// 	if (token) {
+	// 		dispatch(getAllFavouriteAdvert({ section }));
+	// 	}
+	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
+	// }, [section]);
 
 	const favourites: FavouriteAdvertisement[] = useAppSelector(state => state.advertisement.favouriteAdvertisements);
 	const favListId: number[] = favourites.map(item => item.advertisementId);
