@@ -42,6 +42,10 @@ export { default as Seller } from "./pages/announcement/Seller/Seller";
 export { default as AnnouncementSlider } from "./pages/announcement/Slider/Slider";
 export { default as ComplaintModal } from "./pages/announcement/ComplaintModal/ComplaintModal";
 
+// Seller page
+export { default as SellerPage } from "./pages/sellerPage/SellerPage";
+export { CommonPagination } from "./ui/CommonPagination/CommonPagination";
+
 // Auth
 export { default as Register } from "./auth/register/Register";
 export { default as SuccessRegisterModal } from "./auth/register/modals/Success/SuccessRegisterModal";

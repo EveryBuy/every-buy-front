@@ -1,16 +1,41 @@
 "use client";
 
 import { useEffect } from "react";
-import { useAppDispatch } from "@/redux/store";
-import { refreshUser } from "@/redux/auth/operations";
+import { persistor, useAppDispatch } from "@/redux/store";
+import { refreshUser, validate } from "@/redux/auth/operations";
+import { useSelector } from "react-redux";
+import { selectIsLoggedIn } from "@/redux/auth/selectors";
+import { usePathname } from "next/navigation";
 
-export const AuthUpdater = () => {
+type Props = {
+  children: React.ReactNode;
+};
+
+export const AuthUpdater = ({ children }: Props) => {
   const dispatch = useAppDispatch();
+  const isLogin = useSelector(selectIsLoggedIn);
+
+  const path = usePathname();
 
   useEffect(() => {
-    dispatch(refreshUser());
-  }, [dispatch]);
-  return;
+    const interval = setInterval(() => {
+      dispatch(validate())
+        .unwrap()
+        .catch(() => {});
+    }, 1000 * 60 * 1);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    if (isLogin) {
+      dispatch(refreshUser());
+    } else if (!isLogin && path.includes("/user")) {
+      window.location.href = "/login";
+    }
+  }, [isLogin]);
+
+  return <>{children}</>;
 };
 
 export default AuthUpdater;

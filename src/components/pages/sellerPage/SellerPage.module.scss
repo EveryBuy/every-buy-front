@@ -1,0 +1,147 @@
+@import "../../../styles/mixins";
+@import "../../../styles/breakpoints";
+
+.container {
+	padding: 0 21px;
+	margin: 0 auto;
+	max-width: 95%;
+
+	@include media-min($breakpoint-tablet) {
+		margin-top: 40px;
+		// margin-bottom: 138px;
+		// max-width: 768px;
+		padding: 0 32px;
+		// display: flex;
+		// flex-wrap: wrap;
+		// gap: 30px 46px;
+		// width: calc((100% - 46px) / 2);
+	}
+
+	@include media-min($breakpoint-laptop) {
+		padding: 0;
+		max-width: 1280px;
+		margin-right: 60px;
+		margin-left: 60px;
+		margin-bottom: 0px;
+	}
+
+	//  @media (min-width: 1024px) {
+	//      margin: 100px 60px 0px;
+	//  }
+}
+
+.wrapperSearch {
+	margin-bottom: 40px;
+
+	@include media-min($breakpoint-tablet) {
+		margin-bottom: 60px;
+	}
+}
+
+.wrapperSeller {
+	display: flex;
+
+	.wrapperImgSeller {
+		position: relative;
+		width: 83px;
+		height: 83px;
+		border-radius: 50%;
+		overflow: hidden;
+		margin-right: 29px;
+	}
+
+	.typeSeller {
+		font-weight: 600;
+		font-size: var(--f-size-h4);
+		margin: 7px 0 16px;
+	}
+
+	.nameSeller {
+		font-size: var(--large-body-medium);
+	}
+}
+
+.allCountText {
+	margin-top: 12px;
+}
+
+.wrapperSection {
+	display: flex;
+	justify-content: flex-end;
+	// flex-wrap: wrap;
+	// flex-direction: column-reverse;
+	margin: 40px 0 16px;
+
+	@include media-min($breakpoint-tablet) {
+		flex-wrap: nowrap;
+		flex-direction: row;
+		justify-content: space-between;
+		margin-bottom: 28px;
+
+	}
+}
+
+.title {
+	display: none;
+	// font-size: var(--large-body-medium);
+	// margin-top: 36px;
+
+	@include media-min($breakpoint-tablet) {
+		display: block;
+		font-size: var(--f-size-h4);
+		margin-top: 0;
+	}
+
+	@include media-min($breakpoint-laptop) {
+		font-size: var(--f-size-h3);
+	}
+}
+
+.wrapperFilter {
+	display: inline-block;
+	margin-bottom: 40px;
+	line-height: 1.5;
+
+	@include media-min($breakpoint-tablet) {
+		display: flex;
+		flex-wrap: wrap;
+	}
+
+	div {
+		display: inline-block;
+		margin-right: 24px;
+		cursor: pointer;
+		transition: transform 0.2s;
+
+		&:hover {
+			transform: scale(1.1);
+		}
+
+		span {
+			display: inline-block;
+			padding: 5px;
+			background-color: var(--not-active);
+			border-radius: 50%;
+			overflow: hidden;
+			margin: 0 0 -10px 2px;
+		}
+	}
+
+	div:first-child {
+		font-weight: 700;
+	}
+
+}
+
+.categorySelect {
+	border-bottom: 1px solid var(--border);
+}
+
+.wrapperPagination {
+	display: block;
+	margin-top: 32px;
+}
+
+.preloaderContainer {
+	margin: 20px 40%;
+}
