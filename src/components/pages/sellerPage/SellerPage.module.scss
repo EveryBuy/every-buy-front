@@ -90,6 +90,7 @@
 		display: block;
 		font-size: var(--f-size-h4);
 		margin-top: 0;
+		margin-right: 18px;
 	}
 
 	@include media-min($breakpoint-laptop) {
@@ -144,4 +145,10 @@
 
 .preloaderContainer {
 	margin: 20px 40%;
+}
+
+.catalogyHide {
+	width: 0;
+	height: 0;
+	overflow: hidden;
 }

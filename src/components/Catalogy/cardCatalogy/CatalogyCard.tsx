@@ -25,10 +25,10 @@ export const CatalogyCard = (props: ItemProps) => {
 
 	useEffect(() => {
 		if (token) {
-			dispatch(getAllFavouriteAdvert({ section }));
+			// dispatch(getAllFavouriteAdvert({ section }));
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [dispatch, section]);
+	}, [section]);
 
 	const favourites: FavouriteAdvertisement[] = useAppSelector(state => state.advertisement.favouriteAdvertisements);
 	const favListId: number[] = favourites.map(item => item.advertisementId);

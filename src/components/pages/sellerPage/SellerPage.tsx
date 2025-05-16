@@ -1,13 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import { Search, CatalogyCard, CommonSectionSelector, CommonPreloader, CommonPagination } from "@/components";
 import { getAdvertsBySellerId } from "@/redux/advertisement/operations";
 import { AdvertsBySellerIdType, CategoryForSeller } from "@/redux/advertisement/slice";
 import { useAppSelector, useAppDispatch } from "@/redux/store";
-// import { MiddleCardType } from "@/types/middleCardType";
 import styles from "./SellerPage.module.scss";
 import photoSeller from "@/assets/photo-seller.jpg";
 // import { goodsListSell } from "@/mock-data/catalogyCardsData";
@@ -27,9 +26,8 @@ export default function SellerPage() {
 	const router = useRouter();
 
 	const [isFetching, setIsFetching] = useState<boolean>(true);
-	const [section, setSection] = useState<string>(
-		useAppSelector((state) => state.filters.section)
-	);
+	const initialSection = useAppSelector((state) => state.filters.section);
+	const [section, setSection] = useState<string>(initialSection);
 	const [selectCategoryId, setSelectCategoryId] = useState<number>(0);
 	const [page, setPage] = useState<number>(1);
 
@@ -45,43 +43,47 @@ export default function SellerPage() {
 		return filterQuery;
 	}
 
+	function getData(value: string) {
+		setIsFetching(true);
+		try {
+			const query: FilterQueryType = createFilterQuery();
+			if (value === "selectCategoryId" || value === "section") {
+				dispatch(getAdvertsBySellerId(query));
+			}
+			if (value === "page") {
+				dispatch(getAdvertsBySellerId({ ...query, page }));
+			}
+		} catch (error) {
+			console.error(error);
+		} finally {
+			// if (value === "section") router.push(`?section=${section}`);
+			setIsFetching(false);
+		}
+	}
+
 
 	useEffect(() => {
 		if (!idSeller || idSeller === 0) {
 			router.push('/');
 		} else {
-			setIsFetching(true);
-			setPage(1);
-			try {
-				const query: FilterQueryType = createFilterQuery();
-				dispatch(getAdvertsBySellerId(query));
-			} catch (error) {
-				console.error(error);
-			} finally {
-				setIsFetching(false);
-			}
+			if (page !== 1) setPage(1);
+			getData("selectCategoryId");
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [idSeller, section, selectCategoryId]);
+	}, [idSeller, selectCategoryId]);
 
 	useEffect(() => {
-		if (page > 0) {
-			setIsFetching(true);
-			try {
-				const query: FilterQueryType = createFilterQuery();
-				dispatch(getAdvertsBySellerId({ ...query, page }));
-			} catch (error) {
-				console.error(error);
-			} finally {
-				setIsFetching(false);
-
-			}
+		if (!isFetching) {
+			getData("page");
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [page]);
 
 	useEffect(() => {
 		setSelectCategoryId(0);
+		if (page !== 1) setPage(1);
+		getData("section");
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [section]);
 
 	// console.log('data', allDataSeller);
@@ -145,11 +147,8 @@ export default function SellerPage() {
 		}, 200);
 	};
 
-	// if (isFetching) {
-	// 	showPreloader();
-	// }
 
-	if (!idSeller || idSeller === null) {
+	if (!idSeller || idSeller === null || allDataSeller?.user.fullName === "Unknown User") {
 		return (
 			<div className={styles.container}>
 				Користувача було видалено, або його не існувало.
@@ -203,7 +202,9 @@ export default function SellerPage() {
 				</div>
 
 				{allDataSeller?.totalFilteredAdvertisements > 0
-					? isLoading ? null : <CatalogyCard item={allDataSeller.filteredAds} />
+					? <div className={isLoading ? styles.catalogyHide : ""}>
+						<CatalogyCard item={allDataSeller.filteredAds} />
+					</div>
 					: <div>Оголошення не знайдено</div>
 				}
 				{
