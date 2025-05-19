@@ -45,8 +45,9 @@ const DialogueInput: FC<DialogueInputProps> = ({
   const isUserBlockedByCompanion = useSelector((state: RootState) =>
     state.messages?.chat ? state.messages.chat.currentlyUserBlocked : null
   );
-  console.log("Чи заблоковано користувача:", isUserBlockedByCompanion);
-  console.log("Чи заблоковано того, кому користувач пише:", isCompanionBlocked);
+  const response = useSelector((state: RootState) =>
+    state.messages?.chat ? state.messages.chat : null
+  );
 
   const companionId = useSelector((state: RootState) =>
     state.messages?.chat ? state.messages.chat.userData?.userId : null
@@ -134,6 +135,9 @@ const DialogueInput: FC<DialogueInputProps> = ({
       console.error("Failed to unblock the user:", error);
     }
   };
+  console.log(isUserBlockedByCompanion);
+  console.log(isCompanionBlocked);
+  console.log(response);
 
   const dialogInput = isCompanionBlocked ? (
     <Box className={`${style.blockBackground} ${style.blockMessage}`}>
@@ -147,7 +151,9 @@ const DialogueInput: FC<DialogueInputProps> = ({
       </p>
     </Box>
   ) : isUserBlockedByCompanion ? (
-    <Box className={`${style.blockBackground} ${style.blockMessage}`}>
+    <Box
+      className={`${style.blockBackground} ${style.blockMessage} ${style.chatBlockedByCompanion}`}
+    >
       <p>
         Вибачте, користувач вас заблокував. Тепер ви не можете надсилати йому
         повідомлення
