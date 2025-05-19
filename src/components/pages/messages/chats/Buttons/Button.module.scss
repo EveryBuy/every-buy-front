@@ -9,7 +9,7 @@
   text-align: center;
 
   @include media-min($breakpoint-tablet) {
-    width: 100px;
+    width: 130px;
     padding: 8px 6px;
     font-size: var(--large-body-medium);
   }

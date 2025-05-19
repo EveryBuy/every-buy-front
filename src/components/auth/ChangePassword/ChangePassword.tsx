@@ -25,7 +25,7 @@ type InitialValues = {
 };
 
 export const ChangePassword: React.FC<Props> = ({ onClose }: Props) => {
-  const [open, setOpen] = useState(true);
+  // const [open, setOpen] = useState(true);
   const [showNewPwd, setShowPassword] = useState(false);
   const [showConfirmPwd, setShowConfirmPwd] = useState(false);
   const dispatch = useAppDispatch();
@@ -35,7 +35,6 @@ export const ChangePassword: React.FC<Props> = ({ onClose }: Props) => {
   const newPwdConfirmId = useId();
 
   const handleClose = () => {
-    setOpen(false);
     onClose(false);
   };
 
@@ -77,144 +76,142 @@ export const ChangePassword: React.FC<Props> = ({ onClose }: Props) => {
   };
 
   return (
-    <>
-      <CommonModal onClose={handleClose}>
-        <h3 className={styles.title}>Зміна паролю</h3>
-        <Formik
-          initialValues={{
-            oldPwd: "",
-            newPwd: "",
-            newPwdConfirm: "",
-          }}
-          onSubmit={handleSubmit}
-          validate={validate}
-        >
-          {({ errors, touched, values }) => (
-            <Form className={styles.form}>
-              <div>
-                <label id={oldPwdId}>
-                  Старий пароль<span className={styles.requiredMark}> *</span>
-                </label>
-                <div className={styles.inputWrapper}>
-                  <Field
-                    name="oldPwd"
-                    type="text"
-                    id={oldPwdId}
-                    placeholder={
-                      errors.oldPwd && touched.oldPwd
-                        ? errors.oldPwd
-                        : "введіть свій пароль"
-                    }
-                    className={`${styles.input} ${
-                      errors.oldPwd && touched.oldPwd
-                        ? styles.errorPlaceholder
-                        : ""
-                    } `}
-                    required
-                  ></Field>
-                </div>
+    <CommonModal onClose={handleClose}>
+      <h3 className={styles.title}>Зміна паролю</h3>
+      <Formik
+        initialValues={{
+          oldPwd: "",
+          newPwd: "",
+          newPwdConfirm: "",
+        }}
+        onSubmit={handleSubmit}
+        validate={validate}
+      >
+        {({ errors, touched, values }) => (
+          <Form className={styles.form}>
+            <div>
+              <label id={oldPwdId}>
+                Старий пароль<span className={styles.requiredMark}> *</span>
+              </label>
+              <div className={styles.inputWrapper}>
+                <Field
+                  name="oldPwd"
+                  type="text"
+                  id={oldPwdId}
+                  placeholder={
+                    errors.oldPwd && touched.oldPwd
+                      ? errors.oldPwd
+                      : "введіть свій пароль"
+                  }
+                  className={`${styles.input} ${
+                    errors.oldPwd && touched.oldPwd
+                      ? styles.errorPlaceholder
+                      : ""
+                  } `}
+                  required
+                ></Field>
               </div>
+            </div>
 
-              <div>
-                <label
+            <div>
+              <label
+                id={newPwdId}
+                className={`${
+                  errors.newPwd && values.newPwd ? styles.errorLabel : ""
+                }`}
+              >
+                {errors.newPwd && values.newPwd ? (
+                  errors.newPwd
+                ) : (
+                  <>
+                    Новий пароль
+                    <span className={styles.requiredMark}> *</span>
+                  </>
+                )}
+              </label>
+              <div className={styles.inputWrapper}>
+                <Field
+                  name="newPwd"
+                  type={showNewPwd ? "text" : "password"}
                   id={newPwdId}
-                  className={`${
-                    errors.newPwd && values.newPwd ? styles.errorLabel : ""
-                  }`}
-                >
-                  {errors.newPwd && values.newPwd ? (
-                    errors.newPwd
-                  ) : (
-                    <>
-                      Новий пароль
-                      <span className={styles.requiredMark}> *</span>
-                    </>
-                  )}
-                </label>
-                <div className={styles.inputWrapper}>
-                  <Field
-                    name="newPwd"
-                    type={showNewPwd ? "text" : "password"}
-                    id={newPwdId}
-                    placeholder={
-                      errors.newPwd && touched.newPwd
-                        ? errors.newPwd
-                        : "введіть новий пароль"
-                    }
-                    className={`${styles.input} ${
-                      errors.newPwd && touched.newPwd
-                        ? styles.errorPlaceholder
-                        : ""
-                    }`}
-                    required
-                  ></Field>
-                  <Image
-                    className={styles.EyePassword}
-                    src={!showNewPwd ? EyeInvisibleFilled : EyeFilled}
-                    alt="showPassword"
-                    width={24}
-                    height={24}
-                    onClick={toggleShowNewPwd}
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label
-                  id={newPwdConfirmId}
-                  className={`${
-                    errors.newPwdConfirm && values.newPwdConfirm
-                      ? styles.errorLabel
+                  placeholder={
+                    errors.newPwd && touched.newPwd
+                      ? errors.newPwd
+                      : "введіть новий пароль"
+                  }
+                  className={`${styles.input} ${
+                    errors.newPwd && touched.newPwd
+                      ? styles.errorPlaceholder
                       : ""
                   }`}
-                >
-                  {errors.newPwdConfirm && values.newPwdConfirm ? (
-                    errors.newPwdConfirm
-                  ) : (
-                    <>
-                      Підтвердити новий пароль
-                      <span className={styles.requiredMark}> *</span>
-                    </>
-                  )}
-                </label>
-                <div className={styles.inputWrapper}>
-                  <Field
-                    name="newPwdConfirm"
-                    type={showConfirmPwd ? "text" : "password"}
-                    id={newPwdConfirmId}
-                    placeholder={
-                      errors.newPwdConfirm && touched.newPwdConfirm
-                        ? errors.newPwdConfirm
-                        : "підтвердіть новий пароль"
-                    }
-                    className={`${styles.input} ${
-                      errors.newPwdConfirm && touched.newPwdConfirm
-                        ? styles.errorPlaceholder
-                        : ""
-                    }`}
-                    required
-                  ></Field>
-                  <Image
-                    className={styles.EyePassword}
-                    src={!showConfirmPwd ? EyeInvisibleFilled : EyeFilled}
-                    alt="showPassword"
-                    width={24}
-                    height={24}
-                    onClick={toggleShowConfirmPwd}
-                  />
-                </div>
+                  required
+                ></Field>
+                <Image
+                  className={styles.EyePassword}
+                  src={!showNewPwd ? EyeInvisibleFilled : EyeFilled}
+                  alt="showPassword"
+                  width={24}
+                  height={24}
+                  onClick={toggleShowNewPwd}
+                />
               </div>
-              <CommonButton
-                type="submit"
-                title="Зберегти пароль"
-                color="yellow"
-                className={styles.submitBtn}
-              />
-            </Form>
-          )}
-        </Formik>
-      </CommonModal>
-    </>
+            </div>
+
+            <div>
+              <label
+                id={newPwdConfirmId}
+                className={`${
+                  errors.newPwdConfirm && values.newPwdConfirm
+                    ? styles.errorLabel
+                    : ""
+                }`}
+              >
+                {errors.newPwdConfirm && values.newPwdConfirm ? (
+                  errors.newPwdConfirm
+                ) : (
+                  <>
+                    Підтвердити новий пароль
+                    <span className={styles.requiredMark}> *</span>
+                  </>
+                )}
+              </label>
+              <div className={styles.inputWrapper}>
+                <Field
+                  name="newPwdConfirm"
+                  type={showConfirmPwd ? "text" : "password"}
+                  id={newPwdConfirmId}
+                  placeholder={
+                    errors.newPwdConfirm && touched.newPwdConfirm
+                      ? errors.newPwdConfirm
+                      : "підтвердіть новий пароль"
+                  }
+                  className={`${styles.input} ${
+                    errors.newPwdConfirm && touched.newPwdConfirm
+                      ? styles.errorPlaceholder
+                      : ""
+                  }`}
+                  required
+                ></Field>
+                <Image
+                  className={styles.EyePassword}
+                  src={!showConfirmPwd ? EyeInvisibleFilled : EyeFilled}
+                  alt="showPassword"
+                  width={24}
+                  height={24}
+                  onClick={toggleShowConfirmPwd}
+                />
+              </div>
+            </div>
+            <CommonButton
+              type="submit"
+              title="Зберегти пароль"
+              color="yellow"
+              className={styles.submitBtn}
+            />
+          </Form>
+        )}
+      </Formik>
+    </CommonModal>
   );
 };
 

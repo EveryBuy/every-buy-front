@@ -14,31 +14,30 @@ type ChatsBlockType = {
   setSelectedChatId: (selectedChatId: number) => void;
   selectedChatId: number | null;
   activeChatId: number | null;
+  isHeartSelected: boolean;
+  setHeartSelected: (isHeartSelected: boolean) => void;
+  isArchived: boolean;
+  setArchived: (isArchived: boolean) => void;
 };
 
 const ChatsBlock: FC<ChatsBlockType> = ({
   setSelectedChatId,
   selectedChatId,
   activeChatId,
+  isHeartSelected,
+  setHeartSelected,
+  isArchived,
+  setArchived,
 }) => {
   const [activeButton, setActiveButton] = useState<number | null>(1);
-  const [isHeartSelected, setHeardSelected] = useState<boolean>(false);
+  const [isSelected, setSelected] = useState<boolean>(false);
   const [isFolderSelected, setFolderSelected] = useState<boolean>(false);
-  const {
-    data: buyChats,
-    isFetching: isBuyChatsFetching,
-    // isLoading: isBuyChatsLoading,
-    // isError: isBuyChatsError,
-  } = useGetBuyChatsQuery();
-  const {
-    data: sellChats,
-    isFetching: isSellChatsFetching,
-    // isLoading: isSellChatsLoading,
-    // isError: isSellChatsError,
-  } = useGetSellChatsQuery();
+  const { data: buyChats, isFetching: isBuyChatsFetching } =
+    useGetBuyChatsQuery();
+  const { data: sellChats, isFetching: isSellChatsFetching } =
+    useGetSellChatsQuery();
   const { data: favoritesChats } = useGetFavoritesChatsQuery();
   const { data: archivedChats } = useGetArchivedChatsQuery();
-  // console.log(buyChats);
 
   // filter chats and hidden them if they are in the archive
   let updatedBuyChats;
@@ -62,7 +61,7 @@ const ChatsBlock: FC<ChatsBlockType> = ({
   // choose the chat depends on what button you clicked
   let chats;
   if (favoritesChats || archivedChats) {
-    chats = isHeartSelected
+    chats = isSelected
       ? favoritesChats
       : isFolderSelected
       ? archivedChats
@@ -75,7 +74,7 @@ const ChatsBlock: FC<ChatsBlockType> = ({
     setActiveButton(buttonId);
   };
   const handleIconHeartClick = () => {
-    setHeardSelected((prev) => !prev);
+    setSelected((prev) => !prev);
   };
   const handleIconFolderClick = () => {
     setFolderSelected((prev) => !prev);
@@ -96,7 +95,7 @@ const ChatsBlock: FC<ChatsBlockType> = ({
       }
     >
       <Box className={style.buttonsWrapper}>
-        {isHeartSelected ? (
+        {isSelected ? (
           <Box className={style.savedMessagesHeaderBlock}>
             <Box className={style.text}>
               <CommonIcon
@@ -141,9 +140,12 @@ const ChatsBlock: FC<ChatsBlockType> = ({
       <ChatsList
         chats={chats}
         setSelectedChatId={setSelectedChatId}
-        // selectedChatId={selectedChatId}
         isBuyChatsLoading={isBuyChatsFetching}
         isSellChatsLoading={isSellChatsFetching}
+        isHeartSelected={isHeartSelected}
+        setHeartSelected={setHeartSelected}
+        isArchived={isArchived}
+        setArchived={setArchived}
       />
     </Box>
   );
