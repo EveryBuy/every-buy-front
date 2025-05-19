@@ -10,9 +10,25 @@ import style from "./Companion.module.scss";
 
 type CompanionBlockType = {
   setSelectedChatId: (chatId: number | null) => void;
+  blockUserWindowHandle: (() => void) | undefined;
+  complaintWindowHandle: (() => void) | undefined;
+  chatId: number | null;
+  isHeartSelected: boolean;
+  setHeartSelected: (isHeartSelected: boolean) => void;
+  isArchived: boolean;
+  setArchived: (isArchived: boolean) => void;
 };
 
-const Companion: FC<CompanionBlockType> = ({ setSelectedChatId }) => {
+const Companion: FC<CompanionBlockType> = ({
+  setSelectedChatId,
+  blockUserWindowHandle,
+  complaintWindowHandle,
+  chatId,
+  isHeartSelected,
+  setHeartSelected,
+  isArchived,
+  setArchived,
+}) => {
   const [isMenuVisible, setMenuVisible] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const companionPictureUrl = useSelector((state: RootState) =>
@@ -75,7 +91,17 @@ const Companion: FC<CompanionBlockType> = ({ setSelectedChatId }) => {
           <Box></Box>
           <Box></Box>
           <Box></Box>
-          <Menu status={isMenuVisible} changeStatus={menuHandle} />
+          <Menu
+            status={isMenuVisible}
+            changeStatus={menuHandle}
+            blockUserWindowHandle={blockUserWindowHandle}
+            complaintWindowHandle={complaintWindowHandle}
+            chatId={chatId}
+            isHeartSelected={isHeartSelected}
+            setHeartSelected={setHeartSelected}
+            isArchived={isArchived}
+            setArchived={setArchived}
+          />
         </Box>
       </Box>
     </Box>

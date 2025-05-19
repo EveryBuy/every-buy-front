@@ -33,6 +33,7 @@ const Dialogue: FC<DialogueType> = ({ chatId }) => {
     refetchOnMountOrArgChange: true,
   });
   const dialogueWrapperRef = useRef<HTMLDivElement | null>(null);
+  // console.log("messages", messages);
 
   useGetChatQuery(chatId ?? skipToken, {
     refetchOnMountOrArgChange: true,

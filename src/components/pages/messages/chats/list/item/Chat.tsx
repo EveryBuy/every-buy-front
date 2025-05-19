@@ -11,6 +11,10 @@ const Chat: FC<ChatType> = ({
   lastMessageDate,
   selectedChatId,
   chatId,
+  isHeartSelected,
+  setHeartSelected,
+  isArchived,
+  setArchived,
 }) => {
   return (
     <Box className={style.blockWrapper}>
@@ -29,6 +33,10 @@ const Chat: FC<ChatType> = ({
         lastMessageDate={lastMessageDate}
         selectedChatId={selectedChatId}
         chatId={chatId}
+        isHeartSelected={isHeartSelected}
+        setHeartSelected={setHeartSelected}
+        isArchived={isArchived}
+        setArchived={setArchived}
       />
     </Box>
   );
