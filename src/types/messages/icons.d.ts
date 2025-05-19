@@ -20,6 +20,15 @@ interface IconsBlockType {
     selectedChatId: number,
     e: React.MouseEvent<HTMLButtonElement>
   ) => void;
+  isArchived?: boolean;
+  addToArchive?: (
+    selectedChatId: number,
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => void;
+  removeFromArchive?: (
+    selectedChatId: number,
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => void;
 }
 
 export default IconsBlockType;

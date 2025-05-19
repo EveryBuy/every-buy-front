@@ -40,6 +40,7 @@ export { default as Contacts } from "./pages/announcement/Contacts/Contacts";
 export { default as Info } from "./pages/announcement/Info/Info";
 export { default as Seller } from "./pages/announcement/Seller/Seller";
 export { default as AnnouncementSlider } from "./pages/announcement/Slider/Slider";
+export { default as Complaint } from "./pages/announcement/ComplaintModal/Complaint";
 export { default as ComplaintModal } from "./pages/announcement/ComplaintModal/ComplaintModal";
 
 // Seller page
@@ -79,7 +80,7 @@ export { default as IconsData } from "./pages/messages/chats/list/item/data/Icon
 export { default as Buttons } from "./pages/messages/chats/Buttons/Buttons";
 export { default as Button } from "./pages/messages/chats/Buttons/Button";
 export { default as Icons } from "./pages/messages/chats/Icons/Icons";
-export { default as DeleteChatWindow } from "./pages/messages/messages/windows/DeleteChatWindow/DeleteChatWindow";
+export { default as ComplaintWindow } from "./pages/messages/messages/windows/ComplaintWindow/ComplaintWindow";
 export { default as BlockUserWindow } from "./pages/messages/messages/windows/BlockUserWindow/BlockUserWindow";
 
 // Catalogy

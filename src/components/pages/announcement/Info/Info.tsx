@@ -1,5 +1,5 @@
-import { CommonIcon, ComplaintModal } from "@/components";
-import { deliveryToString } from "../deliveryToString"; 
+import { CommonIcon, Complaint } from "@/components";
+import { deliveryToString } from "../deliveryToString";
 import styles from "./Info.module.scss";
 
 interface InfoProps {
@@ -44,10 +44,10 @@ export default function Info({ articleInfo }: InfoProps) {
         </div>
         <div className={styles.mobileContent}>
           <p className={styles.deliveryTitle}>Спосіб доставки</p>
-          <p className={styles.text}>{deliveryToString(delivery)}</p> 
+          <p className={styles.text}>{deliveryToString(delivery)}</p>
         </div>
       </div>
-      <ComplaintModal />
+      <Complaint />
     </div>
   );
 }

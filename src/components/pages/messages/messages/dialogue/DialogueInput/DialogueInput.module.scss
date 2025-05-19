@@ -1,8 +1,9 @@
 @import "@/styles/mixins";
 @import "@/styles/breakpoints";
 
-.blockBackground {
-  width: 99%;
+.blockBackground,
+.blockMessage {
+  width: 100%;
   background-color: var(--background);
   padding: 10px 0px 10px;
   @include media-min($breakpoint-tablet) {
@@ -77,4 +78,38 @@
 .iconSend {
   width: 24px;
   height: 24px;
+}
+
+// .blockMessage {
+//   width: 100%;
+//   display: flex;
+//   flex-direction: column;
+//   // @include media-min($breakpoint-tablet) {
+//   //   margin-top: 0px;
+//   //   margin-bottom: 0px;
+//   // }
+//   // @include media-min($breakpoint-laptop-large) {
+//   //   margin-top: 10px;
+//   // }
+// }
+
+.blockMessage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 144px;
+  padding: 20px 13px;
+  background-color: var(--errorMessagesMessage);
+
+  & p:first-child {
+    text-align: center;
+  }
+  & p:last-child {
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }

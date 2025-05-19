@@ -10,14 +10,24 @@ import style from "./Companion.module.scss";
 
 type CompanionBlockType = {
   setSelectedChatId: (chatId: number | null) => void;
-  deleteChatWindowHandle: (() => void) | undefined;
   blockUserWindowHandle: (() => void) | undefined;
+  complaintWindowHandle: (() => void) | undefined;
+  chatId: number | null;
+  isHeartSelected: boolean;
+  setHeartSelected: (isHeartSelected: boolean) => void;
+  isArchived: boolean;
+  setArchived: (isArchived: boolean) => void;
 };
 
 const Companion: FC<CompanionBlockType> = ({
   setSelectedChatId,
-  deleteChatWindowHandle,
   blockUserWindowHandle,
+  complaintWindowHandle,
+  chatId,
+  isHeartSelected,
+  setHeartSelected,
+  isArchived,
+  setArchived,
 }) => {
   const [isMenuVisible, setMenuVisible] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -26,9 +36,6 @@ const Companion: FC<CompanionBlockType> = ({
   );
   const companionName = useSelector((state: RootState) =>
     state.messages?.chat ? state.messages.chat.userData?.fullName : null
-  );
-  const companion = useSelector((state: RootState) =>
-    state.messages?.chat ? state.messages.chat : null
   );
 
   const picture = companionPictureUrl ? (
@@ -87,8 +94,13 @@ const Companion: FC<CompanionBlockType> = ({
           <Menu
             status={isMenuVisible}
             changeStatus={menuHandle}
-            deleteChatWindowHandle={deleteChatWindowHandle}
             blockUserWindowHandle={blockUserWindowHandle}
+            complaintWindowHandle={complaintWindowHandle}
+            chatId={chatId}
+            isHeartSelected={isHeartSelected}
+            setHeartSelected={setHeartSelected}
+            isArchived={isArchived}
+            setArchived={setArchived}
           />
         </Box>
       </Box>

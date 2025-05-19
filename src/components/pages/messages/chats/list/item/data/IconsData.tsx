@@ -1,23 +1,39 @@
 "use client";
 
-import { FC, useState, useEffect } from "react";
+import { FC, useEffect } from "react";
 import { Box } from "@mui/material";
 import { Icons, CommonIcon } from "@/components";
 import {
   useAddChatToFavoritesMutation,
   useRemoveChatFromFavoritesMutation,
   useGetFavoritesChatsQuery,
+  useAddChatToArchiveMutation,
+  useRemoveChatFromArchiveMutation,
+  useGetArchivedChatsQuery,
 } from "@/redux/messages/chatApi";
 import style from "./IconsData.module.scss";
 interface IconsDataType {
   chatId: number | undefined;
+  isHeartSelected: boolean;
+  setHeartSelected: (isHeartSelected: boolean) => void;
+  isArchived: boolean;
+  setArchived: (isArchived: boolean) => void;
 }
 
-const IconsData: FC<IconsDataType> = ({ chatId }) => {
+const IconsData: FC<IconsDataType> = ({
+  chatId,
+  isHeartSelected,
+  setHeartSelected,
+  isArchived,
+  setArchived,
+}) => {
   const [addChatToFavorites] = useAddChatToFavoritesMutation();
   const [removeChatFromFavorites] = useRemoveChatFromFavoritesMutation();
-  const [isHeartSelected, setHeartSelected] = useState(false);
   const { data: favoritesChats } = useGetFavoritesChatsQuery();
+  const [addChatToArchive] = useAddChatToArchiveMutation();
+  const [removeChatFromArchive] = useRemoveChatFromArchiveMutation();
+  // const [isArchived, setArchived] = useState(false);
+  const { data: archivedChats } = useGetArchivedChatsQuery();
 
   useEffect(() => {
     if (favoritesChats) {
@@ -26,21 +42,21 @@ const IconsData: FC<IconsDataType> = ({ chatId }) => {
       );
       isIdInFavorites && setHeartSelected(true);
     }
-  }, [favoritesChats, chatId]);
+  }, [favoritesChats, chatId, setHeartSelected]);
 
   const handlerHeartSelected = async (
     chatId: number,
     e: React.MouseEvent<HTMLButtonElement>
   ) => {
     e.stopPropagation();
-    setHeartSelected((prev) => !prev);
+    setHeartSelected(!isHeartSelected);
     try {
       if (chatId) {
         await addChatToFavorites({ chatId: chatId }).unwrap();
         console.log("Chat added to favorites!");
       }
     } catch (error) {
-      setHeartSelected((prev) => !prev);
+      setHeartSelected(!isHeartSelected);
       console.error("Failed to add to favorites:", error);
     }
   };
@@ -50,15 +66,58 @@ const IconsData: FC<IconsDataType> = ({ chatId }) => {
     e: React.MouseEvent<HTMLButtonElement>
   ) => {
     e.stopPropagation();
-    setHeartSelected((prev) => !prev);
+    setHeartSelected(!isHeartSelected);
     try {
       if (chatId) {
         await removeChatFromFavorites({ chatId: chatId }).unwrap();
         console.log("Chat removed from favorites!");
       }
     } catch (error) {
-      setHeartSelected((prev) => !prev);
+      setHeartSelected(!isHeartSelected);
       console.error("Failed to remove from favorites:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (archivedChats) {
+      const isIdInArchived = archivedChats.some(
+        (chat) => chat.chatId === chatId
+      );
+      isIdInArchived && setArchived(true);
+    }
+  }, [archivedChats, chatId, setArchived]);
+
+  const addToArchive = async (
+    chatId: number,
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    e.stopPropagation();
+    setArchived(!isArchived);
+    try {
+      if (chatId) {
+        await addChatToArchive({ chatId: chatId }).unwrap();
+        console.log("Chat added to the archive!");
+      }
+    } catch (error) {
+      setArchived(!isArchived);
+      console.error("Failed to add to the archive:", error);
+    }
+  };
+
+  const removeFromArchive = async (
+    chatId: number,
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    e.stopPropagation();
+    setArchived(!isArchived);
+    try {
+      if (chatId) {
+        await removeChatFromArchive({ chatId: chatId }).unwrap();
+        console.log("Chat removed from the archive!");
+      }
+    } catch (error) {
+      setArchived(!isArchived);
+      console.error("Failed to remove from the archive:", error);
     }
   };
 
@@ -83,9 +142,11 @@ const IconsData: FC<IconsDataType> = ({ chatId }) => {
           scss="iconsData"
           isItTopBlock={false}
           chatId={chatId}
-          isHeartSelected={isHeartSelected}
           handlerHeartRemovedFromSelected={handlerHeartRemovedFromSelected}
           handlerHeartSelected={handlerHeartSelected}
+          isArchived={isArchived}
+          addToArchive={addToArchive}
+          removeFromArchive={removeFromArchive}
         />
       </Box>
     </>

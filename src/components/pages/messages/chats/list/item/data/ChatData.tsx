@@ -6,17 +6,30 @@ import style from "./ChatData.module.scss";
 interface ChatDataType {
   lastMessageDate: string;
   selectedChatId: number | null | undefined;
-  // handleChatClick: (chatId: number) => void;
   chatId: number | undefined;
+  isHeartSelected: boolean;
+  setHeartSelected: (isHeartSelected: boolean) => void;
+  isArchived: boolean;
+  setArchived: (isArchived: boolean) => void;
 }
 
-const ChatData: FC<ChatDataType> = ({ lastMessageDate, chatId }) => {
+const ChatData: FC<ChatDataType> = ({
+  lastMessageDate,
+  chatId,
+  isHeartSelected,
+  setHeartSelected,
+  isArchived,
+  setArchived,
+}) => {
   return (
     <Box className={style.blockWrapper}>
       <TimeData lastMessageDate={lastMessageDate} />
       <IconsData
         chatId={chatId}
-        // handleChatClick={handleChatClick}
+        isHeartSelected={isHeartSelected}
+        setHeartSelected={setHeartSelected}
+        isArchived={isArchived}
+        setArchived={setArchived}
       />
     </Box>
   );

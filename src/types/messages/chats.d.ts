@@ -13,6 +13,10 @@ type ChatType = {
   section?: string;
   userData: UserDataType;
   selectedChatId?: number | null;
+  isHeartSelected: boolean;
+  setHeartSelected: (isHeartSelected: boolean) => void;
+  isArchived: boolean;
+  setArchived: (isArchived: boolean) => void;
   // isFolderSelected: boolean;
   // handleChatClick: (chatId: number) => void;
 };

@@ -6,8 +6,12 @@ import { CommonIcon } from "@/components";
 import {
   useAddMessageToChatMutation,
   useUploadFileToChatMutation,
+  useUnblockUserMutation,
 } from "@/redux/messages/chatApi";
 import style from "./DialogueInput.module.scss";
+
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 type DialogueInputProps = {
   onSendMessage: (
@@ -32,6 +36,21 @@ const DialogueInput: FC<DialogueInputProps> = ({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [addMessageToChat] = useAddMessageToChatMutation();
   const [uploadFileToChat] = useUploadFileToChatMutation();
+  const [unblockUser] = useUnblockUserMutation();
+
+  // blocking user's chat
+  const isCompanionBlocked = useSelector((state: RootState) =>
+    state.messages?.chat ? state.messages.chat.anotherUserBlocked : null
+  );
+  const isUserBlockedByCompanion = useSelector((state: RootState) =>
+    state.messages?.chat ? state.messages.chat.currentlyUserBlocked : null
+  );
+  console.log("Чи заблоковано користувача:", isUserBlockedByCompanion);
+  console.log("Чи заблоковано того, кому користувач пише:", isCompanionBlocked);
+
+  const companionId = useSelector((state: RootState) =>
+    state.messages?.chat ? state.messages.chat.userData?.userId : null
+  );
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setMessage(event.target.value);
@@ -96,7 +115,45 @@ const DialogueInput: FC<DialogueInputProps> = ({
     }
   };
 
-  return (
+  const unblockUserHandler = async (
+    userId: number,
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    e.stopPropagation();
+    // setBlockWindowVisible?.((prev) => !prev);
+    try {
+      if (userId) {
+        const response = await unblockUser({ userId: userId }).unwrap();
+        console.log("response", response);
+        if (response === null) {
+          console.log("The user is unblocked!");
+        }
+      }
+    } catch (error) {
+      // setBlockWindowVisible?.((prev) => !prev);
+      console.error("Failed to unblock the user:", error);
+    }
+  };
+
+  const dialogInput = isCompanionBlocked ? (
+    <Box className={`${style.blockBackground} ${style.blockMessage}`}>
+      <p>
+        Ви заблокували користувача. Щоб надсилати та отримувати повідомлення
+        спершу розблокуйте його
+      </p>
+      {/* @ts-ignore */}
+      <p onClick={(e) => unblockUserHandler(companionId as number, e)}>
+        Розблокувати
+      </p>
+    </Box>
+  ) : isUserBlockedByCompanion ? (
+    <Box className={`${style.blockBackground} ${style.blockMessage}`}>
+      <p>
+        Вибачте, користувач вас заблокував. Тепер ви не можете надсилати йому
+        повідомлення
+      </p>
+    </Box>
+  ) : (
     <Box className={style.blockBackground}>
       <Box className={style.inputBlockWrapper}>
         <Box className={style.inputIconsWrapper}>
@@ -139,6 +196,8 @@ const DialogueInput: FC<DialogueInputProps> = ({
       </Box>
     </Box>
   );
+
+  return <>{dialogInput}</>;
 };
 
 export default DialogueInput;

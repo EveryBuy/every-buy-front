@@ -19,6 +19,10 @@ interface BlockUserResponse {
     blockedUserId: number;
   }[];
 }
+interface UnBlockUserResponse {
+  status: number;
+  data: {};
+}
 
 export const chatApi = createApi({
   reducerPath: "chatApi",
@@ -32,7 +36,7 @@ export const chatApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["Chat", "BuyChats"],
+  tagTypes: ["Chat", "BuyChats", "SellChats", "Messages"],
   endpoints: (builder) => ({
     createChat: builder.mutation<NewChatType, { advId: number }>({
       query: ({ advId }) => ({
@@ -49,10 +53,12 @@ export const chatApi = createApi({
     }),
     getSellChats: builder.query<ChatsType, void>({
       query: () => "/chat/get-sell-users-chats",
+      providesTags: ["SellChats"],
     }),
     getChat: builder.query<FullChatType, number>({
       query: (chatId) => `/chat/${chatId}`,
       transformResponse: (response: { data: FullChatType }) => response.data,
+      providesTags: ["Messages"],
     }),
     getMessagesByChatId: builder.query<MessageType[], number>({
       query: (chatId) => `/chat/${chatId}`,
@@ -104,7 +110,7 @@ export const chatApi = createApi({
         method: "POST",
         body: { text },
       }),
-      invalidatesTags: ["Chat", "BuyChats"],
+      invalidatesTags: ["Chat", "BuyChats", "SellChats"],
     }),
     uploadFileToChat: builder.mutation({
       query: ({
@@ -124,14 +130,14 @@ export const chatApi = createApi({
         url: `/chat/black-list/block?blockedUserId=${userId}`,
         method: "POST",
       }),
-      invalidatesTags: ["Chat"],
+      invalidatesTags: ["Chat", "Messages"],
     }),
-    unblockUser: builder.mutation<void, { userId: number }>({
+    unblockUser: builder.mutation<UnBlockUserResponse, { userId: number }>({
       query: ({ userId }) => ({
-        url: `/chat/black-list/block?blockedUserId=${userId}`,
+        url: `/chat/black-list/unblock?blockedUserId=${userId}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Chat"],
+      invalidatesTags: ["Chat", "Messages"],
     }),
   }),
 });

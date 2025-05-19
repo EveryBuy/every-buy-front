@@ -1,13 +1,11 @@
 "use client";
 
-import { FC, useState, useEffect } from "react";
+import { FC } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { toggleFavoriteMessage } from "@/redux/messages/slice";
+import { RootState } from "@/redux/store";
 import { CommonIcon } from "@/components";
 import IconsBlockType from "@/types/messages/icons";
-import {
-  useAddChatToArchiveMutation,
-  useRemoveChatFromArchiveMutation,
-  useGetArchivedChatsQuery,
-} from "@/redux/messages/chatApi";
 import style from "./Icons.module.scss";
 
 const Icons: FC<IconsBlockType> = ({
@@ -16,57 +14,16 @@ const Icons: FC<IconsBlockType> = ({
   statusHeartHandler,
   statusFolderHandler,
   chatId,
-  isHeartSelected,
   handlerHeartRemovedFromSelected,
   handlerHeartSelected,
+  isArchived,
+  addToArchive,
+  removeFromArchive,
 }) => {
-  const [addChatToArchive] = useAddChatToArchiveMutation();
-  const [removeChatFromArchive] = useRemoveChatFromArchiveMutation();
-  const [isArchived, setArchived] = useState(false);
-  const { data: archivedChats } = useGetArchivedChatsQuery();
-
-  useEffect(() => {
-    if (archivedChats) {
-      const isIdInArchived = archivedChats.some(
-        (chat) => chat.chatId === chatId
-      );
-      isIdInArchived && setArchived(true);
-    }
-  }, [archivedChats, chatId]);
-
-  const addToArchive = async (
-    chatId: number,
-    e: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    e.stopPropagation();
-    setArchived((prev) => !prev);
-    try {
-      if (chatId) {
-        await addChatToArchive({ chatId: chatId }).unwrap();
-        console.log("Chat added to the archive!");
-      }
-    } catch (error) {
-      setArchived((prev) => !prev);
-      console.error("Failed to add to the archive:", error);
-    }
-  };
-
-  const removeFromArchive = async (
-    chatId: number,
-    e: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    e.stopPropagation();
-    setArchived((prev) => !prev);
-    try {
-      if (chatId) {
-        await removeChatFromArchive({ chatId: chatId }).unwrap();
-        console.log("Chat removed from the archive!");
-      }
-    } catch (error) {
-      setArchived((prev) => !prev);
-      console.error("Failed to remove from the archive:", error);
-    }
-  };
+  const dispatch = useDispatch();
+  const isFavorite = useSelector((state: RootState) =>
+    chatId ? state.messages.favorites[chatId] : false
+  );
 
   return (
     <>
@@ -88,16 +45,14 @@ const Icons: FC<IconsBlockType> = ({
       ) : (
         <>
           <CommonIcon
-            id={isHeartSelected ? "icon-heart-selected" : "icon-heart"}
+            id={isFavorite ? "icon-heart-selected" : "icon-heart"}
             className={`${style.icon} ${scss ? style[scss] : ""}`}
             // @ts-ignore
             onClick={(e) => {
-              if (
-                chatId &&
-                handlerHeartRemovedFromSelected &&
-                handlerHeartSelected
-              ) {
-                isHeartSelected
+              if (!chatId) return;
+              dispatch(toggleFavoriteMessage(chatId));
+              if (handlerHeartRemovedFromSelected && handlerHeartSelected) {
+                isFavorite
                   ? handlerHeartRemovedFromSelected(chatId, e)
                   : handlerHeartSelected(chatId, e);
               }
@@ -110,7 +65,7 @@ const Icons: FC<IconsBlockType> = ({
             }`}
             // @ts-ignore
             onClick={(e) => {
-              if (chatId) {
+              if (chatId && removeFromArchive && addToArchive) {
                 isArchived
                   ? removeFromArchive(chatId, e)
                   : addToArchive(chatId, e);
