@@ -1,25 +1,80 @@
 "use client";
-import { FC, useState, useEffect } from "react";
+import { FC, useState } from "react";
 import { Box } from "@mui/material";
 import { ChatsList, Buttons, Icons, CommonIcon } from "@/components";
-import { useGetChatsQuery } from "@/redux/messages/chatApi";
+import {
+  useGetBuyChatsQuery,
+  useGetSellChatsQuery,
+  useGetFavoritesChatsQuery,
+  useGetArchivedChatsQuery,
+} from "@/redux/messages/chatApi";
 import style from "./ChatsBlock.module.scss";
 
-type MessageListBlockType = {
-  onclick: (selectedChatId: number) => void;
+type ChatsBlockType = {
+  setSelectedChatId: (selectedChatId: number) => void;
+  selectedChatId: number | null;
+  activeChatId: number | null;
+  isHeartSelected: boolean;
+  setHeartSelected: (isHeartSelected: boolean) => void;
+  isArchived: boolean;
+  setArchived: (isArchived: boolean) => void;
 };
 
-const MessageListBlock: FC<MessageListBlockType> = ({ onclick }) => {
+const ChatsBlock: FC<ChatsBlockType> = ({
+  setSelectedChatId,
+  selectedChatId,
+  activeChatId,
+  isHeartSelected,
+  setHeartSelected,
+  isArchived,
+  setArchived,
+}) => {
   const [activeButton, setActiveButton] = useState<number | null>(1);
-  const [isHeartSelected, setHeardSelected] = useState<boolean>(false);
+  const [isSelected, setSelected] = useState<boolean>(false);
   const [isFolderSelected, setFolderSelected] = useState<boolean>(false);
-  const { data: chats, isLoading, isError } = useGetChatsQuery();
+  const { data: buyChats, isFetching: isBuyChatsFetching } =
+    useGetBuyChatsQuery();
+  const { data: sellChats, isFetching: isSellChatsFetching } =
+    useGetSellChatsQuery();
+  const { data: favoritesChats } = useGetFavoritesChatsQuery();
+  const { data: archivedChats } = useGetArchivedChatsQuery();
+
+  // filter chats and hidden them if they are in the archive
+  let updatedBuyChats;
+  let updatedSellChats;
+  if (buyChats && archivedChats && sellChats) {
+    updatedBuyChats = buyChats.filter(
+      (itemBuyChat) =>
+        !archivedChats.some(
+          (itemArchivedChats) => itemBuyChat.chatId === itemArchivedChats.chatId
+        )
+    );
+    updatedSellChats = sellChats.filter(
+      (itemSellChat) =>
+        !archivedChats.some(
+          (itemArchivedChats) =>
+            itemSellChat.chatId === itemArchivedChats.chatId
+        )
+    );
+  }
+
+  // choose the chat depends on what button you clicked
+  let chats;
+  if (favoritesChats || archivedChats) {
+    chats = isSelected
+      ? favoritesChats
+      : isFolderSelected
+      ? archivedChats
+      : activeButton === 1
+      ? updatedBuyChats
+      : updatedSellChats;
+  }
 
   const handleButtonClick = (buttonId: number) => {
     setActiveButton(buttonId);
   };
   const handleIconHeartClick = () => {
-    setHeardSelected((prev) => !prev);
+    setSelected((prev) => !prev);
   };
   const handleIconFolderClick = () => {
     setFolderSelected((prev) => !prev);
@@ -32,9 +87,15 @@ const MessageListBlock: FC<MessageListBlockType> = ({ onclick }) => {
   };
 
   return (
-    <Box className={style.blockWrapper}>
+    <Box
+      className={
+        selectedChatId || activeChatId
+          ? `${style.blockWrapper} ${style.hidden}`
+          : style.blockWrapper
+      }
+    >
       <Box className={style.buttonsWrapper}>
-        {isHeartSelected ? (
+        {isSelected ? (
           <Box className={style.savedMessagesHeaderBlock}>
             <Box className={style.text}>
               <CommonIcon
@@ -68,7 +129,7 @@ const MessageListBlock: FC<MessageListBlockType> = ({ onclick }) => {
             />
             <Box className={style.iconsWrapper}>
               <Icons
-                // status={isHeartSelected}
+                isItTopBlock={true}
                 statusHeartHandler={handleIconHeartClick}
                 statusFolderHandler={handleIconFolderClick}
               />
@@ -76,11 +137,18 @@ const MessageListBlock: FC<MessageListBlockType> = ({ onclick }) => {
           </>
         )}
       </Box>
-      <Box className={style.listWrapper}>
-        <ChatsList chats={chats} onclick={onclick} />
-      </Box>
+      <ChatsList
+        chats={chats}
+        setSelectedChatId={setSelectedChatId}
+        isBuyChatsLoading={isBuyChatsFetching}
+        isSellChatsLoading={isSellChatsFetching}
+        isHeartSelected={isHeartSelected}
+        setHeartSelected={setHeartSelected}
+        isArchived={isArchived}
+        setArchived={setArchived}
+      />
     </Box>
   );
 };
 
-export default MessageListBlock;
+export default ChatsBlock;

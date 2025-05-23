@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Logout } from "@/components";
 import { PROFMENU_ITEMS } from "@/constants/constants";
 import styles from "./MobileProfileMenu.module.scss";
+import { MobMenuAccordion } from "@/components/ui/MobMenuAccordion/MobMenuAccordion";
 
 export const MobileProfileMenu = () => {
   return (
@@ -14,7 +15,8 @@ export const MobileProfileMenu = () => {
           {PROFMENU_ITEMS.map((elem, idx) => {
             return (
               <li key={idx}>
-                <Link href={elem.href}>{elem.title}</Link>
+                {!elem.submenu && <Link href={elem.href}>{elem.title}</Link>}
+                {elem.submenu && <MobMenuAccordion>{elem}</MobMenuAccordion>}
               </li>
             );
           })}

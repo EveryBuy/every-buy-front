@@ -8,45 +8,72 @@
   width: 215px;
   background-color: var(--background);
   border: 1px solid var(--input-text);
-  // border-radius: 10px;
   position: absolute;
   top: 60px;
-  right: -18px;
-  // right: 0;
-  z-index: 1;
+  right: -10px;
+  z-index: 2;
   padding: 6px 10px;
+  @include media-min($breakpoint-tablet) {
+    width: 200px;
+    right: -31px;
+    top: 50px;
+  }
+  @include media-min($breakpoint-laptop-large) {
+    width: 215px;
+    right: -29px;
+    top: 60px;
+  }
 
   & li {
     padding: 6px 0px;
-    // border-bottom: 1px solid #9d9d9d;
+    @include media-min($breakpoint-tablet) {
+      padding: 4px 0px;
+    }
+    @include media-min($breakpoint-tablet) {
+      padding: 6px 0px;
+    }
   }
 
   & li:last-child {
     border-bottom: none;
   }
 
+  @include media-min($breakpoint-tablet) {
+    & p {
+      font-size: var(--body-mobile-text);
+    }
+  }
+
   &::before {
     content: "";
     position: absolute;
     top: -20px;
-    right: 17px;
+    right: 0px;
     width: 0;
     height: 0;
     border-left: 15px solid transparent;
     border-right: 15px solid transparent;
     border-bottom: 20px solid var(--input-text);
+    @include media-min($breakpoint-tablet) {
+      top: -20px;
+      right: 17px;
+    }
   }
 
   &::after {
     content: "";
     position: absolute;
     top: -19px;
-    right: 19px;
+    right: 2px;
     width: 0;
     height: 0;
     border-left: 13px solid transparent;
     border-right: 13px solid transparent;
     border-bottom: 19px solid var(--background);
+    @include media-min($breakpoint-tablet) {
+      top: -18px;
+      right: 19px;
+    }
   }
 }
 

@@ -1,6 +1,5 @@
 .inputTitle {
   color: var(--label);
-  font-family: Inter;
   font-size: 16px;
   font-weight: 400;
 
@@ -17,7 +16,7 @@
   width: 100%;
   align-items: flex-start;
   gap: 4px;
-  max-width: 420px;
+  // max-width: 420px;
 }
 
 .input {

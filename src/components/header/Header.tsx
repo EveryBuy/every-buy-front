@@ -54,7 +54,9 @@ const Header: FC = () => {
         className={
           path === "/"
             ? styles.headerContainer
-            : `${styles.headerContainer} ${styles.headerMessagePageContainer}`
+            : path === "/messages"
+            ? `${styles.headerContainer} ${styles.headerMessagePageContainer}`
+            : `${styles.headerContainer} ${styles.headerPageContainer}`
         }
       >
         <Link href="/" className={path === "/" ? "" : styles.logo}>
@@ -68,33 +70,40 @@ const Header: FC = () => {
         )}
 
         <div className={styles.addAdvertisingContainer}>
-          {/* <CommonButton
+          <CommonButton
             type="button"
             title="Додати оголошення"
             color="yellow"
             className={styles.headerButton}
-          /> */}
-
-          <Link
-            href="/adver"
-            className={`${styles.headerButton} ${styles.headerLink}`}
-          >
-            Додати оголошення
-          </Link>
-
+          />
           <div className={styles.iconsWrapper}>
             <div onClick={openWindowHandle}>
               <Link
-                href={`${isLoggedIn ? "/messages" : "#"}`}
+                href="/messages"
+                onClick={(e) => !isLoggedIn && e.preventDefault()}
                 className={styles.linkToUserPage}
               >
-                <CommonIcon id="icon-chat" width="21" height="20" />
+                <CommonIcon id="icon-chat" width="30" height="30" />
               </Link>
             </div>
-            <CommonIcon id="icon-heart" width="21" height="20" />
-            <Link href="/user" className={styles.linkToUserPage}>
-              <CommonIcon id="icon-user" width="21" height="20" />
-            </Link>
+            <div onClick={openWindowHandle}>
+              <Link
+                href="/user/selected-goods"
+                onClick={(e) => !isLoggedIn && e.preventDefault()}
+                className={styles.linkToUserPage}
+              >
+                <CommonIcon id="icon-heart" width="30" height="30" />
+              </Link>
+            </div>
+            <div onClick={openWindowHandle}>
+              <Link
+                href="/user"
+                onClick={(e) => !isLoggedIn && e.preventDefault()}
+                className={styles.linkToUserPage}
+              >
+                <CommonIcon id="icon-user" width="30" height="30" />
+              </Link>
+            </div>
 
             {successRegisterModalOpen && (
               <DoLoginModal
@@ -110,6 +119,7 @@ const Header: FC = () => {
               <DropdownMenu
                 status={isDropdownMenuVisible}
                 changeStatus={dropdownMenuHandle}
+                isLoggedIn={isLoggedIn}
               />
             </div>
           </div>

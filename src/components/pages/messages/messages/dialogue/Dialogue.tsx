@@ -1,11 +1,11 @@
 "use client";
 
-import { FC, useState, useEffect } from "react";
+import { FC, useState, useEffect, useRef } from "react";
 import { Box } from "@mui/material";
 import {
   CommonPreloader,
   DialogueMessage,
-  EmptyDialogueMessage,
+  // EmptyDialogueMessage,
   LastMessageDate,
   DialogueInput,
 } from "@/components";
@@ -23,6 +23,7 @@ type DialogueType = {
 
 const Dialogue: FC<DialogueType> = ({ chatId }) => {
   const [displayedMessages, setDisplayedMessages] = useState<MessageType[]>([]);
+
   const {
     data: messages,
     error,
@@ -31,9 +32,19 @@ const Dialogue: FC<DialogueType> = ({ chatId }) => {
   } = useGetMessagesByChatIdQuery(chatId ?? skipToken, {
     refetchOnMountOrArgChange: true,
   });
-  const { data: chat } = useGetChatQuery(chatId ?? skipToken, {
+  const dialogueWrapperRef = useRef<HTMLDivElement | null>(null);
+  // console.log("messages", messages);
+
+  useGetChatQuery(chatId ?? skipToken, {
     refetchOnMountOrArgChange: true,
   });
+
+  const scrollToBottom = () => {
+    if (dialogueWrapperRef.current) {
+      dialogueWrapperRef.current.scrollTop =
+        dialogueWrapperRef.current.scrollHeight;
+    }
+  };
 
   useEffect(() => {
     if (chatId !== null) {
@@ -44,17 +55,56 @@ const Dialogue: FC<DialogueType> = ({ chatId }) => {
   useEffect(() => {
     if (messages && !isLoading && !isFetching) {
       setDisplayedMessages(messages);
+      // scrollToBottom();
+      setTimeout(() => {
+        scrollToBottom();
+      }, 0);
     }
   }, [messages, isLoading, isFetching]);
+
+  //
+  const handleSendMessage = async (
+    newMessage: string,
+    userId: number,
+    userPhotoUrl: string | null
+  ) => {
+    const tempMessage: MessageType = {
+      id: Date.now(),
+      text: newMessage,
+      creationTime: new Date().toISOString(),
+      userId: userId,
+      chatId: chatId,
+      userPhotoUrl: userPhotoUrl,
+    };
+    setDisplayedMessages((prev) => [...prev, tempMessage]);
+    scrollToBottom();
+  };
+  const handleSendFile = async (
+    newFile: string,
+    userId: number,
+    userPhotoUrl: string | null
+  ) => {
+    const tempMessage: MessageType = {
+      id: Date.now(),
+      fileUrl: newFile,
+      creationTime: new Date().toISOString(),
+      userId: userId,
+      chatId: chatId,
+      userPhotoUrl: userPhotoUrl,
+    };
+    setDisplayedMessages((prev) => [...prev, tempMessage]);
+    scrollToBottom();
+  };
+  //
 
   if (isLoading || (isFetching && displayedMessages.length === 0)) {
     return (
       <Box
         sx={{
-          paddingTop: "25%",
+          paddingTop: "15%",
         }}
       >
-        <CommonPreloader sx={{ color: "#9d9d9d" }} />
+        <CommonPreloader sx={{ color: "#e5ff46" }} />
       </Box>
     );
   }
@@ -67,16 +117,16 @@ const Dialogue: FC<DialogueType> = ({ chatId }) => {
     <Box className={style.blockWrapper}>
       {messages ? <LastMessageDate messages={messages} /> : null}
 
-      <Box className={style.dialogueWrapper}>
-        {!messages ? (
-          <EmptyDialogueMessage />
-        ) : (
-          displayedMessages.map((message) => (
-            <DialogueMessage message={message} key={message.id} />
-          ))
-        )}
+      <Box className={style.dialogueWrapper} ref={dialogueWrapperRef}>
+        {displayedMessages.map((message) => (
+          <DialogueMessage message={message} key={message.id} />
+        ))}
       </Box>
-      <DialogueInput />
+      <DialogueInput
+        onSendMessage={handleSendMessage}
+        onSendFile={handleSendFile}
+        chatId={chatId}
+      />
     </Box>
   );
 };

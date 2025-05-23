@@ -2,46 +2,47 @@
 @import "../../../styles/breakpoints";
 
 .container {
-  padding: 0 21px;
-  margin: 0 auto;
-  max-width: 375px;
+	padding: 0 21px;
+	margin: 0 auto;
+	max-width: 375px;
 
-  @include media-min($breakpoint-tablet) {
-    margin-top: 40px;
-    // margin-bottom: 138px;
-    max-width: 768px;
-    padding: 0 32px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 30px 46px;
-    // width: calc((100% - 46px) / 2);
-  }
+	@include media-min($breakpoint-tablet) {
+		margin-top: 40px;
+		// margin-bottom: 138px;
+		max-width: 768px;
+		padding: 0 32px;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 30px 46px;
+		// width: calc((100% - 46px) / 2);
+	}
 
-  @include media-min($breakpoint-laptop) {
-    padding: 0;
-    max-width: 1280px;
-    margin-right: 140px;
-    margin-left: 60px;
-    margin-bottom: 0px;
-  }
-  //  @media (min-width: 1024px) {
-  //      margin: 100px 60px 0px;
-  //  }
+	@include media-min($breakpoint-laptop) {
+		padding: 0;
+		max-width: 1280px;
+		margin-right: 60px;
+		margin-left: 60px;
+		margin-bottom: 0px;
+	}
+
+	//  @media (min-width: 1024px) {
+	//      margin: 100px 60px 0px;
+	//  }
 }
 
 .sectionContainer {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  margin: 50px 20px 0px;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	margin: 50px 20px 0px;
 
-  @media (min-width: 768px) {
-    margin: 100px 40px 0px;
-  }
+	@include media-min($breakpoint-tablet) {
+		margin: 100px 40px 0px;
+	}
 
-  @media (min-width: 1024px) {
-    margin: 100px 60px 0px;
-  }
+	@include media-min($breakpoint-laptop) {
+		margin: 100px 60px 0px;
+	}
 }
 
 // .item {
@@ -49,3 +50,27 @@
 //     width: calc((100% - 46px) / 2);
 //   }
 // }
+
+.preloaderContainer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 70vh;
+}
+
+.breadcrumbsContainer {
+	// display: none;
+	display: block;
+	width: 100%;
+	padding: 10px 30px;
+	margin-bottom: 10px;
+
+	@include media-min($breakpoint-tablet) {
+		margin-top: 20px;
+		padding: 10px 60px;
+	}
+
+	@include media-min($breakpoint-laptop) {
+		margin-top: 50px;
+	}
+}

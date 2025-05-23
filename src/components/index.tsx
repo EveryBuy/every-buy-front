@@ -6,6 +6,7 @@ export { default as CommonModal } from "./ui/commonModal/CommonModal";
 export { default as CommonPreloader } from "./ui/CommonPreloader/CommonPreloader";
 export { default as ErrorModal } from "./ui/commonModal/errorModal/ErrorModal";
 export { default as CommonSelect } from "./ui/CommonSelect/CommonSelect";
+export { default as CommonSectionSelector } from "./ui/CommonSectionSelector/CommonSectionSelector";
 
 // General
 export { default as Header } from "./header/Header";
@@ -13,7 +14,7 @@ export { default as DropdownMenu } from "./header/DropdownMenu";
 export { default as Footer } from "../components/footer/Footer";
 export { default as Item } from "./footer/Item/Item";
 export { default as FooterMobile } from "./footer/FooterMobile/FooterMobile";
-export { default as Search } from "./Search/Search";
+export { default as Search } from "./Catalogy/Search/Search";
 
 // Main page
 export { default as SliderContainer } from "./pages/main/Slider/SliderContainer/SliderContainer";
@@ -26,7 +27,7 @@ export { default as Category } from "./pages/main/Category/Category";
 export { default as AboutMe } from "./pages/user/AboutMe/AboutMe";
 export { default as SelectedGoods } from "./pages/user/selectedGoods/SelectedGoods";
 export { default as MyAds } from "./pages/user/myAds/MyAds";
-export { default as MyActiveAds } from "./pages/user/myAds/MyActiveAds";
+export { default as MyActiveAds } from "./pages/user/myAds/MyActiveAds/MyActiveAds";
 export { default as MyNonActiveAds } from "./pages/user/myAds/MyNonActiveAds";
 export { default as ProfileMenu } from "./pages/user/ProfileMenu/ProfileMenu";
 export { default as MobileProfileMenu } from "./pages/user/MobileProfileMenu/MobileProfileMenu";
@@ -39,7 +40,12 @@ export { default as Contacts } from "./pages/announcement/Contacts/Contacts";
 export { default as Info } from "./pages/announcement/Info/Info";
 export { default as Seller } from "./pages/announcement/Seller/Seller";
 export { default as AnnouncementSlider } from "./pages/announcement/Slider/Slider";
+export { default as Complaint } from "./pages/announcement/ComplaintModal/Complaint";
 export { default as ComplaintModal } from "./pages/announcement/ComplaintModal/ComplaintModal";
+
+// Seller page
+export { default as SellerPage } from "./pages/sellerPage/SellerPage";
+export { CommonPagination } from "./ui/CommonPagination/CommonPagination";
 
 // Auth
 export { default as Register } from "./auth/register/Register";
@@ -68,13 +74,23 @@ export { default as Product } from "./pages/messages/messages/product/Product";
 export { default as Menu } from "./pages/messages/messages/companion/Menu";
 export { default as ChatsList } from "./pages/messages/chats/list/ChatsList";
 export { default as Chat } from "./pages/messages/chats/list/item/Chat";
-export { default as MessageData } from "./pages/messages/chats/list/item/data/MessageData";
+export { default as ChatData } from "./pages/messages/chats/list/item/data/ChatData";
 export { default as TimeData } from "./pages/messages/chats/list/item/data/TimeData";
 export { default as IconsData } from "./pages/messages/chats/list/item/data/IconsData";
 export { default as Buttons } from "./pages/messages/chats/Buttons/Buttons";
 export { default as Button } from "./pages/messages/chats/Buttons/Button";
 export { default as Icons } from "./pages/messages/chats/Icons/Icons";
+export { default as ComplaintWindow } from "./pages/messages/messages/windows/ComplaintWindow/ComplaintWindow";
+export { default as BlockUserWindow } from "./pages/messages/messages/windows/BlockUserWindow/BlockUserWindow";
 
+// Catalogy
+export { FilterCatalogy } from "./Catalogy/filterCatalogy/FilterCatalogy";
+export { CustomSeparator } from "./ui";
+export { CategoryList } from "./Catalogy/CategoryList";
+export { CatalogyCard } from "./Catalogy/cardCatalogy/CatalogyCard";
+export { CatalogyPage } from "./pages/catalogy/CatalogyPage";
+
+// create ad
 export { default as AdverPhotoList } from "./adver/AdverPhotoList/AdverPhotoList";
 export { default as RadioButtonGroup } from "./adver/RadioButtonGroup/RadioButtonGroup";
 export { default as AdverDesktop } from "./adver/AdverDesktop/AdverDesktop";

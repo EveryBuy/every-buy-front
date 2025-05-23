@@ -1,0 +1,6 @@
+.listBox {
+  display: flex;
+  flex-direction: column;
+  height: 1160px;
+  gap: 56px;
+}

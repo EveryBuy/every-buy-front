@@ -1,6 +1,7 @@
 import { FC } from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Link } from "@mui/material";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
+import UploadFileIcon from "@mui/icons-material/UploadFile";
 import Image from "next/image";
 import { selectUser } from "@/redux/auth/selectors";
 import { useAppSelector } from "@/redux/store";
@@ -21,8 +22,8 @@ const DialogueMessages: FC<MessageComponentType> = ({ message }) => {
   const textOrder = user.userId === message.userId ? "1" : "2";
 
   const picture = message.userPhotoUrl ? (
-    <Box className={style.picture}>
-      <Image src={`${message.userPhotoUrl}`} width={48} height={48} alt="" />
+    <Box sx={{ order: `${picOrder}` }} className={style.picture}>
+      <Image src={`${message.userPhotoUrl}`} width={40} height={40} alt="" />
     </Box>
   ) : (
     <Box className={style.noPicture}>
@@ -35,7 +36,7 @@ const DialogueMessages: FC<MessageComponentType> = ({ message }) => {
       className={style.wrapper}
       sx={{ justifySelf: `${messagePositionStyle}` }}
     >
-      <Box sx={{ order: `${picOrder}` }}>{picture}</Box>
+      {picture}
       <Box
         className={`${
           user.userId === message.userId
@@ -44,7 +45,13 @@ const DialogueMessages: FC<MessageComponentType> = ({ message }) => {
         } ${user.userId === message.userId ? style.leftSign : style.rightSign}`}
         sx={{ backgroundColor: `${messageBgStyle}`, order: `${textOrder}` }}
       >
-        <Typography className={style.text}>{message.text}</Typography>
+        {message.text ? (
+          <Typography className={style.text}>{message.text}</Typography>
+        ) : (
+          <Link className={style.file} href={message.fileUrl} target="_blank">
+            <UploadFileIcon />
+          </Link>
+        )}
         <Typography className={style.time}>
           {formatMessageTime(message.creationTime)}
         </Typography>

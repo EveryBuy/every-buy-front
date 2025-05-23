@@ -32,11 +32,15 @@
   --accent: #6735f4;
   --success: #29b126;
   --error: #ff5656;
+  --errorMessagesMessage: #f5b4b4;
 }
 
 body {
+  // don't touch this
   font-family: var(--font-family);
+  font-size: var(--body-text);
   background-color: var(--background);
+  line-height: 1.2;
 }
 
 .container {
@@ -44,6 +48,7 @@ body {
   flex-direction: column;
   margin: 0 auto;
   min-height: calc(100vh - 141px - 162px);
+
   @include media-min($breakpoint-tablet) {
     max-width: 1440px;
     min-height: calc(100vh - 181px - 444px);
@@ -51,8 +56,9 @@ body {
 }
 
 .title {
-  padding-bottom: 30px;
+  padding-bottom: 16px;
   font-size: var(--f-size-h4);
+
   @include media-min($breakpoint-tablet) {
     padding: 60px 60px 52px;
     font-size: 40px;
@@ -115,6 +121,7 @@ body {
 .profileSectionWrapper {
   // display: none;
   width: 100%;
+
   @include media-min($breakpoint-tablet) {
     display: flex;
     flex-direction: column;
@@ -124,6 +131,7 @@ body {
 
 .mobileHidden {
   display: none;
+
   @media screen and (min-width: 769px) {
     display: block;
   }

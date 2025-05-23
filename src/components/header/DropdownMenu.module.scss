@@ -1,7 +1,8 @@
 @import "@/styles/mixins";
 @import "@/styles/breakpoints";
 
-.dropdownWrapper {
+.dropdownLoginWrapper,
+.dropdownNotLoginWrapper {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -51,6 +52,32 @@
     border-right: 13px solid transparent;
     border-bottom: 19px solid var(--background);
   }
+}
+
+.dropdownNotLoginWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  column-gap: 6.5px;
+  padding: 16.5px 14px;
+}
+
+.circle {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #cccccc;
+}
+
+.userName {
+  font-size: var(--large-body-medium);
+}
+
+.userPicture {
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 .nameWrapper {

@@ -1,15 +1,34 @@
 "use client";
-
 import { useState, useEffect, useRef, FC } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import Image from "next/image";
 import { Box } from "@mui/material";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
-import { Menu } from "@/components";
+import { Menu, CommonIcon } from "@/components";
 import style from "./Companion.module.scss";
 
-const Companion: FC = () => {
+type CompanionBlockType = {
+  setSelectedChatId: (chatId: number | null) => void;
+  blockUserWindowHandle: (() => void) | undefined;
+  complaintWindowHandle: (() => void) | undefined;
+  chatId: number | null;
+  isHeartSelected: boolean;
+  setHeartSelected: (isHeartSelected: boolean) => void;
+  isArchived: boolean;
+  setArchived: (isArchived: boolean) => void;
+};
+
+const Companion: FC<CompanionBlockType> = ({
+  setSelectedChatId,
+  blockUserWindowHandle,
+  complaintWindowHandle,
+  chatId,
+  isHeartSelected,
+  setHeartSelected,
+  isArchived,
+  setArchived,
+}) => {
   const [isMenuVisible, setMenuVisible] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const companionPictureUrl = useSelector((state: RootState) =>
@@ -53,6 +72,13 @@ const Companion: FC = () => {
 
   return (
     <Box className={style.companionWrapper}>
+      <CommonIcon
+        id="back-arrow"
+        className={style.backArrow}
+        // for mobile version
+        // onClick={() => setSelectedChatId(null)}
+        onClick={() => setSelectedChatId(0)}
+      />
       <Box className={style.companion}>
         {picture}
         <Box className={style.companionInfo}>
@@ -65,7 +91,17 @@ const Companion: FC = () => {
           <Box></Box>
           <Box></Box>
           <Box></Box>
-          <Menu status={isMenuVisible} changeStatus={menuHandle} />
+          <Menu
+            status={isMenuVisible}
+            changeStatus={menuHandle}
+            blockUserWindowHandle={blockUserWindowHandle}
+            complaintWindowHandle={complaintWindowHandle}
+            chatId={chatId}
+            isHeartSelected={isHeartSelected}
+            setHeartSelected={setHeartSelected}
+            isArchived={isArchived}
+            setArchived={setArchived}
+          />
         </Box>
       </Box>
     </Box>

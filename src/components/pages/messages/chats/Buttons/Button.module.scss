@@ -9,11 +9,8 @@
   text-align: center;
 
   @include media-min($breakpoint-tablet) {
-    font-size: var(--f-size-h4);
-    width: 124px;
+    width: 130px;
+    padding: 8px 6px;
+    font-size: var(--large-body-medium);
   }
 }
-
-// .active {
-//   border-bottom: 1px solid gray;
-// }

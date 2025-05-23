@@ -1,52 +1,88 @@
 "use client";
 
-import { FC, useState } from "react";
+import { FC } from "react";
 import { Box } from "@mui/material";
 import { Chat, CommonPreloader } from "@/components";
-import { ChatType } from "@/types/messages/chats";
+import {
+  ChatType,
+  FavoritesChatType,
+  ArchivedChatType,
+} from "@/types/messages/chats";
 import style from "./ChatsList.module.scss";
 
-// TODO create slice
-// TODO onclick => make request, take messages by id => save to redux
-
-interface ListChatsType {
-  chats?: ChatType[] | undefined;
-  onclick: (chatId: number) => void;
+interface ChatsListType {
+  chats?: ChatType[] | FavoritesChatType[] | ArchivedChatType[] | undefined;
+  setSelectedChatId: (chatId: number) => void;
+  isBuyChatsLoading: boolean;
+  isSellChatsLoading: boolean;
+  isHeartSelected: boolean;
+  setHeartSelected: (isHeartSelected: boolean) => void;
+  isArchived: boolean;
+  setArchived: (isArchived: boolean) => void;
 }
 
-const ChatsList: FC<ListChatsType> = ({ chats, onclick }) => {
+const ChatsList: FC<ChatsListType> = ({
+  chats,
+  setSelectedChatId,
+  isBuyChatsLoading,
+  isSellChatsLoading,
+  isHeartSelected,
+  setHeartSelected,
+  isArchived,
+  setArchived,
+}) => {
   const handleChatClick = (chatId: number) => {
-    // setSelectedChatId(chatId);
-    onclick(chatId);
+    setSelectedChatId(chatId);
   };
-
   return (
-    <Box className={style.listWrapper}>
-      {chats ? (
-        chats.map(({ chatId, userData, lastMessage, lastMessageDate }) => (
-          <Box
-            sx={{ borderBottom: "solid 1px gray" }}
-            key={chatId}
-            onClick={() => {
-              if (chatId) {
-                handleChatClick(chatId);
-              }
-            }}
-          >
-            <Chat
-              lastMessage={lastMessage}
-              userData={userData}
-              lastMessageDate={lastMessageDate}
-            />
-          </Box>
-        ))
-      ) : (
+    <Box>
+      {isBuyChatsLoading || isSellChatsLoading ? (
         <Box
+          className={style.listWrapper}
           sx={{
-            paddingTop: "50%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
-          <CommonPreloader sx={{ color: "#9d9d9d" }} />
+          <CommonPreloader sx={{ color: "#e5ff46" }} />
+        </Box>
+      ) : chats && chats.length > 0 ? (
+        <Box className={style.listWrapper}>
+          {chats.map(({ chatId, userData, lastMessage, lastMessageDate }) => (
+            <Box
+              key={chatId}
+              className={style.listItem}
+              onClick={() => {
+                if (chatId) {
+                  handleChatClick(chatId);
+                }
+              }}
+            >
+              <Chat
+                lastMessage={lastMessage}
+                userData={userData}
+                lastMessageDate={lastMessageDate}
+                chatId={chatId}
+                isHeartSelected={isHeartSelected}
+                setHeartSelected={setHeartSelected}
+                isArchived={isArchived}
+                setArchived={setArchived}
+              />
+            </Box>
+          ))}
+        </Box>
+      ) : (
+        <Box
+          className={style.listWrapper}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            color: "#9d9d9d",
+          }}
+        >
+          You have no messages yet
         </Box>
       )}
     </Box>
