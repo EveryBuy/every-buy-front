@@ -1,17 +1,25 @@
 import axios from "axios";
-
+import axiosRetry from "axios-retry";
 import { persistStore } from "redux-persist";
 
+
+axiosRetry(axios, {
+	retries: 2,
+	retryDelay: (retryCount) => retryCount * 1000,
+	retryCondition: (error) => error.response?.status === 500,
+});
+
+
 export const API = axios.create({
-  baseURL: "https://api-everybuy.onrender.com",
+	baseURL: "https://api-everybuy.onrender.com",
 });
 
 export const setHeaderAuthToken = (token: string | null) => {
-  API.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+	API.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 };
 
 export const clearHeaderAuthToken = () => {
-  delete API.defaults.headers.common["Authorization"];
+	delete API.defaults.headers.common["Authorization"];
 };
 
 // export const persistor = persistStore(store);

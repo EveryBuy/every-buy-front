@@ -4,8 +4,10 @@ import { useEffect, useState, useRef } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import { Search, CatalogyCard, CommonSectionSelector, CommonPreloader, CommonPagination } from "@/components";
+import { CategoryList } from "./CategoryList";
 import { getAdvertsBySellerId } from "@/redux/advertisement/operations";
 import { AdvertsBySellerIdType, CategoryForSeller } from "@/redux/advertisement/slice";
+import { addCategory } from '@/redux/filters/slice';
 import { useAppSelector, useAppDispatch } from "@/redux/store";
 import styles from "./SellerPage.module.scss";
 import photoSeller from "@/assets/photo-seller.jpg";
@@ -28,7 +30,7 @@ export default function SellerPage() {
 	const [isFetching, setIsFetching] = useState<boolean>(true);
 	const initialSection = useAppSelector((state) => state.filters.section);
 	const [section, setSection] = useState<string>(initialSection);
-	const [selectCategoryId, setSelectCategoryId] = useState<number>(0);
+	const selectCategoryId = useAppSelector((state) => state.filters.categoryId) || 0;
 	const [page, setPage] = useState<number>(1);
 
 	const allDataSeller: AdvertsBySellerIdType | null =
@@ -56,11 +58,9 @@ export default function SellerPage() {
 		} catch (error) {
 			console.error(error);
 		} finally {
-			// if (value === "section") router.push(`?section=${section}`);
 			setIsFetching(false);
 		}
 	}
-
 
 	useEffect(() => {
 		if (!idSeller || idSeller === 0) {
@@ -76,59 +76,26 @@ export default function SellerPage() {
 		if (!isFetching) {
 			getData("page");
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [page]);
 
 	useEffect(() => {
-		setSelectCategoryId(0);
+		dispatch(addCategory(0));
 		if (page !== 1) setPage(1);
 		getData("section");
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [section]);
 
+	useEffect(() => {
+		return () => {
+			dispatch(addCategory(0)); // clean redux for categoryId
+		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
 	// console.log('data', allDataSeller);
 
-	function categoryList() {
-
-		const newData: CategoryForSeller[] | undefined = allDataSeller?.categories;
-		if (newData?.length === 0) return (
-			<div>Усі огололення <span>0</span></div>
-		);
-
-		return (
-			allDataSeller && <>
-				<div
-					onClick={
-						() => {
-							setSelectCategoryId(0);
-							setPage(1);
-						}
-					}>
-					Усі оголошення
-					<span>
-						{allDataSeller.categories.reduce((prev, item) => prev + item.count, 0)}
-					</span>
-				</div>
-				{
-					Array.isArray(newData) &&
-					newData.map(({ categoryId, nameUkr, count }) => {
-						return (
-							<div key={categoryId}
-								onClick={
-									() => {
-										setSelectCategoryId(categoryId);
-										setPage(1);
-									}}
-								className={categoryId === selectCategoryId ? styles.categorySelect : ""}>
-								{nameUkr}
-								<span>{count}</span>
-							</div>
-						);
-					})
-				}
-			</>
-		);
-	};
 
 	function showPreloader() {
 		return (
@@ -162,7 +129,7 @@ export default function SellerPage() {
 						Помилка сервера.
 					</div>
 				);
-			}, 5000);
+			}, 8000);
 		}
 	} else {
 
@@ -196,15 +163,18 @@ export default function SellerPage() {
 					<CommonSectionSelector section={section} setSection={setSection} />
 				</div>
 				<div className={styles.wrapperFilter}>
-					{isLoading ? showPreloader() : categoryList()}
-					{/* <div>Мода та стиль <span>7</span></div>
-					<div>Дитячий світ <span>3</span></div> */}
+					{
+						isLoading
+							? showPreloader()
+							: <CategoryList allDataSeller={allDataSeller} category={selectCategoryId} />
+					}
 				</div>
 
 				{allDataSeller?.totalFilteredAdvertisements > 0
-					? <div className={isLoading ? styles.catalogyHide : ""}>
-						<CatalogyCard item={allDataSeller.filteredAds} />
-					</div>
+					? <CatalogyCard item={allDataSeller.filteredAds} />
+					// <div className={isLoading ? styles.catalogyHide : ""}>
+					// 	<CatalogyCard item={allDataSeller.filteredAds} />
+					// </div>
 					: <div>Оголошення не знайдено</div>
 				}
 				{
