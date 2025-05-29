@@ -9,7 +9,9 @@ import { RadioButtonGroup } from "@/components";
 import { AdverPhotoList } from "@/components";
 import { ErrorMessage } from "@/components";
 
-import ArowDown from "@/assets/Svg/icon-chevron-arow-down.svg";
+import { FormValues } from "@/types/adverFormType";
+
+import Search from "@/assets/Svg/search.svg";
 import radioboxIcon from "@/assets/Svg/checkboxIcon.svg";
 import checkIcon from "@/assets/Svg/checkIcon.svg";
 
@@ -19,20 +21,21 @@ import styles from "./AdverDesktop.module.scss";
 
 import { ClassNames } from "@emotion/react";
 
+
 const AdverDesktop = () => {
   const [images, setImages] = useState<{ file: File; url: string }[]>([]);
 
-  const initialValues = {
-    product: "",
-    price: "",
-    description: "",
-    category: "",
-    subcategory: "",
-    location: "",
+  const initialValues: FormValues = {
+  product: "",
+  price: "",
+  description: "",
+  category: "",
+  subcategory: "",
+  location: "",
+  condition: "",
+  delivery: "",
+};
 
-    condition: "",
-    delivery: "",
-  };
 
   const AuthSchema = Yup.object().shape({
     product: Yup.string().required("Будь ласка, вкажіть назву товару"),
@@ -55,24 +58,26 @@ const AdverDesktop = () => {
   });
 
   const handleSubmit = async (
-    values: typeof initialValues,
-    actions: FormikHelpers<typeof initialValues>
-  ) => {
-    const formData = new FormData();
-    Object.entries(values).forEach(([key, value]) => {
-      formData.append(key, value as string);
-    });
+  values: FormValues,
+  actions: FormikHelpers<FormValues>
+) => {
+  const formData = new FormData();
+  Object.entries(values).forEach(([key, value]) => {
+    formData.append(key, value);
+  });
 
-    images.forEach((image, index) => {
-      formData.append(`photos[${index}]`, image.file);
-    });
+  images.forEach((image, index) => {
+    formData.append(`photos[${index}]`, image.file);
+  });
 
-    console.log("formData", formData);
-    console.log("Данные формы:", values);
-    console.log("Отправляемые фотографии:", images);
-    actions.resetForm();
-    setImages([]);
-  };
+  console.log("formData", formData);
+  console.log("Дані форми:", values);
+  console.log("Додані зображення:", images);
+
+  actions.resetForm();
+  setImages([]);
+};
+
 
   return (
     <div className={styles.adWrapper}>
@@ -133,6 +138,9 @@ const AdverDesktop = () => {
                         placeholder="Вкажіть бажану ціну"
                         onBlur={handleBlur}
                       />
+                      <div className={styles.textareaText}>
+                        <p>Використовуйте лише цифри</p>
+                      </div>
                     </label>
                   </div>
                   <ErrorMessage
@@ -184,8 +192,8 @@ const AdverDesktop = () => {
                       <button type="button" className={styles.buttonInput}>
                         <Image
                           priority
-                          src={ArowDown}
-                          alt="icon down"
+                          src={Search}
+                          alt="icon search"
                           width={24}
                           height={24}
                         />
@@ -214,8 +222,8 @@ const AdverDesktop = () => {
                       <button type="button" className={styles.buttonInput}>
                         <Image
                           priority
-                          src={ArowDown}
-                          alt="icon down"
+                          src={Search}
+                          alt="icon search"
                           width={24}
                           height={24}
                         />
@@ -284,6 +292,7 @@ const AdverDesktop = () => {
                         { value: "New_mail", label: "Нова пошта" },
                         { value: "Ukrposhta", label: "Укрпошта" },
                         { value: "Meest_Express", label: "Meest Express" },
+                        { value: "Other", label: "Інше" },
                       ]}
                       groupClass={styles.radioboxGroup}
                       labelClass={`${styles.radioboxLabel} ${styles.check}`}

@@ -46,7 +46,9 @@ const AdverPhotoList: React.FC<AdverPhotoListProps> = ({
 
   const handleAddPhoto = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (images.length >= MAX_PHOTOS) {
-      toast.error("Вы не можете добавить более 9 фотографий.", toastMessage);
+      console.log('too mach');
+      
+      toast.error("Ви не можете додати більше 9 фотографій.", toastMessage);
       return;
     }
 
@@ -66,7 +68,7 @@ const AdverPhotoList: React.FC<AdverPhotoListProps> = ({
 
   const handleRemovePhoto = (index: number) => {
     const removedImage = images[index];
-    URL.revokeObjectURL(removedImage.url); // Освобождаем память
+    URL.revokeObjectURL(removedImage.url);
     setImages((prev) => prev.filter((_, i) => i !== index));
     toast.success("Зображення успішно видалено!", toastMessage);
   };
@@ -89,7 +91,7 @@ const AdverPhotoList: React.FC<AdverPhotoListProps> = ({
     updatedImages.splice(destinationIndex, 0, movedImage);
     setImages(updatedImages);
   };
-
+  console.log(images);
   return (
     <section className={styles.adverPhoto}>
       <h3>Фото</h3>
@@ -160,7 +162,7 @@ const AdverPhotoList: React.FC<AdverPhotoListProps> = ({
       </ul>
 
       <p className={styles.adverPhotoListText}>
-        Обкладинкою оголошення стане перше фото. Перемістіть его, щоб змінити
+        Обкладинкою оголошення стане перше фото. Перемістіть його, щоб змінити
         послідовність зображень.
       </p>
     </section>
