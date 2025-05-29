@@ -1,0 +1,14 @@
+.mobileWrapper {
+  display: none;
+  @media screen and (max-width: 767px) {
+    display: block;
+  }
+}
+
+.desktopWpapper {
+  display: none;
+
+  @media screen and (min-width: 768px) {
+    display: block;
+  }
+}

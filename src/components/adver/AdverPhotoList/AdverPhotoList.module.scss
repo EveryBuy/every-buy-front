@@ -1,0 +1,106 @@
+.adverPhoto {
+  h3 {
+    font-size: var(--f-size-h3);
+    font-weight: 400;
+    line-height: 39px;
+    margin-bottom: 24px;
+  }
+
+  p {
+    font-size: var(--body-text);
+    font-weight: 400;
+    margin-bottom: 12px;
+
+    span {
+      font-weight: 600;
+      font-size: var(--body-text);
+    }
+  }
+}
+
+.adverPhotoList {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+
+  li {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 240px;
+    height: 200px;
+    border: 1px solid var(--label);
+    border-radius: 8px;
+    background: #ffffff;
+  }
+}
+
+.removeButton {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+.removeButtonIcon {
+  width: 24px;
+  height: 24px;
+  fill: black;
+}
+
+.tooltipText {
+  position: absolute;
+  visibility: hidden;
+  opacity: 0;
+
+  bottom: 125%;
+  left: 50%;
+
+  padding: 5px;
+  border-radius: 4px;
+
+  background-color: #000;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+
+  z-index: 1;
+
+  transform: translateX(-50%);
+  transition: opacity 0.3s;
+}
+
+.removeButton:hover .tooltipText {
+  visibility: visible;
+  opacity: 1;
+}
+
+.adverPhotoListText {
+  margin-top: 12px;
+  margin-bottom: 0 !important;
+}
+
+.adverPhotoItem {
+  background: #f5ffb6 !important;
+  border: none !important;
+
+  &:hover,
+  &:focus {
+    background-color: rgb(120, 238, 120) !important;
+  }
+
+  p {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+    margin: 0;
+    padding: 85px 55px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
