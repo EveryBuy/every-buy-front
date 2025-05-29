@@ -25,6 +25,7 @@ export const AuthUpdater = ({ children }: Props) => {
 		}, 1000 * 60 * 3);
 
 		return () => clearInterval(interval);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	useEffect(() => {
@@ -33,6 +34,7 @@ export const AuthUpdater = ({ children }: Props) => {
 		} else if (!isLogin && path.includes("/user")) {
 			window.location.href = "/login";
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isLogin]);
 
 	return <>{children}</>;

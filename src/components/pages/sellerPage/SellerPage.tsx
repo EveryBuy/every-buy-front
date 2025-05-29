@@ -59,6 +59,7 @@ export default function SellerPage() {
 			console.error(error);
 		} finally {
 			setIsFetching(false);
+			router.push('', { scroll: false });
 		}
 	}
 
@@ -140,41 +141,42 @@ export default function SellerPage() {
 					<Search />
 				</div>
 
-				<div className={styles.wrapperSeller}>
-					<div className={styles.wrapperImgSeller}>
-						<Image
-							src={allDataSeller.user.photoUrl || photoSeller}
-							fill
-							sizes="100vh"
-							alt="photo seller"
-						/>
+				<div className={styles.wrapperInfo}>
+					<div className={styles.wrapperSeller}>
+						<div className={styles.wrapperImgSeller}>
+							<Image
+								src={allDataSeller.user.photoUrl || photoSeller}
+								fill
+								sizes="100vh"
+								alt="photo seller"
+							/>
+						</div>
+						<div>
+							<p className={styles.typeSeller}>{section === "SELL" ? "Продавець" : "Покупець"}</p>
+							<p className={styles.nameSeller}>{allDataSeller.user.fullName || "Шахрай Зайченя"}</p>
+						</div>
 					</div>
-					<div>
-						<p className={styles.typeSeller}>{section === "SELL" ? "Продавець" : "Покупець"}</p>
-						<p className={styles.nameSeller}>{allDataSeller.user.fullName || "Шахрай Зайченя"}</p>
+					<div className={styles.allCountText}>
+						кількість знайдених оголошень: {allDataSeller.totalAdvertisements}
+					</div>
+
+					<div className={styles.wrapperSection} id="filter">
+						<h1 className={styles.title}>Фільтрація по оголошенням</h1>
+						<CommonSectionSelector section={section} setSection={setSection} />
+					</div>
+					<div className={styles.wrapperFilter}>
+						{
+							isLoading
+								? showPreloader()
+								: <CategoryList allDataSeller={allDataSeller} category={selectCategoryId} />
+						}
 					</div>
 				</div>
-				<div className={styles.allCountText}>
-					кількість знайдених оголошень: {allDataSeller.totalAdvertisements}
-				</div>
-
-				<div className={styles.wrapperSection} id="filter">
-					<h1 className={styles.title}>Фільтрація по оголошенням</h1>
-					<CommonSectionSelector section={section} setSection={setSection} />
-				</div>
-				<div className={styles.wrapperFilter}>
-					{
-						isLoading
-							? showPreloader()
-							: <CategoryList allDataSeller={allDataSeller} category={selectCategoryId} />
-					}
-				</div>
-
 				{allDataSeller?.totalFilteredAdvertisements > 0
-					? <CatalogyCard item={allDataSeller.filteredAds} />
-					// <div className={isLoading ? styles.catalogyHide : ""}>
-					// 	<CatalogyCard item={allDataSeller.filteredAds} />
-					// </div>
+					? <div className={isLoading ? styles.opacityFalse : styles.opacityTrue}>
+						<CatalogyCard item={allDataSeller.filteredAds} />
+					</div>
+					// ? <CatalogyCard item={allDataSeller.filteredAds} />
 					: <div>Оголошення не знайдено</div>
 				}
 				{
