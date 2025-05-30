@@ -20,6 +20,10 @@
   }
 }
 
+.imageWrapper {
+  position: relative;
+}
+
 .image {
   width: 40px;
   height: 40px;
@@ -29,6 +33,35 @@
     width: 72px;
     height: 72px;
   }
+}
+
+.point {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  left: 25px;
+  bottom: 4px;
+  border-radius: 50%;
+  background-color: var(--color-yellow);
+  font-size: 12px;
+  @include media-min($breakpoint-laptop-large) {
+    width: 36px;
+    height: 36px;
+    left: 45px;
+    bottom: 5px;
+    font-size: 16px;
+  }
+}
+
+.number {
+  width: 15px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .textWrapper {
