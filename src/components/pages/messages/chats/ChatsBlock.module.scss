@@ -6,7 +6,7 @@
   flex-direction: column;
   width: 100%;
 
-  @include media-min($breakpoint-tablet) {
+  @include media-min($breakpoint-laptop) {
     width: 36%;
   }
 }
@@ -19,7 +19,7 @@
   padding: 0px 11px;
   background-color: #ffffff;
 
-  @include media-min($breakpoint-tablet) {
+  @include media-min($breakpoint-laptop) {
     height: 65px;
     border-radius: 10px;
     padding: 0px 10px;
@@ -37,7 +37,7 @@
   column-gap: 16px;
   width: 80px;
 
-  @include media-min($breakpoint-tablet) {
+  @include media-min($breakpoint-laptop) {
     width: 55px;
     column-gap: 0px;
   }

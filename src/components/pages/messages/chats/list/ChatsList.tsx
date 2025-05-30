@@ -1,6 +1,5 @@
-"use client";
-
 import { FC } from "react";
+import { useAppDispatch } from "@/redux/store";
 import { Box } from "@mui/material";
 import { Chat, CommonPreloader } from "@/components";
 import {
@@ -8,6 +7,7 @@ import {
   FavoritesChatType,
   ArchivedChatType,
 } from "@/types/messages/chats";
+import { chatApi } from "@/redux/messages/chatApi";
 import style from "./ChatsList.module.scss";
 
 interface ChatsListType {
@@ -31,9 +31,24 @@ const ChatsList: FC<ChatsListType> = ({
   isArchived,
   setArchived,
 }) => {
+  const dispatch = useAppDispatch();
   const handleChatClick = (chatId: number) => {
     setSelectedChatId(chatId);
+    dispatch(chatApi.util.invalidateTags([{ type: "Messages", id: chatId }]));
+    dispatch(
+      chatApi.util.updateQueryData("getBuyChats", undefined, (draft) => {
+        const chat = draft?.find((c) => c.chatId === chatId);
+        if (chat) chat.unreadMessagesCount = 0;
+      })
+    );
+    dispatch(
+      chatApi.util.updateQueryData("getSellChats", undefined, (draft) => {
+        const chat = draft?.find((c) => c.chatId === chatId);
+        if (chat) chat.unreadMessagesCount = 0;
+      })
+    );
   };
+
   return (
     <Box>
       {isBuyChatsLoading || isSellChatsLoading ? (
@@ -49,25 +64,26 @@ const ChatsList: FC<ChatsListType> = ({
         </Box>
       ) : chats && chats.length > 0 ? (
         <Box className={style.listWrapper}>
-          {chats.map(({ chatId, userData, lastMessage, lastMessageDate }) => (
+          {chats.map((chat) => (
             <Box
-              key={chatId}
+              key={chat.chatId}
               className={style.listItem}
               onClick={() => {
-                if (chatId) {
-                  handleChatClick(chatId);
+                if (chat.chatId) {
+                  handleChatClick(chat.chatId);
                 }
               }}
             >
               <Chat
-                lastMessage={lastMessage}
-                userData={userData}
-                lastMessageDate={lastMessageDate}
-                chatId={chatId}
+                lastMessage={chat.lastMessage}
+                userData={chat.userData}
+                lastMessageDate={chat.lastMessageDate}
+                chatId={chat.chatId}
                 isHeartSelected={isHeartSelected}
                 setHeartSelected={setHeartSelected}
                 isArchived={isArchived}
                 setArchived={setArchived}
+                chat={chat as ChatType}
               />
             </Box>
           ))}

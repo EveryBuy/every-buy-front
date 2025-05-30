@@ -17,8 +17,8 @@ type ChatType = {
   setHeartSelected: (isHeartSelected: boolean) => void;
   isArchived: boolean;
   setArchived: (isArchived: boolean) => void;
-  // isFolderSelected: boolean;
-  // handleChatClick: (chatId: number) => void;
+  unreadMessagesCount?: number;
+  chat: ChatType;
 };
 
 type NewChatType = {

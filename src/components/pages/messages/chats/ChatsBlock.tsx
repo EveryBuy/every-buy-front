@@ -32,10 +32,18 @@ const ChatsBlock: FC<ChatsBlockType> = ({
   const [activeButton, setActiveButton] = useState<number | null>(1);
   const [isSelected, setSelected] = useState<boolean>(false);
   const [isFolderSelected, setFolderSelected] = useState<boolean>(false);
-  const { data: buyChats, isFetching: isBuyChatsFetching } =
-    useGetBuyChatsQuery();
-  const { data: sellChats, isFetching: isSellChatsFetching } =
-    useGetSellChatsQuery();
+  const {
+    data: buyChats = [],
+    // refetch: refetchBuyChats,
+    // isLoading: isBuyChatsLoading,
+    isFetching: isBuyChatsFetching,
+  } = useGetBuyChatsQuery();
+  const {
+    data: sellChats = [],
+    // refetch: refetchSellChats,
+    // isLoading: isSellChatsLoading,
+    isFetching: isSellChatsFetching,
+  } = useGetSellChatsQuery();
   const { data: favoritesChats } = useGetFavoritesChatsQuery();
   const { data: archivedChats } = useGetArchivedChatsQuery();
 
