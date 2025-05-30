@@ -15,16 +15,26 @@ const Chat: FC<ChatType> = ({
   setHeartSelected,
   isArchived,
   setArchived,
+  chat,
 }) => {
+  const numberOfUnreadMessages = chat?.unreadMessagesCount || 0;
+
   return (
     <Box className={style.blockWrapper}>
-      <Image
-        alt=""
-        src={userData.photoUrl || "/images/user.png"}
-        width={72}
-        height={72}
-        className={style.image}
-      />
+      <div className={style.imageWrapper}>
+        <Image
+          alt=""
+          src={userData.photoUrl || "/images/user.png"}
+          width={72}
+          height={72}
+          className={style.image}
+        />
+        {numberOfUnreadMessages > 0 ? (
+          <Box className={style.point}>
+            <p className={style.number}>{numberOfUnreadMessages}</p>
+          </Box>
+        ) : null}
+      </div>
       <Box className={style.textWrapper}>
         <p className={style.title}>{userData.fullName || "anonym"}:</p>
         <p className={style.text}>{lastMessage}</p>
@@ -37,6 +47,7 @@ const Chat: FC<ChatType> = ({
         setHeartSelected={setHeartSelected}
         isArchived={isArchived}
         setArchived={setArchived}
+        chat={chat}
       />
     </Box>
   );

@@ -1,6 +1,9 @@
 "use client";
 
 import { FC, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { toggleFavoriteMessage } from "@/redux/messages/slice";
+import { RootState } from "@/redux/store";
 import { Box } from "@mui/material";
 import { Icons, CommonIcon } from "@/components";
 import {
@@ -32,7 +35,6 @@ const IconsData: FC<IconsDataType> = ({
   const { data: favoritesChats } = useGetFavoritesChatsQuery();
   const [addChatToArchive] = useAddChatToArchiveMutation();
   const [removeChatFromArchive] = useRemoveChatFromArchiveMutation();
-  // const [isArchived, setArchived] = useState(false);
   const { data: archivedChats } = useGetArchivedChatsQuery();
 
   useEffect(() => {
@@ -120,17 +122,34 @@ const IconsData: FC<IconsDataType> = ({
       console.error("Failed to remove from the archive:", error);
     }
   };
-
+  const dispatch = useDispatch();
+  const isFavorite = useSelector((state: RootState) =>
+    chatId ? state.messages.favorites[chatId] : false
+  );
   return (
     <>
       <Box className={style.iconsDataWrapper}>
-        <CommonIcon
+        {/* <CommonIcon
           id={isHeartSelected ? "icon-heart-selected" : "icon-heart"}
           className={`${style.icon} ${style.trash}`}
           // @ts-ignore
           onClick={(e) => {
             if (chatId) {
               isHeartSelected
+                ? handlerHeartRemovedFromSelected(chatId, e)
+                : handlerHeartSelected(chatId, e);
+            }
+          }}
+        /> */}
+        <CommonIcon
+          id={isFavorite ? "icon-heart-selected" : "icon-heart"}
+          className={`${style.icon} ${style["iconsData"]}`}
+          // @ts-ignore
+          onClick={(e) => {
+            if (!chatId) return;
+            dispatch(toggleFavoriteMessage(chatId));
+            if (handlerHeartRemovedFromSelected && handlerHeartSelected) {
+              isFavorite
                 ? handlerHeartRemovedFromSelected(chatId, e)
                 : handlerHeartSelected(chatId, e);
             }
