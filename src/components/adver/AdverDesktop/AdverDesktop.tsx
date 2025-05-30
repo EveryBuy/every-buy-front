@@ -117,7 +117,7 @@ const AdverDesktop = () => {
                   <ErrorMessage
                     touched={touched.product}
                     error={errors.product}
-                    successMessage="Успішно вибрано стан товару"
+                    successMessage="Успішно введено назву товару"
                   />
                 </div>
 
@@ -167,7 +167,7 @@ const AdverDesktop = () => {
                   />
                 </div>
               </section>
-
+              {/* added modals for selection categories*/}
               <section className={styles.formWrapper}>
                 <div>
                   <div className={styles.fieldWrapper}>
@@ -198,7 +198,7 @@ const AdverDesktop = () => {
                     successMessage="Категорія успішно додана"
                   />
                 </div>
-
+                {/* added modals for selection subcategories*/}
                 <div>
                   <div className={styles.fieldWrapper}>
                     <label>
