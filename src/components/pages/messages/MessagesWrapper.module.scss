@@ -24,7 +24,7 @@
 
 .chatBlockWrapper {
   display: flex;
-  @include media-min($breakpoint-tablet) {
+  @include media-min($breakpoint-laptop) {
     column-gap: 15px;
     height: 550px;
     padding: 0px 20px;
