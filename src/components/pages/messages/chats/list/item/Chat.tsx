@@ -15,6 +15,7 @@ const Chat: FC<ChatType> = ({
   setHeartSelected,
   isArchived,
   setArchived,
+  chat,
 }) => {
   return (
     <Box className={style.blockWrapper}>
@@ -37,6 +38,7 @@ const Chat: FC<ChatType> = ({
         setHeartSelected={setHeartSelected}
         isArchived={isArchived}
         setArchived={setArchived}
+        chat={chat}
       />
     </Box>
   );

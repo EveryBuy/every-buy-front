@@ -49,11 +49,19 @@ export const chatApi = createApi({
     }),
     getBuyChats: builder.query<ChatsType, void>({
       query: () => "/chat/get-buy-users-chats",
-      providesTags: ["BuyChats"],
+      // providesTags: ["BuyChats"],
+      providesTags: (result) =>
+        result
+          ? [{ type: "BuyChats", id: "LIST" }]
+          : [{ type: "BuyChats", id: "LIST" }],
     }),
     getSellChats: builder.query<ChatsType, void>({
       query: () => "/chat/get-sell-users-chats",
-      providesTags: ["SellChats"],
+      // providesTags: ["SellChats"],
+      providesTags: (result) =>
+        result
+          ? [{ type: "SellChats", id: "LIST" }]
+          : [{ type: "SellChats", id: "LIST" }],
     }),
     getChat: builder.query<FullChatType, number>({
       query: (chatId) => `/chat/${chatId}`,
@@ -64,6 +72,9 @@ export const chatApi = createApi({
       query: (chatId) => `/chat/${chatId}`,
       transformResponse: (response: { data: ChatMessagesDataTypeInt }) =>
         response.data.chatMessages,
+      providesTags: (result, error, chatId) => [
+        { type: "Messages", id: chatId },
+      ],
     }),
     getFavoritesChats: builder.query<FavoritesChatType[], void>({
       query: () => "/chat/get-all-favorite-chats",
@@ -110,7 +121,12 @@ export const chatApi = createApi({
         method: "POST",
         body: { text },
       }),
-      invalidatesTags: ["Chat", "BuyChats", "SellChats"],
+      // invalidatesTags: ["Chat", "BuyChats", "SellChats"],
+      invalidatesTags: (result, error, { chatId }) => [
+        { type: "Messages", id: chatId },
+        { type: "BuyChats", id: "LIST" },
+        { type: "SellChats", id: "LIST" },
+      ],
     }),
     uploadFileToChat: builder.mutation({
       query: ({

@@ -135,9 +135,6 @@ const DialogueInput: FC<DialogueInputProps> = ({
       console.error("Failed to unblock the user:", error);
     }
   };
-  console.log(isUserBlockedByCompanion);
-  console.log(isCompanionBlocked);
-  console.log(response);
 
   const dialogInput = isCompanionBlocked ? (
     <Box className={`${style.blockBackground} ${style.blockMessage}`}>
