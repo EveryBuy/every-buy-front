@@ -1,0 +1,236 @@
+.adWrapper {
+  width: 1440px;
+  padding-left: 60px;
+  padding-right: 60px;
+  margin-top: 20px;
+}
+
+.adHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 82px;
+
+  h1 {
+    font-size: var(--f-size-h1);
+  }
+}
+
+.linkHeader {
+  display: flex;
+  gap: 18px;
+  list-style: none;
+}
+
+.linkItem {
+  font-size: var(--f-size-h4);
+}
+
+.linkItemText {
+  position: relative;
+}
+
+.linkItemText::after {
+  position: absolute;
+  display: flex;
+
+  content: "";
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  background-color: #9d9d9d;
+}
+
+.adTitle {
+  margin-bottom: 24px;
+  font-size: var(--f-size-h3);
+  font-weight: 400;
+  line-height: 39px;
+  color: var(--label);
+}
+
+.wrapperInput {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+
+  margin-bottom: 27px;
+}
+
+.fieldWrapper {
+  position: relative;
+}
+
+.buttonWrapper {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-top: 55px;
+}
+
+.adverButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 12px 28px;
+  font-size: var(--f-size-h4);
+
+  border: 1px solid;
+  border-radius: 10px;
+
+  color: var(--label);
+
+  width: 347px;
+  height: 61px;
+
+  line-height: 29px;
+}
+
+.adverButtonAd {
+  background: var(--background);
+}
+
+// =============================================================
+
+.formWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+
+  label {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+  }
+}
+
+.styledField {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 335px;
+  height: 46px;
+  margin-top: 4px;
+  padding: 12px;
+  border-radius: 10px;
+  background-color: transparent;
+  border: 1px solid rgba(27, 27, 26, 0.3);
+
+  font-family: Roboto;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 128.571%;
+
+  color: rgba(129, 104, 39, 0.6);
+
+  &:focus {
+    outline: none;
+  }
+
+  &::placeholder {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19px;
+  }
+
+  @media screen and (min-width: 768px) {
+    width: 620px;
+    height: 60px;
+    font-size: 16px;
+    line-height: 150%;
+  }
+}
+
+.textareaText {
+  display: flex;
+  gap: 224px;
+  p {
+    margin-top: 4px;
+    font-size: var(--body-text);
+    font-weight: 400;
+    line-height: 19.5px;
+    color: var(--input-text);
+  }
+}
+
+.buttonInput {
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%);
+  right: 10px;
+}
+
+.styledTexterea {
+  width: 620px;
+  height: 280px;
+}
+
+// ================= radio ===================
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  white-space: nowrap;
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
+
+.radioboxWrapper {
+  display: flex;
+  gap: 160px;
+}
+
+.radioboxGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 10px;
+}
+
+.radioboxInput {
+  margin-right: 16px;
+
+  width: 32px;
+  height: 32px;
+}
+
+.radioBox {
+  position: absolute;
+  margin-left: -48px;
+  width: 32px;
+  height: 32px;
+}
+
+.radioboxLabel {
+  display: flex;
+  align-items: center;
+}
+
+.check {
+  padding-left: 48px;
+}
+
+.radioUnchecked {
+  display: block;
+}
+
+.radioChecked {
+  display: none;
+}
+
+.visuallyHidden:checked + .radioBox .radioUnchecked {
+  display: none;
+}
+
+.visuallyHidden:checked + .radioBox .radioChecked {
+  display: block;
+}

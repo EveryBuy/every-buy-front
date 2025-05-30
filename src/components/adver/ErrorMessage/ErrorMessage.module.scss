@@ -1,0 +1,33 @@
+.messageError {
+  display: flex;
+  gap: 4px;
+
+  // width: 140px;
+
+  // margin-top: 5px;
+  font-feature-settings: "clig" off, "liga" off;
+  font-family: Roboto;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+  letter-spacing: 0.12px;
+
+  color: #d80027;
+}
+
+.messageSuccess {
+  display: flex;
+  gap: 4px;
+
+  // margin-top: 5px;
+  font-feature-settings: "clig" off, "liga" off;
+  font-family: Roboto;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+  letter-spacing: 0.12px;
+
+  color: #3cbf61;
+}
