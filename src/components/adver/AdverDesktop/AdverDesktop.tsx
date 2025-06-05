@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
-import { Formik, Form, Field, FormikHelpers } from "formik";
+import { Formik, Form, Field, FormikHelpers, useFormikContext } from "formik";
 import * as Yup from "yup";
 
 import { CommonButton } from "@/components";
@@ -20,21 +20,36 @@ import styles from "./AdverDesktop.module.scss";
 // -----------------------------------------
 
 import { ClassNames } from "@emotion/react";
-
+import { CategorySelectModal } from "../CategorySelectModal/CategorySelectModal";
+import { CategoryTreeModal } from "../AdverSubCategoriesDesktop/CategoryTreeModal";
 
 const AdverDesktop = () => {
   const [images, setImages] = useState<{ file: File; url: string }[]>([]);
+  // const { setFieldValue, touched, errors, handleBlur } =
+  //   useFormikContext<any>();
 
   const initialValues: FormValues = {
-  product: "",
-  price: "",
-  description: "",
-  category: "",
-  subcategory: "",
-  location: "",
-  condition: "",
-  delivery: "",
-};
+    product: "",
+    price: "",
+    description: "",
+    category: "",
+    subcategory: "",
+    location: "",
+    condition: "",
+    delivery: "",
+  };
+  const [descriptionLength, setDescriptionLength] = useState(0);
+
+  const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
+  console.log("isCategoryModalOpen", isCategoryModalOpen);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  console.log("selectedCategory", selectedCategory);
+  const [isSubCategoryModalOpen, setIsSubCategoryModalOpen] = useState(false);
+ 
+  const [selectedSubCategory, setSelectedSubCategory] = useState<string | null>(
+    null
+  );
+   console.log("selectedSubCategory", selectedSubCategory);
 
 
   const AuthSchema = Yup.object().shape({
@@ -58,26 +73,25 @@ const AdverDesktop = () => {
   });
 
   const handleSubmit = async (
-  values: FormValues,
-  actions: FormikHelpers<FormValues>
-) => {
-  const formData = new FormData();
-  Object.entries(values).forEach(([key, value]) => {
-    formData.append(key, value);
-  });
+    values: FormValues,
+    actions: FormikHelpers<FormValues>
+  ) => {
+    const formData = new FormData();
+    Object.entries(values).forEach(([key, value]) => {
+      formData.append(key, value);
+    });
 
-  images.forEach((image, index) => {
-    formData.append(`photos[${index}]`, image.file);
-  });
+    images.forEach((image, index) => {
+      formData.append(`photos[${index}]`, image.file);
+    });
 
-  console.log("formData", formData);
-  console.log("Дані форми:", values);
-  console.log("Додані зображення:", images);
+    // console.log("formData", formData);
+    // console.log("Дані форми:", values);
+    // console.log("Додані зображення:", images);
 
-  actions.resetForm();
-  setImages([]);
-};
-
+    actions.resetForm();
+    setImages([]);
+  };
 
   return (
     <div className={styles.adWrapper}>
@@ -161,6 +175,12 @@ const AdverDesktop = () => {
                         rows="4"
                         cols="50"
                         className={`${styles.styledField} ${styles.styledTexterea}`}
+                        onChange={(
+                          e: React.ChangeEvent<HTMLTextAreaElement>
+                        ) => {
+                          setDescriptionLength(e.target.value.length);
+                          // setFieldValue("description", e.target.value);
+                        }}
                       />
                       <div className={styles.textareaText}>
                         <p>Вкажіть щонайменьше 30 символів</p>
@@ -175,7 +195,7 @@ const AdverDesktop = () => {
                   />
                 </div>
               </section>
-              {/* added modals for selection categories*/}
+
               <section className={styles.formWrapper}>
                 <div>
                   <div className={styles.fieldWrapper}>
@@ -186,10 +206,17 @@ const AdverDesktop = () => {
                         className={styles.styledField}
                         type="text"
                         name="category"
+                        value={selectedCategory || ""}
+                        readOnly
                         placeholder="зазначте категорію"
                         onBlur={handleBlur}
+                        // onClick={() => setIsCategoryModalOpen(true)}
                       />
-                      <button type="button" className={styles.buttonInput}>
+                      <button
+                        type="button"
+                        className={styles.buttonInput}
+                        onClick={() => setIsCategoryModalOpen(true)}
+                      >
                         <Image
                           priority
                           src={Search}
@@ -216,10 +243,15 @@ const AdverDesktop = () => {
                         className={styles.styledField}
                         type="text"
                         name="subcategory"
+                        value={selectedSubCategory || ""}
                         placeholder="зазначте підкатегорію"
                         onBlur={handleBlur}
                       />
-                      <button type="button" className={styles.buttonInput}>
+                      <button
+                        type="button"
+                        className={styles.buttonInput}
+                        onClick={() => setIsSubCategoryModalOpen(true)}
+                      >
                         <Image
                           priority
                           src={Search}
@@ -334,6 +366,42 @@ const AdverDesktop = () => {
           </Form>
         )}
       </Formik>
+      {/* select category */}
+      {isCategoryModalOpen && (
+        <CategorySelectModal
+          open={isCategoryModalOpen}
+          onClose={setIsCategoryModalOpen}
+          onSelect={(value) => {
+            setSelectedCategory(value);
+            const input = document.querySelector<HTMLInputElement>(
+              'input[name="category"]'
+            );
+            if (input) {
+              input.value = value;
+              input.dispatchEvent(new Event("input", { bubbles: true }));
+            }
+          }}
+        />
+      )}
+      {isSubCategoryModalOpen && (
+        <CategoryTreeModal
+          open={isSubCategoryModalOpen}
+          onClose={() => setIsSubCategoryModalOpen(false)}
+          onSelect={(value) => {
+            const selected = value.join(" / ");
+            setSelectedSubCategory(selected);
+
+            const input = document.querySelector<HTMLInputElement>(
+              'input[name="subcategory"]'
+            );
+
+            if (input) {
+              input.value = selected;
+              input.dispatchEvent(new Event("input", { bubbles: true }));
+            }
+          }}
+        />
+      )}
     </div>
   );
 };

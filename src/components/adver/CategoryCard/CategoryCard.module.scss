@@ -1,0 +1,48 @@
+.card {
+  position: relative;
+  width: 160px;
+  height: 190px;
+  padding: 12px;
+  background: #f5f5f5;
+  border: 1px dashed #d3d3d3;
+  border-radius: 8px;
+  overflow: hidden;
+  text-align: center;
+  font-family: inherit;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+  }
+}
+
+.imageWrapper {
+  width: 100%;
+  height: 120px;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #eaeaea;
+  margin-bottom: 10px;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #000;
+}
+
+.corner {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-top: 40px solid #d8ff32;
+  border-left: 40px solid transparent;
+}

@@ -1,0 +1,93 @@
+.wrapper {
+  padding: 20px;
+  background-color: #fff;
+  max-width: 1000px;
+  width: 100%;
+  margin: 0 auto;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.columns {
+  display: flex;
+  gap: 10px;
+  justify-content: start;
+}
+
+.column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid #ccc;
+  padding-left: 10px;
+
+  &:first-child {
+    border-left: none;
+    padding-left: 0;
+  }
+}
+
+.item {
+  background: none;
+  border: none;
+  text-align: left;
+  padding: 10px 5px;
+  font-size: 16px;
+  cursor: pointer;
+  border-bottom: 1px solid #ccc;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #f8f8f8;
+  }
+
+  &:focus {
+    outline: none;
+    background-color: #eee;
+  }
+}
+
+.itemActive {
+  background-color: #f6f7b0;
+  font-weight: 600;
+}
+
+.itemWithArrow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &::after {
+    content: '›';
+    font-size: 14px;
+    margin-left: 8px;
+    color: #333;
+  }
+}
+.confirmButton {
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+.confirmButton:disabled {
+  background-color: #b0b0b0;
+  cursor: not-allowed;
+}
