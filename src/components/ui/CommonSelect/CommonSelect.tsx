@@ -107,13 +107,18 @@ export const CommonSelect = ({
         label={myLabel ? null : label}
         // onChange={onChange}
         onChange={handleChange}
-        renderValue={(selected) => {
-          if (selected.length === 0) {
-            return <em>Placeholder</em>;
-          }
+        {...((myLabel && {
+          renderValue: (selected: string | unknown) => {
+            if (
+              !selected ||
+              (Array.isArray(selected) && selected.length === 0)
+            ) {
+              return <em>Placeholder</em>;
+            }
 
-          return selected as string;
-        }}
+            return selected as string;
+          },
+        }) as { renderValue: SelectProps<string>["renderValue"] })}
       >
         {options.map((elem) => (
           <MenuItem key={nanoid()} value={elem}>
