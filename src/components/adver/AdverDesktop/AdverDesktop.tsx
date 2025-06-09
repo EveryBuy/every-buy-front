@@ -372,14 +372,14 @@ const AdverDesktop = () => {
           open={isCategoryModalOpen}
           onClose={setIsCategoryModalOpen}
           onSelect={(value) => {
-            setSelectedCategory(value);
+            setSelectedCategory(selectedCategory);
             const input = document.querySelector<HTMLInputElement>(
               'input[name="category"]'
             );
-            if (input) {
-              input.value = value;
-              input.dispatchEvent(new Event("input", { bubbles: true }));
-            }
+            // if (input) {
+            //   input.value = value;
+            //   input.dispatchEvent(new Event("input", { bubbles: true }));
+            // }
           }}
         />
       )}
