@@ -23,7 +23,7 @@ type CommonSelectProps = {
   };
   outlineColor?: string;
   value?: string;
-  // onChange?: (event: SelectChangeEvent<string>) => void;
+  onChange?: (event: SelectChangeEvent<string>) => void;
   myLabel?: string;
   setSelectedCategory?: (value: string) => void;
 };
@@ -34,7 +34,7 @@ export const CommonSelect = ({
   size,
   outlineColor = `var(--input-text)`,
   value,
-  // onChange,
+  onChange,
   myLabel,
   setSelectedCategory,
 }: CommonSelectProps) => {
@@ -106,7 +106,7 @@ export const CommonSelect = ({
         value={myLabel ? firstValue : value}
         label={myLabel ? null : label}
         // onChange={onChange}
-        onChange={handleChange}
+        onChange={myLabel ? handleChange : onChange}
         {...((myLabel && {
           renderValue: (selected: string | unknown) => {
             if (

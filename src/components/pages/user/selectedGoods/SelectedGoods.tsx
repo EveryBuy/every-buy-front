@@ -23,7 +23,7 @@ export const SelectedGoods: FC = () => {
   const categoryNames: string[] = categories.map(
     (elem: Category) => elem.nameUkr
   );
-  categoryNames.unshift("Усі категорії");
+  categoryNames.unshift("Всі категорії");
   const [category] = categories.filter(
     (elem: Category) => elem.nameUkr === selectedCategory
   );
@@ -44,7 +44,7 @@ export const SelectedGoods: FC = () => {
           size={widthSize}
           outlineColor="var(--button)"
           value={selectedCategory}
-          // onChange={(evt) => setSelectedCategory(evt.target.value)}
+          onChange={(evt) => setSelectedCategory(evt.target.value)}
           setSelectedCategory={setSelectedCategory}
         />
         <div style={{ paddingTop: "20px" }}>
