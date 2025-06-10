@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from 'next/link';
 import arrowUrl from "../../../../assets/Svg/rightArrow.svg";
 import imageUrl from "../../../../assets/pc.png";
 import styles from "./Seller.module.scss";
@@ -47,10 +48,10 @@ export default function Seller({ sellerInfo }: SellerProps) {
 					</p>
 				</div>
 			</div>
-			<a href={linkToAllAdvert} className={styles.allOrders}>
+			<Link href={linkToAllAdvert} className={styles.allOrders}>
 				Усі оголошення автора
-				<Image className={styles.arrow} src={arrowUrl} alt="Right arrow" />
-			</a>
+				<Image className={styles.arrow} src={arrowUrl} width={20} height={20} alt="Right arrow" />
+			</Link>
 		</div>
 	);
 }

@@ -9,12 +9,13 @@ import { useRouter } from 'next/navigation';
 import { addPage, addLimitPrice, resetFilters } from '@/redux/filters/slice';
 
 import { CatalogyCard } from "../../Catalogy/cardCatalogy/CatalogyCard";
-import { Container, Box, Typography } from "@mui/material";
+import { Container, Box, Typography, Button, IconButton } from "@mui/material";
 import {
 	CustomSeparator,
 	FilterCatalogy,
 	CategoryList,
 	Search,
+	CommonIcon,
 } from "@/components";
 import { CommonPagination } from "@/components/ui/CommonPagination/CommonPagination";
 import { CommonSectionSelector } from "@/components/ui/CommonSectionSelector/CommonSectionSelector";
@@ -307,7 +308,7 @@ export const CatalogyPage: React.FC = (): JSX.Element => {
 	};
 
 	return (
-		<Container sx={{ marginTop: "1rem" }}>
+		<Container sx={{ marginTop: { sm: "1rem" } }}>
 			{/* <Box className='custom-separator' maxWidth={'sm'}> */}
 			<Box maxWidth={"sm"}>
 				<CustomSeparator
@@ -316,32 +317,47 @@ export const CatalogyPage: React.FC = (): JSX.Element => {
 					lowSubCategory={breadcrumbsObj.lowCategory}
 				/>
 			</Box>
-			<Box sx={{ margin: "2.5rem 0.5rem 0" }}>
+			<Box sx={{ margin: { xs: "1.5em 0 0", sm: "2.5rem 0.5rem 0" } }}>
 				<Search hideSuggest={true} />
 			</Box>
 			{/* <div className={style.wrapperSelectSection}>
 
 			</div> */}
 			<div className={style.wrapperFilters}>
-				<Box sx={{ margin: "2em 0.1em" }}>
+				<Box sx={{ margin: "2em 0.1em 0.5em" }}>
 					<Typography
 						variant="h3"
-						sx={{ fontSize: { xs: "1.5em", sm: "2.3em" } }}
+						sx={{ fontSize: { xs: "1.5em", sm: "2.3em" }, display: "flex" }}
 					>
-						Фільтри
-					</Typography>
-					<Typography
-						sx={{
-							fontSize: "1em",
-							cursor: "pointer",
-							margin: { xs: "5px 0 0 2px", sm: "5px 0 0 25px" },
-						}}
-						onClick={makeLinkOpen}
-					>
-						{isListOpen ? "Згорнути" : "Розгорнути"}
+						<span onClick={makeLinkOpen} style={{ cursor: "pointer" }}>
+							Фільтри
+						</span>
+						<Button
+							// variant="outlined"
+							sx={{
+								width: 24,
+								height: 24,
+								minWidth: 24,
+								padding: 0,
+								display: "flex",
+								alignItems: "center",
+								justifyContent: "center",
+								// display: "inline-block",
+								marginLeft: { xs: 0.8, sm: 1.5 },
+								marginTop: { xs: 0.4, sm: 1.5 },
+							}}
+							onClick={makeLinkOpen}
+						>
+							<CommonIcon
+								id={isListOpen ? "filter-arrow-down" : "filter-arrow-up"}
+								width="20"
+								height="10"
+							/>
+							{/* "Згорнути" : "Розгорнути" */}
+						</Button>
 					</Typography>
 				</Box>
-				<Box sx={{ margin: "2em 0.1em" }}>
+				<Box sx={{ margin: "2em 0.1em 0.5em" }}>
 					<CommonSectionSelector section={section} setSection={setSection} />
 				</Box>
 			</div>
@@ -351,34 +367,37 @@ export const CatalogyPage: React.FC = (): JSX.Element => {
 				<FilterCatalogy heandlerClick={handlerResetFilters} />
 			</div>
 
-			<CategoryList />
-			{!loading ? (
-				<div>Зачекайте ...</div>
-			) : typeof dataArray === "string" ? (
-				<div style={{ fontSize: "32px" }}>Помилка сервера</div>
-			) : Array.isArray(dataArray) && dataArray.length > 0 ? (
-				<>
-					<Typography
-						variant="h3"
-						sx={{
-							margin: "1rem 0 2.3rem",
-							fontSize: { xs: "1.5em", sm: "2.3em" },
-						}}
-					>
-						Ми знайшли {countAdvert(totalAdvert)} оголошень
-					</Typography>
-					<CatalogyCard item={dataArray} />
-					<Box style={{ marginTop: "32px", fontSize: "20px" }}>
-						<CommonPagination
-							page={page}
-							pages={totalPages}
-							changePage={(num) => handlerPage(num)}
-						/>
-					</Box>
-				</>
-			) : (
-				<EmptyData />
-			)}
-		</Container>
+			{/* <CategoryList /> */}
+			{
+				!loading ? (
+					<div>Зачекайте ...</div>
+				) : typeof dataArray === "string" ? (
+					<div style={{ fontSize: "32px" }}>Помилка сервера</div>
+				) : Array.isArray(dataArray) && dataArray.length > 0 ? (
+					<>
+						<Typography
+							variant="h3"
+							sx={{
+								margin: "2rem 0 2.3rem",
+								fontSize: { xs: "1.5em", sm: "2.3em" },
+								display: { xs: "none", sm: "block" },
+							}}
+						>
+							Ми знайшли {countAdvert(totalAdvert)} оголошень
+						</Typography>
+						<CatalogyCard item={dataArray} />
+						<Box style={{ marginTop: "32px", fontSize: "20px" }}>
+							<CommonPagination
+								page={page}
+								pages={totalPages}
+								changePage={(num) => handlerPage(num)}
+							/>
+						</Box>
+					</>
+				) : (
+					<EmptyData />
+				)
+			}
+		</Container >
 	);
 };

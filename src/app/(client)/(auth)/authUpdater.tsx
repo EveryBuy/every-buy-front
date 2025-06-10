@@ -8,34 +8,36 @@ import { selectIsLoggedIn } from "@/redux/auth/selectors";
 import { usePathname } from "next/navigation";
 
 type Props = {
-  children: React.ReactNode;
+	children: React.ReactNode;
 };
 
 export const AuthUpdater = ({ children }: Props) => {
-  const dispatch = useAppDispatch();
-  const isLogin = useSelector(selectIsLoggedIn);
+	const dispatch = useAppDispatch();
+	const isLogin = useSelector(selectIsLoggedIn);
 
-  const path = usePathname();
+	const path = usePathname();
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      dispatch(validate())
-        .unwrap()
-        .catch(() => {});
-    }, 1000 * 60 * 1);
+	useEffect(() => {
+		const interval = setInterval(() => {
+			dispatch(validate())
+				.unwrap()
+				.catch(() => { });
+		}, 1000 * 60 * 3);
 
-    return () => clearInterval(interval);
-  }, []);
+		return () => clearInterval(interval);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
-  useEffect(() => {
-    if (isLogin) {
-      dispatch(refreshUser());
-    } else if (!isLogin && path.includes("/user")) {
-      window.location.href = "/login";
-    }
-  }, [isLogin]);
+	useEffect(() => {
+		if (isLogin) {
+			dispatch(refreshUser());
+		} else if (!isLogin && path.includes("/user")) {
+			window.location.href = "/login";
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isLogin]);
 
-  return <>{children}</>;
+	return <>{children}</>;
 };
 
 export default AuthUpdater;

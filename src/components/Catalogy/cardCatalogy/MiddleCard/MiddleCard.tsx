@@ -19,7 +19,7 @@ import { MinCardType } from '@/types/minCardType';
 
 type ItemProps = {
 	item: AdvertisementBuySeller | MiddleCardType,
-	favourite: boolean
+	favourite: boolean,
 };
 
 export const MiddleCard: FC<ItemProps> = ({ item, favourite }: ItemProps) => {
@@ -93,7 +93,7 @@ export const MiddleCard: FC<ItemProps> = ({ item, favourite }: ItemProps) => {
 					/>
 
 				</CommonButton>
-				<Link className={styles.link} href={linkHref}>
+				{/* <Link className={styles.link} href={linkHref}>
 					<Image
 						className={styles.arrowButton}
 						src={arrowButton}
@@ -101,7 +101,7 @@ export const MiddleCard: FC<ItemProps> = ({ item, favourite }: ItemProps) => {
 						width={58}
 						height={58}
 					/>
-				</Link>
+				</Link> */}
 			</div>
 
 			{successRegisterModalOpen && (
@@ -111,11 +111,10 @@ export const MiddleCard: FC<ItemProps> = ({ item, favourite }: ItemProps) => {
 				/>
 			)}
 
-			<p className={styles.dateText}>
+			<div className={styles.dateText}>
 				{`${item.updateDate && formatAdvertisementDate(item.updateDate)}`}
-				<br />
-				{`${item.city.cityName}, ${item.city.region.regionName}`}
-			</p>
+				{` ${item.city.cityName}, ${item.city.region.regionName}`}
+			</div>
 		</div>
 	);
 };

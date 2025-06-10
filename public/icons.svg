@@ -353,6 +353,12 @@
 			<line y1="-0.5" x2="39.598" y2="-0.5" transform="matrix(0.707107 0.707107 -0.828445 0.56007 0 1)" stroke="black"/>
 			<line y1="-0.5" x2="39.598" y2="-0.5" transform="matrix(0.707107 -0.707107 -0.828445 -0.56007 0 29)" stroke="black"/>
 		</symbol>
+	<symbol id="filter-arrow-down" viewBox="0 0 22 12"  fill="none">
+		<path d="M21 11L12.4142 2.41422C11.6332 1.63317 10.3668 1.63317 9.58579 2.41421L1 11" stroke="black" stroke-width="2" stroke-linecap="round"/>
+    </symbol>
+	<symbol id="filter-arrow-up" viewBox="0 0 22 12"  fill="none">
+		<path d="M1 1L9.58578 9.58578C10.3668 10.3668 11.6332 10.3668 12.4142 9.58579L21 1" stroke="black" stroke-width="2" stroke-linecap="round"/>
+    </symbol>
 
   </defs>
 </svg>

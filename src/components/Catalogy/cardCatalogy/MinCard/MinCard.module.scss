@@ -15,17 +15,19 @@
 	}
 
 	.imageWrapper {
-		width: 131px;
-		height: 94px;
+		width: 123px;
+		height: 100px;
 		overflow: hidden;
 		position: relative;
 		border: 1px solid var(--border);
 		border-radius: 10px;
+		align-self: center;
 
 		@include media-min($breakpoint-tablet) {
 			width: 179px;
 			height: 182px;
 			flex-shrink: 0;
+			align-self: flex-start;
 		}
 	}
 
@@ -38,21 +40,11 @@
 		// }
 	}
 
-	.title {
-		font-weight: 700;
-
-		@include media-min($breakpoint-tablet) {
-			font-size: 36px;
-			font-weight: 400;
-			min-width: 150px;
-			min-height: 88px;
-			margin-right: 50px;
-		}
-	}
-
 	.state {
 		font-size: var(--body-mobile-text-small);
 		color: var(--success);
+		margin-top: 6px;
+		margin-bottom: 4px;
 
 		@include media-min($breakpoint-tablet) {
 			font-size: var(--large-body-medium);
@@ -60,13 +52,28 @@
 		}
 	}
 
-	.price {
-		font-weight: 700;
-		margin-top: 16px;
+	.title {
+		font-weight: 400;
+		font-size: 16px;
 
 		@include media-min($breakpoint-tablet) {
-			font-size: 32px;
-			margin-top: 33px;
+			font-size: 36px;
+			min-width: 150px;
+			// min-height: 88px;
+			margin-right: 40px;
+			margin-top: 12px;
+		}
+	}
+
+	.price {
+		font-size: 20px;
+		font-weight: 400;
+		margin-top: 8px;
+
+		@include media-min($breakpoint-tablet) {
+			font-size: 40px;
+			font-weight: 700;
+			margin-top: 24px;
 		}
 	}
 

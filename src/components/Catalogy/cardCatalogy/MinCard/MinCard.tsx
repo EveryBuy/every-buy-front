@@ -15,6 +15,15 @@ export const MinCard = (props: ItemProps): JSX.Element => {
 		productType,
 		price,
 	} = props.item;
+
+	const shortStr = (str: string): string => {
+		if (str.length < 30) {
+			return str;
+		} else {
+			return str.substring(0, 30) + " ...";
+		}
+	}
+
 	return (
 		// add styles.minCardString for styles.containerMiniCard makes item inline
 		<div className={styles.containerMinCard}>
@@ -29,10 +38,10 @@ export const MinCard = (props: ItemProps): JSX.Element => {
 				/>
 			</div>
 			<div className={styles.WrapperTitleStatePrice}>
-				<h5 className={styles.title}>{title}</h5>
 				<p className={styles.state}>
 					{productType}
 				</p>
+				<h5 className={styles.title}>{shortStr(title)}</h5>
 				<p className={styles.price}>{`${price} грн`}</p>
 			</div>
 		</div>
