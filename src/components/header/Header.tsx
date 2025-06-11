@@ -66,7 +66,6 @@ const Header: FC = () => {
   } = useGetSellChatsQuery(undefined, {
     skip: !isLoggedIn,
   });
-  console.log(buyChats, sellChats);
   const isUnreadMessageInBuyChat = buyChats.some((chat) => {
     return chat.unreadMessagesCount && chat.unreadMessagesCount !== 0;
   });
