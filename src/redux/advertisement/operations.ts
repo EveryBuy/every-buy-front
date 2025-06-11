@@ -1,3 +1,4 @@
+import axios from "axios";
 import { API, setHeaderAuthToken } from "@/utils/axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Advertisement } from "./slice";
@@ -219,8 +220,14 @@ export const getFilteredAdverts = createAsyncThunk('advert/getFiltered',
 	}
 )
 
+let controllerSeller: AbortController | null = null;
+
 export const getAdvertsBySellerId = createAsyncThunk('advert/getListBySellerId',
 	async (params: { userId: number, section?: string, page?: number, categoryId?: number }, thunkAPI) => {
+		if (controllerSeller) {
+			controllerSeller.abort();
+		}
+		controllerSeller = new AbortController();
 		type FilterType = { section?: string, page?: number, categoryId?: number }
 		const filters: FilterType = params.section ? { section: params.section } : {};
 		if (params.page && params.page > 1) filters.page = params.page;
@@ -229,10 +236,15 @@ export const getAdvertsBySellerId = createAsyncThunk('advert/getListBySellerId',
 		try {
 			const response = await API.get(`/product/user/${params.userId}/ads`, {
 				params: { ...filters },  // , size: 5 - for testing navigation
+				signal: controllerSeller.signal,
 			});
+			controllerSeller = null;
 			return response.data;
 		} catch (error: any) {
-			return thunkAPI.rejectWithValue(error.message)
+			if (axios.isCancel(error)) {
+				return thunkAPI.rejectWithValue({ isCanceled: true });
+			}
+			return thunkAPI.rejectWithValue(error.message);
 		}
 	}
 )

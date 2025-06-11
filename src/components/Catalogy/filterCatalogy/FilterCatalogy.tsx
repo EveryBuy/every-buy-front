@@ -39,7 +39,13 @@ export function FilterCatalogy(props: ResetFiltersType) {
 	return (
 		<Grid2 container direction="row" spacing={2} sx={{ justifyContent: "center", alignItems: "flex-end", }}>
 			<PriceSlider />
+
 			<SortOrderSelection />
+			<ProductTyperSelection />
+
+			<RegionListSelect />
+			{regionId && <CityListSelect />}
+
 			<CategoriesSelect />
 			{
 				categoryId && categoryId > 0 && <TopSubCategoriesSelect />
@@ -47,9 +53,6 @@ export function FilterCatalogy(props: ResetFiltersType) {
 			{
 				topSubCategoryId && topSubCategoryId > 0 && <LowSubCategoriesSelect />
 			}
-			<ProductTyperSelection />
-			<RegionListSelect />
-			{regionId && <CityListSelect />}
 
 			<Grid2
 				size={{ xs: 12 }}
@@ -66,6 +69,13 @@ export function FilterCatalogy(props: ResetFiltersType) {
 		</Grid2>
 	);
 }
+
+// Сортувати за
+// Місцезнаходження
+// Стан
+// Категорія
+// Підкатегорія
+// Підкатегорія
 
 // Сортувати за
 // Категорія
