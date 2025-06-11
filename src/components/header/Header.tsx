@@ -7,6 +7,10 @@ import Image from "next/image";
 import { useAppSelector } from "@/redux/store";
 import { selectIsLoggedIn } from "@/redux/auth/selectors";
 import {
+  useGetBuyChatsQuery,
+  useGetSellChatsQuery,
+} from "@/redux/messages/chatApi";
+import {
   CommonIcon,
   CommonButton,
   DropdownMenu,
@@ -14,14 +18,12 @@ import {
 } from "@/components";
 import Logo from "@/assets/Svg/logo.svg";
 import styles from "./Header.module.scss";
-// import styles from "../../components/header/";
 
 const Header: FC = () => {
   const path = usePathname();
   const [isDropdownMenuVisible, setDropdownMenuVisible] = useState(false);
   const [successRegisterModalOpen, setSuccessRegisterModalOpen] =
     useState(false);
-
   const dropdownMenuRef = useRef<HTMLDivElement>(null);
   const dropdownMenuHandle = () => {
     setDropdownMenuVisible((prev) => !prev);
@@ -47,6 +49,36 @@ const Header: FC = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  // for tha chat mark refresh
+  const {
+    data: buyChats = [],
+    // isFetching: isBuyChatsFetching,
+    refetch: refetchBuyChats,
+  } = useGetBuyChatsQuery(undefined, {
+    skip: !isLoggedIn,
+  });
+
+  const {
+    data: sellChats = [],
+    // isFetching: isSellChatsFetching,
+    refetch: refetchSellChats,
+  } = useGetSellChatsQuery(undefined, {
+    skip: !isLoggedIn,
+  });
+  const isUnreadMessageInBuyChat = buyChats.some((chat) => {
+    return chat.unreadMessagesCount && chat.unreadMessagesCount !== 0;
+  });
+  const isUnreadMessageInSellChat = sellChats.some((chat) => {
+    return chat.unreadMessagesCount && chat.unreadMessagesCount !== 0;
+  });
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      refetchBuyChats();
+      refetchSellChats();
+    }
+  }, [isLoggedIn, refetchBuyChats, refetchSellChats]);
 
   return (
     <header className={styles.header}>
@@ -77,7 +109,10 @@ const Header: FC = () => {
             className={styles.headerButton}
           />
           <div className={styles.iconsWrapper}>
-            <div onClick={openWindowHandle}>
+            <div
+              onClick={openWindowHandle}
+              className={styles.iconMessageWrapper}
+            >
               <Link
                 href="/messages"
                 onClick={(e) => !isLoggedIn && e.preventDefault()}
@@ -85,6 +120,9 @@ const Header: FC = () => {
               >
                 <CommonIcon id="icon-chat" width="30" height="30" />
               </Link>
+              {isUnreadMessageInSellChat || isUnreadMessageInBuyChat ? (
+                <div className={styles.unreadMessageMark}></div>
+              ) : null}
             </div>
             <div onClick={openWindowHandle}>
               <Link

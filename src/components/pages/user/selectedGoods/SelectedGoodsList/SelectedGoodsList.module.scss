@@ -1,29 +1,29 @@
 .containerSelectedGoodsList {
-	width: 100%;
+  width: 100%;
 }
 
 .selectedGoodsList {
-	display: flex;
-	flex-wrap: wrap;
-	gap: max(8px, calc((100% - (163px * 3)) / 2));
-	row-gap: 12px;
-	justify-content: flex-start;
+  display: flex;
+  flex-wrap: wrap;
+  gap: max(8px, calc((100% - (163px * 3)) / 2));
+  row-gap: 12px;
+  justify-content: space-around;
 }
 
 @media only screen and (min-width: 768px) {
-	.selectedGoodsList {
-		gap: max(8px, calc((100% - (163px * 4)) / 3));
-		row-gap: 12px;
-		justify-content: stretch;
-	}
+  .selectedGoodsList {
+    gap: max(8px, calc((100% - (163px * 4)) / 3));
+    row-gap: 12px;
+    justify-content: flex-start;
+  }
 
-	.selectedGoodsList li {
-		flex: 0;
-	}
+  .selectedGoodsList li {
+    flex: 0;
+  }
 }
 
 @media only screen and (min-width: 1440px) {
-	.selectedGoodsList {
-		gap: max(8px, calc((100% - (163px * 5)) / 4));
-	}
+  .selectedGoodsList {
+    gap: max(8px, calc((100% - (163px * 5)) / 4));
+  }
 }

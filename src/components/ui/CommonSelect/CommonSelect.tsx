@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import {
   FormControl as MuiFormControl,
   InputLabel,
@@ -22,7 +23,9 @@ type CommonSelectProps = {
   };
   outlineColor?: string;
   value?: string;
-  onChange: (event: SelectChangeEvent<string>) => void;
+  onChange?: (event: SelectChangeEvent<string>) => void;
+  myLabel?: string;
+  setSelectedCategory?: (value: string) => void;
 };
 
 export const CommonSelect = ({
@@ -30,9 +33,23 @@ export const CommonSelect = ({
   options,
   size,
   outlineColor = `var(--input-text)`,
-  value = "",
+  value,
   onChange,
+  myLabel,
+  setSelectedCategory,
 }: CommonSelectProps) => {
+  const [firstValue, setFirstValue] = useState<string>("");
+  const handleChange = (event: SelectChangeEvent<string>) => {
+    setSelectedCategory && setSelectedCategory(event.target.value);
+    setFirstValue(event.target.value);
+  };
+
+  useEffect(() => {
+    if (options.length > 0 && !value) {
+      setFirstValue(options[0]);
+    }
+  }, [options, value]);
+
   const display = Object.entries(size).reduce((acc, [key, value]) => {
     acc[key] = value === "0" ? "none" : "flex";
     return acc;
@@ -76,14 +93,32 @@ export const CommonSelect = ({
   }));
 
   return (
-    <FormControl className={styles.customSelect}>
+    <FormControl className={styles.customSelect} sx={{ height: "auto" }}>
       <InputLabel id="select-label">{label}</InputLabel>
+      {myLabel && (
+        <MenuItem disabled value="">
+          {myLabel}
+        </MenuItem>
+      )}
       <Select
         labelId="select-label"
         id="demo-simple-select"
-        value={value}
-        label={label}
-        onChange={onChange}
+        value={myLabel ? firstValue : value}
+        label={myLabel ? null : label}
+        // onChange={onChange}
+        onChange={myLabel ? handleChange : onChange}
+        {...((myLabel && {
+          renderValue: (selected: string | unknown) => {
+            if (
+              !selected ||
+              (Array.isArray(selected) && selected.length === 0)
+            ) {
+              return <em>Placeholder</em>;
+            }
+
+            return selected as string;
+          },
+        }) as { renderValue: SelectProps<string>["renderValue"] })}
       >
         {options.map((elem) => (
           <MenuItem key={nanoid()} value={elem}>

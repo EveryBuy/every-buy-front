@@ -1,5 +1,6 @@
 export const validatePhone = (phone: string) => {
-  const phoneRegex = /^\+[0-9]{12}$/;
+  // const phoneRegex = /^\+[0-9]{12}$/;
+  const phoneRegex = /^[0-9]{9}$/;
   return phoneRegex.test(phone);
 };
 
@@ -21,5 +22,5 @@ export const validateInput = (input: string) => {
 
 export const validateName = (name: string) => {
   const nameRegex = /^[A-Za-zА-Яа-яЁёІіЇїЄєҐґ'’\-\s]{2,}$/u;
-  return nameRegex.test(name)
-}
+  return nameRegex.test(name);
+};
