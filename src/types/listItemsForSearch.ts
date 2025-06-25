@@ -11,6 +11,14 @@
 // 	[key: string]: any;
 // }
 
+export type ItemSearchType = {
+	categoryId: number;
+	categoryName: string;
+	count: number;
+	topCategoryId: number;
+	topCategoryName: string;
+}
+
 export type Advertisement = {
 	advertisementId: number,
 	title: string,

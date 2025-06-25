@@ -6,11 +6,11 @@
 	position: absolute;
 	left: 0;
 	top: calc(100% + 7px);
-	z-index: 5000;
+	z-index: 50;
 	background: var(--main-background, #F6F6F6);
 	// width: calc(100% - 61px);
-	width: 105vw;
-	margin-left: -28px;
+	width: 96vw;
+	margin-left: 0;
 	overflow: hidden;
 	padding: 19px 18px;
 	flex-direction: column;
@@ -21,7 +21,7 @@
 
 	@include media-min($breakpoint-mobile) {
 		width: calc(100% - 98px);
-		margin-left: 0;
+		// margin-left: 0;
 		border: 1px solid var(--label, #000);
 		border-radius: 10px;
 		max-height: 500px;
@@ -41,6 +41,13 @@
 	font-size: 20px;
 	font-weight: 600;
 	margin-bottom: 8px;
+}
+
+.titleCats {
+	margin-top: 10px;
+	margin-bottom: 8px;
+	font-weight: 600;
+	color: var(--input-text);
 }
 
 .searchSection {
@@ -68,6 +75,15 @@
 .searchLinkItem {
 	font-weight: 700;
 	margin-bottom: 4px;
+}
+
+.searchCount {
+	border: 1px solid var(--color-yellow);
+	margin-left: 8px;
+	border-radius: 50%;
+	background-color: var(--not-active);
+	padding: 0 5px;
+	font-size: 12px;
 }
 
 .searchItemCategory {
