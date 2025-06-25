@@ -5,12 +5,12 @@ import ItemType from "@/types/footerItemType";
 import Link from "next/link";
 
 const Item: FC<ItemType> = ({ id, text, link }) => {
-	return (
-		<Link href={link}>
-			<CommonIcon id={id} width="28" height="28" />
-			<span>{text}</span>
-		</Link>
-	);
+  return (
+    <Link href={link}>
+      <CommonIcon id={id} width="28" height="28" />
+      <span style={{ color: "#000" }}>{text}</span>
+    </Link>
+  );
 };
 
 export default Item;
