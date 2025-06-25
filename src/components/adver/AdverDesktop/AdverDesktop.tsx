@@ -43,14 +43,14 @@ const AdverDesktop = () => {
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
   console.log("isCategoryModalOpen", isCategoryModalOpen);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  console.log("selectedCategory", selectedCategory);
+
   const [isSubCategoryModalOpen, setIsSubCategoryModalOpen] = useState(false);
- 
+
   const [selectedSubCategory, setSelectedSubCategory] = useState<string | null>(
     null
   );
-   console.log("selectedSubCategory", selectedSubCategory);
-
+  console.log("selectedSubCategory", selectedSubCategory);
+  console.log("selectedCategory", selectedCategory);
 
   const AuthSchema = Yup.object().shape({
     product: Yup.string().required("Будь ласка, вкажіть назву товару"),
@@ -114,11 +114,12 @@ const AdverDesktop = () => {
         validationSchema={AuthSchema}
         onSubmit={handleSubmit}
       >
-        {({ handleBlur, touched, errors }) => (
-          <Form autoComplete="off" className={styles.styledForm}>
-            <div className={styles.wrapperInput}>
-              <section className={styles.formWrapper}>
-                <div>
+        {({ handleBlur, touched, errors, setFieldValue, values }) => (
+          <>
+            <Form autoComplete="off" className={styles.styledForm}>
+              <div className={styles.wrapperInput}>
+                <section className={styles.formWrapper}>
+                  {/* Назва товару */}
                   <div>
                     <label>
                       Назва товару
@@ -131,16 +132,14 @@ const AdverDesktop = () => {
                         onBlur={handleBlur}
                       />
                     </label>
+                    <ErrorMessage
+                      touched={touched.product}
+                      error={errors.product}
+                      successMessage="Успішно введено назву товару"
+                    />
                   </div>
 
-                  <ErrorMessage
-                    touched={touched.product}
-                    error={errors.product}
-                    successMessage="Успішно введено назву товару"
-                  />
-                </div>
-
-                <div>
+                  {/* Ціна */}
                   <div>
                     <label>
                       Ціна
@@ -156,15 +155,14 @@ const AdverDesktop = () => {
                         <p>Використовуйте лише цифри</p>
                       </div>
                     </label>
+                    <ErrorMessage
+                      touched={touched.price}
+                      error={errors.price}
+                      successMessage="Ціна успішно додана"
+                    />
                   </div>
-                  <ErrorMessage
-                    touched={touched.price}
-                    error={errors.price}
-                    successMessage="Ціна успішно додана"
-                  />
-                </div>
 
-                <div>
+                  {/* Опис */}
                   <div>
                     <label>
                       Опис товару
@@ -179,25 +177,24 @@ const AdverDesktop = () => {
                           e: React.ChangeEvent<HTMLTextAreaElement>
                         ) => {
                           setDescriptionLength(e.target.value.length);
-                          // setFieldValue("description", e.target.value);
+                          setFieldValue("description", e.target.value);
                         }}
                       />
                       <div className={styles.textareaText}>
-                        <p>Вкажіть щонайменьше 30 символів</p>
-                        <p>0/999</p>
+                        <p>Вкажіть щонайменше 30 символів</p>
+                        <p>{descriptionLength}/999</p>
                       </div>
                     </label>
+                    <ErrorMessage
+                      touched={touched.description}
+                      error={errors.description}
+                      successMessage="Опис товару успішно додано"
+                    />
                   </div>
-                  <ErrorMessage
-                    touched={touched.description}
-                    error={errors.description}
-                    successMessage="Опис товару успішно додано"
-                  />
-                </div>
-              </section>
+                </section>
 
-              <section className={styles.formWrapper}>
-                <div>
+                <section className={styles.formWrapper}>
+                  {/* Категорія */}
                   <div className={styles.fieldWrapper}>
                     <label>
                       Категорія
@@ -206,11 +203,10 @@ const AdverDesktop = () => {
                         className={styles.styledField}
                         type="text"
                         name="category"
-                        value={selectedCategory || ""}
+                        value={values.category}
                         readOnly
                         placeholder="зазначте категорію"
                         onBlur={handleBlur}
-                        // onClick={() => setIsCategoryModalOpen(true)}
                       />
                       <button
                         type="button"
@@ -226,15 +222,14 @@ const AdverDesktop = () => {
                         />
                       </button>
                     </label>
+                    <ErrorMessage
+                      touched={touched.category}
+                      error={errors.category}
+                      successMessage="Категорія успішно додана"
+                    />
                   </div>
-                  <ErrorMessage
-                    touched={touched.category}
-                    error={errors.category}
-                    successMessage="Категорія успішно додана"
-                  />
-                </div>
-                {/* added modals for selection subcategories*/}
-                <div>
+
+                  {/* Підкатегорія */}
                   <div className={styles.fieldWrapper}>
                     <label>
                       Підкатегорія
@@ -243,7 +238,8 @@ const AdverDesktop = () => {
                         className={styles.styledField}
                         type="text"
                         name="subcategory"
-                        value={selectedSubCategory || ""}
+                        value={values.subcategory}
+                        readOnly
                         placeholder="зазначте підкатегорію"
                         onBlur={handleBlur}
                       />
@@ -261,15 +257,14 @@ const AdverDesktop = () => {
                         />
                       </button>
                     </label>
+                    <ErrorMessage
+                      touched={touched.subcategory}
+                      error={errors.subcategory}
+                      successMessage="Підкатегорія успішно додана"
+                    />
                   </div>
-                  <ErrorMessage
-                    touched={touched.subcategory}
-                    error={errors.subcategory}
-                    successMessage="Підкатегорія успішно додана"
-                  />
-                </div>
 
-                <div>
+                  {/* Місцезнаходження */}
                   <div>
                     <label>
                       Місцезнаходження
@@ -282,126 +277,109 @@ const AdverDesktop = () => {
                         onBlur={handleBlur}
                       />
                     </label>
-                  </div>
-                  <ErrorMessage
-                    touched={touched.location}
-                    error={errors.location}
-                    successMessage="Місто успішно додано"
-                  />
-                </div>
-
-                <section className={styles.radioboxWrapper}>
-                  <div>
-                    <RadioButtonGroup
-                      name="condition"
-                      title="Стан товару"
-                      options={[
-                        { value: "New", label: "Нове" },
-                        { value: "Used", label: "Вживане" },
-                      ]}
-                      groupClass={styles.radioboxGroup}
-                      labelClass={`${styles.radioboxLabel} ${styles.check}`}
-                      inputClass={`${styles.visuallyHidden} ${styles.radioboxInput}`}
-                      radioBoxClass={styles.radioBox}
-                      radioUncheckedClass={styles.radioUnchecked}
-                      radioCheckedClass={styles.radioChecked}
-                      uncheckedIcon={radioboxIcon}
-                      checkedIcon={checkIcon}
-                    />
-
                     <ErrorMessage
-                      touched={touched.condition}
-                      error={errors.condition}
-                      successMessage="Стан товару успішно додано"
+                      touched={touched.location}
+                      error={errors.location}
+                      successMessage="Місто успішно додано"
                     />
                   </div>
 
-                  <div>
-                    <RadioButtonGroup
-                      name="delivery"
-                      title="Спосіб доставки"
-                      options={[
-                        { value: "New_mail", label: "Нова пошта" },
-                        { value: "Ukrposhta", label: "Укрпошта" },
-                        { value: "Meest_Express", label: "Meest Express" },
-                        { value: "Other", label: "Інше" },
-                      ]}
-                      groupClass={styles.radioboxGroup}
-                      labelClass={`${styles.radioboxLabel} ${styles.check}`}
-                      inputClass={`${styles.visuallyHidden} ${styles.radioboxInput}`}
-                      radioBoxClass={styles.radioBox}
-                      radioUncheckedClass={styles.radioUnchecked}
-                      radioCheckedClass={styles.radioChecked}
-                      uncheckedIcon={radioboxIcon}
-                      checkedIcon={checkIcon}
-                    />
-
-                    <ErrorMessage
-                      touched={touched.delivery}
-                      error={errors.delivery}
-                      successMessage="Спосіб доставки успішно додано"
-                    />
-                  </div>
+                  {/* Радіо кнопки */}
+                  <section className={styles.radioboxWrapper}>
+                    <div>
+                      <RadioButtonGroup
+                        name="condition"
+                        title="Стан товару"
+                        options={[
+                          { value: "New", label: "Нове" },
+                          { value: "Used", label: "Вживане" },
+                        ]}
+                        groupClass={styles.radioboxGroup}
+                        labelClass={`${styles.radioboxLabel} ${styles.check}`}
+                        inputClass={`${styles.visuallyHidden} ${styles.radioboxInput}`}
+                        radioBoxClass={styles.radioBox}
+                        radioUncheckedClass={styles.radioUnchecked}
+                        radioCheckedClass={styles.radioChecked}
+                        uncheckedIcon={radioboxIcon}
+                        checkedIcon={checkIcon}
+                      />
+                      <ErrorMessage
+                        touched={touched.condition}
+                        error={errors.condition}
+                        successMessage="Стан товару успішно додано"
+                      />
+                    </div>
+                    <div>
+                      <RadioButtonGroup
+                        name="delivery"
+                        title="Спосіб доставки"
+                        options={[
+                          { value: "New_mail", label: "Нова пошта" },
+                          { value: "Ukrposhta", label: "Укрпошта" },
+                          { value: "Meest_Express", label: "Meest Express" },
+                          { value: "Other", label: "Інше" },
+                        ]}
+                        groupClass={styles.radioboxGroup}
+                        labelClass={`${styles.radioboxLabel} ${styles.check}`}
+                        inputClass={`${styles.visuallyHidden} ${styles.radioboxInput}`}
+                        radioBoxClass={styles.radioBox}
+                        radioUncheckedClass={styles.radioUnchecked}
+                        radioCheckedClass={styles.radioChecked}
+                        uncheckedIcon={radioboxIcon}
+                        checkedIcon={checkIcon}
+                      />
+                      <ErrorMessage
+                        touched={touched.delivery}
+                        error={errors.delivery}
+                        successMessage="Спосіб доставки успішно додано"
+                      />
+                    </div>
+                  </section>
                 </section>
-              </section>
-            </div>
+              </div>
 
-            <AdverPhotoList images={images} setImages={setImages} />
+              <AdverPhotoList images={images} setImages={setImages} />
 
-            <div className={styles.buttonWrapper}>
-              <CommonButton
-                type="submit"
-                title="Попередній перегляд"
-                color="yellow"
-                className={styles.adverButton}
+              <div className={styles.buttonWrapper}>
+                <CommonButton
+                  type="submit"
+                  title="Попередній перегляд"
+                  color="yellow"
+                  className={styles.adverButton}
+                />
+                <CommonButton
+                  type="submit"
+                  title="Опублікувати"
+                  color="yellow"
+                  className={`${styles.adverButton} ${styles.adverButtonAd}`}
+                />
+              </div>
+            </Form>
+            {isCategoryModalOpen && (
+              <CategorySelectModal
+                open={isCategoryModalOpen}
+                onClose={() => setIsCategoryModalOpen(false)}
+                onSelect={(value) => {
+                  setSelectedCategory(value.nameUkr);
+                  setFieldValue("category", value.nameUkr);
+                }}
+                categories={[]}
               />
-
-              <CommonButton
-                type="submit"
-                title="Опублікувати"
-                color="yellow"
-                className={`${styles.adverButton} ${styles.adverButtonAd}`}
+            )}
+            {isSubCategoryModalOpen && (
+              <CategoryTreeModal
+                open={isSubCategoryModalOpen}
+                onClose={() => setIsSubCategoryModalOpen(false)}
+                onSelect={(value) => {
+                  const formatted = value.join(" / ");
+                  setSelectedSubCategory(formatted);
+                  setFieldValue("subcategory", formatted);
+                }}
               />
-            </div>
-          </Form>
+            )}
+          </>
         )}
       </Formik>
-      {/* select category */}
-      {isCategoryModalOpen && (
-        <CategorySelectModal
-          open={isCategoryModalOpen}
-          onClose={setIsCategoryModalOpen}
-          onSelect={(value) => {
-            setSelectedCategory(selectedCategory);
-            const input = document.querySelector<HTMLInputElement>(
-              'input[name="category"]'
-            );
-            // if (input) {
-            //   input.value = value;
-            //   input.dispatchEvent(new Event("input", { bubbles: true }));
-            // }
-          }}
-        />
-      )}
-      {isSubCategoryModalOpen && (
-        <CategoryTreeModal
-          open={isSubCategoryModalOpen}
-          onClose={() => setIsSubCategoryModalOpen(false)}
-          onSelect={(value) => {
-            const selected = value.join(" / ");
-            setSelectedSubCategory(selected);
-
-            const input = document.querySelector<HTMLInputElement>(
-              'input[name="subcategory"]'
-            );
-
-            if (input) {
-              input.value = selected;
-              input.dispatchEvent(new Event("input", { bubbles: true }));
-            }
-          }}
-        />
-      )}
     </div>
   );
 };

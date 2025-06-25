@@ -97,7 +97,7 @@ const AdverPhotoList: React.FC<AdverPhotoListProps> = ({
       <h3>Фото</h3>
       <p>
         Максимально допустимий розмір фотографії
-        <span>{MAX_FILE_SIZE_MB}мб</span>
+        <span>{" "} {MAX_FILE_SIZE_MB} мб</span>
       </p>
 
       <ul

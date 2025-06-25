@@ -1,17 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { CommonModal } from "@/components";
+import { CommonButton, CommonModal } from "@/components";
 import styles from "./CategorySelectModal.module.scss";
-import { CategoryCard } from "../CategoryCard/CategoryCard";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { selectCategories } from "@/redux/advertisement/selectors";
 import { Category } from "@/redux/advertisement/slice";
 import { getCategory } from "@/redux/advertisement/operations";
+import CardSelectCatalogy from "@/components/Catalogy/cardCatalogy/CardSelectCatalogy/CardSelectCatalogy";
 
 interface CategorySelectModalProps {
   open: boolean;
-  // categories: Category[];
+  categories: Category[];
   onClose: (value: boolean) => void;
   onSelect: (category: Category) => void;
 }
@@ -23,19 +23,12 @@ export const CategorySelectModal = ({
 }: CategorySelectModalProps) => {
   const [selected, setSelected] = useState<string | null>(null);
 
-  const [selectedCategory, setSelectedCategory] = useState("");
-    const dispatch = useAppDispatch();
-    const categories = useAppSelector(selectCategories);
-    const categoryNames: string[] = categories.map((elem: Category) => elem.nameUkr);
+  const dispatch = useAppDispatch();
+  const categories = useAppSelector(selectCategories);
 
-    const [category] = categories.filter(
-      (elem: Category) => elem.nameUkr === selectedCategory
-    );
-    const [section, setSection] = useState("SELL");
-  
-    useEffect(() => {
-      dispatch(getCategory());
-    }, [dispatch, section]);
+  useEffect(() => {
+    dispatch(getCategory());
+  }, [dispatch]);
 
   return (
     <CommonModal open={open} onClose={onClose}>
@@ -44,30 +37,35 @@ export const CategorySelectModal = ({
         <div className={styles.grid}>
           {categories.map((cat) => (
             <button
-              key={cat.categoryName}
-              // className={`${styles.card} ${
+              key={cat.id}
+              // className={`${styles.listItem} ${
               //   selected === cat.nameUkr ? styles.selected : ""
               // }`}
               onClick={() => setSelected(cat.nameUkr)}
               type="button"
             >
-              <CategoryCard imageSrc={cat.photoUrl} title={cat.nameUkr} />
+              <CardSelectCatalogy photoUrl={cat.photoUrl} title={cat.nameUkr} />
             </button>
           ))}
         </div>
-        <button
+        <CommonButton
+          type="submit"
+          title="Підтвердити"
+          color="yellow"
           className={styles.confirmButton}
           onClick={() => {
             if (selected) {
-              // onSelect(selected);
-              onClose(false);
+              const foundCategory = categories.find(
+                (cat) => cat.nameUkr === selected
+              );
+              if (foundCategory) {
+                onSelect(foundCategory);
+                onClose(false);
+              }
             }
           }}
           disabled={!selected}
-          type="button"
-        >
-          Підтвердити
-        </button>
+        />
       </div>
     </CommonModal>
   );

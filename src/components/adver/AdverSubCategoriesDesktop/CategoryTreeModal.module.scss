@@ -1,7 +1,7 @@
 .wrapper {
   padding: 20px;
   background-color: #fff;
-  max-width: 1000px;
+  // max-width: 1000px;
   width: 100%;
   margin: 0 auto;
   border-radius: 8px;
@@ -77,14 +77,22 @@
   }
 }
 .confirmButton {
-  background-color: #1976d2;
-  color: white;
-  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   padding: 10px 18px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
+  font-size: var(--f-size-h4);
+
+  border: 1px solid;
+  border-radius: 10px;
+
+  color: var(--label);
+
   transition: 0.2s;
+  margin-top: 20px;
+
+  line-height: 29px;
 }
 
 .confirmButton:disabled {

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { CommonModal } from "@/components";
+import { CommonButton, CommonModal } from "@/components";
 import styles from "./CategoryTreeModal.module.scss";
 
 type CategoryTree = {
@@ -137,7 +137,10 @@ export const CategoryTreeModal = ({
           {renderSecond()}
           {renderThird()}
         </div>
-        <button
+        <CommonButton
+          type="submit"
+          title="Підтвердити"
+          color="yellow"
           className={styles.confirmButton}
           onClick={() => {
             if (selected) {
@@ -148,10 +151,7 @@ export const CategoryTreeModal = ({
             }
           }}
           disabled={!selected}
-          type="button"
-        >
-          Підтвердити
-        </button>
+        />
       </div>
     </CommonModal>
   );
