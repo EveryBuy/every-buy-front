@@ -5,105 +5,73 @@ import { Item } from "@/components";
 import { usePathname } from "next/navigation";
 import styles from "../Footer.module.scss";
 
+interface FooterItemProps {
+  id: string;
+  alt: string;
+  text: string;
+  link: string;
+  isActive: boolean;
+}
+
+const FooterItem: FC<FooterItemProps> = ({ id, alt, text, link, isActive }) => (
+  <li className={isActive ? styles.showItemIcon : styles.hiddenItemIcon}>
+    <Item id={id} alt={alt} text={text} link={link} />
+  </li>
+);
+
+const FooterItems: FC<{ path: string }> = ({ path }) => (
+  <>
+    <FooterItem
+      id="icon-home-footer-mobile"
+      alt="House"
+      text="Головна"
+      link="/"
+      isActive={path === "/"}
+    />
+    <FooterItem
+      id="icon-heart-footer-mobile"
+      alt="SmallHeart"
+      text="Вибране"
+      link="/user/selected-goods"
+      isActive={path === "/user/selected-goods"}
+    />
+    <FooterItem
+      id={path === "#" ? "icon-create-plus-active" : "icon-create-plus-passive"}
+      alt="AddIcon"
+      text="Створити"
+      link="#"
+      isActive={path === "#"}
+    />
+    <FooterItem
+      id={path === "/messages" ? "icon-chat-active" : "icon-chat-passive"}
+      alt="Chat"
+      text="Чат"
+      link="/messages"
+      isActive={path === "/messages"}
+    />
+    <FooterItem
+      id={path === "/user" ? "icon-user-active" : "icon-user-passive"}
+      alt="SmallUser"
+      text="Профіль"
+      link="/user"
+      isActive={path === "/user"}
+    />
+  </>
+);
+
 const FooterMobile: FC = () => {
   const path = usePathname();
 
   return (
     <ul className={styles.footerContainerMobile}>
-      {path === "/" ? (
-        <li className={styles.showItemIcon}>
-          <Item id={"icon-home"} alt={"House"} text={"Головна"} link={"/"} />
-        </li>
-      ) : (
-        <li className={styles.hiddenItemIcon}>
-          <Item id={"icon-home"} alt={"House"} text={"Головна"} link={"/"} />
-        </li>
-      )}
-      {path === "/user/selected-goods" ? (
-        <li className={styles.showItemIcon}>
-          <Item
-            id={"icon-heart"}
-            alt={"SmallHeart"}
-            text={"Вибране"}
-            link={"/user/selected-goods"}
-          />
-        </li>
-      ) : (
-        <li className={styles.hiddenItemIcon}>
-          <Item
-            id={"icon-heart"}
-            alt={"SmallHeart"}
-            text={"Вибране"}
-            link={"/user/selected-goods"}
-          />
-        </li>
-      )}
-      {/* TODO: */}
-      {path === "#" ? (
-        <li className={styles.showItemIcon}>
-          <Item
-            id={"icon-create-plus-active"}
-            alt={"AddIcon"}
-            text={"Створити"}
-            // TODO:
-            link={"#"}
-          />
-        </li>
-      ) : (
-        <li className={styles.hiddenItemIcon}>
-          <Item
-            id={"icon-create-plus-passive"}
-            alt={"AddIcon"}
-            text={"Створити"}
-            // TODO:
-            link={"#"}
-          />
-        </li>
-      )}
-      {path === "/messages" ? (
-        <li className={styles.showItemIcon}>
-          <Item
-            id={"icon-chat-active"}
-            alt={"Chat"}
-            text={"Чат"}
-            link={"/messages"}
-          />
-        </li>
-      ) : (
-        <li className={styles.hiddenItemIcon}>
-          <Item
-            id={"icon-chat-passive"}
-            alt={"Chat"}
-            text={"Чат"}
-            link={"/messages"}
-          />
-        </li>
-      )}
-      {path === "/user" ? (
-        <li className={styles.showItemIcon}>
-          <Item
-            id={"icon-user-active"}
-            alt={"SmallUser"}
-            text={"Профіль"}
-            link={"/user"}
-          />
-        </li>
-      ) : (
-        <li className={styles.hiddenItemIcon}>
-          <Item
-            id={"icon-user-passive"}
-            alt={"SmallUser"}
-            text={"Профіль"}
-            link={"/user"}
-          />
-        </li>
-      )}
+      <FooterItems path={path} />
     </ul>
   );
 };
 
 export default FooterMobile;
 
+// ! prev.version
 // import React, { FC } from "react";
 // import { Item } from "@/components";
 // import { footerItems } from "../../../mock-data/footerItems";
