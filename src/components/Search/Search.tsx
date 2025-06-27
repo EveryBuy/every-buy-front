@@ -1,6 +1,7 @@
 "use client";
 
 import { FC, useState, useEffect } from "react";
+import React from "react";
 import { useSearchParams } from "next/navigation";
 import { usePathname } from "next/navigation";
 import { useAppDispatch } from "@/redux/store";
@@ -13,6 +14,7 @@ import SearchSuggest from "./SearchSuggest";
 
 type SearchProps = {
 	hideSuggest?: boolean;
+	style?: React.CSSProperties;
 };
 
 type FormEventType = React.FormEvent<HTMLFormElement>;
@@ -94,7 +96,7 @@ const Search: FC<SearchProps> = (props: SearchProps) => {
 
 	return (
 		<div className={styles.searchContainer}>
-			<form className={styles.searchForm}>
+			<form className={styles.searchForm} style={props.style}>
 				<div className={styles.searchInputWrapper}>
 					<input
 						className={styles.searchInput}

@@ -9,8 +9,8 @@
 	z-index: 50;
 	background: var(--main-background, #F6F6F6);
 	// width: calc(100% - 61px);
-	width: 96vw;
-	margin-left: 0;
+	width: calc(100% + 40px);
+	margin-left: -20px;
 	overflow: hidden;
 	padding: 19px 18px;
 	flex-direction: column;
@@ -21,7 +21,7 @@
 
 	@include media-min($breakpoint-mobile) {
 		width: calc(100% - 98px);
-		// margin-left: 0;
+		margin-left: 0;
 		border: 1px solid var(--label, #000);
 		border-radius: 10px;
 		max-height: 500px;
