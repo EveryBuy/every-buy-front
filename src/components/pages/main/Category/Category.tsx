@@ -14,7 +14,7 @@ const Category: React.FC = () => {
 	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
 	const [isListOpen, setListOpen] = useState(false);
-	const [section, setSection] = useState<string>(useAppSelector(state => state.filters.section));
+	const [section, setSection] = useState<"SELL" | "BUY">(useAppSelector(state => state.filters.section));
 
 	const makeLinkOpen = () => {
 		setListOpen((prev) => !prev);

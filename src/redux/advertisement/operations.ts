@@ -207,15 +207,49 @@ export const getUserInactiveAdverts = createAsyncThunk('advert/getUserInactive',
 	}
 );
 
+let controllerFilter: AbortController | null = null;
+
 export const getFilteredAdverts = createAsyncThunk('advert/getFiltered',
 	async (filters: {}, thunkAPI) => {
+		if (controllerFilter) {
+			controllerFilter.abort();
+		}
+		controllerFilter = new AbortController();
 		try {
 			const response = await API.get('/product/filter', {
 				params: { ...filters },
+				signal: controllerFilter.signal,
 			});
+			controllerFilter = null;
 			return response.data;
 		} catch (error: any) {
-			return thunkAPI.rejectWithValue(error.message)
+			if (axios.isCancel(error)) {
+				return thunkAPI.rejectWithValue({ isCanceled: true });
+			}
+			return thunkAPI.rejectWithValue(error.message);
+		}
+	}
+)
+
+let controllerSearch: AbortController | null = null;
+
+export const getSearchAdverts = createAsyncThunk('advert/getFiltered',
+	async (keyword: string, thunkAPI) => {
+		if (controllerSearch) {
+			controllerSearch.abort();
+		}
+		controllerSearch = new AbortController();
+		try {
+			const response = await API.get(`/product/category/search?keyword=${keyword}`, {
+				signal: controllerSearch.signal,
+			});
+			controllerSearch = null;
+			return response.data;
+		} catch (error: any) {
+			if (axios.isCancel(error)) {
+				return thunkAPI.rejectWithValue({ isCanceled: true });
+			}
+			return thunkAPI.rejectWithValue(error.message);
 		}
 	}
 )
