@@ -76,7 +76,8 @@ const MessagesBlock: FC<MessagesBlockType> = ({
           sx={{
             color: "#e5ff46",
             marginTop: "200px",
-            "@media screen and (min-width: 768px)": { marginTop: "50px" },
+            "@media screen and (min-width: 768px)": { marginTop: "100px" },
+            "@media screen and (min-width: 1024px)": { marginTop: "200px" },
           }}
         />
       </Box>
