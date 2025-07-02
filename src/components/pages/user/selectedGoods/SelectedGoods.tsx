@@ -11,52 +11,52 @@ import CommonSectionSelector from "@/components/ui/CommonSectionSelector/CommonS
 import { Category } from "@/redux/advertisement/slice";
 
 const widthSize = {
-  mobile: "100%",
-  tablet: "230px",
-  laptop: "280px",
+	mobile: "100%",
+	tablet: "230px",
+	laptop: "280px",
 };
 
 export const SelectedGoods: FC = () => {
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const dispatch = useAppDispatch();
-  const categories = useAppSelector(selectCategories);
-  const categoryNames: string[] = categories.map(
-    (elem: Category) => elem.nameUkr
-  );
-  categoryNames.unshift("Всі категорії");
-  const [category] = categories.filter(
-    (elem: Category) => elem.nameUkr === selectedCategory
-  );
-  const [section, setSection] = useState("SELL");
+	const [selectedCategory, setSelectedCategory] = useState("");
+	const dispatch = useAppDispatch();
+	const categories = useAppSelector(selectCategories);
+	const categoryNames: string[] = categories.map(
+		(elem: Category) => elem.nameUkr
+	);
+	categoryNames.unshift("Всі категорії");
+	const [category] = categories.filter(
+		(elem: Category) => elem.nameUkr === selectedCategory
+	);
+	const [section, setSection] = useState<"SELL" | "BUY">("SELL");
 
-  useEffect(() => {
-    dispatch(getCategory());
-  }, [dispatch, section]);
+	useEffect(() => {
+		dispatch(getCategory());
+	}, [dispatch, section]);
 
-  return (
-    <section className={styles.SelectedGoodsContainer}>
-      <h2 className={s.headline}>Мої обрані товари</h2>
-      <div className={styles.selectorBox}>
-        <CommonSelect
-          label=""
-          myLabel="Категорії"
-          options={categoryNames}
-          size={widthSize}
-          outlineColor="var(--button)"
-          value={selectedCategory}
-          onChange={(evt) => setSelectedCategory(evt.target.value)}
-          setSelectedCategory={setSelectedCategory}
-        />
-        <div style={{ paddingTop: "20px" }}>
-          <CommonSectionSelector section={section} setSection={setSection} />
-        </div>
-      </div>
-      <SelectedGoodsList
-        categoryFilter={category && category.id}
-        section={section}
-      />
-    </section>
-  );
+	return (
+		<section className={styles.SelectedGoodsContainer}>
+			<h2 className={s.headline}>Мої обрані товари</h2>
+			<div className={styles.selectorBox}>
+				<CommonSelect
+					label=""
+					myLabel="Категорії"
+					options={categoryNames}
+					size={widthSize}
+					outlineColor="var(--button)"
+					value={selectedCategory}
+					onChange={(evt) => setSelectedCategory(evt.target.value)}
+					setSelectedCategory={setSelectedCategory}
+				/>
+				<div style={{ paddingTop: "20px" }}>
+					<CommonSectionSelector section={section} setSection={setSection} />
+				</div>
+			</div>
+			<SelectedGoodsList
+				categoryFilter={category && category.id}
+				section={section}
+			/>
+		</section>
+	);
 };
 
 export default SelectedGoods;
