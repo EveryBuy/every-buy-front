@@ -14,7 +14,7 @@ export { default as DropdownMenu } from "./header/DropdownMenu";
 export { default as Footer } from "../components/footer/Footer";
 export { default as Item } from "./footer/Item/Item";
 export { default as FooterMobile } from "./footer/FooterMobile/FooterMobile";
-export { default as Search } from "./Catalogy/Search/Search";
+export { default as Search } from "./Search/Search";
 
 // Main page
 export { default as SliderContainer } from "./pages/main/Slider/SliderContainer/SliderContainer";
