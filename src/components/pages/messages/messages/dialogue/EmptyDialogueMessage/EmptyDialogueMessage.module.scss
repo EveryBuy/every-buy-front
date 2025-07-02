@@ -3,7 +3,7 @@
 
 .noticeWrapper {
   display: none;
-  @include media-min($breakpoint-tablet) {
+  @include media-min($breakpoint-laptop) {
     width: 263px;
     height: 263px;
     padding: 32px 10px;

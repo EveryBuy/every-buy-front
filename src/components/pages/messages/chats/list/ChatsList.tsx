@@ -55,9 +55,7 @@ const ChatsList: FC<ChatsListType> = ({
         <Box
           className={style.listWrapper}
           sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
+            paddingTop: "200px",
           }}
         >
           <CommonPreloader sx={{ color: "#e5ff46" }} />

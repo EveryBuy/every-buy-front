@@ -12,7 +12,7 @@ type MessageType = {
   fileUrl?: string;
   userId: number;
   userPhotoUrl: string | null;
-  read: boolean;
+  read?: boolean;
 };
 
 export { ChatsType, UserDataType, MessageType };
