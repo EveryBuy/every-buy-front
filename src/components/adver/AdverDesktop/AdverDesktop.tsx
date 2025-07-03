@@ -29,15 +29,18 @@ const AdverDesktop = () => {
   //   useFormikContext<any>();
 
   const initialValues: FormValues = {
-    product: "",
+    topSubCategoryId: null,
+    lowSubCategoryId: null,
+    categoryId: null,
+    section: "",
+    cityId: null,
+    productType: "",
     price: "",
+    title: "",
     description: "",
-    category: "",
-    subcategory: "",
-    location: "",
-    condition: "",
-    delivery: "",
+    deliveryMethods: [],
   };
+
   const [descriptionLength, setDescriptionLength] = useState(0);
 
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
@@ -77,6 +80,7 @@ const AdverDesktop = () => {
     actions: FormikHelpers<FormValues>
   ) => {
     const formData = new FormData();
+
     Object.entries(values).forEach(([key, value]) => {
       formData.append(key, value);
     });
@@ -84,10 +88,13 @@ const AdverDesktop = () => {
     images.forEach((image, index) => {
       formData.append(`photos[${index}]`, image.file);
     });
+    console.log(values);
 
-    // console.log("formData", formData);
-    // console.log("Дані форми:", values);
-    // console.log("Додані зображення:", images);
+    // запит
+    await fetch("/api/adver", {
+      method: "POST",
+      body: formData,
+    });
 
     actions.resetForm();
     setImages([]);
@@ -375,6 +382,7 @@ const AdverDesktop = () => {
                   setSelectedSubCategory(formatted);
                   setFieldValue("subcategory", formatted);
                 }}
+                subCategories={[]}
               />
             )}
           </>

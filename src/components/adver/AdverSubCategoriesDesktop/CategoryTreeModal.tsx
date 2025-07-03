@@ -1,47 +1,24 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CommonButton, CommonModal } from "@/components";
 import styles from "./CategoryTreeModal.module.scss";
-
-type CategoryTree = {
-  [key: string]: {
-    [key: string]: string[];
-  };
-};
-
-const categoryTree: CategoryTree = {
-  "Мода та стиль": {
-    "Жіночий одяг": [
-      "Боді",
-      "Майки та футболки",
-      "Блузи і сорочки",
-      "Светри, кардигани",
-      "Плаття",
-      "Спідниці",
-      "Верхній одяг",
-      "Джинси",
-      "Шорти",
-      "Брюки",
-      "Комбінезони",
-      "Жіночі піджаки",
-      "Домашній одяг",
-      "Спортивний одяг",
-      "Інший жіночий одяг",
-    ],
-    "Чоловічий одяг": [],
-    "Жіноче взуття": [],
-    "Чоловіче взуття": [],
-    Аксесуари: [],
-    "Краса та здоровʼя": [],
-  },
-  Електроніка: {},
-  "Дім та сад": {},
-  "Дитячий світ": {}
-};
+import { SubCategory } from "@/redux/advertisement/slice";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+import {
+  getCategory,
+  getTopSubCategory,
+  getLowSubCategory,
+} from "@/redux/advertisement/operations";
+import {
+  selectCategories,
+  selectTopSubCategories,
+  selectLowSubCategories,
+} from "@/redux/advertisement/selectors";
 
 interface CategoryTreeModalProps {
   open: boolean;
+  subCategories: SubCategory[];
   onClose: () => void;
   onSelect: (value: string[]) => void;
 }
@@ -51,106 +28,136 @@ export const CategoryTreeModal = ({
   onClose,
   onSelect,
 }: CategoryTreeModalProps) => {
-  const [level1, setLevel1] = useState<string | null>(null);
-  const [level2, setLevel2] = useState<string | null>(null);
-  const [selected, setSelected] = useState<string[] | null>(null);
+  const dispatch = useAppDispatch();
+
+  const categories = useAppSelector(selectCategories);
+  const topSubCategories = useAppSelector(selectTopSubCategories);
+  const lowSubCategories = useAppSelector(selectLowSubCategories);
+
+  const [selectedCategory, setSelectedCategory] = useState<{
+    id: number;
+    name: string;
+  } | null>(null);
+
+  const [selectedTopSubCategory, setSelectedTopSubCategory] = useState<{
+    id: number;
+    name: string;
+  } | null>(null);
+
+  const [selectedLowSubCategory, setSelectedLowSubCategory] = useState<string | null>(null);
+
+  const [finalSelection, setFinalSelection] = useState<string[] | null>(null);
+
+  useEffect(() => {
+    dispatch(getCategory());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (selectedCategory) {
+      dispatch(getTopSubCategory(selectedCategory.id));
+    }
+  }, [selectedCategory, dispatch]);
+
+  useEffect(() => {
+    if (selectedTopSubCategory) {
+      dispatch(getLowSubCategory(selectedTopSubCategory.id));
+    }
+  }, [selectedTopSubCategory, dispatch]);
 
   const handleReset = () => {
-    setLevel1(null);
-    setLevel2(null);
+    setSelectedCategory(null);
+    setSelectedTopSubCategory(null);
+    setSelectedLowSubCategory(null);
+    setFinalSelection(null);
   };
 
-  const handleSelect = (subcategory: string) => {
-    setSelected([level1!, level2!, subcategory]);
-  };
-
-  const renderMain = () => (
-    <div className={styles.column}>
-      {Object.keys(categoryTree).map((cat) => (
-        <button
-          key={cat}
-          onClick={() => setLevel1(cat)}
-          className={`${styles.item} ${
-            level1 === cat ? styles.itemActive : ""
-          } ${
-            Object.keys(categoryTree[cat]).length > 0
-              ? styles.itemWithArrow
-              : ""
-          }`}
-        >
-          {cat}
-        </button>
-      ))}
-    </div>
-  );
-
-  const renderSecond = () => {
-    if (!level1) return null;
-    const sub = categoryTree[level1];
-    return (
-      <div className={styles.column}>
-        {Object.keys(sub).map((subcat) => (
-          <button
-            key={subcat}
-            onClick={() => setLevel2(subcat)}
-            className={`${styles.item} ${
-              level2 === subcat ? styles.itemActive : ""
-            } ${
-              categoryTree[level1][subcat].length > 0
-                ? styles.itemWithArrow
-                : ""
-            }`}
-          >
-            {subcat}
-          </button>
-        ))}
-      </div>
-    );
-  };
-
-  const renderThird = () => {
-    if (!level1 || !level2) return null;
-    const sub = categoryTree[level1][level2];
-    return (
-      <div className={styles.column}>
-        {sub.map((last) => (
-          <button
-            key={last}
-            onClick={() => handleSelect(last)}
-            className={styles.item}
-          >
-            {last}
-          </button>
-        ))}
-      </div>
-    );
+  const handleConfirm = () => {
+    if (selectedCategory && selectedTopSubCategory && selectedLowSubCategory) {
+      const selection = [
+        selectedCategory.name,
+        selectedTopSubCategory.name,
+        selectedLowSubCategory,
+      ];
+      setFinalSelection(selection);
+      onSelect(selection);
+      onClose();
+      handleReset();
+    }
   };
 
   return (
     <CommonModal open={open} onClose={onClose}>
-      <div className={styles.wrapper}>
-        <div className={styles.header}>
-          <h3 className={styles.title}>Оберіть категорію</h3>
-        </div>
+      <div>
         <div className={styles.columns}>
-          {renderMain()}
-          {renderSecond()}
-          {renderThird()}
+          {/* Головні категорії */}
+          <div className={styles.column}>
+            {categories.map((cat) => (
+              <button
+                key={cat.id}
+                className={`${styles.item} ${
+                  selectedCategory?.id === cat.id ? styles.itemActive : ""
+                } ${styles.itemWithArrow}`}
+                onClick={() => {
+                  setSelectedCategory({ id: cat.id, name: cat.nameUkr });
+                  setSelectedTopSubCategory(null);
+                  setSelectedLowSubCategory(null);
+                }}
+              >
+                {cat.nameUkr}
+              </button>
+            ))}
+          </div>
+
+          {/* Топ-підкатегорії */}
+          {selectedCategory && (
+            <div className={styles.column}>
+              {topSubCategories.map((top) => (
+                <button
+                  key={top.id}
+                  className={`${styles.item} ${
+                    selectedTopSubCategory?.id === top.id ? styles.itemActive : ""
+                  } ${styles.itemWithArrow}`}
+                  onClick={() => {
+                    setSelectedTopSubCategory({
+                      id: top.id,
+                      name: top.subCategoryNameUkr,
+                    });
+                    setSelectedLowSubCategory(null);
+                  }}
+                >
+                  {top.subCategoryNameUkr}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {/* Низькорівневі підкатегорії */}
+          {selectedTopSubCategory && (
+            <div className={styles.column}>
+              {lowSubCategories.map((low) => (
+                <button
+                  key={low.id}
+                  className={`${styles.item} ${
+                    selectedLowSubCategory === low.subCategoryNameUkr
+                      ? styles.itemActive
+                      : ""
+                  }`}
+                  onClick={() => setSelectedLowSubCategory(low.subCategoryNameUkr)}
+                >
+                  {low.subCategoryNameUkr}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
+
         <CommonButton
           type="submit"
           title="Підтвердити"
           color="yellow"
           className={styles.confirmButton}
-          onClick={() => {
-            if (selected) {
-              onSelect(selected);
-              onClose();
-              handleReset();
-              setSelected(null);
-            }
-          }}
-          disabled={!selected}
+          onClick={handleConfirm}
+          disabled={!selectedCategory || !selectedTopSubCategory || !selectedLowSubCategory}
         />
       </div>
     </CommonModal>
