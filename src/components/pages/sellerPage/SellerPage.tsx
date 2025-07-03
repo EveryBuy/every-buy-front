@@ -29,7 +29,7 @@ export default function SellerPage() {
 
 	const [isFetching, setIsFetching] = useState<boolean>(true);
 	const initialSection = useAppSelector((state) => state.filters.section);
-	const [section, setSection] = useState<string>(initialSection);
+	const [section, setSection] = useState<"SELL" | "BUY">(initialSection);
 	const selectCategoryId = useAppSelector((state) => state.filters.categoryId) || 0;
 	const [page, setPage] = useState<number>(1);
 

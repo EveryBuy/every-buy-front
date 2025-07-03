@@ -216,7 +216,7 @@ export const getFilteredAdverts = createAsyncThunk('advert/getFiltered',
 		}
 		controllerFilter = new AbortController();
 		try {
-			const response = await API.get('/product/filter', {
+			const response = await API.get('/product/search', {
 				params: { ...filters },
 				signal: controllerFilter.signal,
 			});
