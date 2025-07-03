@@ -12,6 +12,9 @@
 
   &:hover {
     border-top-right-radius: 0;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.25);
+
 
     &:before {
       top: 0;
@@ -20,7 +23,16 @@
       height: 0;
     }
   }
+  &.selected {
+    border-top-right-radius: 0;
 
+    &:before {
+      top: 0;
+      right: 0;
+      width: 0;
+      height: 0;
+    }
+  }
   &:before {
     content: "";
     position: absolute;

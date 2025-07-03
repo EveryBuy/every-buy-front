@@ -1,14 +1,19 @@
+import { useState } from "react";
 import styles from "./CardSelectCatalogy.module.scss";
 import Image from "next/image";
 
-interface CardSelectCatalogyProps {
+type CardSelectCatalogyProps = {
   photoUrl: string;
   title: string;
-}
+  selected?: boolean;
+  onClick?: () => void;
+};
 
-const CardSelectCatalogy = ({ photoUrl, title }: CardSelectCatalogyProps) => {
+
+const CardSelectCatalogy = ({ photoUrl, title, selected }: CardSelectCatalogyProps) => {
   return (
-    <div className={styles.listItem}>
+    <div
+      className={`${styles.listItem} ${selected ? styles.selected : ""}`}>
       <Image
         className={styles.listItemImage}
         src={photoUrl}

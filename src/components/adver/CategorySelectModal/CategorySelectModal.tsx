@@ -33,18 +33,17 @@ export const CategorySelectModal = ({
   return (
     <CommonModal open={open} onClose={onClose}>
       <div className={styles.wrapper}>
-        <h3 className={styles.title}>Оберіть категорію</h3>
         <div className={styles.grid}>
           {categories.map((cat) => (
             <button
               key={cat.id}
-              // className={`${styles.listItem} ${
-              //   selected === cat.nameUkr ? styles.selected : ""
-              // }`}
+              className={`${styles.listItem} ${
+                selected === cat.nameUkr ? styles.selected : ""
+              }`}
               onClick={() => setSelected(cat.nameUkr)}
               type="button"
             >
-              <CardSelectCatalogy photoUrl={cat.photoUrl} title={cat.nameUkr} />
+              <CardSelectCatalogy photoUrl={cat.photoUrl} title={cat.nameUkr} selected={selected === cat.nameUkr}/>
             </button>
           ))}
         </div>
