@@ -27,9 +27,10 @@ const CommonInput: FC<CommonInputProps> = ({
   required,
   children,
   errorsMessage,
+  className,
 }) => {
   return (
-    <div className={styles.inputContainer}>
+    <div className={`${styles.inputContainer} ${className}`}>
       {text && (
         <label
           className={required ? styles.inputTitle : ""}
