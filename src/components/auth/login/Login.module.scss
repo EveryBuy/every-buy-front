@@ -17,8 +17,7 @@
 
 .button {
   position: absolute;
-  top: 36%;
-  // top: 50%;
+  top: 30%;
   right: 15px;
 }
 
@@ -56,4 +55,9 @@
   position: absolute;
   top: 36%;
   right: 15px;
+}
+
+.passwordInput {
+  width: 100%;
+  height: 126px;
 }
