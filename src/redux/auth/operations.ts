@@ -1,4 +1,4 @@
-import { RootState } from "../store";
+
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { clearHeaderAuthToken } from "@/utils/axios";
 import { setHeaderAuthToken } from "@/utils/axios";
@@ -12,6 +12,7 @@ import {
   ChangeEmailData,
 } from "@/types/stateTypes";
 import { API } from "@/utils/axios";
+import { persistor, RootState } from "../store";
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -19,11 +20,19 @@ export const register = createAsyncThunk(
   "auth/register",
   async (userRegisterData: UserRegData, thunkAPI) => {
     try {
-      const response = await API.post("/auth/registration", userRegisterData);
-      setHeaderAuthToken(response.data.data.token);
-      await delay(4000);
+      const { data } = await API.post("/auth/registration", userRegisterData);
+      const token = data.data.token;
+
+      setHeaderAuthToken(token);
+
+      await delay(1000);
+
       const userData = await API.get("/user");
-      return { data: userData.data.data, token: response.data.data.token };
+
+      return { 
+        token, 
+        data: userData.data.data};
+        
     } catch (error: any) {
       console.log("Login error:", error);
       return thunkAPI.rejectWithValue({
@@ -38,11 +47,21 @@ export const login = createAsyncThunk(
   "auth/login",
   async (userLogData: UserLogData, thunkAPI) => {
     try {
+      //1. get token 
       const { data } = await API.post("/auth/auth", userLogData);
-      setHeaderAuthToken(data.data.token);
-      return data.data;
-      // const userData = await API.get("/user");
-      // return { data: userData.data.data, token: data.data.token };
+      const token = data.data.token;
+      //2. sav token in header
+      setHeaderAuthToken(token);
+      //3. wait for backend to be ready
+      await delay(1000);
+      //4. get userData
+      const userData = await API.get("/user");
+      //5. return token with user
+      return {
+        token,
+        data: userData.data.data
+      };
+      
     } catch (error: any) {
       console.log("Login error:", error);
       return thunkAPI.rejectWithValue({
@@ -56,6 +75,7 @@ export const login = createAsyncThunk(
 export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
   try {
     clearHeaderAuthToken();
+    persistor.purge();
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
   }

@@ -13,7 +13,7 @@ import {
   addAdvertToFavourite,
   removeAdvertFromFavourite,
 } from "@/redux/advertisement/operations";
-import { selectIsLoggedIn } from "@/redux/auth/selectors";
+import { selectIsLoggedIn } from "@/redux/auth/selectorsAuth";
 import { GetPhoneUser } from "@/api/getPhoneUser";
 
 interface ContactsProps {

@@ -1,3 +1,5 @@
+"use client";
+
 import { ReactNode } from "react";
 import { Header, Footer } from "../components";
 // import { AuthProvider } from "@/context/AuthContextType";
@@ -11,18 +13,19 @@ import theme from "../styles/mui/theme";
 import Message from "@/components/ui/Message/Message";
 import "./globals.scss";
 import AuthUpdater from "./(client)/(auth)/authUpdater";
+import { useAppSelector } from "@/redux/store";
+import { selectRehydrated } from "@/redux/auth/selectorsAuth";
+import RehydrationGate from "@/components/auth/RehydrationGate/RehydrationGate";
 
-export default async function ClientLayout({
-  children,
-}: {
-  children: ReactNode;
-}) {
+export default function ClientLayout({ children }: { children: ReactNode }) {
+
   return (
     <html lang="uk">
       {/* <body className={myFont.className}> */}
       <body>
         <AppRouterCacheProvider>
           <Providers>
+            <RehydrationGate>
             <AuthUpdater>
               <ThemeProvider theme={theme}>
                 {/* <AuthProvider> */}
@@ -33,6 +36,7 @@ export default async function ClientLayout({
                 {/* </AuthProvider> */}
               </ThemeProvider>
             </AuthUpdater>
+            </RehydrationGate>
           </Providers>
         </AppRouterCacheProvider>
       </body>
