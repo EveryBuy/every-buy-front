@@ -52,11 +52,10 @@ export const login = createAsyncThunk(
       const token = data.data.token;
       //2. sav token in header
       setHeaderAuthToken(token);
-      //3. wait for backend to be ready
-      await delay(1000);
-      //4. get userData
+
+      //3. get userData
       const userData = await API.get("/user");
-      //5. return token with user
+      //4. return token with user
       return {
         token,
         data: userData.data.data
