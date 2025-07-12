@@ -1,6 +1,6 @@
 import axios from "axios";
 import setAuthToken from "@/utils/setAuthToken";
-import { API } from "@/utils/axios";
+import { BASE_URL } from "@/utils/axios";
 
 type PhoneUserType = {
 	data: {
@@ -34,7 +34,7 @@ export const GetPhoneUser = async (userId: number): Promise<PhoneUserType | unde
 
   try {
     const response = await axios.get(
-      `${API}/auth/get-phone?userId=${userId}`
+      `${BASE_URL}/auth/get-phone?userId=${userId}`
     );
     return response.data;
   } catch (error: any) {

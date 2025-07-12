@@ -7,9 +7,9 @@ axiosRetry(axios, {
   retryDelay: (retryCount) => retryCount * 1000,
   retryCondition: (error) => error.response?.status === 500,
 });
-
+export const BASE_URL = "https://api-everybuy.onrender.com";
 export const API = axios.create({
-  baseURL: "https://api-everybuy.onrender.com",
+  baseURL: BASE_URL,
 });
 
 export const setHeaderAuthToken = (token: string | null) => {
