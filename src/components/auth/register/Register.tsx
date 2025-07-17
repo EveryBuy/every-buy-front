@@ -72,7 +72,10 @@ const Register: React.FC = () => {
     );
   };
   if (!isRehydrated) {
-    return null;
+    return 
+    (
+      <>Йде завантаження.....</>
+    );
   }
   const handlePhone = (evt: React.ChangeEvent<HTMLInputElement>) => {
     // TODO:

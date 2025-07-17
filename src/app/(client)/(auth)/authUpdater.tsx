@@ -14,7 +14,6 @@ export type RootState = ReturnType<AppStore["getState"]>;
 export const AuthUpdater = ({ children }: Props) => {
   const dispatch = useAppDispatch();
   const isLogin = useAppSelector(selectIsLoggedIn);
-  const isRehydrated = useAppSelector(selectRehydrated);
   const path = usePathname();
   const router = useRouter();
 
@@ -29,16 +28,17 @@ export const AuthUpdater = ({ children }: Props) => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (!isRehydrated) return;
-
     if (isLogin) {
       dispatch(refreshUser());
-    } else if (!isLogin && path.startsWith("/user")) {
-      router.push("/login");
     }
-  }, [dispatch, isLogin, isRehydrated, path, router]);
+  }, [dispatch, isLogin]);
 
-  if (!isRehydrated) return null;
+  useEffect(() => {
+    if (!isLogin && path.startsWith("/user")) {
+      router.replace("/login");
+    }
+  }, [isLogin, path, router]);
+
 
   return <>{children}</>;
 };
