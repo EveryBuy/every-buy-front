@@ -58,20 +58,25 @@ export default function Contacts({
       openWindowHandle();
     } else {
       try {
-        if (advertisementId) {
-          const response = await createChat({
-            advId: advertisementId,
-          }).unwrap();
-          console.log(response);
-
-          const newChatId = response?.id;
+        const response = await createChat({ advId: advertisementId }).unwrap();
+        const newChatId = response?.id;
+        if (newChatId) {
+          setChatId(newChatId);
+          dispatch(setNewChatId(newChatId));
+        }
+      } catch (error: any) {
+        if (error.status === 409) {
+          const msg = error.data?.messageErrorResponse?.message;
+          const startIndex = msg?.lastIndexOf("id");
+          const extractedId = msg?.slice(startIndex).slice(3);
+          const newChatId = Number(extractedId);
           if (newChatId) {
             setChatId(newChatId);
             dispatch(setNewChatId(newChatId));
           }
+        } else {
+          console.error("Інша помилка:", error);
         }
-      } catch (error) {
-        console.error(error);
       }
     }
   };
@@ -101,10 +106,8 @@ export default function Contacts({
     if (!isLoggedIn) {
       openWindowHandle();
     } else {
-      // console.log(userId);
       if (userId) {
         GetPhoneUser(userId).then((result) => {
-          // console.log(result);
           if (result) {
             setPhoneNumber(result.data.phone);
           }

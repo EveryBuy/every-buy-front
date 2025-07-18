@@ -16,6 +16,8 @@ type CompanionBlockType = {
   isArchived: boolean;
   setArchived: (isArchived: boolean) => void;
   chatData: any;
+  isCompanionBlocked: boolean | null;
+  isUserBlockedByCompanion: boolean | null;
 };
 
 const Companion: FC<CompanionBlockType> = ({
@@ -28,6 +30,8 @@ const Companion: FC<CompanionBlockType> = ({
   isArchived,
   setArchived,
   chatData,
+  isCompanionBlocked,
+  isUserBlockedByCompanion,
 }) => {
   const [isMenuVisible, setMenuVisible] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -89,7 +93,15 @@ const Companion: FC<CompanionBlockType> = ({
       >
         {picture}
         <Box className={style.companionInfo}>
-          <p className={style.name}>{name}</p>
+          <p
+            className={`${style.name} ${
+              isCompanionBlocked || isUserBlockedByCompanion
+                ? style.blocked
+                : ""
+            }`}
+          >
+            {name}
+          </p>
           <p className={style.time}>Як нам дізнатися час?</p>
         </Box>
       </Box>

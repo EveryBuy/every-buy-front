@@ -56,6 +56,32 @@
   }
 }
 
+// .triangleWrapper {
+//   width: 24px;
+//   height: 24px;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+// }
+
+.triangle {
+  position: absolute;
+  left: 25px;
+  bottom: 4px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 15px solid red;
+  @include media-min($breakpoint-laptop-large) {
+    left: 50px;
+    bottom: 5px;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-bottom: 25px solid red;
+  }
+}
+
 .number {
   width: 15px;
   height: 20px;

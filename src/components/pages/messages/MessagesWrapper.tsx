@@ -23,6 +23,12 @@ const MessagesWrapper: FC = () => {
   const [isArchived, setArchived] = useState(false);
   const newChatId = useSelector((state: RootState) => state.messages.chatId);
   const activeChatId = selectedChatId ?? newChatId;
+  const isCompanionBlocked = useSelector((state: RootState) =>
+    state.messages?.chat ? state.messages.chat.anotherUserBlocked : null
+  );
+  const isUserBlockedByCompanion = useSelector((state: RootState) =>
+    state.messages?.chat ? state.messages.chat.currentlyUserBlocked : null
+  );
 
   useGetMessagesByChatIdQuery(activeChatId as number, {
     skip: !activeChatId,
@@ -56,6 +62,8 @@ const MessagesWrapper: FC = () => {
           setHeartSelected={setHeartSelected}
           isArchived={isArchived}
           setArchived={setArchived}
+          isCompanionBlocked={isCompanionBlocked}
+          isUserBlockedByCompanion={isUserBlockedByCompanion}
         />
         {isComplaintWindowVisible && (
           <ComplaintWindow

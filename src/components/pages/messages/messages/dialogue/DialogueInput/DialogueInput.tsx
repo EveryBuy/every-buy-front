@@ -25,12 +25,16 @@ type DialogueInputProps = {
     userPhotoUrl: string | null
   ) => void;
   chatId: number | null;
+  isCompanionBlocked: boolean | null;
+  isUserBlockedByCompanion: boolean | null;
 };
 
 const DialogueInput: FC<DialogueInputProps> = ({
   onSendMessage,
   onSendFile,
   chatId,
+  isCompanionBlocked,
+  isUserBlockedByCompanion,
 }) => {
   const [message, setMessage] = useState<string>("");
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -39,15 +43,15 @@ const DialogueInput: FC<DialogueInputProps> = ({
   const [unblockUser] = useUnblockUserMutation();
 
   // blocking user's chat
-  const isCompanionBlocked = useSelector((state: RootState) =>
-    state.messages?.chat ? state.messages.chat.anotherUserBlocked : null
-  );
-  const isUserBlockedByCompanion = useSelector((state: RootState) =>
-    state.messages?.chat ? state.messages.chat.currentlyUserBlocked : null
-  );
-  const response = useSelector((state: RootState) =>
-    state.messages?.chat ? state.messages.chat : null
-  );
+  // const isCompanionBlocked = useSelector((state: RootState) =>
+  //   state.messages?.chat ? state.messages.chat.anotherUserBlocked : null
+  // );
+  // const isUserBlockedByCompanion = useSelector((state: RootState) =>
+  //   state.messages?.chat ? state.messages.chat.currentlyUserBlocked : null
+  // );
+  // const response = useSelector((state: RootState) =>
+  //   state.messages?.chat ? state.messages.chat : null
+  // );
 
   const companionId = useSelector((state: RootState) =>
     state.messages?.chat ? state.messages.chat.userData?.userId : null

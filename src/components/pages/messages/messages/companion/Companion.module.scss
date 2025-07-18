@@ -75,6 +75,10 @@
   }
 }
 
+.blocked {
+  color: var(--errorMessagesMessage);
+}
+
 .time {
   display: flex;
   align-items: center;
