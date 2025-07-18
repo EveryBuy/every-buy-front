@@ -18,9 +18,15 @@ import style from "./Dialogue.module.scss";
 
 type DialogueType = {
   chatId: number | null;
+  isCompanionBlocked: boolean | null;
+  isUserBlockedByCompanion: boolean | null;
 };
 
-const Dialogue: FC<DialogueType> = ({ chatId }) => {
+const Dialogue: FC<DialogueType> = ({
+  chatId,
+  isCompanionBlocked,
+  isUserBlockedByCompanion,
+}) => {
   const [displayedMessages, setDisplayedMessages] = useState<MessageType[]>([]);
 
   const {
@@ -121,6 +127,8 @@ const Dialogue: FC<DialogueType> = ({ chatId }) => {
         onSendMessage={handleSendMessage}
         onSendFile={handleSendFile}
         chatId={chatId}
+        isCompanionBlocked={isCompanionBlocked}
+        isUserBlockedByCompanion={isUserBlockedByCompanion}
       />
     </Box>
   );

@@ -14,6 +14,8 @@ import {
   CommonPreloader,
 } from "@/components";
 import style from "./MessagesBlock.module.scss";
+// import { useSelector } from "react-redux";
+// import { RootState } from "@/redux/store";
 
 type MessagesBlockType = {
   chatId: number | null;
@@ -24,6 +26,8 @@ type MessagesBlockType = {
   setHeartSelected: (isHeartSelected: boolean) => void;
   isArchived: boolean;
   setArchived: (isArchived: boolean) => void;
+  isCompanionBlocked: boolean | null;
+  isUserBlockedByCompanion: boolean | null;
 };
 
 const MessagesBlock: FC<MessagesBlockType> = ({
@@ -35,6 +39,8 @@ const MessagesBlock: FC<MessagesBlockType> = ({
   setHeartSelected,
   isArchived,
   setArchived,
+  isCompanionBlocked,
+  isUserBlockedByCompanion,
 }) => {
   const [isDataReady, setIsDataReady] = useState(false);
   const { data: chatData, isLoading: isChatLoading } = useGetChatQuery(
@@ -47,6 +53,12 @@ const MessagesBlock: FC<MessagesBlockType> = ({
     useGetMessagesByChatIdQuery(chatId as number, {
       skip: !chatId,
     });
+  // const isCompanionBlocked = useSelector((state: RootState) =>
+  //   state.messages?.chat ? state.messages.chat.anotherUserBlocked : null
+  // );
+  // const isUserBlockedByCompanion = useSelector((state: RootState) =>
+  //   state.messages?.chat ? state.messages.chat.currentlyUserBlocked : null
+  // );
 
   useEffect(() => {
     setIsDataReady(false);
@@ -99,9 +111,15 @@ const MessagesBlock: FC<MessagesBlockType> = ({
         isArchived={isArchived}
         setArchived={setArchived}
         chatData={chatData}
+        isCompanionBlocked={isCompanionBlocked}
+        isUserBlockedByCompanion={isUserBlockedByCompanion}
       />
       <Product chatData={chatData} />
-      <Dialogue chatId={chatId} />
+      <Dialogue
+        chatId={chatId}
+        isCompanionBlocked={isCompanionBlocked}
+        isUserBlockedByCompanion={isUserBlockedByCompanion}
+      />
     </Box>
   );
   //   <Box className={style.noMessagesBlockWrapper}>
