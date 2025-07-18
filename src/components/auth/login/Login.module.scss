@@ -32,6 +32,10 @@
   border-radius: 10px;
   margin-top: 8px;
   background: var(--not-active);
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+  }
   @media (min-width: 375px) {
     width: 100%;
   }

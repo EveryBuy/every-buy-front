@@ -10,7 +10,7 @@ import styles from "./Register.module.scss";
 import CommonInput from "@/components/ui/CommonInput/CommonInput";
 import Image from "next/image";
 import { register } from "@/redux/auth/operations";
-import { selectIsLoggedIn } from "@/redux/auth/selectors";
+import { selectIsLoggedIn, selectRehydrated } from "@/redux/auth/selectorsAuth";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import {
   validatePhone,
@@ -47,6 +47,7 @@ const Register: React.FC = () => {
     useState(false);
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const showSuccessRegisterModal = useRef(false);
+  const isRehydrated = useAppSelector(selectRehydrated);
 
   useEffect(() => {
     if (isLoggedIn && !showSuccessRegisterModal.current) {
@@ -70,7 +71,12 @@ const Register: React.FC = () => {
       })
     );
   };
-
+  if (!isRehydrated) {
+    return 
+    (
+      <>Йде завантаження.....</>
+    );
+  }
   const handlePhone = (evt: React.ChangeEvent<HTMLInputElement>) => {
     // TODO:
     // const inputValue = evt.target.value.replace(/\D/g, "");

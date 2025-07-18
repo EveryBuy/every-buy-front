@@ -8,10 +8,11 @@ import CommonInput from "@/components/ui/CommonInput/CommonInput";
 import styles from "./Login.module.scss";
 import Image from "next/image";
 import { login } from "@/redux/auth/operations";
-import { selectIsLoggedIn } from "@/redux/auth/selectors";
+import { selectIsLoggedIn, selectRehydrated } from "@/redux/auth/selectorsAuth";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import clsx from "clsx";
 import { validateEmailOrPhone, validatePassword } from "@/utils/validate";
+import Spinner from "@/components/ui/CommonSpiner/Spinner";
 
 interface ErrorsType {
   emailOrPhone: string;
@@ -23,13 +24,15 @@ const Login: React.FC = () => {
   const [emailOrPhone, setEmailOrPhone] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
+
   const dispatch = useAppDispatch();
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
+  const isRehydrated = useAppSelector(selectRehydrated);
   const [errors, setErrors] = useState<ErrorsType>({
     emailOrPhone: "",
     password: "",
   });
-
+  const showOverlayLoader = !isLoggedIn && isRehydrated;
   useEffect(() => {
     isLoggedIn && router.push("/user");
   }, [isLoggedIn, router]);
@@ -46,7 +49,7 @@ const Login: React.FC = () => {
   //     })
   //   );
   // };
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const trimmed = emailOrPhone.trim();
@@ -56,12 +59,16 @@ const Login: React.FC = () => {
 
     const loginValue = isPhone ? trimmed.replace(/\D/g, "").slice(-9) : trimmed;
 
-    dispatch(
-      login({
-        login: loginValue,
-        password: password,
-      })
-    );
+    try {
+      await dispatch(
+        login({
+          login: loginValue,
+          password: password,
+        })
+      ).unwrap();
+    } catch (err) {
+      console.error(err);
+    } 
   };
 
   const changeEyeShowPasswordStatus = () => {
@@ -85,6 +92,8 @@ const Login: React.FC = () => {
         : "Пароль повинен містити мінімум 8 символів, одну велику літеру, одну малу літеру, одну цифру та один спеціальний символ",
     }));
   };
+  const isEmailOrPhoneValid = validateEmailOrPhone(emailOrPhone);
+  const isPasswordValid = validatePassword(password);
 
   return (
     <>
@@ -94,6 +103,7 @@ const Login: React.FC = () => {
           text="Телефон або e-mail"
           typeInput={true}
           value={emailOrPhone}
+          isValid={emailOrPhone.length > 0 && isEmailOrPhoneValid}
           setValue={(e) => setEmailOrPhone(e.target.value)}
           setOnBlur={handleEmailOrPhoneBlur}
           required={true}
@@ -111,6 +121,7 @@ const Login: React.FC = () => {
           text="Введіть пароль"
           typeInput={showPassword}
           value={password}
+          isValid={password.length > 0 && isPasswordValid}
           required={true}
           setValue={(e) => setPassword(e.target.value)}
           setOnBlur={handlePasswordBlur}
@@ -142,7 +153,7 @@ const Login: React.FC = () => {
           )}
           type="submit"
         >
-          Увійти
+          {showOverlayLoader ?  "Увійти" : <Spinner />}
         </button>
       </form>
     </>
