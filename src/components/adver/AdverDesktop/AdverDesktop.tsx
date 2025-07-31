@@ -82,7 +82,7 @@ const AdverDesktop = () => {
     const formData = new FormData();
 
     Object.entries(values).forEach(([key, value]) => {
-      formData.append(key, value);
+      // formData.append(key, value);
     });
 
     images.forEach((image, index) => {
@@ -104,17 +104,28 @@ const AdverDesktop = () => {
     <div className={styles.adWrapper}>
       <div className={styles.adHeader}>
         <h1>Створити оголошення</h1>
-        <ul className={styles.linkHeader}>
-          <li className={styles.linkItem}>
-            <p className={styles.linkItemText}>Куплю</p>
-          </li>
-          <li className={styles.linkItem}>
-            <p className={styles.linkItemText}>Продам</p>
-          </li>
-        </ul>
       </div>
+      <div className={styles.linkItem}>
+        <label className={styles.linkItemText}>
+          <input
+            type="radio"
+            name="example"
+            value="buy"
+            className={styles.radio}
+          />
+          <span>Куплю</span>
+        </label>
 
-      <h3 className={styles.adTitle}>Подробиці товару</h3>
+        <label className={styles.linkItemText}>
+          <input
+            type="radio"
+            name="example"
+            value="sell"
+            className={styles.radio}
+          />
+          <span>Продам</span>
+        </label>
+      </div>
 
       <Formik
         initialValues={initialValues}
@@ -125,6 +136,10 @@ const AdverDesktop = () => {
           <>
             <Form autoComplete="off" className={styles.styledForm}>
               <div className={styles.wrapperInput}>
+                <section className={styles.formWrapper}>
+                  {/* фото */}
+                  <AdverPhotoList images={images} setImages={setImages} />
+                </section>
                 <section className={styles.formWrapper}>
                   {/* Назва товару */}
                   <div>
@@ -139,34 +154,45 @@ const AdverDesktop = () => {
                         onBlur={handleBlur}
                       />
                     </label>
-                    <ErrorMessage
+                    {/* <ErrorMessage
                       touched={touched.product}
                       error={errors.product}
                       successMessage="Успішно введено назву товару"
-                    />
+                    /> */}
                   </div>
-
-                  {/* Ціна */}
-                  <div>
+                  {/* Категорія */}
+                  <div className={styles.fieldWrapper}>
                     <label>
-                      Ціна
+                      Категорія
                       <span style={{ color: "red", marginLeft: "4px" }}>*</span>
                       <Field
                         className={styles.styledField}
                         type="text"
-                        name="price"
-                        placeholder="Вкажіть бажану ціну"
+                        name="category"
+                        value={values.categoryId}
+                        readOnly
+                        placeholder="зазначте категорію"
                         onBlur={handleBlur}
                       />
-                      <div className={styles.textareaText}>
-                        <p>Використовуйте лише цифри</p>
-                      </div>
+                      <button
+                        type="button"
+                        className={styles.buttonInput}
+                        onClick={() => setIsCategoryModalOpen(true)}
+                      >
+                        <Image
+                          priority
+                          src={Search}
+                          alt="icon search"
+                          width={24}
+                          height={24}
+                        />
+                      </button>
                     </label>
-                    <ErrorMessage
-                      touched={touched.price}
-                      error={errors.price}
-                      successMessage="Ціна успішно додана"
-                    />
+                    {/* <ErrorMessage
+                      touched={touched.category}
+                      error={errors.category}
+                      successMessage="Категорія успішно додана"
+                    /> */}
                   </div>
 
                   {/* Опис */}
@@ -201,43 +227,31 @@ const AdverDesktop = () => {
                 </section>
 
                 <section className={styles.formWrapper}>
-                  {/* Категорія */}
-                  <div className={styles.fieldWrapper}>
+                  {/* Ціна */}
+                  <div>
                     <label>
-                      Категорія
+                      Ціна
                       <span style={{ color: "red", marginLeft: "4px" }}>*</span>
                       <Field
                         className={styles.styledField}
                         type="text"
-                        name="category"
-                        value={values.category}
-                        readOnly
-                        placeholder="зазначте категорію"
+                        name="price"
+                        placeholder="Вкажіть бажану ціну"
                         onBlur={handleBlur}
                       />
-                      <button
-                        type="button"
-                        className={styles.buttonInput}
-                        onClick={() => setIsCategoryModalOpen(true)}
-                      >
-                        <Image
-                          priority
-                          src={Search}
-                          alt="icon search"
-                          width={24}
-                          height={24}
-                        />
-                      </button>
+                      <div className={styles.textareaText}>
+                        <p>Використовуйте лише цифри</p>
+                      </div>
                     </label>
                     <ErrorMessage
-                      touched={touched.category}
-                      error={errors.category}
-                      successMessage="Категорія успішно додана"
+                      touched={touched.price}
+                      error={errors.price}
+                      successMessage="Ціна успішно додана"
                     />
                   </div>
 
                   {/* Підкатегорія */}
-                  <div className={styles.fieldWrapper}>
+                  {/* <div className={styles.fieldWrapper}>
                     <label>
                       Підкатегорія
                       <span style={{ color: "red", marginLeft: "4px" }}>*</span>
@@ -269,7 +283,7 @@ const AdverDesktop = () => {
                       error={errors.subcategory}
                       successMessage="Підкатегорія успішно додана"
                     />
-                  </div>
+                  </div> */}
 
                   {/* Місцезнаходження */}
                   <div>
@@ -284,11 +298,11 @@ const AdverDesktop = () => {
                         onBlur={handleBlur}
                       />
                     </label>
-                    <ErrorMessage
+                    {/* <ErrorMessage
                       touched={touched.location}
                       error={errors.location}
                       successMessage="Місто успішно додано"
-                    />
+                    /> */}
                   </div>
 
                   {/* Радіо кнопки */}
@@ -310,11 +324,11 @@ const AdverDesktop = () => {
                         uncheckedIcon={radioboxIcon}
                         checkedIcon={checkIcon}
                       />
-                      <ErrorMessage
+                      {/* <ErrorMessage
                         touched={touched.condition}
                         error={errors.condition}
                         successMessage="Стан товару успішно додано"
-                      />
+                      /> */}
                     </div>
                     <div>
                       <RadioButtonGroup
@@ -335,29 +349,25 @@ const AdverDesktop = () => {
                         uncheckedIcon={radioboxIcon}
                         checkedIcon={checkIcon}
                       />
-                      <ErrorMessage
+                      {/* <ErrorMessage
                         touched={touched.delivery}
                         error={errors.delivery}
                         successMessage="Спосіб доставки успішно додано"
-                      />
+                      /> */}
                     </div>
                   </section>
                 </section>
               </div>
 
-              <AdverPhotoList images={images} setImages={setImages} />
-
               <div className={styles.buttonWrapper}>
                 <CommonButton
                   type="submit"
                   title="Попередній перегляд"
-                  color="yellow"
                   className={styles.adverButton}
                 />
                 <CommonButton
                   type="submit"
                   title="Опублікувати"
-                  color="yellow"
                   className={`${styles.adverButton} ${styles.adverButtonAd}`}
                 />
               </div>
