@@ -30,8 +30,6 @@ const ChatsList: FC<ChatsListType> = ({
   setHeartSelected,
   isArchived,
   setArchived,
-  // isCompanionBlocked,
-  // isUserBlockedByCompanion,
 }) => {
   const dispatch = useAppDispatch();
   const handleChatClick = (chatId: number) => {
