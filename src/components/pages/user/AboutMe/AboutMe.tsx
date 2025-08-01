@@ -12,7 +12,7 @@ import {
   UserDataEdit,
 } from "@/components";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
-import { selectUser } from "@/redux/auth/selectors";
+import { selectUser } from "@/redux/auth/selectorsAuth";
 import ArrowBack from "@/assets/Svg/arrowBack.svg";
 // import separeteLine from "@/assets/Svg/separeteLine.svg";
 import styles from "./AboutMe.module.scss";

@@ -1,11 +1,14 @@
 "use client";
 
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 export default function MyAdsPage() {
   const router = useRouter();
 
-  router.push("/user/my-ads/active-ads");
+  useEffect(() => {
+    router.push("/user/my-ads/active-ads");
+  }, [router]);
 
-  return;
+  return null;
 }

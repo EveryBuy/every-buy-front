@@ -31,7 +31,7 @@
   }
 
   &.valid {
-    border-color: green;
+    border-color: var(--success);
   }
 
   &:focus {
@@ -48,3 +48,4 @@
   display: flex;
   justify-content: flex-start;
 }
+

@@ -8,7 +8,7 @@ import Link from 'next/link';
 import { CommonButton, CommonIcon, DoLoginModal } from "@/components";
 import { useAppSelector, useAppDispatch } from "@/redux/store";
 import { setHeaderAuthToken } from "@/utils/axios";
-import { selectIsLoggedIn } from "@/redux/auth/selectors";
+import { selectIsLoggedIn } from "@/redux/auth/selectorsAuth";
 import { addAdvertToFavourite, removeAdvertFromFavourite } from "@/redux/advertisement/operations";
 import { AdvertisementBuySeller } from '@/redux/advertisement/slice';
 import arrowButton from "@/assets/Svg/arrowButton.svg";
