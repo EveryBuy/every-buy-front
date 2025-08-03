@@ -27,9 +27,14 @@ export const SelectedGoodsItem: FC<ItemProps> = ({
 		setIsFavourite(!isFavourite);
 	};
 
+	const shortTitle = (str: string, countLetters: number): string => {
+		const newStr = (str && str.length < countLetters) ? str : str.slice(0, countLetters) + "...";
+		return newStr;
+	}
+
 	return (
-		<div className={styles.containerSelectedGoodsItem}>
-			<Link href={`/announcement?id=${item.advertisementId}`}>
+		<Link href={`/announcement?id=${item.advertisementId}`}>
+			<div className={styles.containerSelectedGoodsItem}>
 				<div className={styles.imageWrapper}>
 					<Image
 						className={styles.image}
@@ -39,30 +44,29 @@ export const SelectedGoodsItem: FC<ItemProps> = ({
 						sizes="100vh"
 					/>
 				</div>
-				<div className={styles.titleWrapper}>
-					<h3 className={styles.title}>{item.title}</h3>
-					<p className={styles.state}>
+				<div className={styles.stateWrapper}>
+					<div className={`${styles.state} ${item.productType === "NEW" ? "" : styles.stateNotNew}`}>
 						{item.productType === "NEW" ? "нове" : "вживане"}
-					</p>
+					</div>
+					<button className={styles.favouriteBtn} onClick={handleToggleFavourite}>
+						<CommonIcon
+							id={isFavourite ? "heart" : "icon-heart"}
+							width="22px"
+							height="22px"
+						/>
+					</button>
 				</div>
-			</Link>
-			<div className={styles.priceWrapper}>
+				<h3 className={styles.title}>{shortTitle(item.title, 20)}</h3>
+
+				<p className={styles.dateText}>
+					{`${item.city?.cityName || "Місто не вказано"}, ${item.city?.region.regionName || "Область не вказано"
+						}`}
+					<br />
+					{`${formatAdvertisementDate(item.updateDate)}`}
+				</p>
 				<p className={styles.price}>{`${item.price} грн`}</p>
-				<button className={styles.favouriteBtn} onClick={handleToggleFavourite}>
-					<CommonIcon
-						id={isFavourite ? "heart" : "icon-heart"}
-						width="24px"
-						height="24px"
-					/>
-				</button>
 			</div>
-			<p className={styles.dateText}>
-				{`${formatAdvertisementDate(item.updateDate)}`}
-				<br />
-				{`${item.city?.cityName || "Хз, яке місто"}, ${item.city?.region.regionName || "Хз, яка область"
-					}`}
-			</p>
-		</div>
+		</Link>
 	);
 };
 
