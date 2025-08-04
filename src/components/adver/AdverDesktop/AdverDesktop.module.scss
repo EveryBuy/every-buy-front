@@ -164,7 +164,7 @@
 
 .textareaText {
   display: flex;
-  gap: 224px;
+  justify-content: space-between;
   p {
     margin-top: 4px;
     font-size: var(--body-text);
@@ -188,6 +188,23 @@
   width: 620px;
   height: 280px;
 }
+.toggleWrapper {
+  margin-top: 12px;
+  margin-bottom: 28px;
+  display: flex;
+  justify-content: space-between;
+}
+.toggleLabel {
+  display: flex;
+  align-items: center;
+}
+
+.toggleText {
+  font-size: var(--body-text);
+  font-weight: 400;
+  color: var(--label);
+}
+
 
 // ================= radio ===================
 .visuallyHidden {
@@ -254,3 +271,4 @@
 .visuallyHidden:checked + .radioBox .radioChecked {
   display: block;
 }
+

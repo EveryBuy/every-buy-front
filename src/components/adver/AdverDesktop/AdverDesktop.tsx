@@ -22,9 +22,12 @@ import styles from "./AdverDesktop.module.scss";
 import { ClassNames } from "@emotion/react";
 import { CategorySelectModal } from "../CategorySelectModal/CategorySelectModal";
 import { CategoryTreeModal } from "../AdverSubCategoriesDesktop/CategoryTreeModal";
+import ToggleSwitch from "../ToggleSwitch/ToogleSwitch";
 
 const AdverDesktop = () => {
   const [images, setImages] = useState<{ file: File; url: string }[]>([]);
+  const [isNegotiable, setIsNegotiable] = useState(false);
+
   // const { setFieldValue, touched, errors, handleBlur } =
   //   useFormikContext<any>();
 
@@ -141,221 +144,221 @@ const AdverDesktop = () => {
                   <AdverPhotoList images={images} setImages={setImages} />
                 </section>
                 <section className={styles.formWrapper}>
-                  {/* Назва товару */}
-                  <div>
-                    <label>
-                      Назва товару
-                      <span style={{ color: "red", marginLeft: "4px" }}>*</span>
-                      <Field
-                        className={styles.styledField}
-                        type="text"
-                        name="product"
-                        placeholder="Вкажіть назву товару"
-                        onBlur={handleBlur}
-                      />
-                    </label>
-                    {/* <ErrorMessage
+                  <div style={{ display: "flex", gap: "40px" }}>
+                    <div >
+                      {/* Назва товару */}
+                      <div style={{ marginBottom: "40px" }}>
+                        <label>
+                          Назва товару
+                          <span style={{ color: "red", marginLeft: "4px" }}>
+                            *
+                          </span>
+                          <Field
+                            className={styles.styledField}
+                            type="text"
+                            name="product"
+                            placeholder="Вкажіть назву товару"
+                            onBlur={handleBlur}
+                          />
+                          <div className={styles.textareaText}>
+                          <p>Введіть від 16 до 70 символів</p>
+                          <p>{descriptionLength}/70</p>
+                        </div>
+                        </label>
+                        {/* <ErrorMessage
                       touched={touched.product}
                       error={errors.product}
                       successMessage="Успішно введено назву товару"
                     /> */}
-                  </div>
-                  {/* Категорія */}
-                  <div className={styles.fieldWrapper}>
-                    <label>
-                      Категорія
-                      <span style={{ color: "red", marginLeft: "4px" }}>*</span>
-                      <Field
-                        className={styles.styledField}
-                        type="text"
-                        name="category"
-                        value={values.categoryId}
-                        readOnly
-                        placeholder="зазначте категорію"
-                        onBlur={handleBlur}
-                      />
-                      <button
-                        type="button"
-                        className={styles.buttonInput}
-                        onClick={() => setIsCategoryModalOpen(true)}
-                      >
-                        <Image
-                          priority
-                          src={Search}
-                          alt="icon search"
-                          width={24}
-                          height={24}
-                        />
-                      </button>
-                    </label>
-                    {/* <ErrorMessage
+                      </div>
+                      {/* Категорія */}
+                      <div className={styles.fieldWrapper}>
+                        <label>
+                          Категорія
+                          <span style={{ color: "red", marginLeft: "4px" }}>
+                            *
+                          </span>
+                          <Field
+                            className={styles.styledField}
+                            type="text"
+                            name="category"
+                            value={values.categoryId}
+                            readOnly
+                            placeholder="зазначте категорію"
+                            onBlur={handleBlur}
+                          />
+                          <button
+                            type="button"
+                            className={styles.buttonInput}
+                            onClick={() => setIsCategoryModalOpen(true)}
+                          >
+                            <Image
+                              priority
+                              src={Search}
+                              alt="icon search"
+                              width={24}
+                              height={24}
+                            />
+                          </button>
+                        </label>
+                        {/* <ErrorMessage
                       touched={touched.category}
                       error={errors.category}
                       successMessage="Категорія успішно додана"
                     /> */}
-                  </div>
-
-                  {/* Опис */}
-                  <div>
-                    <label>
-                      Опис товару
-                      <span style={{ color: "red", marginLeft: "4px" }}>*</span>
-                      <Field
-                        as="textarea"
-                        name="description"
-                        rows="4"
-                        cols="50"
-                        className={`${styles.styledField} ${styles.styledTexterea}`}
-                        onChange={(
-                          e: React.ChangeEvent<HTMLTextAreaElement>
-                        ) => {
-                          setDescriptionLength(e.target.value.length);
-                          setFieldValue("description", e.target.value);
-                        }}
-                      />
-                      <div className={styles.textareaText}>
-                        <p>Вкажіть щонайменше 30 символів</p>
-                        <p>{descriptionLength}/999</p>
                       </div>
-                    </label>
-                    <ErrorMessage
-                      touched={touched.description}
-                      error={errors.description}
-                      successMessage="Опис товару успішно додано"
-                    />
+                    </div>
+                    {/* Опис */}
+                    <div>
+                      <label>
+                        Опис товару
+                        <span style={{ color: "red", marginLeft: "4px" }}>
+                          *
+                        </span>
+                        <Field
+                          as="textarea"
+                          name="description"
+                          rows="4"
+                          cols="50"
+                          className={`${styles.styledField} ${styles.styledTexterea}`}
+                          onChange={(
+                            e: React.ChangeEvent<HTMLTextAreaElement>
+                          ) => {
+                            setDescriptionLength(e.target.value.length);
+                            setFieldValue("description", e.target.value);
+                          }}
+                        />
+                        <div className={styles.textareaText}>
+                          <p>Вкажіть щонайменше 30 символів</p>
+                          <p>{descriptionLength}/3000</p>
+                        </div>
+                      </label>
+                      <ErrorMessage
+                        touched={touched.description}
+                        error={errors.description}
+                        successMessage="Опис товару успішно додано"
+                      />
+                    </div>
                   </div>
                 </section>
 
                 <section className={styles.formWrapper}>
                   {/* Ціна */}
-                  <div>
-                    <label>
-                      Ціна
-                      <span style={{ color: "red", marginLeft: "4px" }}>*</span>
-                      <Field
-                        className={styles.styledField}
-                        type="text"
-                        name="price"
-                        placeholder="Вкажіть бажану ціну"
-                        onBlur={handleBlur}
-                      />
-                      <div className={styles.textareaText}>
-                        <p>Використовуйте лише цифри</p>
-                      </div>
-                    </label>
-                    <ErrorMessage
-                      touched={touched.price}
-                      error={errors.price}
-                      successMessage="Ціна успішно додана"
-                    />
-                  </div>
-
-                  {/* Підкатегорія */}
-                  {/* <div className={styles.fieldWrapper}>
-                    <label>
-                      Підкатегорія
-                      <span style={{ color: "red", marginLeft: "4px" }}>*</span>
-                      <Field
-                        className={styles.styledField}
-                        type="text"
-                        name="subcategory"
-                        value={values.subcategory}
-                        readOnly
-                        placeholder="зазначте підкатегорію"
-                        onBlur={handleBlur}
-                      />
-                      <button
-                        type="button"
-                        className={styles.buttonInput}
-                        onClick={() => setIsSubCategoryModalOpen(true)}
-                      >
-                        <Image
-                          priority
-                          src={Search}
-                          alt="icon search"
-                          width={24}
-                          height={24}
+                  <div style={{ display: "flex", gap: "40px" }}>
+                    <div style={{}}>
+                      <label>
+                        Ціна
+                        <span style={{ color: "red", marginLeft: "4px" }}>
+                          *
+                        </span>
+                        <Field
+                          className={styles.styledField}
+                          type="text"
+                          name="price"
+                          placeholder="Вкажіть бажану ціну"
+                          onBlur={handleBlur}
+                          disabled={isNegotiable}
                         />
-                      </button>
-                    </label>
-                    <ErrorMessage
-                      touched={touched.subcategory}
-                      error={errors.subcategory}
-                      successMessage="Підкатегорія успішно додана"
-                    />
-                  </div> */}
-
-                  {/* Місцезнаходження */}
-                  <div>
-                    <label>
-                      Місцезнаходження
-                      <span style={{ color: "red", marginLeft: "4px" }}>*</span>
-                      <Field
-                        className={styles.styledField}
-                        type="text"
-                        name="location"
-                        placeholder="вкажшть назву Вашого міста"
-                        onBlur={handleBlur}
+                        <div className={styles.textareaText}>
+                          <p>Використовуйте лише цифри</p>
+                        </div>
+                      </label>
+                      <ErrorMessage
+                        touched={touched.price}
+                        error={errors.price}
+                        successMessage="Ціна успішно додана"
                       />
-                    </label>
-                    {/* <ErrorMessage
-                      touched={touched.location}
-                      error={errors.location}
-                      successMessage="Місто успішно додано"
-                    /> */}
-                  </div>
 
-                  {/* Радіо кнопки */}
-                  <section className={styles.radioboxWrapper}>
-                    <div>
-                      <RadioButtonGroup
-                        name="condition"
-                        title="Стан товару"
-                        options={[
-                          { value: "New", label: "Нове" },
-                          { value: "Used", label: "Вживане" },
-                        ]}
-                        groupClass={styles.radioboxGroup}
-                        labelClass={`${styles.radioboxLabel} ${styles.check}`}
-                        inputClass={`${styles.visuallyHidden} ${styles.radioboxInput}`}
-                        radioBoxClass={styles.radioBox}
-                        radioUncheckedClass={styles.radioUnchecked}
-                        radioCheckedClass={styles.radioChecked}
-                        uncheckedIcon={radioboxIcon}
-                        checkedIcon={checkIcon}
-                      />
-                      {/* <ErrorMessage
+                      <div className={styles.toggleWrapper}>
+                        <label className={styles.toggleLabel}>
+                          <span className={styles.toggleText}>Договірна</span>
+                          <ToggleSwitch
+                            checked={isNegotiable}
+                            onChange={(checked) => {
+                              setIsNegotiable(checked);
+                              setFieldValue(
+                                "price",
+                                checked ? "договірна" : ""
+                              );
+                            }}
+                          />
+                        </label>
+                      </div>
+                      <div>
+                        <RadioButtonGroup
+                          name="condition"
+                          title="Стан товару"
+                          options={[
+                            { value: "New", label: "Нове" },
+                            { value: "Used", label: "Вживане" },
+                          ]}
+                          groupClass={styles.radioboxGroup}
+                          labelClass={`${styles.radioboxLabel} ${styles.check}`}
+                          inputClass={`${styles.visuallyHidden} ${styles.radioboxInput}`}
+                          radioBoxClass={styles.radioBox}
+                          radioUncheckedClass={styles.radioUnchecked}
+                          radioCheckedClass={styles.radioChecked}
+                          uncheckedIcon={radioboxIcon}
+                          checkedIcon={checkIcon}
+                        />
+                        {/* <ErrorMessage
                         touched={touched.condition}
                         error={errors.condition}
                         successMessage="Стан товару успішно додано"
                       /> */}
+                      </div>
                     </div>
-                    <div>
-                      <RadioButtonGroup
-                        name="delivery"
-                        title="Спосіб доставки"
-                        options={[
-                          { value: "New_mail", label: "Нова пошта" },
-                          { value: "Ukrposhta", label: "Укрпошта" },
-                          { value: "Meest_Express", label: "Meest Express" },
-                          { value: "Other", label: "Інше" },
-                        ]}
-                        groupClass={styles.radioboxGroup}
-                        labelClass={`${styles.radioboxLabel} ${styles.check}`}
-                        inputClass={`${styles.visuallyHidden} ${styles.radioboxInput}`}
-                        radioBoxClass={styles.radioBox}
-                        radioUncheckedClass={styles.radioUnchecked}
-                        radioCheckedClass={styles.radioChecked}
-                        uncheckedIcon={radioboxIcon}
-                        checkedIcon={checkIcon}
-                      />
+
+                    {/* Місцезнаходження */}
+                    <div style={{}}>
+                      <div>
+                        <label>
+                          Місцезнаходження
+                          <span style={{ color: "red", marginLeft: "4px" }}>
+                            *
+                          </span>
+                          <Field
+                            className={styles.styledField}
+                            type="text"
+                            name="location"
+                            placeholder="вкажшть назву Вашого міста"
+                            onBlur={handleBlur}
+                          />
+                        </label>
+                      </div>
                       {/* <ErrorMessage
+                      touched={touched.location}
+                      error={errors.location}
+                      successMessage="Місто успішно додано"
+                    /> */}
+
+                      <div style={{ marginTop: "85px" }}>
+                        <RadioButtonGroup
+                          name="delivery"
+                          title="Спосіб доставки"
+                          options={[
+                            { value: "New_mail", label: "Нова пошта" },
+                            { value: "Ukrposhta", label: "Укрпошта" },
+                            { value: "Meest_Express", label: "Meest Express" },
+                            { value: "Other", label: "Інше" },
+                          ]}
+                          groupClass={styles.radioboxGroup}
+                          labelClass={`${styles.radioboxLabel} ${styles.check}`}
+                          inputClass={`${styles.visuallyHidden} ${styles.radioboxInput}`}
+                          radioBoxClass={styles.radioBox}
+                          radioUncheckedClass={styles.radioUnchecked}
+                          radioCheckedClass={styles.radioChecked}
+                          uncheckedIcon={radioboxIcon}
+                          checkedIcon={checkIcon}
+                        />
+                        {/* <ErrorMessage
                         touched={touched.delivery}
                         error={errors.delivery}
                         successMessage="Спосіб доставки успішно додано"
                       /> */}
+                      </div>
                     </div>
-                  </section>
+                  </div>
                 </section>
               </div>
 
@@ -403,3 +406,48 @@ const AdverDesktop = () => {
 };
 
 export default AdverDesktop;
+
+{
+  /* Підкатегорія */
+}
+{
+  /* <div className={styles.fieldWrapper}>
+                    <label>
+                      Підкатегорія
+                      <span style={{ color: "red", marginLeft: "4px" }}>*</span>
+                      <Field
+                        className={styles.styledField}
+                        type="text"
+                        name="subcategory"
+                        value={values.subcategory}
+                        readOnly
+                        placeholder="зазначте підкатегорію"
+                        onBlur={handleBlur}
+                      />
+                      <button
+                        type="button"
+                        className={styles.buttonInput}
+                        onClick={() => setIsSubCategoryModalOpen(true)}
+                      >
+                        <Image
+                          priority
+                          src={Search}
+                          alt="icon search"
+                          width={24}
+                          height={24}
+                        />
+                      </button>
+                    </label>
+                    <ErrorMessage
+                      touched={touched.subcategory}
+                      error={errors.subcategory}
+                      successMessage="Підкатегорія успішно додана"
+                    />
+                  </div> */
+}
+{
+  /* Радіо кнопки */
+}
+{
+  /* <section className={styles.radioboxWrapper}></section> */
+}

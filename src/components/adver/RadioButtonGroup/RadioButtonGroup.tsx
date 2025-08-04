@@ -1,21 +1,21 @@
 "use client";
 import Image from "next/image";
 import { Field } from "formik";
-
+import styles from "./RadioButtonGroup.module.scss";
 
 interface RadioButtonGroupProps {
   name: string;
   options: { value: string; label: string }[];
   title: string;
-  wrapperClass?: string; 
-  groupClass?: string; 
-  labelClass?: string; 
-  inputClass?: string; 
-  radioBoxClass?: string; 
+  wrapperClass?: string;
+  groupClass?: string;
+  labelClass?: string;
+  inputClass?: string;
+  radioBoxClass?: string;
   radioUncheckedClass?: string;
   radioCheckedClass?: string;
-  uncheckedIcon: string; 
-  checkedIcon: string; 
+  uncheckedIcon: string;
+  checkedIcon: string;
 }
 
 const RadioButtonGroup: React.FC<RadioButtonGroupProps> = ({
@@ -33,12 +33,12 @@ const RadioButtonGroup: React.FC<RadioButtonGroupProps> = ({
   checkedIcon,
 }) => {
   return (
-    <div className={wrapperClass}>
-      <div role="group" aria-labelledby="radio-group" className={groupClass}>
-        <h2>
-          {title}
-          <span style={{ color: "red", marginLeft: "4px" }}>*</span>
-        </h2>
+    <div role="group" aria-labelledby="radio-group" className={groupClass}>
+      <h2>
+        {title}
+        <span style={{ color: "red", marginLeft: "4px" }}>*</span>
+      </h2>
+      <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
         {options.map((option) => (
           <label key={option.value} className={labelClass}>
             <Field
@@ -65,7 +65,7 @@ const RadioButtonGroup: React.FC<RadioButtonGroupProps> = ({
                 className={radioCheckedClass}
               />
             </span>
-            {option.label}
+            <span className={styles.labelClass}>{option.label}</span>
           </label>
         ))}
       </div>
