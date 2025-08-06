@@ -7,6 +7,7 @@ interface ToggleSwitchProps {
   checked: boolean;
   onChange: (checked: boolean) => void;
   label?: string;
+  name: string
 }
 
 const ToggleSwitch: React.FC<ToggleSwitchProps> = ({ checked, onChange, label }) => {

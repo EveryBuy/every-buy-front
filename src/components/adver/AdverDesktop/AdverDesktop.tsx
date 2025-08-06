@@ -19,11 +19,27 @@ import styles from "./AdverDesktop.module.scss";
 
 // -----------------------------------------
 
-import { ClassNames } from "@emotion/react";
-import { CategorySelectModal } from "../CategorySelectModal/CategorySelectModal";
 import { CategoryTreeModal } from "../AdverSubCategoriesDesktop/CategoryTreeModal";
 import ToggleSwitch from "../ToggleSwitch/ToogleSwitch";
 
+// interface FormValues {
+//   topSubCategoryId: number | null;
+//   lowSubCategoryId: number | null;
+//   categoryId: number | null;
+//   section: string;
+//   cityId: number | null;
+//   productType: string;
+//   price: string;
+//   title: string;
+//   description: string;
+//   deliveryMethods: string[];
+//   product: string;
+//   category: string;
+//   subcategory: string;
+//   location: string;
+//   condition: string;
+//   delivery: string;
+// }
 const AdverDesktop = () => {
   const [images, setImages] = useState<{ file: File; url: string }[]>([]);
   const [isNegotiable, setIsNegotiable] = useState(false);
@@ -39,23 +55,23 @@ const AdverDesktop = () => {
     cityId: null,
     productType: "",
     price: "",
+    isNegotiable: false,
     title: "",
     description: "",
     deliveryMethods: [],
+    product: "",
+    category: "",
+    subcategory: "",
+    location: "",
+    condition: "",
+    delivery: "",
   };
 
   const [descriptionLength, setDescriptionLength] = useState(0);
-
-  const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
-  console.log("isCategoryModalOpen", isCategoryModalOpen);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [isSearchCategoryModalOpen, setIsSearchCategoryModalOpen] =
+    useState(false);
 
-  const [isSubCategoryModalOpen, setIsSubCategoryModalOpen] = useState(false);
-
-  const [selectedSubCategory, setSelectedSubCategory] = useState<string | null>(
-    null
-  );
-  console.log("selectedSubCategory", selectedSubCategory);
   console.log("selectedCategory", selectedCategory);
 
   const AuthSchema = Yup.object().shape({
@@ -63,13 +79,10 @@ const AdverDesktop = () => {
     price: Yup.string().required("Будь ласка, зазначте бажану ціну"),
     description: Yup.string().required("Будь ласка, додайте опис товару"),
     category: Yup.string().required("Будь ласка, зазначте категорію товару"),
-    subcategory: Yup.string().required("Будь ласка, зазначте підкатегорію"),
     location: Yup.string().required("Будь ласка, вкажіть місцезнаходження"),
-
     condition: Yup.string()
       .oneOf(["New", "Used"], "Будь ласка, оберіть стан товару")
       .required("Будь ласка, оберіть стан товару"),
-
     delivery: Yup.string()
       .oneOf(
         ["New_mail", "Ukrposhta", "Meest_Express"],
@@ -85,22 +98,31 @@ const AdverDesktop = () => {
     const formData = new FormData();
 
     Object.entries(values).forEach(([key, value]) => {
-      // formData.append(key, value);
+      if (value === null || value === undefined) {
+        formData.append(key, "");
+      } else if (Array.isArray(value)) {
+        value.forEach((item, index) => {
+          formData.append(`${key}[${index}]`, String(item));
+        });
+      } else {
+        formData.append(key, String(value));
+      }
     });
 
     images.forEach((image, index) => {
       formData.append(`photos[${index}]`, image.file);
     });
-    console.log(values);
-
-    // запит
-    await fetch("/api/adver", {
+    await fetch("/api/product/create", {
       method: "POST",
       body: formData,
     });
-
     actions.resetForm();
     setImages([]);
+  };
+
+  const handlePreview = (values: FormValues) => {
+    console.log("Preview values:", values);
+    // TODO: Implement preview functionality
   };
 
   return (
@@ -145,7 +167,7 @@ const AdverDesktop = () => {
                 </section>
                 <section className={styles.formWrapper}>
                   <div style={{ display: "flex", gap: "40px" }}>
-                    <div >
+                    <div>
                       {/* Назва товару */}
                       <div style={{ marginBottom: "40px" }}>
                         <label>
@@ -161,15 +183,15 @@ const AdverDesktop = () => {
                             onBlur={handleBlur}
                           />
                           <div className={styles.textareaText}>
-                          <p>Введіть від 16 до 70 символів</p>
-                          <p>{descriptionLength}/70</p>
-                        </div>
+                            <p>Введіть від 16 до 70 символів</p>
+                            <p>{descriptionLength}/70</p>
+                          </div>
                         </label>
-                        {/* <ErrorMessage
-                      touched={touched.product}
-                      error={errors.product}
-                      successMessage="Успішно введено назву товару"
-                    /> */}
+                        <ErrorMessage
+                          touched={touched.product}
+                          error={errors.product}
+                          successMessage="Успішно введено назву товару"
+                        />
                       </div>
                       {/* Категорія */}
                       <div className={styles.fieldWrapper}>
@@ -182,7 +204,7 @@ const AdverDesktop = () => {
                             className={styles.styledField}
                             type="text"
                             name="category"
-                            value={values.categoryId}
+                            value={values.category}
                             readOnly
                             placeholder="зазначте категорію"
                             onBlur={handleBlur}
@@ -190,7 +212,7 @@ const AdverDesktop = () => {
                           <button
                             type="button"
                             className={styles.buttonInput}
-                            onClick={() => setIsCategoryModalOpen(true)}
+                            onClick={() => setIsSearchCategoryModalOpen(true)}
                           >
                             <Image
                               priority
@@ -201,11 +223,11 @@ const AdverDesktop = () => {
                             />
                           </button>
                         </label>
-                        {/* <ErrorMessage
-                      touched={touched.category}
-                      error={errors.category}
-                      successMessage="Категорія успішно додана"
-                    /> */}
+                        <ErrorMessage
+                          touched={touched.category}
+                          error={errors.category}
+                          successMessage="Категорія успішно додана"
+                        />
                       </div>
                     </div>
                     {/* Опис */}
@@ -273,6 +295,7 @@ const AdverDesktop = () => {
                         <label className={styles.toggleLabel}>
                           <span className={styles.toggleText}>Договірна</span>
                           <ToggleSwitch
+                            name="isNegotiable"
                             checked={isNegotiable}
                             onChange={(checked) => {
                               setIsNegotiable(checked);
@@ -291,6 +314,7 @@ const AdverDesktop = () => {
                           options={[
                             { value: "New", label: "Нове" },
                             { value: "Used", label: "Вживане" },
+                            { value: "Other", label: "Інше" },
                           ]}
                           groupClass={styles.radioboxGroup}
                           labelClass={`${styles.radioboxLabel} ${styles.check}`}
@@ -301,11 +325,11 @@ const AdverDesktop = () => {
                           uncheckedIcon={radioboxIcon}
                           checkedIcon={checkIcon}
                         />
-                        {/* <ErrorMessage
-                        touched={touched.condition}
-                        error={errors.condition}
-                        successMessage="Стан товару успішно додано"
-                      /> */}
+                        <ErrorMessage
+                          touched={touched.condition}
+                          error={errors.condition}
+                          successMessage="Стан товару успішно додано"
+                        />
                       </div>
                     </div>
 
@@ -326,11 +350,11 @@ const AdverDesktop = () => {
                           />
                         </label>
                       </div>
-                      {/* <ErrorMessage
-                      touched={touched.location}
-                      error={errors.location}
-                      successMessage="Місто успішно додано"
-                    /> */}
+                      <ErrorMessage
+                        touched={touched.location}
+                        error={errors.location}
+                        successMessage="Місто успішно додано"
+                      />
 
                       <div style={{ marginTop: "85px" }}>
                         <RadioButtonGroup
@@ -351,11 +375,11 @@ const AdverDesktop = () => {
                           uncheckedIcon={radioboxIcon}
                           checkedIcon={checkIcon}
                         />
-                        {/* <ErrorMessage
-                        touched={touched.delivery}
-                        error={errors.delivery}
-                        successMessage="Спосіб доставки успішно додано"
-                      /> */}
+                        <ErrorMessage
+                          touched={touched.delivery}
+                          error={errors.delivery}
+                          successMessage="Спосіб доставки успішно додано"
+                        />
                       </div>
                     </div>
                   </div>
@@ -364,9 +388,10 @@ const AdverDesktop = () => {
 
               <div className={styles.buttonWrapper}>
                 <CommonButton
-                  type="submit"
+                  type="button"
                   title="Попередній перегляд"
                   className={styles.adverButton}
+                  onClick={() => handlePreview(values)}
                 />
                 <CommonButton
                   type="submit"
@@ -375,27 +400,16 @@ const AdverDesktop = () => {
                 />
               </div>
             </Form>
-            {isCategoryModalOpen && (
-              <CategorySelectModal
-                open={isCategoryModalOpen}
-                onClose={() => setIsCategoryModalOpen(false)}
-                onSelect={(value) => {
-                  setSelectedCategory(value.nameUkr);
-                  setFieldValue("category", value.nameUkr);
-                }}
-                categories={[]}
-              />
-            )}
-            {isSubCategoryModalOpen && (
+            {isSearchCategoryModalOpen && (
               <CategoryTreeModal
-                open={isSubCategoryModalOpen}
-                onClose={() => setIsSubCategoryModalOpen(false)}
+                open={isSearchCategoryModalOpen}
+                onClose={() => setIsSearchCategoryModalOpen(false)}
                 onSelect={(value) => {
                   const formatted = value.join(" / ");
-                  setSelectedSubCategory(formatted);
-                  setFieldValue("subcategory", formatted);
+                  setSelectedCategory(formatted);
+                  setFieldValue("category", formatted);
                 }}
-                subCategories={[]}
+                categories={[]}
               />
             )}
           </>
@@ -406,48 +420,3 @@ const AdverDesktop = () => {
 };
 
 export default AdverDesktop;
-
-{
-  /* Підкатегорія */
-}
-{
-  /* <div className={styles.fieldWrapper}>
-                    <label>
-                      Підкатегорія
-                      <span style={{ color: "red", marginLeft: "4px" }}>*</span>
-                      <Field
-                        className={styles.styledField}
-                        type="text"
-                        name="subcategory"
-                        value={values.subcategory}
-                        readOnly
-                        placeholder="зазначте підкатегорію"
-                        onBlur={handleBlur}
-                      />
-                      <button
-                        type="button"
-                        className={styles.buttonInput}
-                        onClick={() => setIsSubCategoryModalOpen(true)}
-                      >
-                        <Image
-                          priority
-                          src={Search}
-                          alt="icon search"
-                          width={24}
-                          height={24}
-                        />
-                      </button>
-                    </label>
-                    <ErrorMessage
-                      touched={touched.subcategory}
-                      error={errors.subcategory}
-                      successMessage="Підкатегорія успішно додана"
-                    />
-                  </div> */
-}
-{
-  /* Радіо кнопки */
-}
-{
-  /* <section className={styles.radioboxWrapper}></section> */
-}

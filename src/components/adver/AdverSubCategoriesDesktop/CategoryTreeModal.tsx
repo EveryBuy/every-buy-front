@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import { CommonButton, CommonModal } from "@/components";
 import styles from "./CategoryTreeModal.module.scss";
+import RightArrowIcon from "@/assets/Svg/rightArrow.svg";
+
 import { SubCategory } from "@/redux/advertisement/slice";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import {
@@ -15,10 +17,11 @@ import {
   selectTopSubCategories,
   selectLowSubCategories,
 } from "@/redux/advertisement/selectors";
+import Image from "next/image";
 
 interface CategoryTreeModalProps {
   open: boolean;
-  subCategories: SubCategory[];
+  categories: SubCategory[];
   onClose: () => void;
   onSelect: (value: string[]) => void;
 }
@@ -29,7 +32,6 @@ export const CategoryTreeModal = ({
   onSelect,
 }: CategoryTreeModalProps) => {
   const dispatch = useAppDispatch();
-
   const categories = useAppSelector(selectCategories);
   const topSubCategories = useAppSelector(selectTopSubCategories);
   const lowSubCategories = useAppSelector(selectLowSubCategories);
@@ -44,9 +46,9 @@ export const CategoryTreeModal = ({
     name: string;
   } | null>(null);
 
-  const [selectedLowSubCategory, setSelectedLowSubCategory] = useState<string | null>(null);
-
-  const [finalSelection, setFinalSelection] = useState<string[] | null>(null);
+  const [selectedLowSubCategory, setSelectedLowSubCategory] = useState<
+    string | null
+  >(null);
 
   useEffect(() => {
     dispatch(getCategory());
@@ -64,24 +66,15 @@ export const CategoryTreeModal = ({
     }
   }, [selectedTopSubCategory, dispatch]);
 
-  const handleReset = () => {
-    setSelectedCategory(null);
-    setSelectedTopSubCategory(null);
-    setSelectedLowSubCategory(null);
-    setFinalSelection(null);
-  };
-
-  const handleConfirm = () => {
-    if (selectedCategory && selectedTopSubCategory && selectedLowSubCategory) {
+  const handleLowCategoryClick = (lowName: string) => {
+    if (selectedCategory && selectedTopSubCategory) {
       const selection = [
         selectedCategory.name,
         selectedTopSubCategory.name,
-        selectedLowSubCategory,
+        lowName,
       ];
-      setFinalSelection(selection);
       onSelect(selection);
       onClose();
-      handleReset();
     }
   };
 
@@ -91,32 +84,45 @@ export const CategoryTreeModal = ({
         <div className={styles.columns}>
           {/* Головні категорії */}
           <div className={styles.column}>
-            {categories.map((cat) => (
+            {categories.map((category) => (
               <button
-                key={cat.id}
+                key={category.id}
                 className={`${styles.item} ${
-                  selectedCategory?.id === cat.id ? styles.itemActive : ""
-                } ${styles.itemWithArrow}`}
+                  selectedCategory?.id === category.id ? styles.itemActive : ""
+                }`}
                 onClick={() => {
-                  setSelectedCategory({ id: cat.id, name: cat.nameUkr });
+                  setSelectedCategory({
+                    id: category.id,
+                    name: category.nameUkr,
+                  });
                   setSelectedTopSubCategory(null);
-                  setSelectedLowSubCategory(null);
                 }}
               >
-                {cat.nameUkr}
+                <div className={styles.btnBox}>
+                  <span className={styles.label}>{category.nameUkr}</span>
+                  <Image
+                    src={RightArrowIcon}
+                    alt="arrow"
+                    className={styles.arrowIcon}
+                    width={24}
+                    height={24}
+                  />
+                </div>
               </button>
             ))}
           </div>
 
           {/* Топ-підкатегорії */}
-          {selectedCategory && (
-            <div className={styles.column}>
-              {topSubCategories.map((top) => (
+          <div className={styles.column}>
+            {selectedCategory &&
+              topSubCategories.map((top) => (
                 <button
                   key={top.id}
                   className={`${styles.item} ${
-                    selectedTopSubCategory?.id === top.id ? styles.itemActive : ""
-                  } ${styles.itemWithArrow}`}
+                    selectedTopSubCategory?.id === top.id
+                      ? styles.itemActive
+                      : ""
+                  }`}
                   onClick={() => {
                     setSelectedTopSubCategory({
                       id: top.id,
@@ -125,16 +131,26 @@ export const CategoryTreeModal = ({
                     setSelectedLowSubCategory(null);
                   }}
                 >
-                  {top.subCategoryNameUkr}
+                  <div className={styles.btnBox}>
+                    <span className={styles.label}>
+                      {top.subCategoryNameUkr}
+                    </span>
+                    <Image
+                      src={RightArrowIcon}
+                      alt="arrow"
+                      className={styles.arrowIcon}
+                      width={24}
+                      height={24}
+                    />
+                  </div>
                 </button>
               ))}
-            </div>
-          )}
+          </div>
 
           {/* Низькорівневі підкатегорії */}
-          {selectedTopSubCategory && (
-            <div className={styles.column}>
-              {lowSubCategories.map((low) => (
+          <div className={styles.column}>
+            {selectedTopSubCategory &&
+              lowSubCategories.map((low) => (
                 <button
                   key={low.id}
                   className={`${styles.item} ${
@@ -142,23 +158,24 @@ export const CategoryTreeModal = ({
                       ? styles.itemActive
                       : ""
                   }`}
-                  onClick={() => setSelectedLowSubCategory(low.subCategoryNameUkr)}
+                  onClick={() => handleLowCategoryClick(low.subCategoryNameUkr)}
                 >
-                  {low.subCategoryNameUkr}
+                  <div className={styles.btnBox}>
+                    <span className={styles.label}>
+                      {low.subCategoryNameUkr}
+                    </span>
+                    <Image
+                      src={RightArrowIcon}
+                      alt="arrow"
+                      className={styles.arrowIcon}
+                      width={24}
+                      height={24}
+                    />
+                  </div>
                 </button>
               ))}
-            </div>
-          )}
+          </div>
         </div>
-
-        <CommonButton
-          type="submit"
-          title="Підтвердити"
-          color="yellow"
-          className={styles.confirmButton}
-          onClick={handleConfirm}
-          disabled={!selectedCategory || !selectedTopSubCategory || !selectedLowSubCategory}
-        />
       </div>
     </CommonModal>
   );
