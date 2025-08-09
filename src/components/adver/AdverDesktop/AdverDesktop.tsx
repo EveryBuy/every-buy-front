@@ -345,7 +345,7 @@ const AdverDesktop = () => {
                             className={styles.styledField}
                             type="text"
                             name="location"
-                            placeholder="вкажшть назву Вашого міста"
+                            placeholder="вкажіть назву вашого міста"
                             onBlur={handleBlur}
                           />
                         </label>
