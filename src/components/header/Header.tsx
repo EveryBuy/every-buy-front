@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, FC } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { useAppSelector } from "@/redux/store";
@@ -14,9 +14,11 @@ import {
 } from "@/components";
 import Logo from "@/assets/Svg/logo.svg";
 import styles from "./Header.module.scss";
+import { Alert } from "@mui/material";
 // import styles from "../../components/header/";
 
 const Header: FC = () => {
+  const router = useRouter();
   const path = usePathname();
   const [isDropdownMenuVisible, setDropdownMenuVisible] = useState(false);
   const [successRegisterModalOpen, setSuccessRegisterModalOpen] =
@@ -30,6 +32,16 @@ const Header: FC = () => {
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const openWindowHandle = () => {
     !isLoggedIn ? setSuccessRegisterModalOpen((prev) => !prev) : null;
+  };
+
+  const handleAddAdClick = () => {
+    if (!isLoggedIn) {
+      console.log('Потрібна аторизація')
+      
+      setSuccessRegisterModalOpen(true);
+    } else {
+      router.replace("/adver");
+    }
   };
 
   useEffect(() => {
@@ -75,6 +87,7 @@ const Header: FC = () => {
             title="Додати оголошення"
             color="yellow"
             className={styles.headerButton}
+            onClick={handleAddAdClick}
           />
           <div className={styles.iconsWrapper}>
             <div onClick={openWindowHandle}>

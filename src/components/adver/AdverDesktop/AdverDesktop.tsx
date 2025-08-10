@@ -21,6 +21,9 @@ import styles from "./AdverDesktop.module.scss";
 
 import { CategoryTreeModal } from "../AdverSubCategoriesDesktop/CategoryTreeModal";
 import ToggleSwitch from "../ToggleSwitch/ToogleSwitch";
+import { selectToken } from "@/redux/auth/selectors";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { createAdvertisement } from "@/redux/advertisement/operations";
 
 // interface FormValues {
 //   topSubCategoryId: number | null;
@@ -43,17 +46,16 @@ import ToggleSwitch from "../ToggleSwitch/ToogleSwitch";
 const AdverDesktop = () => {
   const [images, setImages] = useState<{ file: File; url: string }[]>([]);
   const [isNegotiable, setIsNegotiable] = useState(false);
-
-  // const { setFieldValue, touched, errors, handleBlur } =
-  //   useFormikContext<any>();
+  const dispatch = useAppDispatch();
+  const token = useAppSelector((state) => state.auth.token);
 
   const initialValues: FormValues = {
     topSubCategoryId: null,
     lowSubCategoryId: null,
     categoryId: null,
-    section: "",
+    // section: "",
     cityId: null,
-    productType: "",
+    // productType: "",
     price: "",
     isNegotiable: false,
     title: "",
@@ -65,6 +67,8 @@ const AdverDesktop = () => {
     location: "",
     condition: "",
     delivery: "",
+    section: "SELL",
+    productType: "",
   };
 
   const [descriptionLength, setDescriptionLength] = useState(0);
@@ -76,48 +80,78 @@ const AdverDesktop = () => {
 
   const AuthSchema = Yup.object().shape({
     product: Yup.string().required("Будь ласка, вкажіть назву товару"),
-    price: Yup.string().required("Будь ласка, зазначте бажану ціну"),
+    price: Yup.number()
+      .typeError("Використовуйте лише цифри")
+      .when("isNegotiable", {
+        is: true,
+        then: (s) => s.nullable().notRequired(),
+        otherwise: (s) =>
+          s.required("Будь ласка, зазначте бажану ціну").min(1, "Мінімум 1"),
+      }),
+
     description: Yup.string().required("Будь ласка, додайте опис товару"),
     category: Yup.string().required("Будь ласка, зазначте категорію товару"),
     location: Yup.string().required("Будь ласка, вкажіть місцезнаходження"),
     condition: Yup.string()
       .oneOf(["New", "Used"], "Будь ласка, оберіть стан товару")
       .required("Будь ласка, оберіть стан товару"),
-    delivery: Yup.string()
-      .oneOf(
-        ["New_mail", "Ukrposhta", "Meest_Express"],
-        "Будь ласка, оберіть спосіб доставки"
-      )
-      .required("Будь ласка, оберіть спосіб доставки"),
+    // delivery: Yup.string()
+    //   .oneOf(
+    //     ["New_mail", "Ukrposhta", "Meest_Express"],
+    //     "Будь ласка, оберіть спосіб доставки"
+    //   )
+    //   .required("Будь ласка, оберіть спосіб доставки"),
+    section: Yup.string()
+      .oneOf(["SELL", "BUY"])
+      .required("Оберіть тип оголошення"),
+    // productType: Yup.string()
+    //   .oneOf(["NEW", "USED", "OTHER"])
+    //   .required("Оберіть тип товару"),
   });
 
+  // всередині компонента
   const handleSubmit = async (
     values: FormValues,
     actions: FormikHelpers<FormValues>
   ) => {
-    const formData = new FormData();
+    try {
+      // збираємо payload для бекенду
+      const requestPayload = {
+        topSubCategoryId: values.topSubCategoryId,
+        lowSubCategoryId: values.lowSubCategoryId,
+        categoryId: values.categoryId,
+        section: values.section, // "SELL" | "BUY" (важливо не "")
+        cityId: values.cityId,
+        productType: values.productType, // "NEW" | "USED" | "OTHER"
+        price: values.isNegotiable ? null : Number(values.price || 0),
+        title: values.title?.trim() || "",
+        description: values.description?.trim() || "",
+        deliveryMethods: (values.deliveryMethods || []).filter(Boolean),
+      };
 
-    Object.entries(values).forEach(([key, value]) => {
-      if (value === null || value === undefined) {
-        formData.append(key, "");
-      } else if (Array.isArray(value)) {
-        value.forEach((item, index) => {
-          formData.append(`${key}[${index}]`, String(item));
-        });
-      } else {
-        formData.append(key, String(value));
+      const formData = new FormData();
+      formData.append(
+        "request",
+        new Blob([JSON.stringify(requestPayload)], { type: "application/json" })
+      );
+      images.forEach(({ file }) => formData.append("photos", file));
+      console.log("form Data", formData);
+      if (!token) {
+        // показати модалку логіну або повернутись
+        console.error("No token provided");
+        return;
       }
-    });
 
-    images.forEach((image, index) => {
-      formData.append(`photos[${index}]`, image.file);
-    });
-    await fetch("/api/product/create", {
-      method: "POST",
-      body: formData,
-    });
-    actions.resetForm();
-    setImages([]);
+      // через thunk (рекомендовано)
+      await dispatch(createAdvertisement(formData)).unwrap();
+
+      actions.resetForm();
+      setImages([]);
+    } catch (e) {
+      console.error("Create advert failed:", e);
+    } finally {
+      actions.setSubmitting(false);
+    }
   };
 
   const handlePreview = (values: FormValues) => {
@@ -130,27 +164,6 @@ const AdverDesktop = () => {
       <div className={styles.adHeader}>
         <h1>Створити оголошення</h1>
       </div>
-      <div className={styles.linkItem}>
-        <label className={styles.linkItemText}>
-          <input
-            type="radio"
-            name="example"
-            value="buy"
-            className={styles.radio}
-          />
-          <span>Куплю</span>
-        </label>
-
-        <label className={styles.linkItemText}>
-          <input
-            type="radio"
-            name="example"
-            value="sell"
-            className={styles.radio}
-          />
-          <span>Продам</span>
-        </label>
-      </div>
 
       <Formik
         initialValues={initialValues}
@@ -160,6 +173,27 @@ const AdverDesktop = () => {
         {({ handleBlur, touched, errors, setFieldValue, values }) => (
           <>
             <Form autoComplete="off" className={styles.styledForm}>
+              <div className={styles.linkItem}>
+                <label className={styles.linkItemText}>
+                  <Field
+                    type="radio"
+                    name="section"
+                    value="BUY"
+                    className={styles.radio}
+                  />
+                  <span>Куплю</span>
+                </label>
+
+                <label className={styles.linkItemText}>
+                  <Field
+                    type="radio"
+                    name="section"
+                    value="SELL"
+                    className={styles.radio}
+                  />
+                  <span>Продам</span>
+                </label>
+              </div>
               <div className={styles.wrapperInput}>
                 <section className={styles.formWrapper}>
                   {/* фото */}
@@ -299,10 +333,7 @@ const AdverDesktop = () => {
                             checked={isNegotiable}
                             onChange={(checked) => {
                               setIsNegotiable(checked);
-                              setFieldValue(
-                                "price",
-                                checked ? "договірна" : ""
-                              );
+                              setFieldValue("price", checked ? null : "");
                             }}
                           />
                         </label>
@@ -312,9 +343,9 @@ const AdverDesktop = () => {
                           name="condition"
                           title="Стан товару"
                           options={[
-                            { value: "New", label: "Нове" },
-                            { value: "Used", label: "Вживане" },
-                            { value: "Other", label: "Інше" },
+                            { value: "NEW", label: "Нове" },
+                            { value: "USED", label: "Вживане" },
+                            { value: "OTHER", label: "Інше" },
                           ]}
                           groupClass={styles.radioboxGroup}
                           labelClass={`${styles.radioboxLabel} ${styles.check}`}
@@ -331,7 +362,37 @@ const AdverDesktop = () => {
                           successMessage="Стан товару успішно додано"
                         />
                       </div>
-                    </div>
+                      {/* <div className={styles.radioboxGroup}>
+                        <p className={styles.toggleText}>Тип товару</p>
+                        <label className={styles.radioboxLabel}>
+                          <Field
+                            type="radio"
+                            name="productType"
+                            value="NEW"
+                            className={styles.visuallyHidden}
+                          />
+                          <span>Нове</span>
+                        </label>
+                        <label className={styles.radioboxLabel}>
+                          <Field
+                            type="radio"
+                            name="productType"
+                            value="USED"
+                            className={styles.visuallyHidden}
+                          />
+                          <span>Вживане</span>
+                        </label>
+                        <label className={styles.radioboxLabel}>
+                          <Field
+                            type="radio"
+                            name="productType"
+                            value="OTHER"
+                            className={styles.visuallyHidden}
+                          />
+                          <span>Інше</span>
+                        </label>
+                      </div> */}
+                  </div>
 
                     {/* Місцезнаходження */}
                     <div style={{}}>
@@ -348,6 +409,19 @@ const AdverDesktop = () => {
                             placeholder="вкажіть назву вашого міста"
                             onBlur={handleBlur}
                           />
+                          <button
+                            type="button"
+                            className={styles.buttonInput}
+                            onClick={() => setIsSearchCategoryModalOpen(true)}
+                          >
+                            <Image
+                              priority
+                              src={Search}
+                              alt="icon search"
+                              width={24}
+                              height={24}
+                            />
+                          </button>
                         </label>
                       </div>
                       <ErrorMessage
@@ -361,8 +435,8 @@ const AdverDesktop = () => {
                           name="delivery"
                           title="Спосіб доставки"
                           options={[
-                            { value: "New_mail", label: "Нова пошта" },
-                            { value: "Ukrposhta", label: "Укрпошта" },
+                            { value: "NOVA_POST", label: "Нова пошта" },
+                            { value: "UKR_POST", label: "Укрпошта" },
                             { value: "Meest_Express", label: "Meest Express" },
                             { value: "Other", label: "Інше" },
                           ]}

@@ -91,7 +91,7 @@ const AdverPhotoList: React.FC<AdverPhotoListProps> = ({
     updatedImages.splice(destinationIndex, 0, movedImage);
     setImages(updatedImages);
   };
-  console.log(images);
+  // console.log(images);
   return (
     <section className={styles.adverPhoto}>
       <h3>Фото</h3>

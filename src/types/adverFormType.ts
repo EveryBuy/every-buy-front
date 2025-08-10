@@ -26,4 +26,5 @@ export type FormValues = {
   location: string;
   condition: string;
   delivery: string;
+  
 };
