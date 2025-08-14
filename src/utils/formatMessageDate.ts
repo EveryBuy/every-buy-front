@@ -1,35 +1,95 @@
-// const formatMessageDate = (dateString: string): string => {
-//   const date = new Date(dateString);
-//
-//   const day = String(date.getDate()).padStart(2, "0");
-//   const month = String(date.getMonth() + 1).padStart(2, "0");
-//   const year = date.getFullYear();
-//
-//   return `${day}.${month}.${year}`;
-// };
-
 const formatMessageDate = (dateString: string): string => {
-  const date = new Date(dateString);
+  const date = new Date(dateString + "Z");
 
-  const day = date.getDate();
-  const year = date.getFullYear();
+  const day = date.toLocaleDateString("uk-UA", {
+    timeZone: "Europe/Kyiv",
+    day: "numeric",
+  });
+
+  const year = date.toLocaleDateString("uk-UA", {
+    timeZone: "Europe/Kyiv",
+    year: "numeric",
+  });
+
+  // Отримуємо номер місяця (1-12) і конвертуємо в індекс масиву (0-11)
+  const monthNumber =
+    Number.parseInt(
+      date.toLocaleDateString("uk-UA", {
+        timeZone: "Europe/Kyiv",
+        month: "numeric",
+      })
+    ) - 1;
+
   const months = [
-    "січ", "лют", "бер", "квіт", "трав", "черв", "лип", "серп", "вер", "жовт", "лист", "груд"
+    "січ",
+    "лют",
+    "бер",
+    "квіт",
+    "трав",
+    "черв",
+    "лип",
+    "серп",
+    "вер",
+    "жовт",
+    "лист",
+    "груд",
   ];
-  const month = months[date.getMonth()];
+
+  const month = months[monthNumber];
 
   return `${day} ${month} ${year}`;
 };
 
-
 const formatMessageTime = (dateString: string): string => {
-  const date = new Date(dateString);
+  const date = new Date(dateString + "Z");
 
-  const hours = String(date.getHours()).padStart(2, "0");
-  const minutes = String(date.getMinutes()).padStart(2, "0");
-  // const seconds = String(date.getSeconds()).padStart(2, "0");
+  // Використовуємо toLocaleTimeString для отримання часу в київській зоні
+  const timeString = date.toLocaleTimeString("uk-UA", {
+    timeZone: "Europe/Kyiv",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
 
-  return `${hours}:${minutes}`;
+  return timeString;
 };
 
-export {formatMessageDate, formatMessageTime};
+// Додаткова функція для отримання повної дати та часу
+const formatMessageDateTime = (dateString: string): string => {
+  const dateFormatted = formatMessageDate(dateString);
+  const timeFormatted = formatMessageTime(dateString);
+
+  return `${dateFormatted} о ${timeFormatted}`;
+};
+
+// Функція для перевірки, чи дата сьогоднішня (в київському часі)
+const isToday = (dateString: string): boolean => {
+  const date = new Date(dateString + "Z");
+  const today = new Date();
+
+  const dateInKyiv = date.toLocaleDateString("uk-UA", {
+    timeZone: "Europe/Kyiv",
+  });
+
+  const todayInKyiv = today.toLocaleDateString("uk-UA", {
+    timeZone: "Europe/Kyiv",
+  });
+
+  return dateInKyiv === todayInKyiv;
+};
+
+// Функція для відображення "сьогодні" або дати
+const formatMessageDateSmart = (dateString: string): string => {
+  if (isToday(dateString)) {
+    return "сьогодні";
+  }
+  return formatMessageDate(dateString);
+};
+
+export {
+  formatMessageDate,
+  formatMessageTime,
+  formatMessageDateTime,
+  formatMessageDateSmart,
+  isToday,
+};

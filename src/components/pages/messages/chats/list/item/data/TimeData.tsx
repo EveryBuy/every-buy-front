@@ -12,10 +12,11 @@ interface TimeDataType {
 
 const TimeData: FC<TimeDataType> = ({ lastMessageDate, chat }) => {
   const formattedDate = formatMessageTime(lastMessageDate);
-  const hasUnread =
-    chat &&
-    typeof chat.unreadMessagesCount === "number" &&
-    chat.unreadMessagesCount > 0;
+  // const hasUnread =
+  //   chat &&
+  //   typeof chat.unreadMessagesCount === "number" &&
+  //   chat.unreadMessagesCount > 0;
+  const hasUnread = chat && chat.read === false;
 
   return (
     <div className={style.blockWrapper}>

@@ -21,6 +21,7 @@ type ChatType = {
   chat: ChatType;
   anotherUserBlocked?: boolean | null;
   currentlyUserBlocked?: boolean | null;
+  read?: boolean;
 };
 
 type NewChatType = {

@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Box } from "@mui/material";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import { Menu, CommonIcon } from "@/components";
+import { formatMessageTime } from "@/utils/formatMessageDate";
 import style from "./Companion.module.scss";
 
 type CompanionBlockType = {
@@ -37,6 +38,10 @@ const Companion: FC<CompanionBlockType> = ({
   const menuRef = useRef<HTMLDivElement>(null);
   const companionPictureUrl = chatData?.userData?.photoUrl;
   const companionName = chatData?.userData?.fullName;
+
+  const formattedDate = formatMessageTime(chatData?.updateAt);
+  console.log(formattedDate);
+  console.log(chatData);
 
   const picture = companionPictureUrl ? (
     <Image
@@ -102,7 +107,7 @@ const Companion: FC<CompanionBlockType> = ({
           >
             {name}
           </p>
-          <p className={style.time}>Як нам дізнатися час?</p>
+          <p className={style.time}>{formattedDate}</p>
         </Box>
       </Box>
       <Box
@@ -151,7 +156,7 @@ const Companion: FC<CompanionBlockType> = ({
           {picture}
           <Box className={style.companionInfo}>
             <p className={style.name}>{name}</p>
-            <p className={style.time}>Як нам дізнатися час?</p>
+            <p className={style.time}>{formattedDate}</p>
           </Box>
         </Box>
         <Box className={style.companionMenuWrapper} ref={menuRef}>
