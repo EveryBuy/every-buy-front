@@ -55,13 +55,14 @@ const Category: React.FC = () => {
 					<h2 className={styles.title}></h2>
 					<CommonSectionSelector section={section} setSection={setSection} />
 				</div>
-				<div className={styles.wrapperHiddenText}>
+				{/* <div className={styles.wrapperHiddenText}>
 					<h2 className={styles.hiddenText} onClick={makeLinkOpen}>
 						{isListOpen ? "Сховати" : "Дивитись усі"}
 					</h2>
-				</div>
+				</div> */}
 				{data && data.length > 0 ? (
-					<ul className={isListOpen ? styles.listAll : styles.list}>
+					// <ul className={isListOpen ? styles.listAll : styles.list}>
+					<ul className={styles.listAll}>
 						{data.map(({ id, nameUkr, photoUrl }) => (
 							<li className={styles.listItem} key={id}>
 								<Link href={`/catalogy?categoryId=${id}`}>
