@@ -2,184 +2,234 @@
 @import "../../styles/breakpoints";
 
 .header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-size: var(--f-size-small);
-  background-color: var(--background);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	font-size: var(--f-size-small);
+	background-color: var(--background);
 
-  @media (min-width: 768px) {
-    margin-bottom: 28px;
-    background: #b4b4b4;
-    border-bottom: none;
-    border-bottom: 2px solid #000000;
-  }
+	@media (min-width: 768px) {
+		margin-bottom: 28px;
+		background-color: var(--bg-header-footer);
+		border-bottom: none;
+		// border-bottom: 2px solid #000000;
+	}
 
-  @media (min-width: 1024px) {
-    margin-bottom: 40px;
-  }
+	@media (min-width: 1024px) {
+		margin-bottom: 46px;
+	}
 }
 
 .headerContainer {
-  width: 100%;
-  max-width: 1440px;
-  display: flex;
-  justify-content: center;
-  padding: 20px 30px 40px;
+	width: 100%;
 
-  @media (min-width: 768px) {
-    justify-content: space-between;
-    gap: 10px;
-    padding: 30px 40px 26px;
-  }
+	display: flex;
+	justify-content: center;
+	padding: 20px 30px 30px;
 
-  @media (min-width: 1024px) {
-    justify-content: space-between;
-    gap: 10px;
-    padding: 30px 60px 26px;
-  }
+	@media (min-width: 768px) {
+		justify-content: space-between;
+		gap: 10px;
+		padding: 12px 60px;
+	}
+
+	@media (min-width: 1024px) {
+		max-width: 1440px;
+		justify-content: space-between;
+		gap: 10px;
+		// padding: 12px 0;
+	}
 }
 
 .headerPageContainer {
-  justify-content: space-between;
+	display: none;
+
+	// justify-content: space-between;
+	@media (min-width: 768px) {
+		display: flex;
+	}
 }
 
 .logo {
-  width: 45px;
-  height: 33px;
+	// width: 45px;
+	// height: 33px;
+	display: none;
 
-  @media (min-width: 768px) {
-    width: 104px;
-    height: 77px;
-  }
+	@media (min-width: 768px) {
+		display: block;
+		width: 103px;
+		height: 76px;
+	}
 
-  & img {
-    width: 100%;
-    height: 100%;
-  }
+	& img {
+		width: 100%;
+		height: 100%;
+	}
+}
+
+.logoMobile {
+	@media (min-width: 768px) {
+		display: none;
+	}
 }
 
 .searchButton {
-  width: 45px;
-  height: 31px;
-  background-color: #e5ff46;
-  border: 1px solid #e5ff46;
-  border-radius: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: all 0.3s ease;
+	width: 45px;
+	height: 31px;
+	background-color: #e5ff46;
+	border: 1px solid #e5ff46;
+	border-radius: 10px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transition: all 0.3s ease;
 
-  & svg {
-    margin: 0px;
-    width: 15px;
-    height: 15px;
-  }
+	& svg {
+		margin: 0px;
+		width: 15px;
+		height: 15px;
+	}
 
-  @include media-min($breakpoint-tablet) {
-    display: none;
-  }
+	@include media-min($breakpoint-tablet) {
+		display: none;
+	}
 }
 
 .addAdvertisingContainer {
-  display: none;
+	display: none;
 
-  @media (min-width: 768px) {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    background-color: #b4b4b4;
-  }
+	@media (min-width: 768px) {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		// background-color: #b4b4b4;
+	}
 
-  @media (min-width: 1024px) {
-    gap: 10px;
-  }
+	@media (min-width: 1024px) {
+		gap: 10px;
+	}
 }
 
 .linkToUserPage {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: transform 0.2s;
-}
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transition: transform 0.2s;
+	transform-origin: left;
 
-.linkToUserPage:hover {
-  transform: scale(1.2);
+	&:hover {
+		transform: scale(1.1);
+	}
 }
 
 .headerButton {
-  border-radius: 10px;
-  padding: 12px 28px;
-  margin-right: 35px;
-  color: var(--label);
-  font-size: var(-body-text);
+	border-radius: 10px;
+	padding: 16px 20px;
+	margin-right: 35px;
+	color: var(--label);
+	font-size: var(-body-text);
 
-  @media (max-width: 480) {
-    font-size: 16px;
-    padding: 12px 20px;
-  }
+	@media (max-width: 480px) {
+		font-size: 16px;
+		padding: 16px 28px;
+		margin-right: 40px;
+	}
 
-  @media (min-width: 1024px) {
-    padding: 18px 59px;
-    font-size: 20px;
-    margin-right: 50px;
-  }
+	@media (min-width: 1024px) {
+		padding: 20px 59px;
+		font-size: 20px;
+		// margin-right: 50px;
+	}
 }
 
 .headerLink {
-  background-color: var(--color-yellow);
+	background-color: var(--color-yellow);
 }
 
 .iconsWrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  column-gap: 16px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	column-gap: 16px;
 
-  @media (min-width: 1024px) {
-    gap: 20px;
-  }
+	@media (min-width: 1024px) {
+		gap: 20px;
+	}
 
-  & svg {
-    margin: 0px;
-  }
+	& svg {
+		margin: 0px;
+	}
+}
+
+.userLoginText {
+	font-size: 20px;
+	color: #fff;
+	margin-left: 8px;
+}
+
+.userInfo {
+	cursor: pointer;
+	transition: transform 0.2s;
+	transform-origin: left;
+
+	&:hover {
+		transform: scale(1.1);
+	}
+
+}
+
+.userPicture {
+	border-radius: 50%;
+	object-fit: cover;
+}
+
+.userName {
+	font-size: 20px;
+	color: #fff;
+	margin-left: 4px;
 }
 
 .registerContainer {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-left: 16px;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin-left: 16px;
 }
 
 .iconDropdown {
-  position: relative;
+	position: relative;
 
-  & div:first-child {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+	& div:first-child {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
 }
 
 .headerMessagePageContainer {
-  display: none;
+	display: none;
 
-  @media (min-width: 768px) {
-    display: flex;
-  }
+	@media (min-width: 768px) {
+		display: flex;
+	}
 }
+
 .iconMessageWrapper {
-  position: relative;
+	position: relative;
 }
 
-.unreadMessageMark {
-  background-color: red;
-  width: 18px;
-  height: 18px;
-  border: 3px solid #b4b4b4;
-  border-radius: 50%;
-  position: absolute;
-  top: -4px;
-  right: -8px;
+.unreadMessageMarkGreen,
+.unreadMessageMarkRed {
+	background-color: #007600;
+	width: 13px;
+	height: 13px;
+	border: 2px solid #fff;
+	border-radius: 50%;
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
+.unreadMessageMarkRed {
+	background-color: #C21919;
 }
