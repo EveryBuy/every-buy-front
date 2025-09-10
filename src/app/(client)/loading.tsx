@@ -4,12 +4,16 @@ export default function Loading() {
 	return (
 		<div
 			style={{
-				position: "fixed",
-				inset: 0,
+				// position: "absolute",
+				// top: 0,
+				// left: 0,
+				// right: 0,
+				// bottom: 0,
 				display: "flex",
 				alignItems: "center",
 				justifyContent: "center",
-				backgroundColor: "white",
+				padding: "60px 10px",
+				// backgroundColor: "white",
 				zIndex: 9999,
 			}}
 		>

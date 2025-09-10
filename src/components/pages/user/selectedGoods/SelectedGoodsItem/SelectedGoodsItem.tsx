@@ -5,8 +5,8 @@ import Image from "next/image";
 import Link from 'next/link';
 import formatAdvertisementDate from "@/utils/formatAdvertisementDate";
 import { CommonIcon } from "@/components";
-import heartSelected from "@/assets/Svg/heartSelected.svg";
-import heart from "@/assets/Svg/heartDefault.svg";
+// import heartSelected from "@/assets/Svg/heartSelected.svg";
+// import heart from "@/assets/Svg/heartDefault.svg";
 import { favouriteAdvertisementItemType } from "@/types/favouriteAdvertisementItemType";
 import styles from "./SelectedGoodsItem.module.scss";
 import noPhotoCard from "@/assets/noPhotoCard.jpg";
@@ -48,7 +48,17 @@ export const SelectedGoodsItem: FC<ItemProps> = ({
 					<div className={`${styles.state} ${item.productType === "NEW" ? "" : styles.stateNotNew}`}>
 						{item.productType === "NEW" ? "нове" : "вживане"}
 					</div>
-					<button className={styles.favouriteBtn} onClick={handleToggleFavourite}>
+					<button
+						className={styles.favouriteBtn}
+						// onClick={handleToggleFavourite}
+						onClick={e => {
+							e.preventDefault();
+							e.stopPropagation();
+							// e.nativeEvent.stopImmediatePropagation();
+							handleToggleFavourite();
+						}
+						}
+					>
 						<CommonIcon
 							id={isFavourite ? "heart" : "icon-heart"}
 							width="22px"
@@ -56,7 +66,8 @@ export const SelectedGoodsItem: FC<ItemProps> = ({
 						/>
 					</button>
 				</div>
-				<h3 className={styles.title}>{shortTitle(item.title, 20)}</h3>
+
+				<h3 className={styles.title}>{item?.title && shortTitle(item.title, 20)}</h3>
 
 				<p className={styles.dateText}>
 					{`${item.city?.cityName || "Місто не вказано"}, ${item.city?.region.regionName || "Область не вказано"

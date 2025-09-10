@@ -16,7 +16,7 @@ type City = {
 	region: Region,
 }
 
-export type MiddleCardType = {
+export type CatalogyCardItemType = {
 	advertisementId: number,
 	mainPhotoUrl: string,
 	title: string,
