@@ -1,40 +1,38 @@
 @import "@/styles/breakpoints";
 @import "@/styles/mixins";
 
-.containerSelectedGoodsItem {
+.containerCardItem {
 	width: 158px;
 	min-height: 374px;
 	height: 100%;
 	display: flex;
 	flex-direction: column;
-	// gap: 18px;
+	// gap: 10px;
 	padding: 16px 12px;
 	border: 1px solid rgba(184, 221, 5, 0.40);
 	border-radius: 10px;
 	transition: transform 250ms ease;
-	// box-shadow: 3px 2px 2px #000000;
-	// transition: box-shadow 250ms ease, transform 250ms ease;
 
 	&:hover {
 		border: 1px solid rgba(184, 221, 5, 1);
-		// transform: scale(1.02);
-		// box-shadow: 5px 3px 3px #000000;
 	}
 
-	@include media-min($breakpoint-laptop) {
+	@include media-min($breakpoint-tablet) {
 		width: 248px;
 		justify-content: space-around;
 	}
+
+	// @include media-min($breakpoint-laptop) {
+	// }
 
 	.imageWrapper {
 		width: 134px;
 		height: 193px;
 		overflow: hidden;
 		position: relative;
-		// border: 1px solid var(--border);
 		border-radius: 8px;
 
-		@include media-min($breakpoint-laptop) {
+		@include media-min($breakpoint-tablet) {
 			width: 224px;
 			height: 224px;
 		}
@@ -42,7 +40,11 @@
 
 	.image {
 		object-fit: cover;
-		height: 100%;
+		width: 100%;
+
+		// @include media-min($breakpoint-tablet) {
+		// 	height: auto;
+		// }
 	}
 
 	.stateWrapper {
@@ -60,7 +62,7 @@
 		background-color: #e7e6e6;
 		border-radius: 4px;
 
-		@include media-min($breakpoint-laptop) {
+		@include media-min($breakpoint-tablet) {
 			border-radius: 8px;
 			font-weight: 400;
 			padding: 7px 10px;
@@ -70,6 +72,7 @@
 	.stateNotNew {
 		color: #2e2c02;
 	}
+
 
 	.favouriteBtn {
 		transition: transform 250ms ease;
@@ -82,6 +85,28 @@
 		&:hover {
 			transform: scale(1.1);
 		}
+
+		.icon_heart,
+		.icon_heart_select {
+			width: 22px;
+			height: 22px;
+			margin-top: 3px;
+			margin-right: 0;
+
+			@include media-min($breakpoint-tablet) {
+				width: 28px;
+				height: 28px;
+			}
+		}
+
+		.icon_heart_select {
+			fill: var(--error);
+		}
+
+		@include media-min($breakpoint-tablet) {
+			width: 36px;
+			height: 36px;
+		}
 	}
 
 	.title {
@@ -90,7 +115,7 @@
 		margin: 6px 0;
 		letter-spacing: 0.16px;
 
-		@include media-min($breakpoint-laptop) {
+		@include media-min($breakpoint-tablet) {
 			margin-bottom: 16px;
 			margin-top: 10px;
 		}
@@ -101,20 +126,18 @@
 		color: #777676;
 		margin-bottom: 24px;
 
-		@include media-min($breakpoint-laptop) {
+		@include media-min($breakpoint-tablet) {
 			font-size: 12px;
 			margin-bottom: 16px;
 		}
 	}
 
-	// .priceWrapper {
-	// 	display: flex;
-	// 	flex-direction: row;
-	// 	justify-content: space-between;
-	// }
-
 	.price {
 		font-weight: 700;
 		margin-top: auto;
+
+		// @include media-min($breakpoint-tablet) {
+
+		// }
 	}
 }

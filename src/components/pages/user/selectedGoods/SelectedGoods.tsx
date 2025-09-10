@@ -20,7 +20,7 @@ export const SelectedGoods: FC = () => {
 	const [selectedCategory, setSelectedCategory] = useState("");
 	const dispatch = useAppDispatch();
 	const categories = useAppSelector(selectCategories);
-	const categoryNames: string[] = categories.map(
+	const categoryNames: string[] = categories?.map(
 		(elem: Category) => elem.nameUkr
 	);
 	categoryNames.unshift("Всі категорії");
