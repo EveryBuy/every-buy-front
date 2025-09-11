@@ -240,19 +240,57 @@ let controllerFilter: AbortController | null = null;
 
 export const getFilteredAdverts = createAsyncThunk('advert/getFiltered',
 	async (filters: {}, thunkAPI) => {
+		if (controllerFilter) {
+			controllerFilter.abort();
+		}
+		controllerFilter = new AbortController();
 		try {
-			const response = await API.get('/product/filter', {
+			const response = await API.get('/product/search', {
 				params: { ...filters },
+				signal: controllerFilter.signal,
 			});
+			controllerFilter = null;
 			return response.data;
 		} catch (error: any) {
-			return thunkAPI.rejectWithValue(error.message)
+			if (axios.isCancel(error)) {
+				return thunkAPI.rejectWithValue({ isCanceled: true });
+			}
+			return thunkAPI.rejectWithValue(error.message);
 		}
 	}
 )
 
+let controllerSearch: AbortController | null = null;
+
+export const getSearchAdverts = createAsyncThunk('advert/getFiltered',
+	async (keyword: string, thunkAPI) => {
+		if (controllerSearch) {
+			controllerSearch.abort();
+		}
+		controllerSearch = new AbortController();
+		try {
+			const response = await API.get(`/product/category/search?keyword=${keyword}`, {
+				signal: controllerSearch.signal,
+			});
+			controllerSearch = null;
+			return response.data;
+		} catch (error: any) {
+			if (axios.isCancel(error)) {
+				return thunkAPI.rejectWithValue({ isCanceled: true });
+			}
+			return thunkAPI.rejectWithValue(error.message);
+		}
+	}
+)
+
+let controllerSeller: AbortController | null = null;
+
 export const getAdvertsBySellerId = createAsyncThunk('advert/getListBySellerId',
 	async (params: { userId: number, section?: string, page?: number, categoryId?: number }, thunkAPI) => {
+		if (controllerSeller) {
+			controllerSeller.abort();
+		}
+		controllerSeller = new AbortController();
 		type FilterType = { section?: string, page?: number, categoryId?: number }
 		const filters: FilterType = params.section ? { section: params.section } : {};
 		if (params.page && params.page > 1) filters.page = params.page;
@@ -261,10 +299,15 @@ export const getAdvertsBySellerId = createAsyncThunk('advert/getListBySellerId',
 		try {
 			const response = await API.get(`/product/user/${params.userId}/ads`, {
 				params: { ...filters },  // , size: 5 - for testing navigation
+				signal: controllerSeller.signal,
 			});
+			controllerSeller = null;
 			return response.data;
 		} catch (error: any) {
-			return thunkAPI.rejectWithValue(error.message)
+			if (axios.isCancel(error)) {
+				return thunkAPI.rejectWithValue({ isCanceled: true });
+			}
+			return thunkAPI.rejectWithValue(error.message);
 		}
 	}
 )
