@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Formik, Form, Field, FormikHelpers, useFormikContext } from "formik";
 import * as Yup from "yup";
@@ -21,9 +21,9 @@ import styles from "./AdverDesktop.module.scss";
 
 import { CategoryTreeModal } from "../AdverSubCategoriesDesktop/CategoryTreeModal";
 import ToggleSwitch from "../ToggleSwitch/ToogleSwitch";
-import { selectToken } from "@/redux/auth/selectors";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { createAdvertisement } from "@/redux/advertisement/operations";
+import { selectToken } from "@/redux/auth/selectorsAuth";
 
 // interface FormValues {
 //   topSubCategoryId: number | null;
@@ -43,90 +43,173 @@ import { createAdvertisement } from "@/redux/advertisement/operations";
 //   condition: string;
 //   delivery: string;
 // }
+export type FormValues = {
+  topSubCategoryId: number | null;
+  lowSubCategoryId: number | null;
+  categoryId: number | null;
+
+  section: "SELL" | "BUY";
+  cityId: number | null;
+
+  productType: "NEW" | "USED" | "OTHER" | "";
+
+  price: string | null; // зручно для інпуту; у payload конвертуємо в number | null
+  isNegotiable: boolean;
+
+  title: string; // назва оголошення (можна дублювати з product)
+  description: string;
+
+  deliveryMethods: string[]; // ["NOVA_POST", ...]
+  product: string; // назва товару (UI поле)
+  category: string; // "Категорія / Топ / Низ"
+  subcategory: string; // опційно
+  location: string; // текстове місто (для UI); бек отримує cityId
+  condition: "NEW" | "USED" | "OTHER" | "";
+  delivery: string; // якщо потрібно одну з опцій; але для бек — deliveryMethods[]
+};
+
+const initialValues: FormValues = {
+  topSubCategoryId: null,
+  lowSubCategoryId: null,
+  categoryId: null,
+  section: "SELL",
+  cityId: null,
+  productType: "",
+  price: "",
+  isNegotiable: false,
+  title: "",
+  description: "",
+  deliveryMethods: [],
+  product: "",
+  category: "",
+  subcategory: "",
+  location: "",
+  condition: "",
+  delivery: "",
+};
+
+const AuthSchema = Yup.object().shape({
+  product: Yup.string()
+    .trim()
+    .min(2, "Мінімум 2 символи")
+    .max(70, "Максимум 70 символів")
+    .required("Будь ласка, вкажіть назву товару"),
+  price: Yup.string()
+    .nullable()
+    .when("isNegotiable", {
+      is: false,
+      then: (s) =>
+        s
+          .required("Будь ласка, зазначте бажану ціну")
+          .matches(/^\d+$/, "Використовуйте лише цифри")
+          .test("min-1", "Мінімум 1", (v) => {
+            if (v == null || v === "") {
+              return false;
+            }
+            return Number(v) >= 1;
+          }),
+      otherwise: (s) => s.nullable().notRequired(),
+    }),
+
+  description: Yup.string()
+    .trim()
+    .min(30, "Вкажіть щонайменше 30 символів")
+    .max(3000, "Максимум 3000 символів")
+    .required("Будь ласка, додайте опис товару"),
+  categoryId: Yup.number()
+    .typeError("Будь ласка, зазначте категорію товару")
+    .required("Будь ласка, зазначте категорію товару"),
+  location: Yup.string()
+    .trim()
+    .required("Будь ласка, вкажіть місцезнаходження"),
+  condition: Yup.mixed<"NEW" | "USED" | "OTHER">()
+    .oneOf(["NEW", "USED", "OTHER"], "Будь ласка, оберіть стан товару")
+    .required("Будь ласка, оберіть стан товару"),
+  // delivery: Yup.string()
+  //   .oneOf(
+  //     ["New_mail", "Ukrposhta", "Meest_Express"],
+  //     "Будь ласка, оберіть спосіб доставки"
+  //   )
+  //   .required("Будь ласка, оберіть спосіб доставки"),
+  section: Yup.mixed<"SELL" | "BUY">().oneOf(["SELL", "BUY"]).required(),
+  // productType: Yup.string()
+  //   .oneOf(["NEW", "USED", "OTHER"])
+  //   .required("Оберіть тип товару"),
+});
+
+function FormSyncers() {
+  const { values, setFieldValue } = useFormikContext /* <FormValues> */();
+
+  // (2) delivery -> deliveryMethods
+  useEffect(() => {
+    const methods = values.delivery ? [values.delivery] : [];
+    setFieldValue("deliveryMethods", methods, false);
+  }, [values.delivery, setFieldValue]);
+
+  // (3) condition -> productType
+  useEffect(() => {
+    if (values.condition && values.productType !== values.condition) {
+      setFieldValue("productType", values.condition, false);
+    }
+  }, [values.condition, values.productType, setFieldValue]);
+
+  return null;
+}
+
 const AdverDesktop = () => {
   const [images, setImages] = useState<{ file: File; url: string }[]>([]);
-  const [isNegotiable, setIsNegotiable] = useState(false);
-  const dispatch = useAppDispatch();
-  const token = useAppSelector((state) => state.auth.token);
-
-  const initialValues: FormValues = {
-    topSubCategoryId: null,
-    lowSubCategoryId: null,
-    categoryId: null,
-    // section: "",
-    cityId: null,
-    // productType: "",
-    price: "",
-    isNegotiable: false,
-    title: "",
-    description: "",
-    deliveryMethods: [],
-    product: "",
-    category: "",
-    subcategory: "",
-    location: "",
-    condition: "",
-    delivery: "",
-    section: "SELL",
-    productType: "",
-  };
-
   const [descriptionLength, setDescriptionLength] = useState(0);
+  const [categoryModalOpen, setCategoryModalOpen] = useState(false);
+
+  const dispatch = useAppDispatch();
+  const token = useAppSelector(selectToken);
+
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [isSearchCategoryModalOpen, setIsSearchCategoryModalOpen] =
-    useState(false);
 
   console.log("selectedCategory", selectedCategory);
-
-  const AuthSchema = Yup.object().shape({
-    product: Yup.string().required("Будь ласка, вкажіть назву товару"),
-    price: Yup.number()
-      .typeError("Використовуйте лише цифри")
-      .when("isNegotiable", {
-        is: true,
-        then: (s) => s.nullable().notRequired(),
-        otherwise: (s) =>
-          s.required("Будь ласка, зазначте бажану ціну").min(1, "Мінімум 1"),
-      }),
-
-    description: Yup.string().required("Будь ласка, додайте опис товару"),
-    category: Yup.string().required("Будь ласка, зазначте категорію товару"),
-    location: Yup.string().required("Будь ласка, вкажіть місцезнаходження"),
-    condition: Yup.string()
-      .oneOf(["New", "Used"], "Будь ласка, оберіть стан товару")
-      .required("Будь ласка, оберіть стан товару"),
-    // delivery: Yup.string()
-    //   .oneOf(
-    //     ["New_mail", "Ukrposhta", "Meest_Express"],
-    //     "Будь ласка, оберіть спосіб доставки"
-    //   )
-    //   .required("Будь ласка, оберіть спосіб доставки"),
-    section: Yup.string()
-      .oneOf(["SELL", "BUY"])
-      .required("Оберіть тип оголошення"),
-    // productType: Yup.string()
-    //   .oneOf(["NEW", "USED", "OTHER"])
-    //   .required("Оберіть тип товару"),
-  });
-
+  const handlePreview = (values: FormValues) => {
+    console.log("Preview values:", values);
+    // TODO: Implement preview functionality
+  };
   // всередині компонента
-  const handleSubmit = async (
+  async function handleSubmit(
     values: FormValues,
     actions: FormikHelpers<FormValues>
-  ) => {
+  ) {
     try {
+      if (!token) {
+        console.error("No token provided");
+        //login modal or return
+        return;
+      }
       // збираємо payload для бекенду
       const requestPayload = {
         topSubCategoryId: values.topSubCategoryId,
         lowSubCategoryId: values.lowSubCategoryId,
         categoryId: values.categoryId,
-        section: values.section, // "SELL" | "BUY" (важливо не "")
-        cityId: values.cityId,
-        productType: values.productType, // "NEW" | "USED" | "OTHER"
+
+        section: values.section, // "SELL" | "BUY"
+        cityId: values.cityId, // ОБОВʼЯЗКОВО: має бути число
+
+        // бек вимагає productType — підставляємо зі стану товару
+        productType: (values.productType || values.condition) ?? null, // "NEW" | "USED" | "OTHER"
+
+        // бек вимагає negotiable
+        isNegotiable: Boolean(values.isNegotiable),
+
         price: values.isNegotiable ? null : Number(values.price || 0),
-        title: values.title?.trim() || "",
+
+        title: (values.title || values.product || "").trim(),
         description: values.description?.trim() || "",
-        deliveryMethods: (values.deliveryMethods || []).filter(Boolean),
+
+        // бек вимагає масив
+        deliveryMethods: Array.isArray(values.deliveryMethods)
+          ? values.deliveryMethods.filter(Boolean)
+          : values.delivery
+          ? [values.delivery]
+          : [],
+
+        condition: values.condition || null,
       };
 
       const formData = new FormData();
@@ -136,11 +219,6 @@ const AdverDesktop = () => {
       );
       images.forEach(({ file }) => formData.append("photos", file));
       console.log("form Data", formData);
-      if (!token) {
-        // показати модалку логіну або повернутись
-        console.error("No token provided");
-        return;
-      }
 
       // через thunk (рекомендовано)
       await dispatch(createAdvertisement(formData)).unwrap();
@@ -152,12 +230,7 @@ const AdverDesktop = () => {
     } finally {
       actions.setSubmitting(false);
     }
-  };
-
-  const handlePreview = (values: FormValues) => {
-    console.log("Preview values:", values);
-    // TODO: Implement preview functionality
-  };
+  }
 
   return (
     <div className={styles.adWrapper}>
@@ -172,6 +245,7 @@ const AdverDesktop = () => {
       >
         {({ handleBlur, touched, errors, setFieldValue, values }) => (
           <>
+            <FormSyncers />
             <Form autoComplete="off" className={styles.styledForm}>
               <div className={styles.linkItem}>
                 <label className={styles.linkItemText}>
@@ -214,11 +288,28 @@ const AdverDesktop = () => {
                             type="text"
                             name="product"
                             placeholder="Вкажіть назву товару"
-                            onBlur={handleBlur}
+                            onBlur={(
+                              e: React.ChangeEvent<HTMLInputElement>
+                            ) => {
+                              handleBlur(e);
+                              const trimmed = (e.target.value || "").trim();
+                              if (trimmed && !values.title) {
+                                setFieldValue("title", trimmed);
+                              }
+                            }}
+                            onChange={(
+                              e: React.ChangeEvent<HTMLInputElement>
+                            ) => {
+                              const v = e.target.value;
+                              setFieldValue("product", v);
+                              setDescriptionLength(
+                                v.length > 70 ? 70 : v.length
+                              );
+                            }}
                           />
                           <div className={styles.textareaText}>
                             <p>Введіть від 16 до 70 символів</p>
-                            <p>{descriptionLength}/70</p>
+                            <p>{Math.min(descriptionLength, 70)}/70</p>
                           </div>
                         </label>
                         <ErrorMessage
@@ -246,7 +337,7 @@ const AdverDesktop = () => {
                           <button
                             type="button"
                             className={styles.buttonInput}
-                            onClick={() => setIsSearchCategoryModalOpen(true)}
+                            onClick={() => setCategoryModalOpen(true)}
                           >
                             <Image
                               priority
@@ -258,8 +349,8 @@ const AdverDesktop = () => {
                           </button>
                         </label>
                         <ErrorMessage
-                          touched={touched.category}
-                          error={errors.category}
+                          touched={touched.categoryId}
+                          error={errors.categoryId}
                           successMessage="Категорія успішно додана"
                         />
                       </div>
@@ -280,13 +371,13 @@ const AdverDesktop = () => {
                           onChange={(
                             e: React.ChangeEvent<HTMLTextAreaElement>
                           ) => {
-                            setDescriptionLength(e.target.value.length);
+                            // setDescriptionLength(e.target.value.length);
                             setFieldValue("description", e.target.value);
                           }}
                         />
                         <div className={styles.textareaText}>
                           <p>Вкажіть щонайменше 30 символів</p>
-                          <p>{descriptionLength}/3000</p>
+                          <p>{(values.description || "").length}/3000</p>
                         </div>
                       </label>
                       <ErrorMessage
@@ -313,7 +404,7 @@ const AdverDesktop = () => {
                           name="price"
                           placeholder="Вкажіть бажану ціну"
                           onBlur={handleBlur}
-                          disabled={isNegotiable}
+                          disabled={values.isNegotiable}
                         />
                         <div className={styles.textareaText}>
                           <p>Використовуйте лише цифри</p>
@@ -330,10 +421,14 @@ const AdverDesktop = () => {
                           <span className={styles.toggleText}>Договірна</span>
                           <ToggleSwitch
                             name="isNegotiable"
-                            checked={isNegotiable}
+                            checked={values.isNegotiable}
                             onChange={(checked) => {
-                              setIsNegotiable(checked);
-                              setFieldValue("price", checked ? null : "");
+                              // setIsNegotiable(checked);
+                              // setFieldValue("price", checked ? null : "");
+                              setFieldValue("isNegotiable", checked);
+                              if (checked) {
+                                setFieldValue("price", "");
+                              }
                             }}
                           />
                         </label>
@@ -392,7 +487,7 @@ const AdverDesktop = () => {
                           <span>Інше</span>
                         </label>
                       </div> */}
-                  </div>
+                    </div>
 
                     {/* Місцезнаходження */}
                     <div style={{}}>
@@ -409,10 +504,10 @@ const AdverDesktop = () => {
                             placeholder="вкажіть назву вашого міста"
                             onBlur={handleBlur}
                           />
-                          <button
+                          {/* <button
                             type="button"
                             className={styles.buttonInput}
-                            onClick={() => setIsSearchCategoryModalOpen(true)}
+                            onClick={() => setCategoryModalOpen(true)}
                           >
                             <Image
                               priority
@@ -421,7 +516,7 @@ const AdverDesktop = () => {
                               width={24}
                               height={24}
                             />
-                          </button>
+                          </button> */}
                         </label>
                       </div>
                       <ErrorMessage
@@ -474,16 +569,22 @@ const AdverDesktop = () => {
                 />
               </div>
             </Form>
-            {isSearchCategoryModalOpen && (
+            {categoryModalOpen && (
               <CategoryTreeModal
-                open={isSearchCategoryModalOpen}
-                onClose={() => setIsSearchCategoryModalOpen(false)}
-                onSelect={(value) => {
-                  const formatted = value.join(" / ");
-                  setSelectedCategory(formatted);
-                  setFieldValue("category", formatted);
+                open={categoryModalOpen}
+                onClose={() => setCategoryModalOpen(false)}
+                onSelect={({
+                  categoryId,
+                  topSubCategoryId,
+                  lowSubCategoryId,
+                  label,
+                }) => {
+                  setFieldValue("categoryId", categoryId);
+                  setFieldValue("topSubCategoryId", topSubCategoryId);
+                  setFieldValue("lowSubCategoryId", lowSubCategoryId);
+                  setFieldValue("category", label);
                 }}
-                categories={[]}
+                // categories={[]}
               />
             )}
           </>
