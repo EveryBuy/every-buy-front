@@ -5,7 +5,7 @@ import React from "react";
 import Image from "next/image";
 import Link from 'next/link';
 import { CommonIcon, CommonButton, FooterMobile } from "@/components";
-import Logo from "@/assets/Svg/logo.svg";
+import Logo from "@/assets/logo-white.svg";
 import styles from "./Footer.module.scss";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { subscribeUser } from "@/redux/auth/operations";
@@ -42,21 +42,44 @@ const Footer: FC = () => {
 						priority
 						src={Logo}
 						alt="Logo"
-						width={104}
-						height={77}
+						width={165}
+						height={120}
 					/>
-					<div className={styles.contactContainer}>
-						<a href="tel:+380(63)0000000" className={styles.contactText}>
-							+380(63)0000000
-						</a>
-						<a href="mailto:EveryBuymarket@gmail.com" className={styles.contactText}>
-							EveryBuymarket@gmail.com
-						</a>
+
+
+					<div className={styles.wrapperInfo}>
+						<div className={styles.social}>
+							<Link href="https://www.facebook.com" target='_blanck'>
+								<CommonIcon
+									id="facebook-footer"
+									width="32"
+									height="32"
+									className={styles.facebookIcon}
+								/>
+							</Link>
+							<Link href="https://www.instagram.com" target='_blanck'>
+								<CommonIcon
+									id="instagram-footer"
+									width="32"
+									height="32"
+									className={styles.instagramIcon}
+								/>
+							</Link>
+						</div>
+						<div className={styles.contactContainer}>
+							<a href="tel:+380(63)0000000" className={styles.contactText}>
+								+380(63)0000000
+							</a>
+							<a href="mailto:EveryBuymarket@gmail.com" className={styles.contactText}>
+								EveryBuymarket@gmail.com
+							</a>
+						</div>
 					</div>
 				</div>
+
 				<div className={styles.wrapperSearch}>
 					<p className={styles.footerText}>
-						Бажаєте отримувати <br className={styles.hidden} /> повідомлення про новинки?
+						Бажаєте отримувати повідомлення про новинки?
 					</p>
 					<div className={styles.wrapperContent}>
 						<div className={styles.mailWrapper}>
@@ -74,24 +97,6 @@ const Footer: FC = () => {
 								className={styles.buttonSubscribe}
 								onClick={handleSubscribe}
 							/>
-						</div>
-						<div className={styles.social}>
-							<Link href="https://www.facebook.com" target='_blanck'>
-								<CommonIcon
-									id="facebook-footer"
-									width="50"
-									height="50"
-									className={styles.facebookIcon}
-								/>
-							</Link>
-							<Link href="https://www.instagram.com" target='_blanck'>
-								<CommonIcon
-									id="instagram-footer"
-									width="50"
-									height="50"
-									className={styles.instagramIcon}
-								/>
-							</Link>
 						</div>
 					</div>
 				</div>

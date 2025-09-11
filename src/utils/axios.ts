@@ -1,9 +1,15 @@
+import { persistor } from "@/redux/store";
 import axios from "axios";
+import axiosRetry from "axios-retry";
 
-import { persistStore } from "redux-persist";
-
+axiosRetry(axios, {
+  retries: 2,
+  retryDelay: (retryCount) => retryCount * 1000,
+  retryCondition: (error) => error.response?.status === 500,
+});
+export const BASE_URL = "https://api-everybuy.onrender.com";
 export const API = axios.create({
-  baseURL: "https://api-everybuy.onrender.com",
+  baseURL: BASE_URL,
 });
 
 export const setHeaderAuthToken = (token: string | null) => {
@@ -14,24 +20,34 @@ export const clearHeaderAuthToken = () => {
   delete API.defaults.headers.common["Authorization"];
 };
 
-// export const persistor = persistStore(store);
 
-// API.interceptors.response.use(
-//   (response) => response,
-//   (error) => {
-//     if (error.responce?.status === 401) {
-//       console.warn("⛔️ Неавторизований доступ, перенаправлення на /login");
+API.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      console.warn("⛔️ Неавторизований доступ, перенаправлення на /login");
 
-//       clearHeaderAuthToken();
-//       // persistor.purge();
+      clearHeaderAuthToken();
 
-//       if (typeof window !== "undefined") {
-//         window.location.href = '/login';
-//         // useRouter().push("/login"); // якщо через хук
-//       }
-//     }
+      if (typeof window !== "undefined") {
+        window.location.href = '/login';
+        // useRouter().push("/login"); // якщо через хук
+      }
+    }
 
-//     return Promise.reject(error);
+    if (error.response?.status === 403) {
+      console.warn("📳 Строк дії токену скінчився, автори зуйтесь заново");
 
-//   }
-// )
+      clearHeaderAuthToken();
+      persistor.purge();
+
+      if (typeof window !== "undefined") {
+        window.location.href = '/login';
+        // useRouter().push("/login"); // якщо через хук
+      }
+    }
+
+    return Promise.reject(error);
+
+  }
+)

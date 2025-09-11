@@ -7,6 +7,7 @@ type CommonInputProps = {
   typeInput?: boolean | string;
   value?: string;
   id?: string;
+  isValid?: boolean;
   setValue: (e: ChangeEvent<HTMLInputElement>) => void;
   setOnBlur?: () => void;
   className?: string;
@@ -27,9 +28,10 @@ const CommonInput: FC<CommonInputProps> = ({
   required,
   children,
   errorsMessage,
+  className,
 }) => {
   return (
-    <div className={styles.inputContainer}>
+    <div className={`${styles.inputContainer} ${className}`}>
       {text && (
         <label
           className={required ? styles.inputTitle : ""}
@@ -51,6 +53,7 @@ const CommonInput: FC<CommonInputProps> = ({
         className={styles.input}
         required={required}
         placeholder={placeholder}
+        
       />
       {children}
       {/* </div> */}

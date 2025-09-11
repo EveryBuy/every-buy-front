@@ -77,6 +77,7 @@ const ChatsBlock: FC<ChatsBlockType> = ({
       ? updatedBuyChats
       : updatedSellChats;
   }
+  console.log(chats);
 
   const handleButtonClick = (buttonId: number) => {
     setActiveButton(buttonId);

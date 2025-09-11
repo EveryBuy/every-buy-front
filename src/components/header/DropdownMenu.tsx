@@ -2,47 +2,44 @@
 
 import { FC, useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
+import { RootState, useAppSelector } from "@/redux/store";
 import Image from "next/image";
 import Link from "next/link";
 // import { Logout } from "@/components";
 import style from "./DropdownMenu.module.scss";
 import Logout from "../auth/Logout/Logout";
-import { selectUser } from "@/redux/auth/selectors";
+import { selectRehydrated, selectToken, selectUser } from "@/redux/auth/selectorsAuth";
 // import fallback from "/public/images/user.png";
 
 interface DropdownMenuType {
-  status: boolean;
-  isLoggedIn: boolean;
-  changeStatus: () => void;
+	status: boolean;
+	isLoggedIn: boolean;
+	changeStatus: () => void;
 }
 
 const DropdownMenu: FC<DropdownMenuType> = ({
-  status,
-  changeStatus,
-  isLoggedIn,
+	status,
+	changeStatus,
+	isLoggedIn,
 }) => {
-  const user = useSelector(selectUser);
-  const userPictureUrl = user?.userPhotoUrl || "/images/user.png";
-  const userName = user?.fullName || "";
 
-  // resolve hydration problem
-  const [hydrated, setHydrated] = useState(false);
-  useEffect(() => {
-    setHydrated(true);
-  }, []);
-  if (!hydrated) return null;
+	const isRehydrated = useAppSelector(selectRehydrated);
+	const user = useAppSelector(selectUser);
+	const userPictureUrl = user?.userPhotoUrl || "/images/user.png";
+	const userName = user?.fullName || "";
 
-  const handleLogout = (evt: React.MouseEvent) => {
-    evt.stopPropagation();
-  };
+	if (!isRehydrated) return null;
 
-  return isLoggedIn ? (
-    <ul
-      className={status ? style.dropdownLoginWrapper : "hidden"}
-      onClick={changeStatus}
-    >
-      <li>
+	const handleLogout = (evt: React.MouseEvent) => {
+		evt.stopPropagation();
+	};
+
+	return isLoggedIn && (
+		<ul
+			className={status ? style.dropdownLoginWrapper : "hidden"}
+			onClick={changeStatus}
+		>
+			{/* <li>
         <Link href="/user/about-me" className={style.nameWrapper}>
           {userPictureUrl ? (
             <Image
@@ -57,34 +54,35 @@ const DropdownMenu: FC<DropdownMenuType> = ({
           )}
           <p className={style.userName}>{userName}</p>
         </Link>
-      </li>
-      <li>
-        <Link href="/user/about-me">Редагування профілю</Link>
-      </li>
-      <li>
-        <Link href="/user/my-ads">Оголошення</Link>
-      </li>
-      <li>
-        <Link href="/messages">Повідомлення</Link>
-      </li>
-      <li>
-        <Link href="/user/selected-goods">Обрані</Link>
-      </li>
-      <li onClick={handleLogout}>
-        <Logout>Вихід</Logout>
-      </li>
-    </ul>
-  ) : (
-    <div
-      className={status ? style.dropdownNotLoginWrapper : "hidden"}
-      onClick={changeStatus}
-    >
-      <span className={style.circle}></span>
-      <Link href="/login">Вхід</Link>
-      {" / "}
-      <Link href="/register">Реєстрація</Link>
-    </div>
-  );
+      </li> */}
+			<li>
+				<Link href="/user/about-me">Редагування профілю</Link>
+			</li>
+			<li>
+				<Link href="/user/my-ads">Оголошення</Link>
+			</li>
+			<li>
+				<Link href="/messages">Повідомлення</Link>
+			</li>
+			<li>
+				<Link href="/user/selected-goods">Обрані</Link>
+			</li>
+			<li onClick={handleLogout}>
+				<Logout>Вихід</Logout>
+			</li>
+		</ul>
+	);
+	// : (
+	// 	<div
+	// 		className={status ? style.dropdownNotLoginWrapper : "hidden"}
+	// 		onClick={changeStatus}
+	// 	>
+	// 		<span className={style.circle}></span>
+	// 		<Link href="/login">Вхід</Link>
+	// 		{" / "}
+	// 		<Link href="/register">Реєстрація</Link>
+	// 	</div>
+	// );
 };
 
 export default DropdownMenu;

@@ -65,7 +65,7 @@ const CategoriesSelect: FC = () => {
 	}, [categoryIdStore]);
 
 	// const options = ["Option 1", "Option 2", "Option 3"];
-	const options: string[] = ["Всі категорії", ...categoriesList.map(item => item.nameUkr)];
+	const options: string[] = ["Всі категорії", ...categoriesList?.map(item => item.nameUkr)];
 
 	const handleChange = (event: SelectChangeEvent<string>) => {
 		const target: string = event.target.value;

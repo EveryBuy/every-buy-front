@@ -5,7 +5,6 @@ import { Box } from "@mui/material";
 import {
   CommonPreloader,
   DialogueMessage,
-  // EmptyDialogueMessage,
   LastMessageDate,
   DialogueInput,
 } from "@/components";
@@ -19,9 +18,15 @@ import style from "./Dialogue.module.scss";
 
 type DialogueType = {
   chatId: number | null;
+  isCompanionBlocked: boolean | null;
+  isUserBlockedByCompanion: boolean | null;
 };
 
-const Dialogue: FC<DialogueType> = ({ chatId }) => {
+const Dialogue: FC<DialogueType> = ({
+  chatId,
+  isCompanionBlocked,
+  isUserBlockedByCompanion,
+}) => {
   const [displayedMessages, setDisplayedMessages] = useState<MessageType[]>([]);
 
   const {
@@ -33,7 +38,6 @@ const Dialogue: FC<DialogueType> = ({ chatId }) => {
     refetchOnMountOrArgChange: true,
   });
   const dialogueWrapperRef = useRef<HTMLDivElement | null>(null);
-  // console.log("messages", messages);
 
   useGetChatQuery(chatId ?? skipToken, {
     refetchOnMountOrArgChange: true,
@@ -55,14 +59,12 @@ const Dialogue: FC<DialogueType> = ({ chatId }) => {
   useEffect(() => {
     if (messages && !isLoading && !isFetching) {
       setDisplayedMessages(messages);
-      // scrollToBottom();
       setTimeout(() => {
         scrollToBottom();
       }, 0);
     }
   }, [messages, isLoading, isFetching]);
 
-  //
   const handleSendMessage = async (
     newMessage: string,
     userId: number,
@@ -95,7 +97,6 @@ const Dialogue: FC<DialogueType> = ({ chatId }) => {
     setDisplayedMessages((prev) => [...prev, tempMessage]);
     scrollToBottom();
   };
-  //
 
   if (isLoading || (isFetching && displayedMessages.length === 0)) {
     return (
@@ -126,6 +127,8 @@ const Dialogue: FC<DialogueType> = ({ chatId }) => {
         onSendMessage={handleSendMessage}
         onSendFile={handleSendFile}
         chatId={chatId}
+        isCompanionBlocked={isCompanionBlocked}
+        isUserBlockedByCompanion={isUserBlockedByCompanion}
       />
     </Box>
   );

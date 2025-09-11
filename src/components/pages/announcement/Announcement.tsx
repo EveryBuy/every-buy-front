@@ -15,8 +15,7 @@ import {
 } from "@/components";
 import styles from "./Announcement.module.scss";
 import { getAllFavouriteAdvert } from '@/redux/advertisement/operations';
-import { selectIsLoggedIn } from "@/redux/auth/selectors";
-import { setHeaderAuthToken } from "@/utils/axios";
+import { selectIsLoggedIn } from "@/redux/auth/selectorsAuth";
 
 export default function Announcement() {
 	const dispatch = useAppDispatch();

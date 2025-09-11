@@ -1,5 +1,6 @@
 import axios from "axios";
 import setAuthToken from "@/utils/setAuthToken";
+import { BASE_URL } from "@/utils/axios";
 
 type PhoneUserType = {
 	data: {
@@ -8,20 +9,35 @@ type PhoneUserType = {
 }
 
 export const GetPhoneUser = async (userId: number): Promise<PhoneUserType | undefined> => {
-	const BASE_URL = "https://api-everybuy.onrender.com";
-	const persist = localStorage.getItem("persist:root");
-	const tokenWithQuotes = persist ? JSON.parse(persist).token : null;
-	const token = tokenWithQuotes ? tokenWithQuotes.slice(1, -1) : null;
-	setAuthToken(token);
+
+	let token: string | null = null;
+
 	try {
-		if (token) {
-			// console.log("token", token);
-			const response = await axios.get(`${BASE_URL}/auth/get-phone?userId=${userId}`);
-			return response.data;
-		} else {
-			console.log("not token");
-		}
-	} catch (error: any) {
-		console.error("Error: ", error.status);
-	}
+    const persist = localStorage.getItem("persist:root");
+    if (persist) {
+      const parsed = JSON.parse(persist);
+      const tokenRaw = parsed.token;
+      if (tokenRaw) {
+        token = JSON.parse(tokenRaw);
+      }
+    }
+  } catch (e) {
+    console.warn("Token parse error", e);
+  }
+
+  if (!token) {
+    console.log("No token");
+    return;
+  }
+
+  setAuthToken(token);
+
+  try {
+    const response = await axios.get(
+      `${BASE_URL}/auth/get-phone?userId=${userId}`
+    );
+    return response.data;
+  } catch (error: any) {
+    console.error("Request error: ", error.message || error);
+  }
 };

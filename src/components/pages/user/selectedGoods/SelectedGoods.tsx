@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/store";
 import s from "../UserPage.module.scss";
 import styles from "./SelectedGoods.module.scss";
 import CommonSectionSelector from "@/components/ui/CommonSectionSelector/CommonSectionSelector";
-import { Category } from '@/redux/advertisement/slice';
+import { Category } from "@/redux/advertisement/slice";
 
 const widthSize = {
 	mobile: "100%",
@@ -20,12 +20,14 @@ export const SelectedGoods: FC = () => {
 	const [selectedCategory, setSelectedCategory] = useState("");
 	const dispatch = useAppDispatch();
 	const categories = useAppSelector(selectCategories);
-	const categoryNames: string[] = categories.map((elem: Category) => elem.nameUkr);
-	categoryNames.unshift('Усі категорії');
+	const categoryNames: string[] = categories?.map(
+		(elem: Category) => elem.nameUkr
+	);
+	categoryNames.unshift("Всі категорії");
 	const [category] = categories.filter(
 		(elem: Category) => elem.nameUkr === selectedCategory
 	);
-	const [section, setSection] = useState("SELL");
+	const [section, setSection] = useState<"SELL" | "BUY">("SELL");
 
 	useEffect(() => {
 		dispatch(getCategory());
@@ -36,14 +38,18 @@ export const SelectedGoods: FC = () => {
 			<h2 className={s.headline}>Мої обрані товари</h2>
 			<div className={styles.selectorBox}>
 				<CommonSelect
-					label="Виберіть категорію"
+					label=""
+					myLabel="Категорії"
 					options={categoryNames}
 					size={widthSize}
 					outlineColor="var(--button)"
 					value={selectedCategory}
 					onChange={(evt) => setSelectedCategory(evt.target.value)}
+					setSelectedCategory={setSelectedCategory}
 				/>
-				<CommonSectionSelector section={section} setSection={setSection} />
+				<div style={{ paddingTop: "20px" }}>
+					<CommonSectionSelector section={section} setSection={setSection} />
+				</div>
 			</div>
 			<SelectedGoodsList
 				categoryFilter={category && category.id}

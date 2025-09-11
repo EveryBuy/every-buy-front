@@ -1,3 +1,4 @@
+import axios from "axios";
 import { API, setHeaderAuthToken } from "@/utils/axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Advertisement } from "./slice";
@@ -235,46 +236,35 @@ export const getUserInactiveAdverts = createAsyncThunk(
   }
 );
 
-export const getFilteredAdverts = createAsyncThunk(
-  "advert/getFiltered",
-  async (filters: {}, thunkAPI) => {
-    try {
-      const response = await API.get("/product/filter", {
-        params: { ...filters },
-      });
-      return response.data;
-    } catch (error: any) {
-      return thunkAPI.rejectWithValue(error.message);
-    }
-  }
-);
+let controllerFilter: AbortController | null = null;
 
-export const getAdvertsBySellerId = createAsyncThunk(
-  "advert/getListBySellerId",
-  async (
-    params: {
-      userId: number;
-      section?: string;
-      page?: number;
-      categoryId?: number;
-    },
-    thunkAPI
-  ) => {
-    type FilterType = { section?: string; page?: number; categoryId?: number };
-    const filters: FilterType = params.section
-      ? { section: params.section }
-      : {};
-    if (params.page && params.page > 1) filters.page = params.page;
-    if (params.categoryId && params.categoryId > 0)
-      filters.categoryId = params.categoryId;
-    // console.log("filters", filters);
-    try {
-      const response = await API.get(`/product/user/${params.userId}/ads`, {
-        params: { ...filters }, // , size: 5 - for testing navigation
-      });
-      return response.data;
-    } catch (error: any) {
-      return thunkAPI.rejectWithValue(error.message);
-    }
-  }
-);
+export const getFilteredAdverts = createAsyncThunk('advert/getFiltered',
+	async (filters: {}, thunkAPI) => {
+		try {
+			const response = await API.get('/product/filter', {
+				params: { ...filters },
+			});
+			return response.data;
+		} catch (error: any) {
+			return thunkAPI.rejectWithValue(error.message)
+		}
+	}
+)
+
+export const getAdvertsBySellerId = createAsyncThunk('advert/getListBySellerId',
+	async (params: { userId: number, section?: string, page?: number, categoryId?: number }, thunkAPI) => {
+		type FilterType = { section?: string, page?: number, categoryId?: number }
+		const filters: FilterType = params.section ? { section: params.section } : {};
+		if (params.page && params.page > 1) filters.page = params.page;
+		if (params.categoryId && params.categoryId > 0) filters.categoryId = params.categoryId;
+		// console.log("filters", filters);
+		try {
+			const response = await API.get(`/product/user/${params.userId}/ads`, {
+				params: { ...filters },  // , size: 5 - for testing navigation
+			});
+			return response.data;
+		} catch (error: any) {
+			return thunkAPI.rejectWithValue(error.message)
+		}
+	}
+)

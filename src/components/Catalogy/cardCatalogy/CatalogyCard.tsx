@@ -2,15 +2,10 @@
 import { useState, useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from "@/redux/store";
 import styles from "./CatalogyCard.module.scss";
-import MiddleCard from "./MiddleCard/MiddleCard";
-import { goodsListSell } from "@/mock-data/catalogyCardsData";
-import { MiddleCardType } from "@/types/middleCardType";
+import CatalogyCardItem from './CatalogyCardItem/CatalogyCardItem';
+// import { goodsListSell } from "@/mock-data/catalogyCardsData";
 import { getAllFavouriteAdvert } from "@/redux/advertisement/operations";
 import { FavouriteAdvertisement, AdvertisementBuySeller } from '@/redux/advertisement/slice';
-
-type ElemCard = MiddleCardType & {
-	[key: string]: any;
-};
 
 type ItemProps = {
 	item: AdvertisementBuySeller[] | null;
@@ -23,15 +18,15 @@ export const CatalogyCard = (props: ItemProps) => {
 	const section = useAppSelector(state => state.filters.section);
 	const token = useAppSelector(state => state.auth.token);
 
-	// useEffect(() => {
-	// 	if (token) {
-	// 		dispatch(getAllFavouriteAdvert({ section }));
-	// 	}
-	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	// }, [section]);
+	useEffect(() => {
+		if (token) {
+			dispatch(getAllFavouriteAdvert({ section }));
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [section]);
 
 	const favourites: FavouriteAdvertisement[] = useAppSelector(state => state.advertisement.favouriteAdvertisements);
-	const favListId: number[] = favourites.map(item => item.advertisementId);
+	const favListId: number[] = favourites?.map(item => item.advertisementId);
 	// console.log(favourites);
 	// console.log("favListId", favListId);
 
@@ -45,7 +40,7 @@ export const CatalogyCard = (props: ItemProps) => {
 								key={elem.advertisementId}
 								className={styles.middleCardsItem}
 							>
-								<MiddleCard
+								<CatalogyCardItem
 									item={elem}
 									favourite={favListId ? favListId.includes(elem.advertisementId) : false} />
 							</li>

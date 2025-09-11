@@ -18,6 +18,7 @@ const Chat: FC<ChatType> = ({
   chat,
 }) => {
   const numberOfUnreadMessages = chat?.unreadMessagesCount || 0;
+  console.log(chat);
 
   return (
     <Box className={style.blockWrapper}>
@@ -34,6 +35,11 @@ const Chat: FC<ChatType> = ({
             <p className={style.number}>{numberOfUnreadMessages}</p>
           </Box>
         ) : null}
+        {chat.anotherUserBlocked || chat.currentlyUserBlocked ? (
+          // <div className={style.triangleWrapper}>
+          <div className={style.triangle}></div>
+        ) : // </div>
+        null}
       </div>
       <Box className={style.textWrapper}>
         <p className={style.title}>{userData.fullName || "anonym"}:</p>

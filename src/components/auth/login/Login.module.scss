@@ -17,8 +17,7 @@
 
 .button {
   position: absolute;
-  top: 36%;
-  // top: 50%;
+  top: 30%;
   right: 15px;
 }
 
@@ -33,6 +32,10 @@
   border-radius: 10px;
   margin-top: 8px;
   background: var(--not-active);
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+  }
   @media (min-width: 375px) {
     width: 100%;
   }
@@ -56,4 +59,9 @@
   position: absolute;
   top: 36%;
   right: 15px;
+}
+
+.passwordInput {
+  width: 100%;
+  height: 126px;
 }

@@ -82,7 +82,7 @@ export const UserDataEdit: FC<Props> = ({ onEdit }: Props) => {
   const handleCheckPhone = async () => {
     const newPhone = phone.slice(-9);
     if (!validatePhone(newPhone)) {
-      setMessageText("Введено не коректний номер телефону!");
+      setMessageText("Введено некоректний номер телефону!");
       return;
     }
     if (user.phone === newPhone) {
@@ -106,7 +106,7 @@ export const UserDataEdit: FC<Props> = ({ onEdit }: Props) => {
       return;
     }
     if (!validateEmail(email)) {
-      setMessageText("Введено не коректний email!");
+      setMessageText("Введено некоректний email!");
       return;
     }
     setIsOpenEmailModal(true);

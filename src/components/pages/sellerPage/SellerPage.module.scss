@@ -2,9 +2,9 @@
 @import "../../../styles/breakpoints";
 
 .container {
-	padding: 0 21px;
+	padding: 0 5px;
 	margin: 0 auto;
-	max-width: 95%;
+	// max-width: 100%;
 
 	@include media-min($breakpoint-tablet) {
 		margin-top: 40px;
@@ -32,10 +32,16 @@
 
 .wrapperSearch {
 	margin-bottom: 40px;
+	padding: 0 21px;
 
 	@include media-min($breakpoint-tablet) {
 		margin-bottom: 60px;
+		padding: 0 2%;
 	}
+}
+
+.wrapperInfo {
+	padding: 0 21px;
 }
 
 .wrapperSeller {
@@ -90,6 +96,7 @@
 		display: block;
 		font-size: var(--f-size-h4);
 		margin-top: 0;
+		margin-right: 18px;
 	}
 
 	@include media-min($breakpoint-laptop) {
@@ -144,4 +151,20 @@
 
 .preloaderContainer {
 	margin: 20px 40%;
+}
+
+// .catalogyHide {
+// 	width: 0;
+// 	height: 0;
+// 	overflow: hidden;
+// }
+
+.opacityTrue {
+	opacity: 1;
+	transition: opacity 0.3s ease-in;
+}
+
+.opacityFalse {
+	opacity: 0;
+	transition: opacity 0.3s ease-in;
 }

@@ -5,16 +5,17 @@
 .selectedGoodsList {
 	display: flex;
 	flex-wrap: wrap;
-	gap: max(8px, calc((100% - (163px * 3)) / 2));
+	gap: max(18px, calc((100% - (163px * 3)) / 2));
 	row-gap: 12px;
+	// justify-content: space-around;
 	justify-content: flex-start;
 }
 
 @media only screen and (min-width: 768px) {
 	.selectedGoodsList {
-		gap: max(8px, calc((100% - (163px * 4)) / 3));
+		gap: max(18px, calc((100% - (163px * 4)) / 3));
 		row-gap: 12px;
-		justify-content: stretch;
+		// justify-content: flex-start;
 	}
 
 	.selectedGoodsList li {
@@ -24,6 +25,6 @@
 
 @media only screen and (min-width: 1440px) {
 	.selectedGoodsList {
-		gap: max(8px, calc((100% - (163px * 5)) / 4));
+		gap: max(18px, calc((100% - (163px * 5)) / 4));
 	}
 }

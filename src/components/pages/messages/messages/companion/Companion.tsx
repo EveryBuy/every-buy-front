@@ -1,7 +1,5 @@
 "use client";
 import { useState, useEffect, useRef, FC } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
 import Image from "next/image";
 import { Box } from "@mui/material";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
@@ -17,6 +15,9 @@ type CompanionBlockType = {
   setHeartSelected: (isHeartSelected: boolean) => void;
   isArchived: boolean;
   setArchived: (isArchived: boolean) => void;
+  chatData: any;
+  isCompanionBlocked: boolean | null;
+  isUserBlockedByCompanion: boolean | null;
 };
 
 const Companion: FC<CompanionBlockType> = ({
@@ -28,15 +29,14 @@ const Companion: FC<CompanionBlockType> = ({
   setHeartSelected,
   isArchived,
   setArchived,
+  chatData,
+  isCompanionBlocked,
+  isUserBlockedByCompanion,
 }) => {
   const [isMenuVisible, setMenuVisible] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
-  const companionPictureUrl = useSelector((state: RootState) =>
-    state.messages?.chat ? state.messages.chat.userData?.photoUrl : null
-  );
-  const companionName = useSelector((state: RootState) =>
-    state.messages?.chat ? state.messages.chat.userData?.fullName : null
-  );
+  const companionPictureUrl = chatData?.userData?.photoUrl;
+  const companionName = chatData?.userData?.fullName;
 
   const picture = companionPictureUrl ? (
     <Image
@@ -76,17 +76,47 @@ const Companion: FC<CompanionBlockType> = ({
         id="back-arrow"
         className={style.backArrow}
         // for mobile version
-        // onClick={() => setSelectedChatId(null)}
-        onClick={() => setSelectedChatId(0)}
+        onClick={() => setSelectedChatId(null)}
+        // onClick={() => setSelectedChatId(0)}
       />
-      <Box className={style.companion}>
+      {/* blocks position for mobile */}
+      <Box
+        className={style.companion}
+        sx={{
+          display: {
+            xs: "flex",
+          },
+          "@media (min-width:500px)": {
+            display: "none",
+          },
+        }}
+      >
         {picture}
         <Box className={style.companionInfo}>
-          <p className={style.name}>{name}</p>
+          <p
+            className={`${style.name} ${
+              isCompanionBlocked || isUserBlockedByCompanion
+                ? style.blocked
+                : ""
+            }`}
+          >
+            {name}
+          </p>
           <p className={style.time}>Як нам дізнатися час?</p>
         </Box>
       </Box>
-      <Box className={style.companionMenuWrapper} ref={menuRef}>
+      <Box
+        className={style.companionMenuWrapper}
+        sx={{
+          display: {
+            xs: "flex",
+          },
+          "@media (min-width:500px)": {
+            display: "none",
+          },
+        }}
+        ref={menuRef}
+      >
         <Box className={style.companionMenu} onClick={menuHandle}>
           <Box></Box>
           <Box></Box>
@@ -102,6 +132,45 @@ const Companion: FC<CompanionBlockType> = ({
             isArchived={isArchived}
             setArchived={setArchived}
           />
+        </Box>
+      </Box>
+      {/* blocks position for tablet and desktop */}
+      <Box
+        sx={{
+          display: { xs: "none" },
+          "@media (min-width:500px)": {
+            display: "flex",
+            justifyContent: { md: "space-between" },
+          },
+          "@media (min-width:1024px)": {
+            width: "100%",
+          },
+        }}
+      >
+        <Box className={style.companion} sx={{ mr: { xs: "50px" } }}>
+          {picture}
+          <Box className={style.companionInfo}>
+            <p className={style.name}>{name}</p>
+            <p className={style.time}>Як нам дізнатися час?</p>
+          </Box>
+        </Box>
+        <Box className={style.companionMenuWrapper} ref={menuRef}>
+          <Box className={style.companionMenu} onClick={menuHandle}>
+            <Box></Box>
+            <Box></Box>
+            <Box></Box>
+            <Menu
+              status={isMenuVisible}
+              changeStatus={menuHandle}
+              blockUserWindowHandle={blockUserWindowHandle}
+              complaintWindowHandle={complaintWindowHandle}
+              chatId={chatId}
+              isHeartSelected={isHeartSelected}
+              setHeartSelected={setHeartSelected}
+              isArchived={isArchived}
+              setArchived={setArchived}
+            />
+          </Box>
         </Box>
       </Box>
     </Box>

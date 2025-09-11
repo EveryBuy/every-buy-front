@@ -1,4 +1,4 @@
-import { RootState } from "../store";
+
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { clearHeaderAuthToken } from "@/utils/axios";
 import { setHeaderAuthToken } from "@/utils/axios";
@@ -12,22 +12,29 @@ import {
   ChangeEmailData,
 } from "@/types/stateTypes";
 import { API } from "@/utils/axios";
+import { persistor, RootState } from "../store";
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const register = createAsyncThunk(
   "auth/register",
   async (userRegisterData: UserRegData, thunkAPI) => {
-    
     try {
-      const response = await API.post("/auth/registration", userRegisterData);
-      setHeaderAuthToken(response.data.data.token);
-      await delay(4000);
+      const { data } = await API.post("/auth/registration", userRegisterData);
+      const token = data.data.token;
+
+      setHeaderAuthToken(token);
+
+      await delay(1000);
+
       const userData = await API.get("/user");
-      return { data: userData.data.data, token: response.data.data.token };
+
+      return { 
+        token, 
+        data: userData.data.data};
+        
     } catch (error: any) {
-      console.log("Error", error);
-      
+      console.log("Login error:", error);
       return thunkAPI.rejectWithValue({
         message: error.response?.data?.message || error.message,
         status: error.response?.status,
@@ -35,24 +42,31 @@ export const register = createAsyncThunk(
     }
   }
 );
-//   login: "test@gmail.com",
-//   password: "kdf{DT'nR(d!/i8r4)+U>Wa",
+
 export const login = createAsyncThunk(
   "auth/login",
   async (userLogData: UserLogData, thunkAPI) => {
     try {
+      //1. get token 
       const { data } = await API.post("/auth/auth", userLogData);
-      setHeaderAuthToken(data.data.token);
-      console.log(data);
-      return data.data;
-      // const userData = await API.get("/user");
-      // return { data: userData.data.data, token: data.data.token };
+      const token = data.data.token;
+      //2. sav token in header
+      setHeaderAuthToken(token);
+
+      //3. get userData
+      const userData = await API.get("/user");
+      //4. return token with user
+      return {
+        token,
+        data: userData.data.data
+      };
+      
     } catch (error: any) {
+      console.log("Login error:", error);
       return thunkAPI.rejectWithValue({
         message: error.response?.data?.message || error.message,
         status: error.response?.status,
-        });
-      
+      });
     }
   }
 );
@@ -60,6 +74,7 @@ export const login = createAsyncThunk(
 export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
   try {
     clearHeaderAuthToken();
+    persistor.purge();
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
   }
@@ -70,7 +85,6 @@ export const validate = createAsyncThunk(
   async (_, thunkAPI) => {
     const state: any = thunkAPI.getState();
     const token = state.auth.token;
-    // console.log("Auth/validate-Token", token);
     if (!token) return thunkAPI.rejectWithValue("No token!");
 
     try {
@@ -175,12 +189,10 @@ export const changeUserPhone = createAsyncThunk(
       const response = await API.get("/user");
       return response.data.data;
     } catch (error: any) {
-      return rejectWithValue(
-        {
+      return rejectWithValue({
         message: error.response?.data?.message || error.message,
         status: error.response?.status,
-        }
-      );
+      });
     }
   }
 );
@@ -192,18 +204,15 @@ export const changeUserEmail = createAsyncThunk(
       const state = getState() as RootState;
       setHeaderAuthToken(state.auth.token);
       const response = await API.put("/auth/change-email", changeEmailData);
-      console.log(response.data.data.token);
-      
       setHeaderAuthToken(response.data.data.token);
       await delay(1000);
       const userData = await API.get("/user");
       return { data: userData.data.data, token: response.data.data.token };
-
     } catch (error: any) {
       return rejectWithValue({
         message: error.response?.data?.message || error.message,
         status: error.response?.status,
-        });
+      });
     }
   }
 );
@@ -230,30 +239,32 @@ export const subscribeUser = createAsyncThunk(
   "user/subscribe",
   async (email: string, thunkAPI) => {
     console.log("email", email);
-    
-    try {
-      const response = await API.post('/user/add-subscriber', { email } )
-      return response.data;
-    } catch (error: any) {
-      return thunkAPI.rejectWithValue({
-        message: error.response?.data?.message || "An error occurred" ,
-        status: error.response?.status || 500,
-      })
-    }
-  }
-)
 
-export const unsubscribeUser = createAsyncThunk(
-  "user/unsubscribe",
-  async (email: string, thunkAPI) => {
     try {
-      const response = await API.delete('/user/delete-subscriber', { data: { email } })
+      const response = await API.post("/user/add-subscriber", { email });
       return response.data;
     } catch (error: any) {
       return thunkAPI.rejectWithValue({
         message: error.response?.data?.message || "An error occurred",
         status: error.response?.status || 500,
-      })
+      });
     }
   }
-)
+);
+
+export const unsubscribeUser = createAsyncThunk(
+  "user/unsubscribe",
+  async (email: string, thunkAPI) => {
+    try {
+      const response = await API.delete("/user/delete-subscriber", {
+        data: { email },
+      });
+      return response.data;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue({
+        message: error.response?.data?.message || "An error occurred",
+        status: error.response?.status || 500,
+      });
+    }
+  }
+);

@@ -10,7 +10,7 @@ import styles from "./Register.module.scss";
 import CommonInput from "@/components/ui/CommonInput/CommonInput";
 import Image from "next/image";
 import { register } from "@/redux/auth/operations";
-import { selectIsLoggedIn } from "@/redux/auth/selectors";
+import { selectIsLoggedIn, selectRehydrated } from "@/redux/auth/selectorsAuth";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import {
   validatePhone,
@@ -47,6 +47,7 @@ const Register: React.FC = () => {
     useState(false);
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const showSuccessRegisterModal = useRef(false);
+  const isRehydrated = useAppSelector(selectRehydrated);
 
   useEffect(() => {
     if (isLoggedIn && !showSuccessRegisterModal.current) {
@@ -70,28 +71,47 @@ const Register: React.FC = () => {
       })
     );
   };
-
+  if (!isRehydrated) {
+    return 
+    (
+      <>Йде завантаження.....</>
+    );
+  }
   const handlePhone = (evt: React.ChangeEvent<HTMLInputElement>) => {
-    const inputValue = evt.target.value.replace(/\D/g, ""); // Видаляємо всі нецифрові символи
-    const phoneWithoutPrefix = inputValue.replace(/^380/, ""); // Прибираємо 380, якщо юзер випадково вводить
+    // TODO:
+    // const inputValue = evt.target.value.replace(/\D/g, "");
+    // const phoneWithoutPrefix = inputValue.slice(-9);
 
-    setPhone(phoneWithoutPrefix); // Оновлюємо лише змінну після +380
+    setPhone(evt.target.value);
 
+    // setErrors((prevErrors) => ({
+    //   ...prevErrors,
+    //   phone: validatePhone(`${evt.target.value}`)
+    //     ? ""
+    //     : "Невірний формат телефону",
+    // }));
+  };
+  const handlePhoneBlur = () => {
     setErrors((prevErrors) => ({
       ...prevErrors,
-      phone: validatePhone(`+380${phoneWithoutPrefix}`)
-        ? ""
-        : "Невірний формат телефону",
+      phone: validatePhone(phone) ? "" : "Невірний формат телефону",
     }));
   };
 
   const handleEmail = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const newEmail = evt.target.value;
     setEmail(newEmail);
+    // TODO:
+    // setErrors((prevErrors) => ({
+    //   ...prevErrors,
+    //   email: validateEmail(newEmail) ? "" : "Невірний фомат email.",
+    // }));
+  };
 
+  const handleEmailBlur = () => {
     setErrors((prevErrors) => ({
       ...prevErrors,
-      email: validateEmail(newEmail) ? "" : "Невірний фомат email.",
+      email: validateEmail(email) ? "" : "Невірний фомат email.",
     }));
   };
 
@@ -102,6 +122,13 @@ const Register: React.FC = () => {
     setErrors((prevErrors) => ({
       ...prevErrors,
       password: validatePassword(newPassword) ? "" : "Невірний формат паролю.",
+    }));
+  };
+
+  const handlePasswordBlur = () => {
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      password: validatePassword(password) ? "" : "Невірний формат паролю.",
     }));
   };
 
@@ -132,8 +159,10 @@ const Register: React.FC = () => {
           text="Телефон"
           typeInput={true}
           required={true}
-          value={`+380${phone}`}
+          value={phone}
           setValue={(evt) => handlePhone(evt)}
+          setOnBlur={handlePhoneBlur}
+          placeholder="введіть номер телефону"
           errorsMessage={
             errors.phone && (
               <span className={styles.errorMessage}>{errors.phone}</span>
@@ -168,6 +197,7 @@ const Register: React.FC = () => {
           value={email}
           required={true}
           setValue={(evt) => handleEmail(evt)}
+          setOnBlur={handleEmailBlur}
           placeholder="введіть email"
           errorsMessage={
             errors.email && (
@@ -202,6 +232,7 @@ const Register: React.FC = () => {
           typeInput={showPassword}
           value={password}
           setValue={(evt) => handlePassword(evt)}
+          setOnBlur={handlePasswordBlur}
           required={true}
           placeholder="введіть свій пароль"
           errorsMessage={

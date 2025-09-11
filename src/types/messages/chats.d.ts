@@ -19,6 +19,8 @@ type ChatType = {
   setArchived: (isArchived: boolean) => void;
   unreadMessagesCount?: number;
   chat: ChatType;
+  anotherUserBlocked?: boolean | null;
+  currentlyUserBlocked?: boolean | null;
 };
 
 type NewChatType = {
@@ -27,6 +29,7 @@ type NewChatType = {
   creationDate: string;
   buyerId: number;
   sellerId: number;
+  status?: number;
 };
 
 // type NewMessageType = {
