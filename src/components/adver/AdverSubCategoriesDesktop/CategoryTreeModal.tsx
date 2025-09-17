@@ -5,7 +5,7 @@ import { CommonButton, CommonModal } from "@/components";
 import styles from "./CategoryTreeModal.module.scss";
 import RightArrowIcon from "@/assets/Svg/rightArrow.svg";
 
-import { SubCategory } from "@/redux/advertisement/slice";
+// import { SubCategory } from "@/redux/advertisement/slice";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import {
   getCategory,
@@ -71,9 +71,10 @@ export const CategoryTreeModal = ({
     name: string;
   } | null>(null);
 
-  const [selectedLowSubCategory, setSelectedLowSubCategory] = useState<
-    string | null
-  >(null);
+  const [selectedLowSubCategory, setSelectedLowSubCategory] = useState<{
+    id: number;
+    name: string;
+  } | null>(null);
 
   useEffect(() => {
     if (open) {
@@ -107,105 +108,6 @@ export const CategoryTreeModal = ({
   };
   console.log("categories", categories);
   return (
-    // <CommonModal open={open} onClose={onClose}>
-    //   <div>
-    //     <div className={styles.columns}>
-    //       {/* Головні категорії */}
-    //       <div className={styles.column}>
-    //         {categories.map((category) => (
-    //           <button
-    //             key={category.id}
-    //             className={`${styles.item} ${
-    //               selectedCategory?.id === category.id ? styles.itemActive : ""
-    //             }`}
-    //             onClick={() => {
-    //               setSelectedCategory({
-    //                 id: category.id,
-    //                 name: category.nameUkr,
-    //               });
-    //               setSelectedTopSubCategory(null);
-    //             }}
-    //           >
-    //             <div className={styles.btnBox}>
-    //               <span className={styles.label}>{category.nameUkr}</span>
-    //               <Image
-    //                 src={RightArrowIcon}
-    //                 alt="arrow"
-    //                 className={styles.arrowIcon}
-    //                 width={24}
-    //                 height={24}
-    //               />
-    //             </div>
-    //           </button>
-    //         ))}
-    //       </div>
-
-    //       {/* Топ-підкатегорії */}
-    //       <div className={styles.column}>
-    //         {selectedCategory &&
-    //           topSubCategories.map((top) => (
-    //             <button
-    //               key={top.id}
-    //               className={`${styles.item} ${
-    //                 selectedTopSubCategory?.id === top.id
-    //                   ? styles.itemActive
-    //                   : ""
-    //               }`}
-    //               onClick={() => {
-    //                 setSelectedTopSubCategory({
-    //                   id: top.id,
-    //                   name: top.subCategoryNameUkr,
-    //                 });
-    //                 setSelectedLowSubCategory(null);
-    //               }}
-    //             >
-    //               <div className={styles.btnBox}>
-    //                 <span className={styles.label}>
-    //                   {top.subCategoryNameUkr}
-    //                 </span>
-    //                 <Image
-    //                   src={RightArrowIcon}
-    //                   alt="arrow"
-    //                   className={styles.arrowIcon}
-    //                   width={24}
-    //                   height={24}
-    //                 />
-    //               </div>
-    //             </button>
-    //           ))}
-    //       </div>
-
-    //       {/* Низькорівневі підкатегорії */}
-    //       <div className={styles.column}>
-    //         {selectedTopSubCategory &&
-    //           lowSubCategories.map((low) => (
-    //             <button
-    //               key={low.id}
-    //               className={`${styles.item} ${
-    //                 selectedLowSubCategory === low.subCategoryNameUkr
-    //                   ? styles.itemActive
-    //                   : ""
-    //               }`}
-    //               onClick={() => handleLowCategoryClick(low.subCategoryNameUkr)}
-    //             >
-    //               <div className={styles.btnBox}>
-    //                 <span className={styles.label}>
-    //                   {low.subCategoryNameUkr}
-    //                 </span>
-    //                 <Image
-    //                   src={RightArrowIcon}
-    //                   alt="arrow"
-    //                   className={styles.arrowIcon}
-    //                   width={24}
-    //                   height={24}
-    //                 />
-    //               </div>
-    //             </button>
-    //           ))}
-    //       </div>
-    //     </div>
-    //   </div>
-    // </CommonModal>
     <CommonModal open={open} onClose={onClose}>
       <div>
         <div className={styles.columns}>
@@ -305,13 +207,6 @@ export const CategoryTreeModal = ({
                       <span className={styles.label}>
                         {low.subCategoryNameUkr}
                       </span>
-                      <Image
-                        src={RightArrowIcon}
-                        alt="arrow"
-                        className={styles.arrowIcon}
-                        width={24}
-                        height={24}
-                      />
                     </div>
                   </button>
                 );

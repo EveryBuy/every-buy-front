@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Formik, Form, Field, FormikHelpers, useFormikContext } from "formik";
 import * as Yup from "yup";
@@ -8,9 +8,6 @@ import { CommonButton } from "@/components";
 import { RadioButtonGroup } from "@/components";
 import { AdverPhotoList } from "@/components";
 import { ErrorMessage } from "@/components";
-
-import { FormValues } from "@/types/adverFormType";
-
 import Search from "@/assets/Svg/search.svg";
 import radioboxIcon from "@/assets/Svg/checkboxIcon.svg";
 import checkIcon from "@/assets/Svg/checkIcon.svg";
@@ -24,48 +21,27 @@ import ToggleSwitch from "../ToggleSwitch/ToogleSwitch";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { createAdvertisement } from "@/redux/advertisement/operations";
 import { selectToken } from "@/redux/auth/selectorsAuth";
+import CityAutocomplete from "../CityAutocomplete/CityAutocomplete";
+import AdverPreviewModal from "../AdverPreviewModal/AdverPreviewModal";
 
-// interface FormValues {
-//   topSubCategoryId: number | null;
-//   lowSubCategoryId: number | null;
-//   categoryId: number | null;
-//   section: string;
-//   cityId: number | null;
-//   productType: string;
-//   price: string;
-//   title: string;
-//   description: string;
-//   deliveryMethods: string[];
-//   product: string;
-//   category: string;
-//   subcategory: string;
-//   location: string;
-//   condition: string;
-//   delivery: string;
-// }
 export type FormValues = {
   topSubCategoryId: number | null;
   lowSubCategoryId: number | null;
   categoryId: number | null;
-
   section: "SELL" | "BUY";
   cityId: number | null;
-
   productType: "NEW" | "USED" | "OTHER" | "";
-
-  price: string | null; // зручно для інпуту; у payload конвертуємо в number | null
+  price: string | null;
   isNegotiable: boolean;
-
-  title: string; // назва оголошення (можна дублювати з product)
+  title: string;
   description: string;
-
-  deliveryMethods: string[]; // ["NOVA_POST", ...]
-  product: string; // назва товару (UI поле)
-  category: string; // "Категорія / Топ / Низ"
-  subcategory: string; // опційно
-  location: string; // текстове місто (для UI); бек отримує cityId
+  deliveryMethods: string[];
+  product: string;
+  category: string;
+  subcategory: string;
+  location: string;
   condition: "NEW" | "USED" | "OTHER" | "";
-  delivery: string; // якщо потрібно одну з опцій; але для бек — deliveryMethods[]
+  delivery: string;
 };
 
 const initialValues: FormValues = {
@@ -138,15 +114,15 @@ const AuthSchema = Yup.object().shape({
 });
 
 function FormSyncers() {
-  const { values, setFieldValue } = useFormikContext /* <FormValues> */();
+  const { values, setFieldValue } = useFormikContext<FormValues>();
 
-  // (2) delivery -> deliveryMethods
+  //   // (2) delivery -> deliveryMethods
   useEffect(() => {
     const methods = values.delivery ? [values.delivery] : [];
     setFieldValue("deliveryMethods", methods, false);
   }, [values.delivery, setFieldValue]);
 
-  // (3) condition -> productType
+  //   // (3) condition -> productType
   useEffect(() => {
     if (values.condition && values.productType !== values.condition) {
       setFieldValue("productType", values.condition, false);
@@ -165,11 +141,12 @@ const AdverDesktop = () => {
   const token = useAppSelector(selectToken);
 
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [previewOpen, setPreviewOpen] = useState(false);
 
   console.log("selectedCategory", selectedCategory);
   const handlePreview = (values: FormValues) => {
     console.log("Preview values:", values);
-    // TODO: Implement preview functionality
+    setPreviewOpen(true);
   };
   // всередині компонента
   async function handleSubmit(
@@ -179,37 +156,26 @@ const AdverDesktop = () => {
     try {
       if (!token) {
         console.error("No token provided");
-        //login modal or return
         return;
       }
-      // збираємо payload для бекенду
+
+      // Only fields expected by backend
       const requestPayload = {
         topSubCategoryId: values.topSubCategoryId,
         lowSubCategoryId: values.lowSubCategoryId,
-        categoryId: values.categoryId,
-
-        section: values.section, // "SELL" | "BUY"
-        cityId: values.cityId, // ОБОВʼЯЗКОВО: має бути число
-
-        // бек вимагає productType — підставляємо зі стану товару
-        productType: (values.productType || values.condition) ?? null, // "NEW" | "USED" | "OTHER"
-
-        // бек вимагає negotiable
+        section: values.section,
+        cityId: values.cityId,
+        productType: values.productType || values.condition, // fallback, якщо обирається через condition
+        price: values.price ? Number(values.price) : null,
+        title: values.title || values.product || "",
         isNegotiable: Boolean(values.isNegotiable),
-
-        price: values.isNegotiable ? null : Number(values.price || 0),
-
-        title: (values.title || values.product || "").trim(),
-        description: values.description?.trim() || "",
-
-        // бек вимагає масив
+        categoryId: values.categoryId,
+        description: values.description,
         deliveryMethods: Array.isArray(values.deliveryMethods)
           ? values.deliveryMethods.filter(Boolean)
           : values.delivery
           ? [values.delivery]
           : [],
-
-        condition: values.condition || null,
       };
 
       const formData = new FormData();
@@ -218,9 +184,7 @@ const AdverDesktop = () => {
         new Blob([JSON.stringify(requestPayload)], { type: "application/json" })
       );
       images.forEach(({ file }) => formData.append("photos", file));
-      console.log("form Data", formData);
 
-      // через thunk (рекомендовано)
       await dispatch(createAdvertisement(formData)).unwrap();
 
       actions.resetForm();
@@ -231,6 +195,7 @@ const AdverDesktop = () => {
       actions.setSubmitting(false);
     }
   }
+  const submitRef = useRef<HTMLButtonElement>(null);
 
   return (
     <div className={styles.adWrapper}>
@@ -371,7 +336,6 @@ const AdverDesktop = () => {
                           onChange={(
                             e: React.ChangeEvent<HTMLTextAreaElement>
                           ) => {
-                            // setDescriptionLength(e.target.value.length);
                             setFieldValue("description", e.target.value);
                           }}
                         />
@@ -423,8 +387,6 @@ const AdverDesktop = () => {
                             name="isNegotiable"
                             checked={values.isNegotiable}
                             onChange={(checked) => {
-                              // setIsNegotiable(checked);
-                              // setFieldValue("price", checked ? null : "");
                               setFieldValue("isNegotiable", checked);
                               if (checked) {
                                 setFieldValue("price", "");
@@ -457,36 +419,6 @@ const AdverDesktop = () => {
                           successMessage="Стан товару успішно додано"
                         />
                       </div>
-                      {/* <div className={styles.radioboxGroup}>
-                        <p className={styles.toggleText}>Тип товару</p>
-                        <label className={styles.radioboxLabel}>
-                          <Field
-                            type="radio"
-                            name="productType"
-                            value="NEW"
-                            className={styles.visuallyHidden}
-                          />
-                          <span>Нове</span>
-                        </label>
-                        <label className={styles.radioboxLabel}>
-                          <Field
-                            type="radio"
-                            name="productType"
-                            value="USED"
-                            className={styles.visuallyHidden}
-                          />
-                          <span>Вживане</span>
-                        </label>
-                        <label className={styles.radioboxLabel}>
-                          <Field
-                            type="radio"
-                            name="productType"
-                            value="OTHER"
-                            className={styles.visuallyHidden}
-                          />
-                          <span>Інше</span>
-                        </label>
-                      </div> */}
                     </div>
 
                     {/* Місцезнаходження */}
@@ -497,26 +429,12 @@ const AdverDesktop = () => {
                           <span style={{ color: "red", marginLeft: "4px" }}>
                             *
                           </span>
-                          <Field
-                            className={styles.styledField}
-                            type="text"
-                            name="location"
-                            placeholder="вкажіть назву вашого міста"
-                            onBlur={handleBlur}
+                          <CityAutocomplete
+                            nameField="location"
+                            idField="cityId"
+                            placeholder="введіть місто (мін. 3 символи)"
+                            minLength={3}
                           />
-                          {/* <button
-                            type="button"
-                            className={styles.buttonInput}
-                            onClick={() => setCategoryModalOpen(true)}
-                          >
-                            <Image
-                              priority
-                              src={Search}
-                              alt="icon search"
-                              width={24}
-                              height={24}
-                            />
-                          </button> */}
                         </label>
                       </div>
                       <ErrorMessage
@@ -568,6 +486,10 @@ const AdverDesktop = () => {
                   className={`${styles.adverButton} ${styles.adverButtonAd}`}
                 />
               </div>
+              {/* прихована кнопка сабміту */}
+              <button type="submit" ref={submitRef} style={{ display: "none" }}>
+                Сабміт
+              </button>
             </Form>
             {categoryModalOpen && (
               <CategoryTreeModal
@@ -584,7 +506,19 @@ const AdverDesktop = () => {
                   setFieldValue("lowSubCategoryId", lowSubCategoryId);
                   setFieldValue("category", label);
                 }}
-                // categories={[]}
+              />
+            )}
+
+            {previewOpen && (
+              <AdverPreviewModal
+                open={previewOpen}
+                onClose={() => setPreviewOpen(false)}
+                values={values}
+                images={images}
+                onPublish={() => {
+                  setPreviewOpen(false);
+                  submitRef.current?.click();
+                }}
               />
             )}
           </>

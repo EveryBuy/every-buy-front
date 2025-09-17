@@ -1,0 +1,21 @@
+.wrapper { position: relative; }
+.input { width: 100%; padding: 8px; }
+.state { font-size: 12px; margin-top: 4px; opacity: 0.7; }
+.error { font-size: 12px; margin-top: 4px; color: #d33; }
+.dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0; right: 0;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  max-height: 220px;
+  overflow-y: auto;
+  z-index: 50;
+}
+.item, .itemActive {
+  width: 100%;
+  text-align: left;
+  padding: 6px 10px;
+}
+.itemActive { background: #f3f4f6; }
