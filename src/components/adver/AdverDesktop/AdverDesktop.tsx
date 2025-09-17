@@ -140,10 +140,10 @@ const AdverDesktop = () => {
   const dispatch = useAppDispatch();
   const token = useAppSelector(selectToken);
 
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+
   const [previewOpen, setPreviewOpen] = useState(false);
 
-  console.log("selectedCategory", selectedCategory);
+
   const handlePreview = (values: FormValues) => {
     console.log("Preview values:", values);
     setPreviewOpen(true);
