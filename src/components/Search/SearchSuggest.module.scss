@@ -20,21 +20,21 @@
 	border-bottom: 1px solid var(--label, #000);
 
 	@include media-min($breakpoint-mobile) {
-		width: calc(100% - 98px);
+		width: 100%; // calc(100% - 98px)
 		margin-left: 0;
-		border: 1px solid var(--label, #000);
+		border: 1px solid var(--label);
 		border-radius: 10px;
 		max-height: 500px;
 		overflow: auto;
 	}
 
-	@include media-min($breakpoint-tablet) {
-		width: calc(100% - 130px);
-	}
+	// @include media-min($breakpoint-tablet) {
+	// 	width: calc(100% - 130px);
+	// }
 
-	@media (min-width: 1024px) {
-		width: calc(100% - 140px);
-	}
+	// @media (min-width: 1024px) {
+	// 	width: calc(100% - 140px);
+	// }
 }
 
 .searchTitle {

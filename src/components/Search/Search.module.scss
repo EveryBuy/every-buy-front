@@ -21,7 +21,7 @@
 	justify-content: center;
 	align-items: center;
 	width: 100%;
-	max-width: 1024px;
+	max-width: 864px;
 	position: relative;
 }
 
@@ -30,120 +30,80 @@
 	display: flex;
 	align-items: center;
 	flex-grow: 1;
-	margin-right: 10px;
-
-	@include media-max($breakpoint-mobile) {
-		margin-right: 0;
-	}
 }
 
 .searchInput {
 	width: 100%;
-	padding: 2px 10px;
+	padding: 12px 14px;
+	padding-right: 68px;
 	font-size: 1rem;
-	border: 1px solid #e5ff46;
-	border-radius: 10px;
+	border: 1px solid var(--button);
+	border-radius: 12px;
 	transition: all 0.3s ease;
-	height: 39px;
+	height: 40px;
 	box-sizing: border-box;
+	background-color: var(--background);
+	color: #777676;
+	outline: none;
 
-	@include media-min($breakpoint-mobile) {
-		border: none;
-		background-color: #b4b4b4;
-		color: #ffffff;
-		padding-right: 50px;
+	&:focus {
+		color: var(--label);
+		border: 1px solid var(--button);
+		background-color: #fff;
+		box-shadow: 2px 2px 8px 0 #C2C5AD;
 	}
 
 	@include media-min($breakpoint-tablet) {
-		padding: 12px 15.5px;
-		padding-right: 50px;
-		height: 58px;
-	}
-
-	@media (min-width: 1024px) {
-		padding: 12px 20px;
-		padding-right: 50px;
+		height: 60px;
 	}
 }
 
-.searchInput::placeholder {
-	@include media-min($breakpoint-mobile) {
-		color: #fff;
-		font-size: 16px;
-	}
+.searchInputIconsWrapper {
+	position: absolute;
+	right: 0;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
 
-	@include media-min($breakpoint-tablet) {
-		font-size: 18px;
+.searchButtonIconPassive {
+	position: relative;
+	margin: 0;
+	padding: 3px;
+	margin-right: 11px;
+	cursor: auto;
+}
+
+.closeBtn {
+	border: none;
+	transition: all 0.3s ease;
+
+	&:hover {
+		transform: scale(1.2);
+		box-shadow: none;
+		background-color: transparent;
 	}
 }
 
-.searchButton {
-	padding: 3px 14px 2px;
-	background-color: #e5ff46;
-	border: 1px solid #e5ff46;
-	border-radius: 10px;
+.searchButtonFocus {
+	padding: 3px;
+	margin-right: 11px;
+	border: none;
+	border-radius: 12px;
+	width: 32px;
+	height: 28px;
+	background-color: var(--button);
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	transition: all 0.3s ease;
 
-	@include media-min($breakpoint-mobile) {
-		background-color: #ffffff;
-		border: 1px solid #000000;
-		padding: 10px 15px;
-
-		&::before {
-			content: "Знайти";
-		}
+	.searchButtonIcon {
+		position: relative;
+		margin: 0;
 	}
 
-	@include media-min($breakpoint-tablet) {
-		padding: 19px 31.5px;
+	&:hover {
+		transform: scale(1.1);
 	}
-
-	@media (min-width: 1024px) {
-		padding: 19px 40px;
-	}
-}
-
-.searchButtonIcon {
-	position: relative;
-
-	@include media-min($breakpoint-mobile) {
-		display: none;
-	}
-}
-
-.searchInputIconWrapper {
-	position: absolute;
-	right: 1%;
-	display: flex;
-	align-items: center;
-	width: 28px;
-	height: 28px;
-	margin-right: 4px;
-
-	& svg {
-		width: 24px;
-		margin: 0px;
-		cursor: default;
-
-		@include media-min($breakpoint-mobile) {
-			width: 28px;
-			margin-right: 10px;
-		}
-	}
-}
-
-.closeBtn {
-	border: none;
-
-	& svg:hover {
-		cursor: pointer;
-	}
-}
-
-.closeBtn:hover {
-	box-shadow: none;
-	background-color: transparent;
 }

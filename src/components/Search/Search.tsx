@@ -104,24 +104,47 @@ const Search: FC<SearchProps> = (props: SearchProps) => {
 						value={word}
 						onChange={handlerSetWord}
 					/>
-					<div className={styles.searchInputIconWrapper}>
+					<div className={styles.searchInputIconsWrapper}>
 						{
 							word && word.length > 0 ? (
-								<CommonButton
-									type="button"
-									title=""
-									color="transparent"
-									className={styles.closeBtn}
-									onClick={handlerClearWord}
-								>
-									<CommonIcon
-										id="icon-close"
-										width="29"
-										height="30"
-										className={styles.searchInputIcon}
-									/>
-								</CommonButton>
-							) : null
+								<>
+									<CommonButton
+										type="button"
+										title=""
+										color="transparent"
+										className={styles.closeBtn}
+										onClick={handlerClearWord}
+									>
+										<CommonIcon
+											id="icon-clean-search"
+											width="14"
+											height="14"
+											className={styles.searchInputIcon}
+										/>
+									</CommonButton>
+
+									<CommonButton
+										type="submit"
+										title=""
+										color="white"
+										className={styles.searchButtonFocus}
+										onClick={hendlerSearch}
+									>
+										<CommonIcon
+											id="icon-search-focus"
+											width="24"
+											height="24"
+											className={styles.searchButtonIcon}
+										/>
+									</CommonButton>
+								</>
+							) :
+								<CommonIcon
+									id="icon-search-passive"
+									width="26"
+									height="26"
+									className={styles.searchButtonIconPassive}
+								/>
 							// (
 							// 	<CommonIcon
 							// 		id="icon-search"
@@ -133,20 +156,6 @@ const Search: FC<SearchProps> = (props: SearchProps) => {
 						}
 					</div>
 				</div>
-				<CommonButton
-					type="submit"
-					title=""
-					color="white"
-					className={styles.searchButton}
-					onClick={hendlerSearch}
-				>
-					<CommonIcon
-						id="icon-search"
-						width="25"
-						height="25"
-						className={styles.searchButtonIcon}
-					/>
-				</CommonButton>
 				{hideSearchSuggest
 					? null
 					: (word.length > 2)  //  && (searchArr.SELL.length > 0 || searchArr.BUY.length > 0)
