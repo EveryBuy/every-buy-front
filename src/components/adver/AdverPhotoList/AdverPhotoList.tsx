@@ -105,8 +105,8 @@ const AdverPhotoList: React.FC<AdverPhotoListProps> = ({
         onDragOver={(e) => e.preventDefault()}
       >
         <li className={styles.adverPhotoItem}>
-          <label>
-            <p>Додати фото</p>
+          <label className={styles.labelAddPhoto}>
+            <p className={styles.title}>Додати фото</p>
             <input
               type="file"
               accept="image/*"

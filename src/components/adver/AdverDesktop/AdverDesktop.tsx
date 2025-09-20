@@ -116,13 +116,13 @@ const AuthSchema = Yup.object().shape({
 function FormSyncers() {
   const { values, setFieldValue } = useFormikContext<FormValues>();
 
-  //   // (2) delivery -> deliveryMethods
+  //delivery -> deliveryMethods
   useEffect(() => {
     const methods = values.delivery ? [values.delivery] : [];
     setFieldValue("deliveryMethods", methods, false);
   }, [values.delivery, setFieldValue]);
 
-  //   // (3) condition -> productType
+  //condition -> productType
   useEffect(() => {
     if (values.condition && values.productType !== values.condition) {
       setFieldValue("productType", values.condition, false);
@@ -165,7 +165,7 @@ const AdverDesktop = () => {
         lowSubCategoryId: values.lowSubCategoryId,
         section: values.section,
         cityId: values.cityId,
-        productType: values.productType || values.condition, // fallback, якщо обирається через condition
+        productType: values.productType || values.condition,
         price: values.price ? Number(values.price) : null,
         title: values.title || values.product || "",
         isNegotiable: Boolean(values.isNegotiable),
@@ -179,6 +179,7 @@ const AdverDesktop = () => {
       };
 
       const formData = new FormData();
+
       formData.append(
         "request",
         new Blob([JSON.stringify(requestPayload)], { type: "application/json" })
@@ -212,6 +213,7 @@ const AdverDesktop = () => {
           <>
             <FormSyncers />
             <Form autoComplete="off" className={styles.styledForm}>
+              {/* buy / sell */}
               <div className={styles.linkItem}>
                 <label className={styles.linkItemText}>
                   <Field
