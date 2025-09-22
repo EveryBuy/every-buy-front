@@ -1,21 +1,31 @@
-.adverPhoto {
-  h3 {
-    font-size: var(--f-size-h3);
-    font-weight: 400;
-    line-height: 39px;
-    margin-bottom: 24px;
-  }
+.adverPhoto h3 {
+  font-size: var(--f-size-h3);
+  font-weight: 400;
+  line-height: 39px;
+  margin-bottom: 24px;
+}
+.labelAddPhoto{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+.title {
+  font-size: var(--large-body-medium);
+  font-weight: 400;
+  text-decoration: underline;
+  cursor: pointer;
+  text-underline-offset: 4px;
 
-  p {
-    font-size: var(--body-text);
-    font-weight: 400;
-    margin-bottom: 12px;
-
-    span {
-      font-weight: 600;
-      font-size: var(--body-text);
-    }
+  &:hover {
+    text-decoration-thickness: 2px;
   }
+}
+.adverPhoto span {
+  font-weight: 600;
+  font-size: var(--body-text);
 }
 
 .adverPhotoList {
@@ -23,7 +33,8 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 30px;
+  gap: 20px;
+  margin-top: 20px;
 
   li {
     position: relative;
@@ -33,9 +44,9 @@
 
     width: 240px;
     height: 200px;
-    border: 1px solid var(--label);
+    border: 1px solid #777676;
     border-radius: 8px;
-    background: #ffffff;
+    background: #F6F6F6;
   }
 }
 
@@ -48,7 +59,7 @@
 .removeButtonIcon {
   width: 24px;
   height: 24px;
-  fill: black;
+  fill: #777676;
 }
 
 .tooltipText {
@@ -90,17 +101,5 @@
   &:hover,
   &:focus {
     background-color: rgb(120, 238, 120) !important;
-  }
-
-  p {
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 24px;
-    margin: 0;
-    padding: 85px 55px;
-
-    &:hover {
-      cursor: pointer;
-    }
   }
 }

@@ -28,6 +28,11 @@ export type Category = {
 	photoUrl: string
 }
 
+export type SubCategory = {
+	id: number,
+	categoryName: string
+}
+
 export type CategoryForSeller = {
 	categoryId: number,
 	nameUkr: string,

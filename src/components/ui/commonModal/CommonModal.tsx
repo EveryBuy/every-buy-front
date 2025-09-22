@@ -9,6 +9,9 @@ export const CommonModal: React.FC<CommonModalProps> = ({
   onClose,
   children,
 }) => {
+  if(!open){
+    return
+  }
   return (
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     // @ts-ignore: Ignore type error for the Backdrop component
