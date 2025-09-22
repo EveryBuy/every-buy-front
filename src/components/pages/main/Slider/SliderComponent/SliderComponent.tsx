@@ -10,43 +10,50 @@ import { bannerItems } from "@/mock-data/bannerItems";
 import { nanoid } from "nanoid";
 
 const SliderComponent: FC = () => {
-  const settings = {
-    className: "center",
-    dots: true,
-    arrows: false,
-    centerMode: true,
-    infinite: true,
-    speed: 500,
-    centerPadding: "16%",
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 5000,
-    responsive: [
-      {
-        breakpoint: 478,
-        settings: {
-          dots: false,
-          centerPadding: "9%",
-        },
-      },
-      {
-        breakpoint: 768,
-        settings: {
-          dots: true,
-          centerPadding: "16%",
-        },
-      },
-    ],
-  };
+	const settings = {
+		className: "center",
+		dots: true,
+		arrows: false,
+		centerMode: true,
+		infinite: true,
+		speed: 500,
+		centerPadding: "16%",
+		slidesToShow: 1,
+		slidesToScroll: 1,
+		autoplay: true,
+		autoplaySpeed: 5000,
+		responsive: [
+			// {
+			//   breakpoint: 478,
+			//   settings: {
+			//     dots: false,
+			//     centerPadding: "9%",
+			//   },
+			// },
+			{
+				breakpoint: 767,
+				settings: {
+					dots: false,
+					centerPadding: "9%",
+				},
+			},
+			{
+				breakpoint: 768,
+				settings: {
+					dots: true,
+					centerPadding: "16%",
+				},
+			},
+		],
+	};
 
-  return (
-    <Slider {...settings}>
-      {bannerItems.map((item) => (
-        <Banner item={item} key={nanoid()} />
-      ))}
-    </Slider>
-  );
+	return (
+		<Slider {...settings}>
+			{bannerItems.map((item) => (
+				<Banner item={item} key={nanoid()} />
+			))}
+		</Slider>
+	);
 };
 
 export default SliderComponent;

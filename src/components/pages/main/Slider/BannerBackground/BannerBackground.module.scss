@@ -2,47 +2,45 @@
 @import "@/styles/breakpoints";
 
 .bannerBackground {
-  border-radius: 10px;
-  padding: 7px 20px 17px;
-  box-sizing: border-box;
+	border-radius: 10px;
+	padding: 7px 20px 7px 10px;
+	box-sizing: border-box;
 
-  background-size: cover;
-  background-position: center;
-  overflow: hidden;
+	background-size: cover;
+	background-position: center;
+	overflow: hidden;
 
-  @include media-max($breakpoint-mobile) {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)),
-      var(--banner-background_mobile1x);
+	@include media-max($breakpoint-tablet) {
 
-    @media (min-resolution: 2dppx) {
-      background-image: linear-gradient(
-          rgba(0, 0, 0, 0.35),
-          rgba(0, 0, 0, 0.35)
-        ),
-        var(--banner-background_mobile2x);
-    }
-  }
+		background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+			var(--banner-background_mobile1x);
 
-  @include media-min($breakpoint-mobile + 1) {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)),
-      var(--banner-background_laptop1x);
+		@media (min-resolution: 2dppx) {
+			background-image: linear-gradient(rgba(0, 0, 0, 0.4),
+					rgba(0, 0, 0, 0.4)),
+				var(--banner-background_mobile2x);
+		}
+	}
 
-    @media (min-resolution: 2dppx) {
-      background-image: linear-gradient(
-          rgba(0, 0, 0, 0.35),
-          rgba(0, 0, 0, 0.35)
-        ),
-        var(--banner-background_laptop2x);
-    }
-  }
+	// @include media-min($breakpoint-mobile + 1) {
 
-  @include media-min($breakpoint-tablet) {
-    border-radius: 33px;
-  }
-  @media (min-width: 768px) {
-    padding: 9px 24px 16px;
-  }
-  @media (min-width: 1024px) {
-    padding: 18px 32px;
-  }
+	// }
+
+	@include media-min($breakpoint-tablet + 1) {
+		background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+			var(--banner-background_laptop1x);
+
+		@media (min-resolution: 2dppx) {
+			background-image: linear-gradient(rgba(0, 0, 0, 0.5),
+					rgba(0, 0, 0, 0.5)),
+				var(--banner-background_laptop2x);
+		}
+
+		border-radius: 33px;
+		padding: 18px 30px 32px;
+	}
+
+	@media (min-width: 1024px) {
+		padding: 18px 40px 44px;
+	}
 }
