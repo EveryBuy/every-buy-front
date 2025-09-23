@@ -1,28 +1,27 @@
 "use client";
 import Image from "next/image";
-import { Field } from "formik";
-
+import { Field, useField } from "formik";
+// import styles from "./RadioButtonGroup.module.scss";
 
 interface RadioButtonGroupProps {
   name: string;
   options: { value: string; label: string }[];
-  title: string;
-  wrapperClass?: string; 
-  groupClass?: string; 
-  labelClass?: string; 
-  inputClass?: string; 
-  radioBoxClass?: string; 
+  title?: string;
+  wrapperClass?: string;
+  groupClass?: string;
+  labelClass?: string;
+  inputClass?: string;
+  radioBoxClass?: string;
   radioUncheckedClass?: string;
   radioCheckedClass?: string;
-  uncheckedIcon: string; 
-  checkedIcon: string; 
+  uncheckedIcon?: string;
+  checkedIcon?: string;
 }
 
 const RadioButtonGroup: React.FC<RadioButtonGroupProps> = ({
   name,
   options,
   title,
-  wrapperClass = "",
   groupClass = "",
   labelClass = "",
   inputClass = "",
@@ -32,14 +31,15 @@ const RadioButtonGroup: React.FC<RadioButtonGroupProps> = ({
   uncheckedIcon,
   checkedIcon,
 }) => {
+  const [field, meta, helpers] = useField(name);
   return (
-    <div className={wrapperClass}>
-      <div role="group" aria-labelledby="radio-group" className={groupClass}>
-        <h2>
-          {title}
-          <span style={{ color: "red", marginLeft: "4px" }}>*</span>
-        </h2>
-        {options.map((option) => (
+    <div role="group" aria-labelledby="radio-group" className={groupClass}>
+      <h2>
+        {title}
+        <span style={{ color: "red", marginLeft: "4px" }}>*</span>
+      </h2>
+      <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+        {/* {options.map((option) => (
           <label key={option.value} className={labelClass}>
             <Field
               type="radio"
@@ -65,9 +65,36 @@ const RadioButtonGroup: React.FC<RadioButtonGroupProps> = ({
                 className={radioCheckedClass}
               />
             </span>
-            {option.label}
+            <span className={styles.labelClass}>{option.label}</span>
           </label>
-        ))}
+        ))} */}
+        {options.map((option) => {
+          const isChecked = field.value === option.value;
+          return (
+            <label key={option.value} className={labelClass}>
+              <input
+                type="radio"
+                {...field}
+                value={option.value}
+                checked={isChecked}
+                className={inputClass}
+                onChange={() => helpers.setValue(option.value)}
+              />
+              <span className={radioBoxClass}>
+                <Image
+                  src={isChecked ? checkedIcon || "" : uncheckedIcon || ""}
+                  className={
+                    isChecked ? radioCheckedClass : radioUncheckedClass
+                  }
+                  width={24}
+                  height={24}
+                  alt=""
+                />
+              </span>
+              {option.label}
+            </label>
+          );
+        })}
       </div>
     </div>
   );

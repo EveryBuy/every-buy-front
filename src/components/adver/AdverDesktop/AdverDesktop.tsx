@@ -1,15 +1,14 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { Formik, Form, Field, FormikHelpers } from "formik";
+import { Formik, Form, Field, FormikHelpers, useFormikContext } from "formik";
 import * as Yup from "yup";
 
 import { CommonButton } from "@/components";
 import { RadioButtonGroup } from "@/components";
 import { AdverPhotoList } from "@/components";
 import { ErrorMessage } from "@/components";
-
-import ArowDown from "@/assets/Svg/icon-chevron-arow-down.svg";
+import Search from "@/assets/Svg/search.svg";
 import radioboxIcon from "@/assets/Svg/checkboxIcon.svg";
 import checkIcon from "@/assets/Svg/checkIcon.svg";
 
@@ -17,312 +16,514 @@ import styles from "./AdverDesktop.module.scss";
 
 // -----------------------------------------
 
-import { ClassNames } from "@emotion/react";
+import { CategoryTreeModal } from "../AdverSubCategoriesDesktop/CategoryTreeModal";
+import ToggleSwitch from "../ToggleSwitch/ToogleSwitch";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { createAdvertisement } from "@/redux/advertisement/operations";
+import { selectToken } from "@/redux/auth/selectorsAuth";
+import CityAutocomplete from "../CityAutocomplete/CityAutocomplete";
+import AdverPreviewModal from "../AdverPreviewModal/AdverPreviewModal";
+
+export type FormValues = {
+  topSubCategoryId: number | null;
+  lowSubCategoryId: number | null;
+  categoryId: number | null;
+  section: "SELL" | "BUY";
+  cityId: number | null;
+  productType: "NEW" | "USED" | "OTHER" | "";
+  price: string | null;
+  isNegotiable: boolean;
+  title: string;
+  description: string;
+  deliveryMethods: string[];
+  product: string;
+  category: string;
+  subcategory: string;
+  location: string;
+  condition: "NEW" | "USED" | "OTHER" | "";
+  delivery: string;
+};
+
+const initialValues: FormValues = {
+  topSubCategoryId: null,
+  lowSubCategoryId: null,
+  categoryId: null,
+  section: "SELL",
+  cityId: null,
+  productType: "",
+  price: "",
+  isNegotiable: false,
+  title: "",
+  description: "",
+  deliveryMethods: [],
+  product: "",
+  category: "",
+  subcategory: "",
+  location: "",
+  condition: "",
+  delivery: "",
+};
+
+const AuthSchema = Yup.object().shape({
+  product: Yup.string()
+    .trim()
+    .min(2, "Мінімум 2 символи")
+    .max(70, "Максимум 70 символів")
+    .required("Будь ласка, вкажіть назву товару"),
+  price: Yup.string()
+    .nullable()
+    .when("isNegotiable", {
+      is: false,
+      then: (s) =>
+        s
+          .required("Будь ласка, зазначте бажану ціну")
+          .matches(/^\d+$/, "Використовуйте лише цифри")
+          .test("min-1", "Мінімум 1", (v) => {
+            if (v == null || v === "") {
+              return false;
+            }
+            return Number(v) >= 1;
+          }),
+      otherwise: (s) => s.nullable().notRequired(),
+    }),
+
+  description: Yup.string()
+    .trim()
+    .min(30, "Вкажіть щонайменше 30 символів")
+    .max(3000, "Максимум 3000 символів")
+    .required("Будь ласка, додайте опис товару"),
+  categoryId: Yup.number()
+    .typeError("Будь ласка, зазначте категорію товару")
+    .required("Будь ласка, зазначте категорію товару"),
+  location: Yup.string()
+    .trim()
+    .required("Будь ласка, вкажіть місцезнаходження"),
+  condition: Yup.mixed<"NEW" | "USED" | "OTHER">()
+    .oneOf(["NEW", "USED", "OTHER"], "Будь ласка, оберіть стан товару")
+    .required("Будь ласка, оберіть стан товару"),
+  // delivery: Yup.string()
+  //   .oneOf(
+  //     ["New_mail", "Ukrposhta", "Meest_Express"],
+  //     "Будь ласка, оберіть спосіб доставки"
+  //   )
+  //   .required("Будь ласка, оберіть спосіб доставки"),
+  section: Yup.mixed<"SELL" | "BUY">().oneOf(["SELL", "BUY"]).required(),
+  // productType: Yup.string()
+  //   .oneOf(["NEW", "USED", "OTHER"])
+  //   .required("Оберіть тип товару"),
+});
+
+function FormSyncers() {
+  const { values, setFieldValue } = useFormikContext<FormValues>();
+
+  //delivery -> deliveryMethods
+  useEffect(() => {
+    const methods = values.delivery ? [values.delivery] : [];
+    setFieldValue("deliveryMethods", methods, false);
+  }, [values.delivery, setFieldValue]);
+
+  //condition -> productType
+  useEffect(() => {
+    if (values.condition && values.productType !== values.condition) {
+      setFieldValue("productType", values.condition, false);
+    }
+  }, [values.condition, values.productType, setFieldValue]);
+
+  return null;
+}
 
 const AdverDesktop = () => {
   const [images, setImages] = useState<{ file: File; url: string }[]>([]);
+  const [descriptionLength, setDescriptionLength] = useState(0);
+  const [categoryModalOpen, setCategoryModalOpen] = useState(false);
 
-  const initialValues = {
-    product: "",
-    price: "",
-    description: "",
-    category: "",
-    subcategory: "",
-    location: "",
+  const dispatch = useAppDispatch();
+  const token = useAppSelector(selectToken);
 
-    condition: "",
-    delivery: "",
+
+  const [previewOpen, setPreviewOpen] = useState(false);
+
+
+  const handlePreview = (values: FormValues) => {
+    console.log("Preview values:", values);
+    setPreviewOpen(true);
   };
+  // всередині компонента
+  async function handleSubmit(
+    values: FormValues,
+    actions: FormikHelpers<FormValues>
+  ) {
+    try {
+      if (!token) {
+        console.error("No token provided");
+        return;
+      }
 
-  const AuthSchema = Yup.object().shape({
-    product: Yup.string().required("Будь ласка, вкажіть назву товару"),
-    price: Yup.string().required("Будь ласка, зазначте бажану ціну"),
-    description: Yup.string().required("Будь ласка, додайте опис товару"),
-    category: Yup.string().required("Будь ласка, зазначте категорію товару"),
-    subcategory: Yup.string().required("Будь ласка, зазначте підкатегорію"),
-    location: Yup.string().required("Будь ласка, вкажіть місцезнаходження"),
+      // Only fields expected by backend
+      const requestPayload = {
+        topSubCategoryId: values.topSubCategoryId,
+        lowSubCategoryId: values.lowSubCategoryId,
+        section: values.section,
+        cityId: values.cityId,
+        productType: values.productType || values.condition,
+        price: values.price ? Number(values.price) : null,
+        title: values.title || values.product || "",
+        isNegotiable: Boolean(values.isNegotiable),
+        categoryId: values.categoryId,
+        description: values.description,
+        deliveryMethods: Array.isArray(values.deliveryMethods)
+          ? values.deliveryMethods.filter(Boolean)
+          : values.delivery
+          ? [values.delivery]
+          : [],
+      };
 
-    condition: Yup.string()
-      .oneOf(["New", "Used"], "Будь ласка, оберіть стан товару")
-      .required("Будь ласка, оберіть стан товару"),
+      const formData = new FormData();
 
-    delivery: Yup.string()
-      .oneOf(
-        ["New_mail", "Ukrposhta", "Meest_Express"],
-        "Будь ласка, оберіть спосіб доставки"
-      )
-      .required("Будь ласка, оберіть спосіб доставки"),
-  });
+      formData.append(
+        "request",
+        new Blob([JSON.stringify(requestPayload)], { type: "application/json" })
+      );
+      images.forEach(({ file }) => formData.append("photos", file));
 
-  const handleSubmit = async (
-    values: typeof initialValues,
-    actions: FormikHelpers<typeof initialValues>
-  ) => {
-    const formData = new FormData();
-    Object.entries(values).forEach(([key, value]) => {
-      formData.append(key, value as string);
-    });
+      await dispatch(createAdvertisement(formData)).unwrap();
 
-    images.forEach((image, index) => {
-      formData.append(`photos[${index}]`, image.file);
-    });
-
-    console.log("formData", formData);
-    console.log("Данные формы:", values);
-    console.log("Отправляемые фотографии:", images);
-    actions.resetForm();
-    setImages([]);
-  };
+      actions.resetForm();
+      setImages([]);
+    } catch (e) {
+      console.error("Create advert failed:", e);
+    } finally {
+      actions.setSubmitting(false);
+    }
+  }
+  const submitRef = useRef<HTMLButtonElement>(null);
 
   return (
     <div className={styles.adWrapper}>
       <div className={styles.adHeader}>
         <h1>Створити оголошення</h1>
-        <ul className={styles.linkHeader}>
-          <li className={styles.linkItem}>
-            <p className={styles.linkItemText}>Куплю</p>
-          </li>
-          <li className={styles.linkItem}>
-            <p className={styles.linkItemText}>Продам</p>
-          </li>
-        </ul>
       </div>
-
-      <h3 className={styles.adTitle}>Подробиці товару</h3>
 
       <Formik
         initialValues={initialValues}
         validationSchema={AuthSchema}
         onSubmit={handleSubmit}
       >
-        {({ handleBlur, touched, errors }) => (
-          <Form autoComplete="off" className={styles.styledForm}>
-            <div className={styles.wrapperInput}>
-              <section className={styles.formWrapper}>
-                <div>
-                  <div>
-                    <label>
-                      Назва товару
-                      <span style={{ color: "red", marginLeft: "4px" }}>*</span>
-                      <Field
-                        className={styles.styledField}
-                        type="text"
-                        name="product"
-                        placeholder="Вкажіть назву товару"
-                        onBlur={handleBlur}
-                      />
-                    </label>
-                  </div>
-
-                  <ErrorMessage
-                    touched={touched.product}
-                    error={errors.product}
-                    successMessage="Успішно введено назву товару"
+        {({ handleBlur, touched, errors, setFieldValue, values }) => (
+          <>
+            <FormSyncers />
+            <Form autoComplete="off" className={styles.styledForm}>
+              {/* buy / sell */}
+              <div className={styles.linkItem}>
+                <label className={styles.linkItemText}>
+                  <Field
+                    type="radio"
+                    name="section"
+                    value="BUY"
+                    className={styles.radio}
                   />
-                </div>
+                  <span>Куплю</span>
+                </label>
 
-                <div>
-                  <div>
-                    <label>
-                      Ціна
-                      <span style={{ color: "red", marginLeft: "4px" }}>*</span>
-                      <Field
-                        className={styles.styledField}
-                        type="text"
-                        name="price"
-                        placeholder="Вкажіть бажану ціну"
-                        onBlur={handleBlur}
-                      />
-                    </label>
-                  </div>
-                  <ErrorMessage
-                    touched={touched.price}
-                    error={errors.price}
-                    successMessage="Ціна успішно додана"
+                <label className={styles.linkItemText}>
+                  <Field
+                    type="radio"
+                    name="section"
+                    value="SELL"
+                    className={styles.radio}
                   />
-                </div>
-
-                <div>
-                  <div>
-                    <label>
-                      Опис товару
-                      <span style={{ color: "red", marginLeft: "4px" }}>*</span>
-                      <Field
-                        as="textarea"
-                        name="description"
-                        rows="4"
-                        cols="50"
-                        className={`${styles.styledField} ${styles.styledTexterea}`}
-                      />
-                      <div className={styles.textareaText}>
-                        <p>Вкажіть щонайменьше 30 символів</p>
-                        <p>0/999</p>
+                  <span>Продам</span>
+                </label>
+              </div>
+              <div className={styles.wrapperInput}>
+                <section className={styles.formWrapper}>
+                  {/* фото */}
+                  <AdverPhotoList images={images} setImages={setImages} />
+                </section>
+                <section className={styles.formWrapper}>
+                  <div style={{ display: "flex", gap: "40px" }}>
+                    <div>
+                      {/* Назва товару */}
+                      <div style={{ marginBottom: "40px" }}>
+                        <label>
+                          Назва товару
+                          <span style={{ color: "red", marginLeft: "4px" }}>
+                            *
+                          </span>
+                          <Field
+                            className={styles.styledField}
+                            type="text"
+                            name="product"
+                            placeholder="Вкажіть назву товару"
+                            onBlur={(
+                              e: React.ChangeEvent<HTMLInputElement>
+                            ) => {
+                              handleBlur(e);
+                              const trimmed = (e.target.value || "").trim();
+                              if (trimmed && !values.title) {
+                                setFieldValue("title", trimmed);
+                              }
+                            }}
+                            onChange={(
+                              e: React.ChangeEvent<HTMLInputElement>
+                            ) => {
+                              const v = e.target.value;
+                              setFieldValue("product", v);
+                              setDescriptionLength(
+                                v.length > 70 ? 70 : v.length
+                              );
+                            }}
+                          />
+                          <div className={styles.textareaText}>
+                            <p>Введіть від 16 до 70 символів</p>
+                            <p>{Math.min(descriptionLength, 70)}/70</p>
+                          </div>
+                        </label>
+                        <ErrorMessage
+                          touched={touched.product}
+                          error={errors.product}
+                          successMessage="Успішно введено назву товару"
+                        />
                       </div>
-                    </label>
-                  </div>
-                  <ErrorMessage
-                    touched={touched.description}
-                    error={errors.description}
-                    successMessage="Опис товару успішно додано"
-                  />
-                </div>
-              </section>
-              {/* added modals for selection categories*/}
-              <section className={styles.formWrapper}>
-                <div>
-                  <div className={styles.fieldWrapper}>
-                    <label>
-                      Категорія
-                      <span style={{ color: "red", marginLeft: "4px" }}>*</span>
-                      <Field
-                        className={styles.styledField}
-                        type="text"
-                        name="category"
-                        placeholder="зазначте категорію"
-                        onBlur={handleBlur}
-                      />
-                      <button type="button" className={styles.buttonInput}>
-                        <Image
-                          priority
-                          src={ArowDown}
-                          alt="icon down"
-                          width={24}
-                          height={24}
+                      {/* Категорія */}
+                      <div className={styles.fieldWrapper}>
+                        <label>
+                          Категорія
+                          <span style={{ color: "red", marginLeft: "4px" }}>
+                            *
+                          </span>
+                          <Field
+                            className={styles.styledField}
+                            type="text"
+                            name="category"
+                            value={values.category}
+                            readOnly
+                            placeholder="зазначте категорію"
+                            onBlur={handleBlur}
+                          />
+                          <button
+                            type="button"
+                            className={styles.buttonInput}
+                            onClick={() => setCategoryModalOpen(true)}
+                          >
+                            <Image
+                              priority
+                              src={Search}
+                              alt="icon search"
+                              width={24}
+                              height={24}
+                            />
+                          </button>
+                        </label>
+                        <ErrorMessage
+                          touched={touched.categoryId}
+                          error={errors.categoryId}
+                          successMessage="Категорія успішно додана"
                         />
-                      </button>
-                    </label>
-                  </div>
-                  <ErrorMessage
-                    touched={touched.category}
-                    error={errors.category}
-                    successMessage="Категорія успішно додана"
-                  />
-                </div>
-                {/* added modals for selection subcategories*/}
-                <div>
-                  <div className={styles.fieldWrapper}>
-                    <label>
-                      Підкатегорія
-                      <span style={{ color: "red", marginLeft: "4px" }}>*</span>
-                      <Field
-                        className={styles.styledField}
-                        type="text"
-                        name="subcategory"
-                        placeholder="зазначте підкатегорію"
-                        onBlur={handleBlur}
-                      />
-                      <button type="button" className={styles.buttonInput}>
-                        <Image
-                          priority
-                          src={ArowDown}
-                          alt="icon down"
-                          width={24}
-                          height={24}
+                      </div>
+                    </div>
+                    {/* Опис */}
+                    <div>
+                      <label>
+                        Опис товару
+                        <span style={{ color: "red", marginLeft: "4px" }}>
+                          *
+                        </span>
+                        <Field
+                          as="textarea"
+                          name="description"
+                          rows="4"
+                          cols="50"
+                          className={`${styles.styledField} ${styles.styledTexterea}`}
+                          onChange={(
+                            e: React.ChangeEvent<HTMLTextAreaElement>
+                          ) => {
+                            setFieldValue("description", e.target.value);
+                          }}
                         />
-                      </button>
-                    </label>
-                  </div>
-                  <ErrorMessage
-                    touched={touched.subcategory}
-                    error={errors.subcategory}
-                    successMessage="Підкатегорія успішно додана"
-                  />
-                </div>
-
-                <div>
-                  <div>
-                    <label>
-                      Місцезнаходження
-                      <span style={{ color: "red", marginLeft: "4px" }}>*</span>
-                      <Field
-                        className={styles.styledField}
-                        type="text"
-                        name="location"
-                        placeholder="вкажшть назву Вашого міста"
-                        onBlur={handleBlur}
+                        <div className={styles.textareaText}>
+                          <p>Вкажіть щонайменше 30 символів</p>
+                          <p>{(values.description || "").length}/3000</p>
+                        </div>
+                      </label>
+                      <ErrorMessage
+                        touched={touched.description}
+                        error={errors.description}
+                        successMessage="Опис товару успішно додано"
                       />
-                    </label>
-                  </div>
-                  <ErrorMessage
-                    touched={touched.location}
-                    error={errors.location}
-                    successMessage="Місто успішно додано"
-                  />
-                </div>
-
-                <section className={styles.radioboxWrapper}>
-                  <div>
-                    <RadioButtonGroup
-                      name="condition"
-                      title="Стан товару"
-                      options={[
-                        { value: "New", label: "Нове" },
-                        { value: "Used", label: "Вживане" },
-                      ]}
-                      groupClass={styles.radioboxGroup}
-                      labelClass={`${styles.radioboxLabel} ${styles.check}`}
-                      inputClass={`${styles.visuallyHidden} ${styles.radioboxInput}`}
-                      radioBoxClass={styles.radioBox}
-                      radioUncheckedClass={styles.radioUnchecked}
-                      radioCheckedClass={styles.radioChecked}
-                      uncheckedIcon={radioboxIcon}
-                      checkedIcon={checkIcon}
-                    />
-
-                    <ErrorMessage
-                      touched={touched.condition}
-                      error={errors.condition}
-                      successMessage="Стан товару успішно додано"
-                    />
-                  </div>
-
-                  <div>
-                    <RadioButtonGroup
-                      name="delivery"
-                      title="Спосіб доставки"
-                      options={[
-                        { value: "New_mail", label: "Нова пошта" },
-                        { value: "Ukrposhta", label: "Укрпошта" },
-                        { value: "Meest_Express", label: "Meest Express" },
-                      ]}
-                      groupClass={styles.radioboxGroup}
-                      labelClass={`${styles.radioboxLabel} ${styles.check}`}
-                      inputClass={`${styles.visuallyHidden} ${styles.radioboxInput}`}
-                      radioBoxClass={styles.radioBox}
-                      radioUncheckedClass={styles.radioUnchecked}
-                      radioCheckedClass={styles.radioChecked}
-                      uncheckedIcon={radioboxIcon}
-                      checkedIcon={checkIcon}
-                    />
-
-                    <ErrorMessage
-                      touched={touched.delivery}
-                      error={errors.delivery}
-                      successMessage="Спосіб доставки успішно додано"
-                    />
+                    </div>
                   </div>
                 </section>
-              </section>
-            </div>
 
-            <AdverPhotoList images={images} setImages={setImages} />
+                <section className={styles.formWrapper}>
+                  {/* Ціна */}
+                  <div style={{ display: "flex", gap: "40px" }}>
+                    <div style={{}}>
+                      <label>
+                        Ціна
+                        <span style={{ color: "red", marginLeft: "4px" }}>
+                          *
+                        </span>
+                        <Field
+                          className={styles.styledField}
+                          type="text"
+                          name="price"
+                          placeholder="Вкажіть бажану ціну"
+                          onBlur={handleBlur}
+                          disabled={values.isNegotiable}
+                        />
+                        <div className={styles.textareaText}>
+                          <p>Використовуйте лише цифри</p>
+                        </div>
+                      </label>
+                      <ErrorMessage
+                        touched={touched.price}
+                        error={errors.price}
+                        successMessage="Ціна успішно додана"
+                      />
 
-            <div className={styles.buttonWrapper}>
-              <CommonButton
-                type="submit"
-                title="Попередній перегляд"
-                color="yellow"
-                className={styles.adverButton}
+                      <div className={styles.toggleWrapper}>
+                        <label className={styles.toggleLabel}>
+                          <span className={styles.toggleText}>Договірна</span>
+                          <ToggleSwitch
+                            name="isNegotiable"
+                            checked={values.isNegotiable}
+                            onChange={(checked) => {
+                              setFieldValue("isNegotiable", checked);
+                              if (checked) {
+                                setFieldValue("price", "");
+                              }
+                            }}
+                          />
+                        </label>
+                      </div>
+                      <div>
+                        <RadioButtonGroup
+                          name="condition"
+                          title="Стан товару"
+                          options={[
+                            { value: "NEW", label: "Нове" },
+                            { value: "USED", label: "Вживане" },
+                            { value: "OTHER", label: "Інше" },
+                          ]}
+                          groupClass={styles.radioboxGroup}
+                          labelClass={`${styles.radioboxLabel} ${styles.check}`}
+                          inputClass={`${styles.visuallyHidden} ${styles.radioboxInput}`}
+                          radioBoxClass={styles.radioBox}
+                          radioUncheckedClass={styles.radioUnchecked}
+                          radioCheckedClass={styles.radioChecked}
+                          uncheckedIcon={radioboxIcon}
+                          checkedIcon={checkIcon}
+                        />
+                        <ErrorMessage
+                          touched={touched.condition}
+                          error={errors.condition}
+                          successMessage="Стан товару успішно додано"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Місцезнаходження */}
+                    <div style={{}}>
+                      <div>
+                        <label>
+                          Місцезнаходження
+                          <span style={{ color: "red", marginLeft: "4px" }}>
+                            *
+                          </span>
+                          <CityAutocomplete
+                            nameField="location"
+                            idField="cityId"
+                            placeholder="введіть місто (мін. 3 символи)"
+                            minLength={3}
+                          />
+                        </label>
+                      </div>
+                      <ErrorMessage
+                        touched={touched.location}
+                        error={errors.location}
+                        successMessage="Місто успішно додано"
+                      />
+
+                      <div style={{ marginTop: "85px" }}>
+                        <RadioButtonGroup
+                          name="delivery"
+                          title="Спосіб доставки"
+                          options={[
+                            { value: "NOVA_POST", label: "Нова пошта" },
+                            { value: "UKR_POST", label: "Укрпошта" },
+                            { value: "Meest_Express", label: "Meest Express" },
+                            { value: "Other", label: "Інше" },
+                          ]}
+                          groupClass={styles.radioboxGroup}
+                          labelClass={`${styles.radioboxLabel} ${styles.check}`}
+                          inputClass={`${styles.visuallyHidden} ${styles.radioboxInput}`}
+                          radioBoxClass={styles.radioBox}
+                          radioUncheckedClass={styles.radioUnchecked}
+                          radioCheckedClass={styles.radioChecked}
+                          uncheckedIcon={radioboxIcon}
+                          checkedIcon={checkIcon}
+                        />
+                        <ErrorMessage
+                          touched={touched.delivery}
+                          error={errors.delivery}
+                          successMessage="Спосіб доставки успішно додано"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              </div>
+
+              <div className={styles.buttonWrapper}>
+                <CommonButton
+                  type="button"
+                  title="Попередній перегляд"
+                  className={styles.adverButton}
+                  onClick={() => handlePreview(values)}
+                />
+                <CommonButton
+                  type="submit"
+                  title="Опублікувати"
+                  className={`${styles.adverButton} ${styles.adverButtonAd}`}
+                />
+              </div>
+              {/* прихована кнопка сабміту */}
+              <button type="submit" ref={submitRef} style={{ display: "none" }}>
+                Сабміт
+              </button>
+            </Form>
+            {categoryModalOpen && (
+              <CategoryTreeModal
+                open={categoryModalOpen}
+                onClose={() => setCategoryModalOpen(false)}
+                onSelect={({
+                  categoryId,
+                  topSubCategoryId,
+                  lowSubCategoryId,
+                  label,
+                }) => {
+                  setFieldValue("categoryId", categoryId);
+                  setFieldValue("topSubCategoryId", topSubCategoryId);
+                  setFieldValue("lowSubCategoryId", lowSubCategoryId);
+                  setFieldValue("category", label);
+                }}
               />
+            )}
 
-              <CommonButton
-                type="submit"
-                title="Опублікувати"
-                color="yellow"
-                className={`${styles.adverButton} ${styles.adverButtonAd}`}
+            {previewOpen && (
+              <AdverPreviewModal
+                open={previewOpen}
+                onClose={() => setPreviewOpen(false)}
+                values={values}
+                images={images}
+                onPublish={() => {
+                  setPreviewOpen(false);
+                  submitRef.current?.click();
+                }}
               />
-            </div>
-          </Form>
+            )}
+          </>
         )}
       </Formik>
     </div>
