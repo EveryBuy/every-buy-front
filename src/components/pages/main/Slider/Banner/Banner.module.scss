@@ -1,119 +1,172 @@
 @import "@/styles/mixins";
 @import "@/styles/breakpoints";
 
+.bannerWrapper {
+	width: 282px;
+
+	@media (min-width: $breakpoint-tablet) {
+		width: 480px;
+	}
+
+	@media (min-width: $breakpoint-laptop) {
+		width: 900px;
+	}
+}
+
 .bannerLabelContainer {
-  position: relative;
-  width: 100%;
-  height: 20px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  width: 53px;
-  height: 34px;
-  @media (min-width: 768px) {
-    justify-content: center;
-  }
-  @media (min-width: 1024px) {
-    width: 68px;
-    height: 44px;
-  }
+	position: relative;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	width: 30px;
+	height: 18px;
+
+	@media (min-width: $breakpoint-tablet) {
+		justify-content: center;
+		width: 68px;
+		height: 44px;
+	}
+
+	// @media (min-width: $breakpoint-laptop) {
+
+	// }
 }
 
 .bannerIcon {
-  fill: var(--not-active);
-  margin: 0;
+	fill: var(--not-active);
+	margin: 0;
 
-  @include media-min($breakpoint-tablet) {
-    width: 100%;
-    height: 100%;
-  }
+	@include media-min($breakpoint-tablet) {
+		width: 100%;
+		height: 100%;
+	}
 }
 
 .bannerIconSale {
-  fill: var(--error);
+	fill: var(--error);
 }
 
 .bannerLabel {
-  position: absolute;
-  top: 46%;
-  left: 28%;
-  translate: -50% -50%;
-  font-weight: 400;
-  font-size: 6px;
-  @media (min-width: 768px) {
-    font-size: 12px;
-    top: 50%;
-    left: 50%;
-  }
-  @media (min-width: 1024px) {
-    font-size: 14px;
-  }
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	translate: -50% -50%;
+	font-weight: 400;
+	font-size: 6px;
+	color: var(--label);
+	text-transform: uppercase;
+
+	@media (min-width: $breakpoint-tablet) {
+		font-size: 12px;
+		// top: 50%;
+		// left: 50%;
+	}
+
+	@media (min-width: $breakpoint-laptop) {
+		font-size: 14px;
+	}
 }
+
+.bannerLabelSale {
+	color: #fff;
+}
+
 
 .bannerTitle {
-  margin-top: 4px;
-  font-weight: 200;
-  font-size: 13px;
-  color: var(--background);
+	margin-top: 6px;
+	font-weight: 200;
+	font-size: 14px;
+	color: #fff;
 
-  @include media-min($breakpoint-tablet) {
-    margin-top: 37px;
-    font-weight: 400;
-    font-size: 26px;
-  }
-  @media (min-width: 1024px) {
-    margin-top: 4px;
-  }
+	@include media-min($breakpoint-tablet) {
+		margin-top: 40px;
+		font-weight: 400;
+		font-size: 26px;
+	}
 
-  @include media-min($breakpoint-laptop) {
-    font-weight: 400;
-    font-size: 40px;
-  }
+	// @media (min-width: 1024px) {
+	// 	margin-top: 4px;
+	// }
+
+	@include media-min($breakpoint-laptop) {
+		font-weight: 400;
+		font-size: 40px;
+	}
 }
-.bannerAdditionalInfo {
-  margin-top: 2px;
-  font-weight: 400;
-  font-size: 8px;
-  color: var(--background);
 
-  @include media-min($breakpoint-tablet) {
-    margin-top: 6px;
-    font-size: 12px;
-  }
-  @media (min-width: 1024px) {
-    font-size: 16px;
-  }
+.bannerPriceWrapper {
+	margin-top: 6px;
+	display: flex;
+	align-items: center;
+	gap: 4px;
+
+	@include media-min($breakpoint-tablet) {
+		margin-top: 32px;
+		gap: 16px;
+	}
 }
+
 .bannerPrice {
-  margin-top: 5px;
-  font-weight: 400;
-  font-size: 10px;
-  color: var(--background);
+	font-weight: 500;
+	font-size: 10px;
+	color: #fff;
 
-  @include media-min($breakpoint-tablet) {
-    margin-top: 32px;
-    font-size: 24px;
-  }
+	@include media-min($breakpoint-tablet) {
+		font-size: 24px;
+		font-weight: 600;
+	}
+}
+
+.bannerAdditionalInfo {
+	padding: 4px 6px;
+	font-weight: 400;
+	font-size: 8px;
+	line-height: 0.4;
+	color: var(--label);
+	letter-spacing: 0.16px;
+	background-color: #E7E6E6;
+	border-radius: 8px;
+	height: 12px;
+
+	&.newStatus {
+		color: var(--success);
+	}
+
+	@include media-min($breakpoint-tablet) {
+		font-size: 12px;
+		padding: 4px 10px;
+		line-height: 1.7;
+		height: 32px;
+	}
+
+	@media (min-width: 1024px) {
+		font-size: 16px;
+		line-height: 1.2;
+
+	}
 }
 
 .bannerButton {
-  border-radius: 4px;
-  padding: 4px 10px;
-  height: 14px;
-  margin-top: 5px;
-  font-weight: 400;
-  font-size: 5px;
+	border-radius: 4px;
+	padding: 4px 10px;
+	min-width: 80px;
+	height: 20px;
+	margin-top: 10px;
+	font-weight: 600;
+	font-size: 10px;
+	color: var(--label);
 
-  @include media-min($breakpoint-tablet) {
-    margin-top: 10px;
-    border-radius: 10px;
-    width: 113px;
-    height: 39px;
-    font-size: 12px;
-  }
-  @media (min-width: 1024px) {
-    font-size: 16px;
-    height: 51px;
-    width: 147px;
-  }
+	@include media-min($breakpoint-tablet) {
+		margin-top: 32px;
+		border-radius: 8px;
+		min-width: 216px;
+		height: 56px;
+		font-size: 14px;
+	}
+
+	@media (min-width: 1024px) {
+		font-size: 18px;
+		min-width: 216px;
+		height: 56px;
+	}
 }

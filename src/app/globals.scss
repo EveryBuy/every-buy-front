@@ -30,8 +30,8 @@
 	--not-active: #f5ffb6;
 
 	--accent: #6735f4;
-	--success: #29b126;
-	--error: #ff5656;
+	--success: #007600; // old color #29b126
+	--error: #c21919; // old color #ff5656
 	--errorMessagesMessage: #f5b4b4;
 }
 
@@ -80,22 +80,22 @@ body {
 }
 
 .slick-dots {
-	bottom: -40px !important;
+	bottom: -32px !important;
 	display: flex !important;
 	justify-content: center;
 	gap: 12px;
 
 	li {
 		margin: 0 !important;
-		width: 8px !important;
-		height: 8px !important;
+		width: 12px !important;
+		height: 12px !important;
 		border-radius: 50%;
-		background: #d9d9d9;
+		background: #b5b5b5;
 
 		button {
 			padding: 0 !important;
-			width: 8px !important;
-			height: 8px !important;
+			width: 12px !important;
+			height: 12px !important;
 			border-radius: 50%;
 			background: #d9d9d9;
 
@@ -105,7 +105,7 @@ body {
 		}
 
 		&.slick-active button {
-			background: var(--input-text);
+			background: var(--label);
 		}
 	}
 }

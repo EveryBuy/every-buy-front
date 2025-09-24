@@ -2,12 +2,13 @@
 @import "../../../../../styles/breakpoints";
 
 .sliderSection {
-  padding-top: 40px;
+	padding-top: 24px;
 
-  @include media-min($breakpoint-tablet) {
-    padding-top: 28px;
-  }
-  @media (min-width: 1024px) {
-    padding-top: 60px;
-  }
+	@include media-min($breakpoint-tablet) {
+		padding-top: 32px;
+	}
+
+	@media (min-width: 1024px) {
+		padding-top: 40px;
+	}
 }
