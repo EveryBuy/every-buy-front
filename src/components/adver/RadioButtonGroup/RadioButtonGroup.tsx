@@ -16,6 +16,7 @@ interface RadioButtonGroupProps {
   radioCheckedClass?: string;
   uncheckedIcon?: string;
   checkedIcon?: string;
+  onChange?: (value: string) => void;
 }
 
 const RadioButtonGroup: React.FC<RadioButtonGroupProps> = ({
@@ -30,6 +31,7 @@ const RadioButtonGroup: React.FC<RadioButtonGroupProps> = ({
   radioCheckedClass = "",
   uncheckedIcon,
   checkedIcon,
+  onChange
 }) => {
   const [field, meta, helpers] = useField(name);
   return (
@@ -78,7 +80,12 @@ const RadioButtonGroup: React.FC<RadioButtonGroupProps> = ({
                 value={option.value}
                 checked={isChecked}
                 className={inputClass}
-                onChange={() => helpers.setValue(option.value)}
+                onChange={() => {
+                  helpers.setValue(option.value);
+                  if (onChange) {
+                    onChange(option.value);
+                  }
+                }}
               />
               <span className={radioBoxClass}>
                 <Image

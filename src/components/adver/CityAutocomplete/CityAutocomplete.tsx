@@ -51,13 +51,6 @@ function CityAutocomplete({
     return r ? `${c}, ${r}` : c;
   };
   useEffect(() => {
-  console.log(
-    "[CityAutocomplete effect]",
-    "inputValue:", inputValue,
-    "| debouncedQuery:", debouncedQuery,
-    "| minLength:", minLength,
-    "| debouncedQuery.length:", debouncedQuery.trim().length
-  );
   if (debouncedQuery.trim().length < minLength) {
     setList([]);
     setOpen(false);

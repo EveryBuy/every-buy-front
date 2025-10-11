@@ -272,3 +272,42 @@
   display: block;
 }
 
+.checkboxGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+}
+
+.checkboxInput {
+  @extend .visuallyHidden;
+}
+
+.checkboxBox {
+  position: absolute;
+  left: 0;
+  width: 32px;
+  height: 32px;
+}
+
+.checkboxUnchecked {
+  display: block;
+}
+
+.checkboxChecked {
+  display: none;
+}
+
+.checkboxInput:checked + .checkboxBox .checkboxUnchecked {
+  display: none;
+}
+
+.checkboxInput:checked + .checkboxBox .checkboxChecked {
+  display: block;
+}

@@ -4,8 +4,7 @@ import Image from "next/image";
 import { Formik, Form, Field, FormikHelpers, useFormikContext } from "formik";
 import * as Yup from "yup";
 
-import { CommonButton } from "@/components";
-import { RadioButtonGroup } from "@/components";
+import { CommonButton, RadioButtonGroup } from "@/components";
 import { AdverPhotoList } from "@/components";
 import { ErrorMessage } from "@/components";
 import Search from "@/assets/Svg/search.svg";
@@ -23,6 +22,7 @@ import { createAdvertisement } from "@/redux/advertisement/operations";
 import { selectToken } from "@/redux/auth/selectorsAuth";
 import CityAutocomplete from "../CityAutocomplete/CityAutocomplete";
 import AdverPreviewModal from "../AdverPreviewModal/AdverPreviewModal";
+import CheckboxGroup from "../RadioButtonGroup/RadioButtonGroup";
 
 export type FormValues = {
   topSubCategoryId: number | null;
@@ -41,7 +41,6 @@ export type FormValues = {
   subcategory: string;
   location: string;
   condition: "NEW" | "USED" | "OTHER" | "";
-  delivery: string;
 };
 
 const initialValues: FormValues = {
@@ -61,7 +60,6 @@ const initialValues: FormValues = {
   subcategory: "",
   location: "",
   condition: "",
-  delivery: "",
 };
 
 const AuthSchema = Yup.object().shape({
@@ -79,14 +77,11 @@ const AuthSchema = Yup.object().shape({
           .required("Будь ласка, зазначте бажану ціну")
           .matches(/^\d+$/, "Використовуйте лише цифри")
           .test("min-1", "Мінімум 1", (v) => {
-            if (v == null || v === "") {
-              return false;
-            }
+            if (v == null || v === "") return false;
             return Number(v) >= 1;
           }),
       otherwise: (s) => s.nullable().notRequired(),
     }),
-
   description: Yup.string()
     .trim()
     .min(30, "Вкажіть щонайменше 30 символів")
@@ -101,36 +96,31 @@ const AuthSchema = Yup.object().shape({
   condition: Yup.mixed<"NEW" | "USED" | "OTHER">()
     .oneOf(["NEW", "USED", "OTHER"], "Будь ласка, оберіть стан товару")
     .required("Будь ласка, оберіть стан товару"),
-  // delivery: Yup.string()
-  //   .oneOf(
-  //     ["New_mail", "Ukrposhta", "Meest_Express"],
-  //     "Будь ласка, оберіть спосіб доставки"
-  //   )
-  //   .required("Будь ласка, оберіть спосіб доставки"),
   section: Yup.mixed<"SELL" | "BUY">().oneOf(["SELL", "BUY"]).required(),
-  // productType: Yup.string()
-  //   .oneOf(["NEW", "USED", "OTHER"])
-  //   .required("Оберіть тип товару"),
+  deliveryMethods: Yup.array()
+    .of(Yup.string())
+    .min(1, "Будь ласка, оберіть хоча б один спосіб доставки")
+    .required("Будь ласка, оберіть спосіб доставки"),
 });
 
-function FormSyncers() {
-  const { values, setFieldValue } = useFormikContext<FormValues>();
+// function FormSyncers() {
+//   const { values, setFieldValue } = useFormikContext<FormValues>();
 
-  //delivery -> deliveryMethods
-  useEffect(() => {
-    const methods = values.delivery ? [values.delivery] : [];
-    setFieldValue("deliveryMethods", methods, false);
-  }, [values.delivery, setFieldValue]);
+//   //delivery -> deliveryMethods
+//   // useEffect(() => {
+//   //   const methods = values.delivery ? [values.delivery] : [];
+//   //   setFieldValue("deliveryMethods", methods, false);
+//   // }, [values.delivery, setFieldValue]);
 
-  //condition -> productType
-  useEffect(() => {
-    if (values.condition && values.productType !== values.condition) {
-      setFieldValue("productType", values.condition, false);
-    }
-  }, [values.condition, values.productType, setFieldValue]);
+//   //condition -> productType
+//   useEffect(() => {
+//     if (values.condition && values.productType !== values.condition) {
+//       setFieldValue("productType", values.condition, false);
+//     }
+//   }, [values.condition, values.productType, setFieldValue]);
 
-  return null;
-}
+//   return null;
+// }
 
 const AdverDesktop = () => {
   const [images, setImages] = useState<{ file: File; url: string }[]>([]);
@@ -140,9 +130,7 @@ const AdverDesktop = () => {
   const dispatch = useAppDispatch();
   const token = useAppSelector(selectToken);
 
-
   const [previewOpen, setPreviewOpen] = useState(false);
-
 
   const handlePreview = (values: FormValues) => {
     console.log("Preview values:", values);
@@ -173,11 +161,9 @@ const AdverDesktop = () => {
         description: values.description,
         deliveryMethods: Array.isArray(values.deliveryMethods)
           ? values.deliveryMethods.filter(Boolean)
-          : values.delivery
-          ? [values.delivery]
           : [],
       };
-
+      console.log("requestPayload", requestPayload);
       const formData = new FormData();
 
       formData.append(
@@ -211,7 +197,7 @@ const AdverDesktop = () => {
       >
         {({ handleBlur, touched, errors, setFieldValue, values }) => (
           <>
-            <FormSyncers />
+            {/* <FormSyncers /> */}
             <Form autoComplete="off" className={styles.styledForm}>
               {/* buy / sell */}
               <div className={styles.linkItem}>
@@ -370,7 +356,6 @@ const AdverDesktop = () => {
                           name="price"
                           placeholder="Вкажіть бажану ціну"
                           onBlur={handleBlur}
-                          disabled={values.isNegotiable}
                         />
                         <div className={styles.textareaText}>
                           <p>Використовуйте лише цифри</p>
@@ -381,7 +366,7 @@ const AdverDesktop = () => {
                         error={errors.price}
                         successMessage="Ціна успішно додана"
                       />
-
+                      {/* договірна */}
                       <div className={styles.toggleWrapper}>
                         <label className={styles.toggleLabel}>
                           <span className={styles.toggleText}>Договірна</span>
@@ -397,6 +382,7 @@ const AdverDesktop = () => {
                           />
                         </label>
                       </div>
+                      {/* стан */}
                       <div>
                         <RadioButtonGroup
                           name="condition"
@@ -414,6 +400,9 @@ const AdverDesktop = () => {
                           radioCheckedClass={styles.radioChecked}
                           uncheckedIcon={radioboxIcon}
                           checkedIcon={checkIcon}
+                          onChange={(value) =>
+                            setFieldValue("productType", value)
+                          }
                         />
                         <ErrorMessage
                           touched={touched.condition}
@@ -444,10 +433,10 @@ const AdverDesktop = () => {
                         error={errors.location}
                         successMessage="Місто успішно додано"
                       />
-
+                      {/* доставка */}
                       <div style={{ marginTop: "85px" }}>
-                        <RadioButtonGroup
-                          name="delivery"
+                        <CheckboxGroup
+                          name="deliveryMethods"
                           title="Спосіб доставки"
                           options={[
                             { value: "NOVA_POST", label: "Нова пошта" },
@@ -455,18 +444,18 @@ const AdverDesktop = () => {
                             { value: "Meest_Express", label: "Meest Express" },
                             { value: "Other", label: "Інше" },
                           ]}
-                          groupClass={styles.radioboxGroup}
-                          labelClass={`${styles.radioboxLabel} ${styles.check}`}
-                          inputClass={`${styles.visuallyHidden} ${styles.radioboxInput}`}
-                          radioBoxClass={styles.radioBox}
-                          radioUncheckedClass={styles.radioUnchecked}
-                          radioCheckedClass={styles.radioChecked}
+                          groupClass={styles.checkboxGroup}
+                          labelClass={styles.checkboxLabel}
+                          inputClass={styles.checkboxInput}
+                          radioBoxClass={styles.checkboxBox}
+                          radioUncheckedClass={styles.checkboxUnchecked}
+                          radioCheckedClass={styles.checkboxChecked}
                           uncheckedIcon={radioboxIcon}
                           checkedIcon={checkIcon}
                         />
                         <ErrorMessage
-                          touched={touched.delivery}
-                          error={errors.delivery}
+                          touched={touched.deliveryMethods}
+                          error={errors.deliveryMethods}
                           successMessage="Спосіб доставки успішно додано"
                         />
                       </div>
@@ -489,9 +478,11 @@ const AdverDesktop = () => {
                 />
               </div>
               {/* прихована кнопка сабміту */}
-              <button type="submit" ref={submitRef} style={{ display: "none" }}>
-                Сабміт
-              </button>
+              <button
+                type="submit"
+                ref={submitRef}
+                style={{ display: "none" }}
+              ></button>
             </Form>
             {categoryModalOpen && (
               <CategoryTreeModal
