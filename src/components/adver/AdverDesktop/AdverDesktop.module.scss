@@ -235,14 +235,11 @@
 
 .radioboxInput {
   margin-right: 16px;
-
   width: 32px;
   height: 32px;
 }
 
 .radioBox {
-  position: absolute;
-  margin-left: -48px;
   width: 32px;
   height: 32px;
 }
@@ -250,11 +247,12 @@
 .radioboxLabel {
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 
-.check {
-  padding-left: 48px;
-}
+// .check {
+//   padding-left: 48px;
+// }
 
 .radioUnchecked {
   display: block;
@@ -281,7 +279,7 @@
 .checkboxLabel {
   display: flex;
   align-items: center;
-  position: relative;
+  // position: relative;
   cursor: pointer;
 }
 
@@ -290,7 +288,7 @@
 }
 
 .checkboxBox {
-  position: absolute;
+  // position: absolute;
   left: 0;
   width: 32px;
   height: 32px;

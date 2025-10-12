@@ -33,59 +33,28 @@ const RadioButtonGroup: React.FC<RadioButtonGroupProps> = ({
   checkedIcon,
   onChange
 }) => {
-  const [field, meta, helpers] = useField(name);
+  const [field, , helpers] = useField(name);
   return (
     <div role="group" aria-labelledby="radio-group" className={groupClass}>
       <h2>
         {title}
         <span style={{ color: "red", marginLeft: "4px" }}>*</span>
       </h2>
-      <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
-        {/* {options.map((option) => (
-          <label key={option.value} className={labelClass}>
-            <Field
-              type="radio"
-              name={name}
-              value={option.value}
-              className={inputClass}
-            />
-            <span className={radioBoxClass}>
-              <Image
-                priority
-                src={uncheckedIcon}
-                alt="radio icon"
-                width={32}
-                height={32}
-                className={radioUncheckedClass}
-              />
-              <Image
-                priority
-                src={checkedIcon}
-                alt="checked icon"
-                width={32}
-                height={32}
-                className={radioCheckedClass}
-              />
-            </span>
-            <span className={styles.labelClass}>{option.label}</span>
-          </label>
-        ))} */}
+      <div style={{ display: "flex", gap: "20px", alignItems: "center" }}>
         {options.map((option) => {
+
           const isChecked = field.value === option.value;
+          
           return (
             <label key={option.value} className={labelClass}>
               <input
                 type="radio"
-                {...field}
+                // {...field}
+                name={field.value}
                 value={option.value}
                 checked={isChecked}
                 className={inputClass}
-                onChange={() => {
-                  helpers.setValue(option.value);
-                  if (onChange) {
-                    onChange(option.value);
-                  }
-                }}
+                onChange={() => helpers.setValue(option.value)}
               />
               <span className={radioBoxClass}>
                 <Image

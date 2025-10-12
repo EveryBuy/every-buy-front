@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useField } from "formik";
+import { useField, useFormikContext } from "formik";
 
 interface CheckboxGroupProps {
   name: string;
@@ -30,37 +30,40 @@ const CheckboxGroup: React.FC<CheckboxGroupProps> = ({
   uncheckedIcon,
   checkedIcon,
 }) => {
-  const [field, meta, helpers] = useField(name);
-  const selectedValues: string[] = Array.isArray(meta.value)
-    ? meta.value
-    : meta.value
-    ? [meta.value]
+const { values, setFieldValue } = useFormikContext<any>();
+
+const selectedValues: string[] = Array.isArray(values[name])
+    ? values[name]
     : [];
 
   const handleToggle = (value: string) => {
     if (selectedValues.includes(value)) {
-      helpers.setValue(selectedValues.filter((v) => v !== value));
+      setFieldValue(
+        name,
+        selectedValues.filter((v) => v !== value)
+      );
     } else {
-      helpers.setValue([...selectedValues, value]);
+      setFieldValue(name, [...selectedValues, value]);
     }
   };
-  console.log('values', name);
+
   return (
-    <div role="group" aria-labelledby="radio-group" className={groupClass}>
+    <div role="group" aria-label={title || name} className={groupClass}>
       {title && (
         <h2>
           {title}
           <span style={{ color: "red", marginLeft: "4px" }}>*</span>
         </h2>
       )}
-      <div style={{ display: "flex", gap: "8px", alignItems: "center", flexWrap: "wrap" }}>
+        <div style={{ display: "flex", gap: "20px", alignItems: "center" }}>
         {options.map((option) => {
           const isChecked = selectedValues.includes(option.value);
+            console.log()
           return (
             <label key={option.value} className={labelClass}>
               <input
                 type="checkbox"
-                name={`${name}-${option.value}`}
+                name={`${name}`}
                 value={option.value}
                 checked={isChecked}
                 className={inputClass}

@@ -22,7 +22,8 @@ import { createAdvertisement } from "@/redux/advertisement/operations";
 import { selectToken } from "@/redux/auth/selectorsAuth";
 import CityAutocomplete from "../CityAutocomplete/CityAutocomplete";
 import AdverPreviewModal from "../AdverPreviewModal/AdverPreviewModal";
-import CheckboxGroup from "../RadioButtonGroup/RadioButtonGroup";
+import CheckboxGroup from "../CheckboxGroup/CheckboxGroup";
+
 
 export type FormValues = {
   topSubCategoryId: number | null;

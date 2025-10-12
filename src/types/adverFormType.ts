@@ -49,6 +49,5 @@ export type FormValues = {
   category: string; // "Категорія / Топ / Низ"
   subcategory: string; // опційно
   location: string; // текстове місто (для UI); бек отримує cityId
-  condition: "NEW" | "USED" | "OTHER" | "";
-  delivery: string; // якщо потрібно одну з опцій; але для бек — deliveryMethods[]
+  condition: "NEW" | "USED" | "OTHER" | ""
 };
