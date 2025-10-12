@@ -19,10 +19,11 @@ export type CityDto = {
 };
 
 type Props = {
-  nameField?: string; // поле для назви (у Formik)
-  idField?: string;   // поле для id (у Formik)
+  nameField?: string;
+  idField?: string;
   placeholder?: string;
   minLength?: number;
+  styledFieldClass?: string
 };
 
 function CityAutocomplete({
@@ -30,6 +31,7 @@ function CityAutocomplete({
   idField = "cityId",
   placeholder = "Вкажіть місто",
   minLength = 3,
+  styledFieldClass
 }: Props) {
   const token = useAppSelector(selectToken);
   const { values, setFieldValue, setFieldTouched } = useFormikContext<any>();
@@ -67,7 +69,7 @@ function CityAutocomplete({
     try {
       setLoading(true);
       setErrorMsg(null);
-      // Ось тут викликаємо searchCities (axios)
+
       const data = await searchCities(
         debouncedQuery.trim(),
         token || undefined,
@@ -91,10 +93,10 @@ function CityAutocomplete({
   return () => controller.abort();
 }, [debouncedQuery, token, minLength, inputValue]);
 
-  const helpText = useMemo(() => {
-    const left = minLength - (inputValue?.trim()?.length ?? 0);
-    return left > 0 ? `Введіть ще ${left} символів` : "";
-  }, [inputValue, minLength]);
+  // const helpText = useMemo(() => {
+  //   const left = minLength - (inputValue?.trim()?.length ?? 0);
+  //   return left > 0 ? `Введіть ще ${left} символів` : "";
+  // }, [inputValue, minLength]);
 
   const onSelectCity = (city: CityDto) => {
     setFieldValue(nameField, labelOf(city), true);
@@ -108,7 +110,7 @@ function CityAutocomplete({
     <div className={styles.wrapper}>
       <input
         type="text"
-        className={styles.input}
+        className={styledFieldClass}
         name={nameField}
         value={inputValue}
         placeholder={placeholder}
@@ -139,7 +141,7 @@ function CityAutocomplete({
       />
 
       {loading && <div className={styles.state}>Пошук…</div>}
-      {!loading && helpText && <div className={styles.state}>{helpText}</div>}
+      {/* {!loading && helpText && <div className={styles.state}>{helpText}</div>} */}
       {errorMsg && <div className={styles.error}>{errorMsg}</div>}
 
       {open && list.length > 0 && (
