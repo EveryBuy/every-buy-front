@@ -24,7 +24,6 @@ import CityAutocomplete from "../CityAutocomplete/CityAutocomplete";
 import AdverPreviewModal from "../AdverPreviewModal/AdverPreviewModal";
 import CheckboxGroup from "../CheckboxGroup/CheckboxGroup";
 
-
 export type FormValues = {
   topSubCategoryId: number | null;
   lowSubCategoryId: number | null;
@@ -369,19 +368,21 @@ const AdverDesktop = () => {
                       />
                       {/* договірна */}
                       <div className={styles.toggleWrapper}>
-                        <label className={styles.toggleLabel}>
-                          <span className={styles.toggleText}>Договірна</span>
-                          <ToggleSwitch
-                            name="isNegotiable"
-                            checked={values.isNegotiable}
-                            onChange={(checked) => {
-                              setFieldValue("isNegotiable", checked);
-                              if (checked) {
-                                setFieldValue("price", "");
-                              }
-                            }}
-                          />
-                        </label>
+                          <div>
+                            <span className={styles.toggleText}>Договірна</span>
+                          </div>
+                          <div>
+                            <ToggleSwitch
+                              name="isNegotiable"
+                              checked={values.isNegotiable}
+                              onChange={(checked) => {
+                                setFieldValue("isNegotiable", checked);
+                                if (checked) {
+                                  setFieldValue("price", "");
+                                }
+                              }}
+                            />
+                          </div>
                       </div>
                       {/* стан */}
                       <div>
