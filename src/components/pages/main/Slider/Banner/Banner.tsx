@@ -1,13 +1,20 @@
 import { FC } from "react";
-import { CommonIcon, CommonButton, BannerBackground } from "@/components";
+import Link from 'next/link';
+import { CommonIcon, CommonButton } from "@/components";
+// import { BannerBackground } from "@/components";
 import BannerProps from "@/types/bannerProps";
 import styles from "./Banner.module.scss";
 
 const Banner: FC<BannerProps> = ({ item }) => {
-	const { label, title, condition, price, buttonName, backgroundImages } = item;
+	const { label, title, condition, price, buttonName, backgroundImage, url } = item;
+
+	const backgroundImageStyles = {
+		"--banner-background": `url(${backgroundImage})`,
+	};
 
 	return (
-		<BannerBackground backgroundImages={backgroundImages}>
+		// <BannerBackground backgroundImages={backgroundImages}>
+		<div className={styles.bannerBackground} style={backgroundImageStyles}>
 			<div className={styles.bannerWrapper}>
 				<div className={styles.bannerLabelContainer}>
 					<CommonIcon
@@ -30,14 +37,17 @@ const Banner: FC<BannerProps> = ({ item }) => {
 							}`}
 					>{condition || "\u00A0"}</p>
 				</div>
-				<CommonButton
-					type="button"
-					title={buttonName}
-					color="yellow"
-					className={styles.bannerButton}
-				/>
+				<Link href={url || "#"}>
+					<CommonButton
+						type="button"
+						title={buttonName}
+						color="yellow"
+						className={styles.bannerButton}
+					/>
+				</Link>
 			</div>
-		</BannerBackground>
+		</div>
+		// </BannerBackground>
 	);
 };
 

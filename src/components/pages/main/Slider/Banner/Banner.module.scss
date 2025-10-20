@@ -1,6 +1,33 @@
 @import "@/styles/mixins";
 @import "@/styles/breakpoints";
 
+.bannerBackground {
+	border-radius: 10px;
+	padding: 7px 20px 7px 10px;
+	box-sizing: border-box;
+
+	background-size: cover;
+	background-position: center;
+	overflow: hidden;
+
+	@include media-max($breakpoint-tablet) {
+		background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+			var(--banner-background);
+	}
+
+	@include media-min($breakpoint-tablet + 1) {
+		background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+			var(--banner-background);
+
+		border-radius: 33px;
+		padding: 18px 30px 32px;
+	}
+
+	@media (min-width: 1024px) {
+		padding: 18px 40px 44px;
+	}
+}
+
 .bannerWrapper {
 	width: 282px;
 
