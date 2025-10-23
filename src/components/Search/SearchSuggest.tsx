@@ -3,9 +3,10 @@
 // import { FC } from "react";
 import styles from "./SearchSuggest.module.scss";
 import Link from 'next/link';
-import { ItemSearchType } from '@/types/listItemsForSearch';
 import Image from 'next/image';
+import { ItemSearchType } from '@/types/listItemsForSearch';
 import imgSearchEmpty from '@/assets/Svg/searchEmpty.svg';
+import CategoriesList from "@/assets/category.json";
 
 type SearchSuggestProps = {
 	searchWord: string;
@@ -24,6 +25,7 @@ type ItemSaggestProps = {
 type ItemSaggestCat = {
 	categoryId: number;
 	categoryName: string;
+	categoryUrl: string;
 }
 
 type ItemSaggestCatProps = {
@@ -35,16 +37,23 @@ type ItemSaggestCatProps = {
 const SearchSuggest = (props: SearchSuggestProps): JSX.Element => {
 	// console.log('props.searchArr', props.searchArr);
 
-	const searchArrSell = props.searchArr.SELL || [];
-	const searchArrBuy = props.searchArr.BUY || [];
+	const searchArrSell = props.searchArr.SELL
+		? [...props.searchArr.SELL].sort((a, b) => b.count - a.count)
+		: [];
+	const searchArrBuy = props.searchArr.BUY
+		? [...props.searchArr.BUY].sort((a, b) => b.count - a.count)
+		: [];
 	const word = props.searchWord || "";
+
+	// console.log(CategoriesList);
 
 	function transformCategories(input: ItemSearchType[]): ItemSaggestCat[] {
 		return input.reduce((acc: ItemSaggestCat[], current) => {
 			if (!acc.some(item => item.categoryId === current.categoryId)) {
 				acc.push({
 					categoryId: current.categoryId,
-					categoryName: current.categoryName
+					categoryName: current.categoryName,
+					categoryUrl: CategoriesList[current.categoryId - 1].photoUrl || ""
 				});
 			}
 			return acc;
@@ -58,7 +67,7 @@ const SearchSuggest = (props: SearchSuggestProps): JSX.Element => {
 
 	return (
 		<div className={styles.searchSuggest}>
-			<div className={styles.searchTitle}>Рекомендації</div>
+			{/* <div className={styles.searchTitle}>Рекомендації</div> */}
 			{
 				searchArrSell && Array.isArray(searchArrSell) && searchArrSell.length > 0 ||
 					searchArrBuy && Array.isArray(searchArrBuy) && searchArrBuy.length > 0
@@ -136,7 +145,7 @@ const SuggestItem = (props: ItemSaggestProps): JSX.Element => {
 				<span className={styles.searchLinkItem}>{word}</span>
 				{/* <span className={styles.searchCount}>{count}</span> */}
 				<div className={styles.searchItemCategory}>
-					{categoryName} / {topCategoryName}
+					{categoryName} / <strong>{topCategoryName}</strong>
 					<span className={styles.searchCount}>{count}</span>
 				</div>
 
@@ -150,14 +159,22 @@ const SuggestCatItem = (props: ItemSaggestCatProps): JSX.Element => {
 	const {
 		categoryId,
 		categoryName,
+		categoryUrl
 	} = props.item;
 
 	const word = props.word;
 
 	return (
 		<li key={categoryId} className={styles.searchSuggestItem}>
-			<Link href={`/catalogy?keyword=${word}&categoryId=${categoryId}${props.section === "SELL" ? "" : "&section=BUY"}`}>
-				<span className={styles.searchLinkItem}>{categoryName}</span>
+			<Link className={styles.searchLinkCatLink} href={`/catalogy?keyword=${word}&categoryId=${categoryId}${props.section === "SELL" ? "" : "&section=BUY"}`}>
+				<Image
+					alt=""
+					src={categoryUrl}
+					width={24}
+					height={24}
+					className={styles.searchLinkCatImg}
+				/>
+				<span className={styles.searchLinkCatTitle}>{categoryName}</span>
 			</Link>
 		</li>
 	)
