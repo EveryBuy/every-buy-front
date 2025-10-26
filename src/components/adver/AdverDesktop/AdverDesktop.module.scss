@@ -103,7 +103,7 @@
 
 .adverButtonAd {
   background: var(--button);
-  border: none
+  border: none;
 }
 
 // =============================================================
@@ -170,7 +170,7 @@
     font-size: var(--body-text);
     font-weight: 400;
     line-height: 19.5px;
-    color: #746F79;;
+    color: #746f79;
   }
 }
 
@@ -204,7 +204,6 @@
   font-weight: 400;
   color: var(--label);
 }
-
 
 // ================= radio ===================
 .visuallyHidden {
@@ -308,4 +307,44 @@
 
 .checkboxInput:checked + .checkboxBox .checkboxChecked {
   display: block;
+}
+
+//new
+
+.priceLocationWrapper {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.radioboxGroup {
+  margin-top: 16px;
+}
+
+.priceField {
+  margin-top: 24px;
+}
+
+.toggleText {
+  font-size: 16px;
+  color: #777676;
+  margin-right: 12px;
+}
+
+.conditionWrapper {
+  margin-top: 32px;
+}
+
+.locationWrapper {
+  max-width: 335px;
+}
+
+.deliveryWrapper {
+  margin-top: 60px;
+}
+
+.checkboxBox {
+  width: 24px;
+  height: 24px;
 }

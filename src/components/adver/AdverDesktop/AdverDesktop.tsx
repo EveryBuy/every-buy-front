@@ -23,6 +23,7 @@ import { selectToken } from "@/redux/auth/selectorsAuth";
 import CityAutocomplete from "../CityAutocomplete/CityAutocomplete";
 import AdverPreviewModal from "../AdverPreviewModal/AdverPreviewModal";
 import CheckboxGroup from "../CheckboxGroup/CheckboxGroup";
+import { FilledInput } from "@mui/material";
 
 export type FormValues = {
   topSubCategoryId: number | null;
@@ -103,24 +104,6 @@ const AuthSchema = Yup.object().shape({
     .required("Будь ласка, оберіть спосіб доставки"),
 });
 
-// function FormSyncers() {
-//   const { values, setFieldValue } = useFormikContext<FormValues>();
-
-//   //delivery -> deliveryMethods
-//   // useEffect(() => {
-//   //   const methods = values.delivery ? [values.delivery] : [];
-//   //   setFieldValue("deliveryMethods", methods, false);
-//   // }, [values.delivery, setFieldValue]);
-
-//   //condition -> productType
-//   useEffect(() => {
-//     if (values.condition && values.productType !== values.condition) {
-//       setFieldValue("productType", values.condition, false);
-//     }
-//   }, [values.condition, values.productType, setFieldValue]);
-
-//   return null;
-// }
 
 const AdverDesktop = () => {
   const [images, setImages] = useState<{ file: File; url: string }[]>([]);
@@ -368,21 +351,21 @@ const AdverDesktop = () => {
                       />
                       {/* договірна */}
                       <div className={styles.toggleWrapper}>
-                          <div>
-                            <span className={styles.toggleText}>Договірна</span>
-                          </div>
-                          <div>
-                            <ToggleSwitch
-                              name="isNegotiable"
-                              checked={values.isNegotiable}
-                              onChange={(checked) => {
-                                setFieldValue("isNegotiable", checked);
-                                if (checked) {
-                                  setFieldValue("price", "");
-                                }
-                              }}
-                            />
-                          </div>
+                        <div>
+                          <span className={styles.toggleText}>Договірна</span>
+                        </div>
+                        <div>
+                          <ToggleSwitch
+                            name="isNegotiable"
+                            checked={values.isNegotiable}
+                            onChange={(checked) => {
+                              setFieldValue("isNegotiable", checked);
+                              if (checked) {
+                                setFieldValue("price", "");
+                              }
+                            }}
+                          />
+                        </div>
                       </div>
                       {/* стан */}
                       <div>
@@ -423,6 +406,7 @@ const AdverDesktop = () => {
                             *
                           </span>
                           <CityAutocomplete
+                            styledFieldClass={styles.styledField}
                             nameField="location"
                             idField="cityId"
                             placeholder="введіть місто (мін. 3 символи)"
