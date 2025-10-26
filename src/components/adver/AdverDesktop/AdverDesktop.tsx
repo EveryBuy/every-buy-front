@@ -7,7 +7,7 @@ import * as Yup from "yup";
 import { CommonButton, RadioButtonGroup } from "@/components";
 import { AdverPhotoList } from "@/components";
 import { ErrorMessage } from "@/components";
-import Search from "@/assets/Svg/search.svg";
+import Select from "@/assets/Svg/reshot-icon-chevron-arrow-down-circle.svg";
 import radioboxIcon from "@/assets/Svg/checkboxIcon.svg";
 import checkIcon from "@/assets/Svg/checkIcon.svg";
 
@@ -103,7 +103,6 @@ const AuthSchema = Yup.object().shape({
     .min(1, "Будь ласка, оберіть хоча б один спосіб доставки")
     .required("Будь ласка, оберіть спосіб доставки"),
 });
-
 
 const AdverDesktop = () => {
   const [images, setImages] = useState<{ file: File; url: string }[]>([]);
@@ -209,6 +208,8 @@ const AdverDesktop = () => {
                   {/* фото */}
                   <AdverPhotoList images={images} setImages={setImages} />
                 </section>
+
+                {/* назва товару */}
                 <section className={styles.formWrapper}>
                   <div style={{ display: "flex", gap: "40px" }}>
                     <div>
@@ -223,7 +224,8 @@ const AdverDesktop = () => {
                             className={styles.styledField}
                             type="text"
                             name="product"
-                            placeholder="Вкажіть назву товару"
+                            placeholder="Наприклад, жіноча сукня 32 розміру
+грн."
                             onBlur={(
                               e: React.ChangeEvent<HTMLInputElement>
                             ) => {
@@ -244,8 +246,12 @@ const AdverDesktop = () => {
                             }}
                           />
                           <div className={styles.textareaText}>
-                            <p>Введіть від 16 до 70 символів</p>
-                            <p>{Math.min(descriptionLength, 70)}/70</p>
+                            <p className={styles.helperText}>
+                              Введіть від 16 до 70 символів
+                            </p>
+                            <p className={styles.helperText}>
+                              {Math.min(descriptionLength, 70)}/70
+                            </p>
                           </div>
                         </label>
                         <ErrorMessage
@@ -267,7 +273,7 @@ const AdverDesktop = () => {
                             name="category"
                             value={values.category}
                             readOnly
-                            placeholder="зазначте категорію"
+                            placeholder="Оберіть категорію товару "
                             onBlur={handleBlur}
                           />
                           <button
@@ -277,8 +283,8 @@ const AdverDesktop = () => {
                           >
                             <Image
                               priority
-                              src={Search}
-                              alt="icon search"
+                              src={Select}
+                              alt="icon select"
                               width={24}
                               height={24}
                             />
@@ -311,8 +317,12 @@ const AdverDesktop = () => {
                           }}
                         />
                         <div className={styles.textareaText}>
-                          <p>Вкажіть щонайменше 30 символів</p>
-                          <p>{(values.description || "").length}/3000</p>
+                          <p className={styles.helperText}>
+                            Вкажіть щонайменше 30 символів
+                          </p>
+                          <p className={styles.helperText}>
+                            {(values.description || "").length}/3000
+                          </p>
                         </div>
                       </label>
                       <ErrorMessage
@@ -324,24 +334,61 @@ const AdverDesktop = () => {
                   </div>
                 </section>
 
+                {/* Ціна */}
                 <section className={styles.formWrapper}>
-                  {/* Ціна */}
+                  <div className={styles.linkItem}>
+                    <label className={styles.linkItemText}>
+                      <Field
+                        type="radio"
+                        name="section"
+                        value="price"
+                        className={styles.radio}
+                      />
+                      <span>Ціна</span>
+                    </label>
+
+                    <label className={styles.linkItemText}>
+                      <Field
+                        type="radio"
+                        name="section"
+                        value="free"
+                        className={styles.radio}
+                      />
+                      <span>Безкоштовно</span>
+                    </label>
+
+                    <div className={styles.toggleWrapper}>
+                      <label className={styles.linkItemText}>
+                        <span className={styles.toggleText}>Договірна</span>
+                      </label>
+                      <div>
+                        <ToggleSwitch
+                          name="isNegotiable"
+                          checked={values.isNegotiable}
+                          onChange={(checked) => {
+                            setFieldValue("isNegotiable", checked);
+                            if (checked) {
+                              setFieldValue("price", "");
+                            }
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </div>
                   <div style={{ display: "flex", gap: "40px" }}>
-                    <div style={{}}>
+                    <div>
                       <label>
-                        Ціна
-                        <span style={{ color: "red", marginLeft: "4px" }}>
-                          *
-                        </span>
                         <Field
                           className={styles.styledField}
                           type="text"
                           name="price"
-                          placeholder="Вкажіть бажану ціну"
+                          placeholder="Вартість за 1 шт. в грн."
                           onBlur={handleBlur}
                         />
                         <div className={styles.textareaText}>
-                          <p>Використовуйте лише цифри</p>
+                          <p className={styles.helperText}>
+                            Використовуйте лише цифри
+                          </p>
                         </div>
                       </label>
                       <ErrorMessage
@@ -350,23 +397,7 @@ const AdverDesktop = () => {
                         successMessage="Ціна успішно додана"
                       />
                       {/* договірна */}
-                      <div className={styles.toggleWrapper}>
-                        <div>
-                          <span className={styles.toggleText}>Договірна</span>
-                        </div>
-                        <div>
-                          <ToggleSwitch
-                            name="isNegotiable"
-                            checked={values.isNegotiable}
-                            onChange={(checked) => {
-                              setFieldValue("isNegotiable", checked);
-                              if (checked) {
-                                setFieldValue("price", "");
-                              }
-                            }}
-                          />
-                        </div>
-                      </div>
+
                       {/* стан */}
                       <div>
                         <RadioButtonGroup
@@ -449,7 +480,7 @@ const AdverDesktop = () => {
                   </div>
                 </section>
               </div>
-
+              {/* попередній перегляд */}
               <div className={styles.buttonWrapper}>
                 <CommonButton
                   type="button"
