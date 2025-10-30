@@ -36,10 +36,7 @@ const RadioButtonGroup: React.FC<RadioButtonGroupProps> = ({
   const [field, , helpers] = useField(name);
   return (
     <div role="group" aria-labelledby="radio-group" className={groupClass}>
-      <h2>
-        {title}
-        <span style={{ color: "red", marginLeft: "4px" }}>*</span>
-      </h2>
+      <h2>{title}<span style={{color: "#C21919"}}>*</span></h2>
       <div style={{ display: "flex", gap: "20px", alignItems: "center" }}>
         {options.map((option) => {
 

@@ -3,10 +3,12 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import ImgStub from "@/assets/Svg/imgStub.svg";
 import styles from "./AdverPhotoList.module.scss";
-import { PiBandaidsDuotone } from "react-icons/pi";
+import ArrowTurnLeft from "@/assets/Svg/turnLeft.svg";
+import ArrowTurnRight from "@/assets/Svg/turnRight.svg";
+import Delete from "@/assets/Svg/delete.svg";
 import { toast, Zoom, ToastPosition, ToastOptions } from "react-toastify";
 
-const MAX_PHOTOS = 9;
+const MAX_PHOTOS = 10;
 const MAX_FILE_SIZE_MB = 5;
 
 const toastMessage: ToastOptions = {
@@ -19,6 +21,7 @@ const toastMessage: ToastOptions = {
 interface AdverPhoto {
   file: File;
   url: string;
+  rotation?: number;
 }
 interface AdverPhotoListProps {
   images: AdverPhoto[];
@@ -45,24 +48,28 @@ const AdverPhotoList: React.FC<AdverPhotoListProps> = ({
   };
 
   const handleAddPhoto = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (images.length >= MAX_PHOTOS) {
-      console.log('too mach');
-      
-      toast.error("Ви не можете додати більше 9 фотографій.", toastMessage);
-      return;
-    }
+    // if (images.length >= MAX_PHOTOS) {
+    //   toast.error("Ви не можете додати більше 9 фотографій.", toastMessage);
+    //   return;
+    // }
 
     const fileInput = event.target;
     const file = fileInput.files?.[0];
-    if (file) {
-      if (!validateFile(file)) {
-        return;
-      }
 
-      const url = URL.createObjectURL(file);
-      setImages((prev) => [...prev, { file, url }]);
-      toast.success("Зображення успішно завантажено!", toastMessage);
+    if (!file) return;
+
+    if (images.length >= MAX_PHOTOS) {
+      toast.error("Ви не можете додати більше 10 фотографій.", toastMessage);
+      return;
     }
+
+    if (!validateFile(file)) return;
+
+    const url = URL.createObjectURL(file);
+
+    setImages((prev) => [...prev, { file, url, rotation: 0 }]);
+    toast.success("Зображення успішно завантажено!", toastMessage);
+
     fileInput.value = "";
   };
 
@@ -71,6 +78,45 @@ const AdverPhotoList: React.FC<AdverPhotoListProps> = ({
     URL.revokeObjectURL(removedImage.url);
     setImages((prev) => prev.filter((_, i) => i !== index));
     toast.success("Зображення успішно видалено!", toastMessage);
+  };
+
+  // const handleRotatePhoto = (index: number) => {
+  //   setImages((prev) => {
+  //     const updated = [...prev];
+  //     const current = updated[index];
+  //     updated[index] = {
+  //       ...current,
+  //       rotation: ((current.rotation ?? 0) + 1) % 4, // цикл 0–3
+  //     };
+  //     return updated;
+  //   });
+  // };
+
+  // const handleSetCover = (index: number) => {
+  //   if (index === 0) return;
+  //   setImages((prev) => {
+  //     const newOrder = [...prev];
+  //     const [selected] = newOrder.splice(index, 1);
+  //     newOrder.unshift(selected);
+  //     return newOrder;
+  //   });
+  //   toast.success("Фото встановлено як обкладинку!", toastMessage);
+  // };
+
+  const handleRotateLeft = (index: number) => {
+    setImages((prev) => {
+      const updated = [...prev];
+      updated[index].rotation = ((updated[index].rotation ?? 0) + 3) % 4; // обертання вліво
+      return updated;
+    });
+  };
+
+  const handleRotateRight = (index: number) => {
+    setImages((prev) => {
+      const updated = [...prev];
+      updated[index].rotation = ((updated[index].rotation ?? 0) + 1) % 4; // обертання вправо
+      return updated;
+    });
   };
 
   const handleDrag = (
@@ -91,76 +137,121 @@ const AdverPhotoList: React.FC<AdverPhotoListProps> = ({
     updatedImages.splice(destinationIndex, 0, movedImage);
     setImages(updatedImages);
   };
+
+  const canAddMore = images.length < MAX_PHOTOS;
+
   // console.log(images);
   return (
     <section className={styles.adverPhoto}>
-      <h3>Фото</h3>
+      <p
+        style={{ fontSize: "20px", fontWeight: "normal", marginBottom: "12px" }}
+      >
+        Фото<span style={{ color: "#C21919" }}>*</span>
+      </p>
       <p>
         Максимально допустимий розмір фотографії
-        <span>{" "} {MAX_FILE_SIZE_MB} мб</span>
+        <span> {MAX_FILE_SIZE_MB}мб.</span> Допустимий формат{" "}
+        <span>jpg, jpeg, png, bmp, gif</span>
       </p>
-
       <ul
         className={styles.adverPhotoList}
         onDragOver={(e) => e.preventDefault()}
       >
-        <li className={styles.adverPhotoItem}>
-          <label className={styles.labelAddPhoto}>
-            <p className={styles.title}>Додати фото</p>
-            <input
-              type="file"
-              accept="image/*"
-              style={{ display: "none" }}
-              onChange={handleAddPhoto}
-            />
-          </label>
-        </li>
-
-        {Array.from({ length: MAX_PHOTOS }, (_, index) => (
-          <li
-            key={index}
-            draggable={index < images.length}
-            onDragStart={(event) =>
-              event.dataTransfer.setData("index", index.toString())
-            }
-            onDrop={(event) =>
-              handleDrag(
-                event,
-                Number(event.dataTransfer.getData("index")),
-                index
-              )
-            }
-          >
-            {index < images.length ? (
-              <>
+        {canAddMore && (
+          <li className={styles.adverPhotoItem}>
+            <label className={styles.labelAddPhoto}>
+              <p className={styles.title}>Додати фото</p>
+              <input
+                type="file"
+                accept="image/*"
+                style={{ display: "none" }}
+                onChange={handleAddPhoto}
+              />
+            </label>
+          </li>
+        )}
+        {images.map((img, index) => {
+          const rotationDeg = (img.rotation ?? 0) * 45;
+          return (
+            <li
+              key={index}
+              draggable
+              onDragStart={(event) =>
+                event.dataTransfer.setData("index", index.toString())
+              }
+              onDrop={(event) =>
+                handleDrag(
+                  event,
+                  Number(event.dataTransfer.getData("index")),
+                  index
+                )
+              }
+              className={styles.photoItem}
+            >
+              <div className={styles.photoWrapper}>
                 <Image
-                  src={images[index].url}
+                  src={img.url}
                   alt={`Photo ${index + 1}`}
                   fill
-                  style={{ objectFit: "cover" }}
+                  style={{
+                    transform: `rotate(${rotationDeg}deg)`,
+                    transition: "transform 0.3s ease",
+                  }}
                 />
-                <button
-                  type="button"
-                  className={styles.removeButton}
-                  onClick={() => handleRemovePhoto(index)}
-                >
-                  <PiBandaidsDuotone className={styles.removeButtonIcon} />
-                  <span className={styles.tooltipText}>Видалити</span>
-                </button>
-              </>
-            ) : (
-              <Image
-                priority
-                src={ImgStub}
-                alt="placeholder"
-                width={58}
-                height={46}
-              />
-            )}
+                <div className={styles.photoActions}>
+                  <button
+                    type="button"
+                    title="Видалити"
+                    onClick={() => handleRemovePhoto(index)}
+                  >
+                    <Image src={Delete} alt="delete" width={22} height={22} />
+                  </button>
+
+                  <div className={styles.rotateButtons}>
+                    <button
+                      type="button"
+                      onClick={() => handleRotateLeft(index)}
+                      title="Повернути вліво"
+                    >
+                      <Image
+                        src={ArrowTurnLeft}
+                        alt="rotate left"
+                        width={22}
+                        height={22}
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleRotateRight(index)}
+                      title="Повернути вправо"
+                    >
+                      <Image
+                        src={ArrowTurnRight}
+                        alt="rotate right"
+                        width={22}
+                        height={22}
+                      />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </li>
+          );
+        })}
+        {Array.from({
+          length: MAX_PHOTOS - (images.length + (canAddMore ? 1 : 0)),
+        }).map((_, i) => (
+          <li key={`stub-${i}`}>
+            <Image
+              priority
+              src={ImgStub}
+              alt="placeholder"
+              width={58}
+              height={46}
+            />
           </li>
         ))}
       </ul>
-
       <p className={styles.adverPhotoListText}>
         Обкладинкою оголошення стане перше фото. Перемістіть його, щоб змінити
         послідовність зображень.

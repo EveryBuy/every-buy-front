@@ -118,6 +118,8 @@ const AdverDesktop = () => {
     console.log("Preview values:", values);
     setPreviewOpen(true);
   };
+
+  console.log("img", images);
   // всередині компонента
   async function handleSubmit(
     values: FormValues,
@@ -190,7 +192,7 @@ const AdverDesktop = () => {
                     value="BUY"
                     className={styles.radio}
                   />
-                  <span>Куплю</span>
+                  <span style={{fontSize: "20px"}}>Куплю</span>
                 </label>
 
                 <label className={styles.linkItemText}>
@@ -200,7 +202,7 @@ const AdverDesktop = () => {
                     value="SELL"
                     className={styles.radio}
                   />
-                  <span>Продам</span>
+                  <span style={{fontSize: "20px"}}>Продам</span>
                 </label>
               </div>
               <div className={styles.wrapperInput}>
@@ -216,10 +218,7 @@ const AdverDesktop = () => {
                       {/* Назва товару */}
                       <div style={{ marginBottom: "40px" }}>
                         <label>
-                          Назва товару
-                          <span style={{ color: "red", marginLeft: "4px" }}>
-                            *
-                          </span>
+                          Назва товару<span style={{color: "#C21919"}}>*</span>
                           <Field
                             className={styles.styledField}
                             type="text"
@@ -263,10 +262,7 @@ const AdverDesktop = () => {
                       {/* Категорія */}
                       <div className={styles.fieldWrapper}>
                         <label>
-                          Категорія
-                          <span style={{ color: "red", marginLeft: "4px" }}>
-                            *
-                          </span>
+                          Категорія<span style={{color: "#C21919"}}>*</span>
                           <Field
                             className={styles.styledField}
                             type="text"
@@ -300,10 +296,7 @@ const AdverDesktop = () => {
                     {/* Опис */}
                     <div>
                       <label>
-                        Опис товару
-                        <span style={{ color: "red", marginLeft: "4px" }}>
-                          *
-                        </span>
+                        Опис товару<span style={{color: "#C21919"}}>*</span>
                         <Field
                           as="textarea"
                           name="description"
@@ -429,13 +422,10 @@ const AdverDesktop = () => {
                     </div>
 
                     {/* Місцезнаходження */}
-                    <div style={{}}>
+                    <div>
                       <div>
                         <label>
-                          Місцезнаходження
-                          <span style={{ color: "red", marginLeft: "4px" }}>
-                            *
-                          </span>
+                          Місцезнаходження<span style={{color: "#C21919"}}>*</span>
                           <CityAutocomplete
                             styledFieldClass={styles.styledField}
                             nameField="location"

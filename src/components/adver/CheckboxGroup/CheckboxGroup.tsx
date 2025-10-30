@@ -50,10 +50,7 @@ const selectedValues: string[] = Array.isArray(values[name])
   return (
     <div role="group" aria-label={title || name} className={groupClass}>
       {title && (
-        <h2>
-          {title}
-          <span style={{ color: "red", marginLeft: "4px" }}>*</span>
-        </h2>
+        <h2>{title}<span style={{color: "#C21919"}}>*</span></h2>
       )}
         <div style={{ display: "flex", gap: "20px", alignItems: "center" }}>
         {options.map((option) => {
