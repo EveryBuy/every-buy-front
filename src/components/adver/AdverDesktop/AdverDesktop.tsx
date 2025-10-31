@@ -27,7 +27,6 @@ import CheckboxGroup from "../CheckboxGroup/CheckboxGroup";
 import { FilledInput } from "@mui/material";
 import { useRouter } from "next/navigation";
 
-
 export type FormValues = {
   topSubCategoryId: number | null;
   lowSubCategoryId: number | null;
@@ -170,7 +169,7 @@ const AdverDesktop = () => {
     }
   }
   const submitRef = useRef<HTMLButtonElement>(null);
-  
+
   return (
     <div className={styles.adWrapper}>
       <div className={styles.adHeader}>
@@ -178,9 +177,9 @@ const AdverDesktop = () => {
           <h1>Створити оголошення</h1>
         </div>
         <div>
-        <button onClick={() => router.push('/')}>
-          <Image src={Close} alt="close page" width={32} height={32} />
-        </button>
+          <button onClick={() => router.push("/")}>
+            <Image src={Close} alt="close page" width={32} height={32} />
+          </button>
         </div>
       </div>
 
@@ -338,49 +337,51 @@ const AdverDesktop = () => {
                   </div>
                 </section>
 
-                {/* Ціна */}
                 <section className={styles.formWrapper}>
-                  <div className={styles.linkItem}>
-                    <label className={styles.linkItemText}>
-                      <Field
-                        type="radio"
-                        name="section"
-                        value="price"
-                        className={styles.radio}
-                      />
-                      <span>Ціна</span>
-                    </label>
+                  <div className={styles.priceLocationWrapper}>
+                    {/* Ліва колонка */}
+                    <div className={styles.priceColumn}>
+                      {/* "Ціна" */}
+                      <div className={styles.linkItem}>
+                        <label className={styles.linkItemText}>
+                          <Field
+                            type="radio"
+                            name="section"
+                            value="price"
+                            className={styles.radio}
+                          />
+                          <span>Ціна</span>
+                        </label>
 
-                    <label className={styles.linkItemText}>
-                      <Field
-                        type="radio"
-                        name="section"
-                        value="free"
-                        className={styles.radio}
-                      />
-                      <span>Безкоштовно</span>
-                    </label>
+                        <label className={styles.linkItemText}>
+                          <Field
+                            type="radio"
+                            name="section"
+                            value="free"
+                            className={styles.radio}
+                          />
+                          <span>Безкоштовно</span>
+                        </label>
 
-                    <div className={styles.toggleWrapper}>
-                      <label className={styles.linkItemText}>
-                        <span className={styles.toggleText}>Договірна</span>
-                      </label>
-                      <div>
-                        <ToggleSwitch
-                          name="isNegotiable"
-                          checked={values.isNegotiable}
-                          onChange={(checked) => {
-                            setFieldValue("isNegotiable", checked);
-                            if (checked) {
-                              setFieldValue("price", "");
-                            }
-                          }}
-                        />
+                        <div className={styles.toggleWrapper}>
+                          <label className={styles.linkItemText}>
+                            <span className={styles.linkItemText}>Договірна</span>
+
+                            <div>
+                              <ToggleSwitch
+                                name="isNegotiable"
+                                checked={values.isNegotiable}
+                                onChange={(checked) => {
+                                  setFieldValue("isNegotiable", checked);
+                                  if (checked) {
+                                    setFieldValue("price", "");
+                                  }
+                                }}
+                              />
+                            </div>
+                          </label>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                  <div style={{ display: "flex", gap: "40px" }}>
-                    <div>
                       <label>
                         <Field
                           className={styles.styledField}
@@ -400,10 +401,9 @@ const AdverDesktop = () => {
                         error={errors.price}
                         successMessage="Ціна успішно додана"
                       />
-                      {/* договірна */}
 
-                      {/* стан */}
-                      <div>
+                      {/* Стан товару */}
+                      <div className={styles.conditionWrapper}>
                         <RadioButtonGroup
                           name="condition"
                           title="Стан товару"
@@ -432,28 +432,28 @@ const AdverDesktop = () => {
                       </div>
                     </div>
 
-                    {/* Місцезнаходження */}
-                    <div>
-                      <div>
-                        <label>
-                          Місцезнаходження
-                          <span style={{ color: "#C21919" }}>*</span>
-                          <CityAutocomplete
-                            styledFieldClass={styles.styledField}
-                            nameField="location"
-                            idField="cityId"
-                            placeholder="введіть місто (мін. 3 символи)"
-                            minLength={3}
-                          />
-                        </label>
-                      </div>
+                    {/* Права колонка */}
+                    <div className={styles.locationColumn}>
+                      {/* Місцезнаходження */}
+                      <label className={styles.linkItemText}> 
+                        Місцезнаходження
+                        <span style={{ color: "#C21919" }}>*</span></label>
+                        <CityAutocomplete
+                          styledFieldClass={styles.styledField}
+                          nameField="location"
+                          idField="cityId"
+                          placeholder="введіть місто (мін. 3 символи)"
+                          minLength={3}
+                        />
+                      
                       <ErrorMessage
                         touched={touched.location}
                         error={errors.location}
                         successMessage="Місто успішно додано"
                       />
-                      {/* доставка */}
-                      <div style={{ marginTop: "85px" }}>
+
+                      {/* Спосіб доставки */}
+                      <div className={styles.deliveryWrapper}>
                         <CheckboxGroup
                           name="deliveryMethods"
                           title="Спосіб доставки"
@@ -482,6 +482,7 @@ const AdverDesktop = () => {
                   </div>
                 </section>
               </div>
+
               {/* попередній перегляд */}
               <div className={styles.buttonWrapper}>
                 <CommonButton

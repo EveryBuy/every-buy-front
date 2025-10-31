@@ -21,14 +21,14 @@
   display: flex;
   gap: 20px;
   align-items: center;
-  margin-bottom: 40px;
+  margin-bottom: 10px;
 }
 
 .linkItemText {
   display: flex;
   align-items: center;
   gap: 8px;
-  color: var(--input-text);
+  color: #131313;
 }
 .linkItemText span {
   font-size: var(--large-body-medium);
@@ -119,7 +119,7 @@
   flex-direction: column;
   gap: 40px;
   padding: 20px 20px 30px 20px;
-  // margin-bottom: 40px;
+  margin-bottom: 40px;
 
   label {
     font-size: 20px;
@@ -191,11 +191,12 @@
 
 .styledTexterea {
   width: 620px;
-  height: 280px;
+  height: 210px;
+  resize: none;
 }
 .toggleWrapper {
-  margin-top: 12px;
-  margin-bottom: 28px;
+  // margin-top: 12px;
+  margin-left: auto;
   display: flex;
   justify-content: space-between;
 }
@@ -234,7 +235,7 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
-  margin-bottom: 10px;
+  // margin-bottom: 10px;
 }
 
 .radioboxInput {
@@ -352,4 +353,13 @@
 .checkboxBox {
   width: 24px;
   height: 24px;
+}
+.priceColumn,
+.locationColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  flex: 1;
+  min-width: 300px;
+  max-width: 650px;
 }
