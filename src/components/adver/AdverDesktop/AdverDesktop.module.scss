@@ -7,7 +7,9 @@
 
 .adHeader {
   display: flex;
-  margin-bottom: 60px;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 
   h1 {
     font-size: var(--f-size-h1);

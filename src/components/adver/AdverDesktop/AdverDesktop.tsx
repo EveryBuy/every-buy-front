@@ -8,6 +8,7 @@ import { CommonButton, RadioButtonGroup } from "@/components";
 import { AdverPhotoList } from "@/components";
 import { ErrorMessage } from "@/components";
 import Select from "@/assets/Svg/reshot-icon-chevron-arrow-down-circle.svg";
+import Close from "@/assets/Svg/xClose.svg";
 import radioboxIcon from "@/assets/Svg/checkboxIcon.svg";
 import checkIcon from "@/assets/Svg/checkIcon.svg";
 
@@ -24,6 +25,8 @@ import CityAutocomplete from "../CityAutocomplete/CityAutocomplete";
 import AdverPreviewModal from "../AdverPreviewModal/AdverPreviewModal";
 import CheckboxGroup from "../CheckboxGroup/CheckboxGroup";
 import { FilledInput } from "@mui/material";
+import { useRouter } from "next/navigation";
+
 
 export type FormValues = {
   topSubCategoryId: number | null;
@@ -119,7 +122,7 @@ const AdverDesktop = () => {
     setPreviewOpen(true);
   };
 
-  console.log("img", images);
+  const router = useRouter();
   // всередині компонента
   async function handleSubmit(
     values: FormValues,
@@ -167,11 +170,18 @@ const AdverDesktop = () => {
     }
   }
   const submitRef = useRef<HTMLButtonElement>(null);
-
+  
   return (
     <div className={styles.adWrapper}>
       <div className={styles.adHeader}>
-        <h1>Створити оголошення</h1>
+        <div>
+          <h1>Створити оголошення</h1>
+        </div>
+        <div>
+        <button onClick={() => router.push('/')}>
+          <Image src={Close} alt="close page" width={32} height={32} />
+        </button>
+        </div>
       </div>
 
       <Formik
@@ -192,7 +202,7 @@ const AdverDesktop = () => {
                     value="BUY"
                     className={styles.radio}
                   />
-                  <span style={{fontSize: "20px"}}>Куплю</span>
+                  <span style={{ fontSize: "20px" }}>Куплю</span>
                 </label>
 
                 <label className={styles.linkItemText}>
@@ -202,7 +212,7 @@ const AdverDesktop = () => {
                     value="SELL"
                     className={styles.radio}
                   />
-                  <span style={{fontSize: "20px"}}>Продам</span>
+                  <span style={{ fontSize: "20px" }}>Продам</span>
                 </label>
               </div>
               <div className={styles.wrapperInput}>
@@ -218,7 +228,8 @@ const AdverDesktop = () => {
                       {/* Назва товару */}
                       <div style={{ marginBottom: "40px" }}>
                         <label>
-                          Назва товару<span style={{color: "#C21919"}}>*</span>
+                          Назва товару
+                          <span style={{ color: "#C21919" }}>*</span>
                           <Field
                             className={styles.styledField}
                             type="text"
@@ -262,7 +273,7 @@ const AdverDesktop = () => {
                       {/* Категорія */}
                       <div className={styles.fieldWrapper}>
                         <label>
-                          Категорія<span style={{color: "#C21919"}}>*</span>
+                          Категорія<span style={{ color: "#C21919" }}>*</span>
                           <Field
                             className={styles.styledField}
                             type="text"
@@ -296,7 +307,7 @@ const AdverDesktop = () => {
                     {/* Опис */}
                     <div>
                       <label>
-                        Опис товару<span style={{color: "#C21919"}}>*</span>
+                        Опис товару<span style={{ color: "#C21919" }}>*</span>
                         <Field
                           as="textarea"
                           name="description"
@@ -425,7 +436,8 @@ const AdverDesktop = () => {
                     <div>
                       <div>
                         <label>
-                          Місцезнаходження<span style={{color: "#C21919"}}>*</span>
+                          Місцезнаходження
+                          <span style={{ color: "#C21919" }}>*</span>
                           <CityAutocomplete
                             styledFieldClass={styles.styledField}
                             nameField="location"
