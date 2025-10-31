@@ -5,10 +5,14 @@ import { CommonIcon, CommonButton } from "@/components";
 import BannerProps from "@/types/bannerProps";
 import styles from "./Banner.module.scss";
 
+interface BackgroundStyles {
+	[key: string]: string;
+}
+
 const Banner: FC<BannerProps> = ({ item }) => {
 	const { label, title, condition, price, buttonName, backgroundImage, url } = item;
 
-	const backgroundImageStyles = {
+	const backgroundImageStyles: BackgroundStyles = {
 		"--banner-background": `url(${backgroundImage})`,
 	};
 
