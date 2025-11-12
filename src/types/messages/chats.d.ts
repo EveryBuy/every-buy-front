@@ -1,9 +1,29 @@
 import { MessageType } from "@/types/messages/messages";
+import { Dispatch, SetStateAction } from "react";
 
 type UserDataType = {
   userId: number;
   fullName: string | null;
   photoUrl?: string | null;
+};
+
+type ChatsBlockType = {
+  setSelectedChatId: (selectedChatId: number) => void;
+  selectedChatId: number | null;
+  activeChatId: number | null;
+  isHeartSelected: boolean;
+  setHeartSelected: (isHeartSelected: boolean) => void;
+  isArchived: boolean;
+  setArchived: (isArchived: boolean) => void;
+};
+
+type ButtonsIconBlockType = {
+  activeButton: number | null;
+  setActiveButton: (activeButton: number) => void;
+  isSelected: boolean;
+  setSelected: Dispatch<SetStateAction<boolean>>;
+  isFolderSelected: boolean;
+  setFolderSelected: Dispatch<SetStateAction<boolean>>;
 };
 
 type ChatType = {
@@ -83,6 +103,8 @@ type ArchivedChatType = {
 };
 
 export {
+  ChatsBlockType,
+  ButtonsIconBlockType,
   UserDataType,
   NewChatType,
   ChatType,

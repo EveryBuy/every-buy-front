@@ -1,51 +1,6 @@
 @import "@/styles/mixins";
 @import "@/styles/breakpoints";
 
-.blockWrapper {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-
-  @include media-min($breakpoint-laptop) {
-    width: 36%;
-  }
-}
-
-.buttonsWrapper {
-  height: 67px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0px 11px;
-  background-color: #ffffff;
-
-  @include media-min($breakpoint-laptop) {
-    height: 65px;
-    border-radius: 10px;
-    padding: 0px 10px;
-  }
-  @include media-min($breakpoint-laptop-large) {
-    height: 81px;
-    flex-direction: row;
-    justify-content: space-between;
-  }
-}
-
-.iconsWrapper {
-  display: flex;
-  justify-content: space-between;
-  column-gap: 16px;
-  width: 80px;
-
-  @include media-min($breakpoint-laptop) {
-    width: 55px;
-    column-gap: 0px;
-  }
-  @include media-min($breakpoint-laptop-large) {
-    width: 80px;
-  }
-}
-
 .savedMessagesHeaderBlock {
   width: 100%;
   display: flex;

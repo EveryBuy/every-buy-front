@@ -1,24 +1,14 @@
 "use client";
 import { FC, useState } from "react";
 import { Box } from "@mui/material";
-import { ChatsList, Buttons, Icons, CommonIcon } from "@/components";
+import { ChatsList, ButtonsIconBlock } from "@/components";
 import {
   useGetBuyChatsQuery,
   useGetSellChatsQuery,
   useGetFavoritesChatsQuery,
   useGetArchivedChatsQuery,
 } from "@/redux/messages/chatApi";
-import style from "./ChatsBlock.module.scss";
-
-type ChatsBlockType = {
-  setSelectedChatId: (selectedChatId: number) => void;
-  selectedChatId: number | null;
-  activeChatId: number | null;
-  isHeartSelected: boolean;
-  setHeartSelected: (isHeartSelected: boolean) => void;
-  isArchived: boolean;
-  setArchived: (isArchived: boolean) => void;
-};
+import { ChatsBlockType } from "@/types/messages/chats";
 
 const ChatsBlock: FC<ChatsBlockType> = ({
   setSelectedChatId,
@@ -79,73 +69,31 @@ const ChatsBlock: FC<ChatsBlockType> = ({
   }
   console.log(chats);
 
-  const handleButtonClick = (buttonId: number) => {
-    setActiveButton(buttonId);
-  };
-  const handleIconHeartClick = () => {
-    setSelected((prev) => !prev);
-  };
-  const handleIconFolderClick = () => {
-    setFolderSelected((prev) => !prev);
-  };
-
-  const getButtonStyle = (buttonId: number) => {
-    return {
-      borderBottom: activeButton === buttonId ? "3px solid #000000" : "",
-    };
-  };
+  // styles
+  const isHidden = selectedChatId || activeChatId;
 
   return (
     <Box
-      className={
-        selectedChatId || activeChatId
-          ? `${style.blockWrapper} ${style.hidden}`
-          : style.blockWrapper
-      }
+      sx={{
+        flexDirection: "column",
+        width: "100%",
+        "@media (max-width: 1023px)": {
+          display: isHidden ? "none" : "flex",
+        },
+        "@media (min-width: 1024px)": {
+          display: "flex",
+          width: "36%",
+        },
+      }}
     >
-      <Box className={style.buttonsWrapper}>
-        {isSelected ? (
-          <Box className={style.savedMessagesHeaderBlock}>
-            <Box className={style.text}>
-              <CommonIcon
-                id="message-left-arrow"
-                className={style.arrow}
-                onClick={handleIconHeartClick}
-              />
-              <p>Збережені повідомлення</p>
-            </Box>
-            <CommonIcon id="icon-heart-selected" className={style.iconHeart} />
-          </Box>
-        ) : isFolderSelected ? (
-          <Box className={style.savedMessagesHeaderBlock}>
-            <Box className={style.text}>
-              <CommonIcon
-                id="message-left-arrow"
-                className={style.arrow}
-                onClick={handleIconFolderClick}
-              />
-              <p>Архівовані повідомлення</p>
-            </Box>
-            <CommonIcon id="folder" className={style.iconFolder} />
-          </Box>
-        ) : (
-          <>
-            <Buttons
-              typeHandle={handleButtonClick}
-              styleButton={getButtonStyle}
-              typeButtonBuyStatus={activeButton === 1}
-              typeButtonSellStatus={activeButton === 2}
-            />
-            <Box className={style.iconsWrapper}>
-              <Icons
-                isItTopBlock={true}
-                statusHeartHandler={handleIconHeartClick}
-                statusFolderHandler={handleIconFolderClick}
-              />
-            </Box>
-          </>
-        )}
-      </Box>
+      <ButtonsIconBlock
+        activeButton={activeButton}
+        setActiveButton={setActiveButton}
+        isSelected={isSelected}
+        setSelected={setSelected}
+        isFolderSelected={isFolderSelected}
+        setFolderSelected={setFolderSelected}
+      />
       <ChatsList
         chats={chats}
         setSelectedChatId={setSelectedChatId}
