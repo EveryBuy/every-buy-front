@@ -230,11 +230,22 @@ const AdverDesktop = () => {
                           Назва товару
                           <span style={{ color: "#C21919" }}>*</span>
                           <Field
-                            className={styles.styledField}
                             type="text"
                             name="product"
-                            placeholder="Наприклад, жіноча сукня 32 розміру
-грн."
+                            placeholder="Наприклад, жіноча сукня 32 розміру грн."
+                            className={`
+                              ${styles.styledField}
+                              ${
+                                touched.product && errors.product
+                                  ? styles.errorBorder
+                                  : ""
+                              }
+                              ${
+                                touched.product && !errors.product
+                                  ? styles.successBorder
+                                  : ""
+                              }
+                            `}
                             onBlur={(
                               e: React.ChangeEvent<HTMLInputElement>
                             ) => {
@@ -274,12 +285,25 @@ const AdverDesktop = () => {
                         <label>
                           Категорія<span style={{ color: "#C21919" }}>*</span>
                           <Field
-                            className={styles.styledField}
+                            // className={styles.styledField}
                             type="text"
                             name="category"
                             value={values.category}
                             readOnly
                             placeholder="Оберіть категорію товару "
+                            className={`
+                              ${styles.styledField}
+                              ${
+                                touched.categoryId && errors.categoryId
+                                  ? styles.errorBorder
+                                  : ""
+                              }
+                              ${
+                                touched.categoryId && !errors.categoryId
+                                  ? styles.successBorder
+                                  : ""
+                              }
+                            `}
                             onBlur={handleBlur}
                           />
                           <button
@@ -312,7 +336,20 @@ const AdverDesktop = () => {
                           name="description"
                           rows="4"
                           cols="50"
-                          className={`${styles.styledField} ${styles.styledTexterea}`}
+                          className={`
+                            ${styles.styledField} 
+                            ${styles.styledTexterea}
+                            ${
+                              touched.description && errors.description
+                                ? styles.errorBorder
+                                : ""
+                            }
+                            ${
+                              touched.description && !errors.description
+                                ? styles.successBorder
+                                : ""
+                            }
+                          `}
                           onChange={(
                             e: React.ChangeEvent<HTMLTextAreaElement>
                           ) => {
@@ -365,7 +402,9 @@ const AdverDesktop = () => {
 
                         <div className={styles.toggleWrapper}>
                           <label className={styles.linkItemText}>
-                            <span className={styles.linkItemText}>Договірна</span>
+                            <span className={styles.linkItemText}>
+                              Договірна
+                            </span>
 
                             <div>
                               <ToggleSwitch
@@ -384,10 +423,22 @@ const AdverDesktop = () => {
                       </div>
                       <label>
                         <Field
-                          className={styles.styledField}
                           type="text"
                           name="price"
                           placeholder="Вартість за 1 шт. в грн."
+                          className={`
+                              ${styles.styledField}
+                              ${
+                                touched.price && errors.price
+                                  ? styles.errorBorder
+                                  : ""
+                              }
+                              ${
+                                touched.price && !errors.price
+                                  ? styles.successBorder
+                                  : ""
+                              }
+                            `}
                           onBlur={handleBlur}
                         />
                         <div className={styles.textareaText}>
@@ -414,7 +465,18 @@ const AdverDesktop = () => {
                           ]}
                           groupClass={styles.radioboxGroup}
                           labelClass={`${styles.radioboxLabel} ${styles.check}`}
-                          inputClass={`${styles.visuallyHidden} ${styles.radioboxInput}`}
+                          inputClass={`${styles.visuallyHidden} ${
+                            styles.radioboxInput
+                          } ${
+                            touched.condition && errors.condition
+                              ? styles.errorBorder
+                              : ""
+                          }
+                              ${
+                                touched.condition && !errors.condition
+                                  ? styles.successBorder
+                                  : ""
+                              }`}
                           radioBoxClass={styles.radioBox}
                           radioUncheckedClass={styles.radioUnchecked}
                           radioCheckedClass={styles.radioChecked}
@@ -435,17 +497,30 @@ const AdverDesktop = () => {
                     {/* Права колонка */}
                     <div className={styles.locationColumn}>
                       {/* Місцезнаходження */}
-                      <label className={styles.linkItemText}> 
+                      <label className={styles.linkItemText}>
                         Місцезнаходження
-                        <span style={{ color: "#C21919" }}>*</span></label>
-                        <CityAutocomplete
-                          styledFieldClass={styles.styledField}
-                          nameField="location"
-                          idField="cityId"
-                          placeholder="введіть місто (мін. 3 символи)"
-                          minLength={3}
-                        />
-                      
+                        <span style={{ color: "#C21919" }}>*</span>
+                      </label>
+                      <CityAutocomplete
+                        styledFieldClass={`
+                              ${styles.styledField}
+                              ${
+                                touched.location && errors.location
+                                  ? styles.errorBorder
+                                  : ""
+                              }
+                              ${
+                                touched.location && !errors.location
+                                  ? styles.successBorder
+                                  : ""
+                              }
+                            `}
+                        nameField="location"
+                        idField="cityId"
+                        placeholder="введіть місто (мін. 3 символи)"
+                        minLength={3}
+                      />
+
                       <ErrorMessage
                         touched={touched.location}
                         error={errors.location}

@@ -48,27 +48,61 @@ const AdverPhotoList: React.FC<AdverPhotoListProps> = ({
     return true;
   };
 
+  // const handleAddPhoto = (event: React.ChangeEvent<HTMLInputElement>) => {
+
+  //   const fileInput = event.target;
+  //   const file = fileInput.files?.[0];
+
+  //   if (!file) return;
+
+  //   if (images.length >= MAX_PHOTOS) {
+  //     toast.error("Ви не можете додати більше 10 фотографій.", toastMessage);
+  //     return;
+  //   }
+
+  //   if (!validateFile(file)) return;
+
+  //   const url = URL.createObjectURL(file);
+
+  //   setImages((prev) => [...prev, { file, url, rotation: 0 }]);
+  //   toast.success("Зображення успішно завантажено!", toastMessage);
+
+  //   fileInput.value = "";
+  // };
+
+
   const handleAddPhoto = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const fileInput = event.target;
+  const files = fileInput.files;
 
-    const fileInput = event.target;
-    const file = fileInput.files?.[0];
+  if (!files || files.length === 0) return;
 
-    if (!file) return;
+  const validFiles: AdverPhoto[] = [];
 
-    if (images.length >= MAX_PHOTOS) {
+  for (const file of Array.from(files)) {
+    if (images.length + validFiles.length >= MAX_PHOTOS) {
       toast.error("Ви не можете додати більше 10 фотографій.", toastMessage);
-      return;
+      break;
     }
 
-    if (!validateFile(file)) return;
+    if (!validateFile(file)) continue;
 
     const url = URL.createObjectURL(file);
+    validFiles.push({ file, url, rotation: 0 });
+  }
 
-    setImages((prev) => [...prev, { file, url, rotation: 0 }]);
-    toast.success("Зображення успішно завантажено!", toastMessage);
+  if (validFiles.length > 0) {
+    setImages((prev) => [...prev, ...validFiles]);
+    toast.success(
+      validFiles.length === 1
+        ? "Зображення успішно завантажено!"
+        : `Зображення (${validFiles.length}) успішно завантажено!`,
+      toastMessage
+    );
+  }
 
-    fileInput.value = "";
-  };
+  fileInput.value = "";
+};
 
   const handleRemovePhoto = (index: number) => {
     const removedImage = images[index];
@@ -143,6 +177,7 @@ const AdverPhotoList: React.FC<AdverPhotoListProps> = ({
               <input
                 type="file"
                 accept="image/*"
+                multiple
                 style={{ display: "none" }}
                 onChange={handleAddPhoto}
               />

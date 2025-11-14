@@ -168,6 +168,20 @@
   }
 }
 
+.errorBorder {
+  border-color: #c21919 !important;
+  box-shadow: 0 0 0 1px rgba(194, 25, 25, 0.3);
+  background-color: rgba(255, 235, 235, 0.3);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.successBorder {
+  border-color: #29B126 !important;
+  box-shadow: 0 0 0 1px rgba(184, 221, 5, 0.3);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+
 .textareaText {
   display: flex;
   justify-content: space-between;
