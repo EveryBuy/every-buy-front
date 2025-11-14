@@ -1,5 +1,5 @@
 "use client";
-import Image from "next/image";
+
 import { Field, useField } from "formik";
 import styles from "./RadioButtonGroup.module.scss";
 
@@ -28,10 +28,6 @@ const RadioButtonGroup: React.FC<RadioButtonGroupProps> = ({
   labelClass = "",
   inputClass = "",
   radioBoxClass = "",
-  radioUncheckedClass = "",
-  radioCheckedClass = "",
-  uncheckedIcon,
-  checkedIcon,
   onChange
 }) => {
   const [field, , helpers] = useField(name);
@@ -47,24 +43,16 @@ const RadioButtonGroup: React.FC<RadioButtonGroupProps> = ({
             <label key={option.value} className={labelClass}>
               <input
                 type="radio"
-                // {...field}
                 name={field.value}
                 value={option.value}
                 checked={isChecked}
                 className={inputClass}
-                onChange={() => helpers.setValue(option.value)}
+                onChange={() => {
+                  helpers.setValue(option.value);
+                  onChange?.(option.value);
+                }}
               />
-              <span className={radioBoxClass}>
-                <Image
-                  src={isChecked ? checkedIcon || "" : uncheckedIcon || ""}
-                  className={
-                    isChecked ? radioCheckedClass : radioUncheckedClass
-                  }
-                  width={24}
-                  height={24}
-                  alt=""
-                />
-              </span>
+              <span className={radioBoxClass}></span>
               {option.label}
             </label>
           );
