@@ -39,19 +39,16 @@ const AdverPhotoList: React.FC<AdverPhotoListProps> = ({
     }
     if (file.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
       toast.error(
-        `Розмір файлу не повинен перевищувати ${MAX_FILE_SIZE_MB}МБ.`,
+        `Розмір файлу не повинен перевищувати ${MAX_FILE_SIZE_MB} МБ.`,
         toastMessage
       );
+
       return false;
     }
     return true;
   };
 
   const handleAddPhoto = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // if (images.length >= MAX_PHOTOS) {
-    //   toast.error("Ви не можете додати більше 9 фотографій.", toastMessage);
-    //   return;
-    // }
 
     const fileInput = event.target;
     const file = fileInput.files?.[0];
@@ -80,28 +77,7 @@ const AdverPhotoList: React.FC<AdverPhotoListProps> = ({
     toast.success("Зображення успішно видалено!", toastMessage);
   };
 
-  // const handleRotatePhoto = (index: number) => {
-  //   setImages((prev) => {
-  //     const updated = [...prev];
-  //     const current = updated[index];
-  //     updated[index] = {
-  //       ...current,
-  //       rotation: ((current.rotation ?? 0) + 1) % 4, // цикл 0–3
-  //     };
-  //     return updated;
-  //   });
-  // };
 
-  // const handleSetCover = (index: number) => {
-  //   if (index === 0) return;
-  //   setImages((prev) => {
-  //     const newOrder = [...prev];
-  //     const [selected] = newOrder.splice(index, 1);
-  //     newOrder.unshift(selected);
-  //     return newOrder;
-  //   });
-  //   toast.success("Фото встановлено як обкладинку!", toastMessage);
-  // };
 
   const handleRotateLeft = (index: number) => {
     setImages((prev) => {
@@ -136,11 +112,14 @@ const AdverPhotoList: React.FC<AdverPhotoListProps> = ({
     const [movedImage] = updatedImages.splice(sourceIndex, 1);
     updatedImages.splice(destinationIndex, 0, movedImage);
     setImages(updatedImages);
+
+    if (destinationIndex === 0 && sourceIndex !== 0) {
+  toast.success("Фото встановлено як обкладинку!", toastMessage);
+}
   };
 
   const canAddMore = images.length < MAX_PHOTOS;
 
-  // console.log(images);
   return (
     <section className={styles.adverPhoto}>
       <p
@@ -150,7 +129,7 @@ const AdverPhotoList: React.FC<AdverPhotoListProps> = ({
       </p>
       <p>
         Максимально допустимий розмір фотографії
-        <span> {MAX_FILE_SIZE_MB}мб.</span> Допустимий формат{" "}
+        <span> {MAX_FILE_SIZE_MB} мб.</span> Допустимий формат{" "}
         <span>jpg, jpeg, png, bmp, gif</span>
       </p>
       <ul
