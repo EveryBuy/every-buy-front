@@ -1,5 +1,5 @@
 "use client";
-import Image from "next/image";
+
 import { useField, useFormikContext } from "formik";
 
 interface CheckboxGroupProps {
@@ -11,10 +11,6 @@ interface CheckboxGroupProps {
   labelClass?: string;
   inputClass?: string;
   radioBoxClass?: string;
-  radioUncheckedClass?: string;
-  radioCheckedClass?: string;
-  uncheckedIcon?: string;
-  checkedIcon?: string;
 }
 
 const CheckboxGroup: React.FC<CheckboxGroupProps> = ({
@@ -24,13 +20,9 @@ const CheckboxGroup: React.FC<CheckboxGroupProps> = ({
   groupClass = "",
   labelClass = "",
   inputClass = "",
-  radioBoxClass = "",
-  radioUncheckedClass = "",
-  radioCheckedClass = "",
-  uncheckedIcon,
-  checkedIcon,
+  radioBoxClass = ""
 }) => {
-const { values, setFieldValue } = useFormikContext<any>();
+const { values, setFieldValue } = useFormikContext<Record<string, any>>();
 
 const selectedValues: string[] = Array.isArray(values[name])
     ? values[name]
@@ -55,28 +47,17 @@ const selectedValues: string[] = Array.isArray(values[name])
         <div style={{ display: "flex", gap: "20px", alignItems: "center" }}>
         {options.map((option) => {
           const isChecked = selectedValues.includes(option.value);
-            console.log()
           return (
             <label key={option.value} className={labelClass}>
               <input
                 type="checkbox"
-                name={`${name}`}
+                name={name}
                 value={option.value}
                 checked={isChecked}
                 className={inputClass}
                 onChange={() => handleToggle(option.value)}
               />
-              <span className={radioBoxClass}>
-                <Image
-                  src={isChecked ? checkedIcon || "" : uncheckedIcon || ""}
-                  className={
-                    isChecked ? radioCheckedClass : radioUncheckedClass
-                  }
-                  width={24}
-                  height={24}
-                  alt=""
-                />
-              </span>
+              <span className={radioBoxClass}></span>
               {option.label}
             </label>
           );

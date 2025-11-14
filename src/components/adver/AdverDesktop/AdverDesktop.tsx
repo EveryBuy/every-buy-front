@@ -193,8 +193,8 @@ const AdverDesktop = () => {
             {/* <FormSyncers /> */}
             <Form autoComplete="off" className={styles.styledForm}>
               {/* buy / sell */}
-              <div className={styles.linkItem}>
-                <label className={styles.linkItemText}>
+              <div className={`${styles.linkItem} ${styles.sellBox}`}>
+                <label className={`${styles.linkItemText}`}>
                   <Field
                     type="radio"
                     name="section"
@@ -542,10 +542,6 @@ const AdverDesktop = () => {
                           labelClass={styles.checkboxLabel}
                           inputClass={styles.checkboxInput}
                           radioBoxClass={styles.checkboxBox}
-                          radioUncheckedClass={styles.checkboxUnchecked}
-                          radioCheckedClass={styles.checkboxChecked}
-                          uncheckedIcon={radioboxIcon}
-                          checkedIcon={checkIcon}
                         />
                         <ErrorMessage
                           touched={touched.deliveryMethods}

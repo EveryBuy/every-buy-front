@@ -34,6 +34,10 @@
   font-weight: 400;
 }
 
+.sellBox {
+  margin-bottom: 40px;
+}
+
 .radio {
   appearance: none;
   width: 32px;
@@ -174,11 +178,10 @@
 }
 
 .successBorder {
-  border-color: #29B126 !important;
+  border-color: #29b126 !important;
   box-shadow: 0 0 0 1px rgba(184, 221, 5, 0.3);
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
-
 
 .textareaText {
   display: flex;
@@ -307,28 +310,38 @@
 }
 
 .checkboxBox {
-  // position: absolute;
   left: 0;
   width: 32px;
   height: 32px;
+  padding: 2px;
+  margin-right: 8px;
+  background-color: transparent;
+  position: relative;
+  display: inline-block;
+  border: 1px solid #777676;
+  &:hover {
+    border-color: #555;
+  }
 }
 
-.checkboxUnchecked {
-  display: block;
+.checkboxInput:checked + .checkboxBox {
+  background-color: transparent;
+  // border-color: #B8DD05;
 }
 
-.checkboxChecked {
-  display: none;
-}
+// .checkboxInput:focus + .checkboxBox {
+//   outline: 2px solid rgba(184, 221, 5, 0.5);
+//   outline-offset: 2px;
+// }
 
-.checkboxInput:checked + .checkboxBox .checkboxUnchecked {
-  display: none;
-}
 
-.checkboxInput:checked + .checkboxBox .checkboxChecked {
-  display: block;
+.checkboxInput:checked + .checkboxBox::after {
+  content: "";
+  position: absolute;
+  inset: 3px; 
+  background-color: #B8DD05;
+  transition: transform 0.2s ease, opacity 0.2s ease;
 }
-
 //new
 
 .priceLocationWrapper {
