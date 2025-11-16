@@ -13,7 +13,7 @@ export const CommonModal: React.FC<CommonModalProps> = ({
   if(!open){
     return
   }
-  console.log('contentClassName', contentClassName);
+
   return (
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     // @ts-ignore: Ignore type error for the Backdrop component

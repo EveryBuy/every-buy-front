@@ -28,25 +28,7 @@ import { FilledInput } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { AdverPhoto } from "../AdverPhotoList/AdverPhotoList";
 import SuccessCreateModal from "../modals/Success/SuccessCreateModal";
-
-export type FormValues = {
-  topSubCategoryId: number | null;
-  lowSubCategoryId: number | null;
-  categoryId: number | null;
-  section: "SELL" | "BUY";
-  cityId: number | null;
-  productType: "NEW" | "USED" | "OTHER" | "";
-  price: string | null;
-  isNegotiable: boolean;
-  title: string;
-  description: string;
-  deliveryMethods: string[];
-  product: string;
-  category: string;
-  subcategory: string;
-  location: string;
-  condition: "NEW" | "USED" | "OTHER" | "";
-};
+import { FormValues } from "@/types/adverFormType";
 
 const initialValues: FormValues = {
   topSubCategoryId: null,
@@ -54,58 +36,52 @@ const initialValues: FormValues = {
   categoryId: null,
   section: "SELL",
   cityId: null,
-  productType: "",
-  price: "",
-  isNegotiable: false,
+  categoryLabel: "",
   title: "",
   description: "",
+  productType: "",
+  price: "",
+  priceType: "WITH_PRICE",
+  isNegotiable: false,
   deliveryMethods: [],
-  product: "",
-  category: "",
-  subcategory: "",
   location: "",
-  condition: "",
 };
 
 const AuthSchema = Yup.object().shape({
-  product: Yup.string()
+  title: Yup.string()
     .trim()
-    .min(2, "Мінімум 2 символи")
-    .max(70, "Максимум 70 символів")
-    .required("Будь ласка, вкажіть назву товару"),
-  price: Yup.string()
-    .nullable()
-    .when("isNegotiable", {
-      is: false,
-      then: (s) =>
-        s
-          .required("Будь ласка, зазначте бажану ціну")
-          .matches(/^\d+$/, "Використовуйте лише цифри")
-          .test("min-1", "Мінімум 1", (v) => {
-            if (v == null || v === "") return false;
-            return Number(v) >= 1;
-          }),
-      otherwise: (s) => s.nullable().notRequired(),
-    }),
+    .min(2, "Мінімум 2 символи.")
+    .max(70, "Максимум 70 символів.")
+    .required("Вкажіть назву товару."),
+
   description: Yup.string()
     .trim()
-    .min(30, "Вкажіть щонайменше 30 символів")
-    .max(3000, "Максимум 3000 символів")
-    .required("Будь ласка, додайте опис товару"),
+    .min(30, "Мінімум 30 символів.")
+    .max(3000, "Максимум 3000 символів.")
+    .required("Будь ласка, додайте опис товару."),
+
   categoryId: Yup.number()
-    .typeError("Будь ласка, зазначте категорію товару")
-    .required("Будь ласка, зазначте категорію товару"),
-  location: Yup.string()
-    .trim()
-    .required("Будь ласка, вкажіть місцезнаходження"),
-  condition: Yup.mixed<"NEW" | "USED" | "OTHER">()
-    .oneOf(["NEW", "USED", "OTHER"], "Будь ласка, оберіть стан товару")
-    .required("Будь ласка, оберіть стан товару"),
-  section: Yup.mixed<"SELL" | "BUY">().oneOf(["SELL", "BUY"]).required(),
+    .typeError("Будь ласка, зазначте категорію товару.")
+    .required("Будь ласка, зазначте категорію товару."),
+
+  location: Yup.string().required("Будь ласка, вкажіть місцезнаходження."),
+
+  productType: Yup.mixed()
+    .oneOf(["NEW", "USED", "OTHER"], "Будь ласка, оберіть стан товару.")
+    .required(),
+
+  section: Yup.mixed().oneOf(["SELL", "BUY"]).required(),
+
   deliveryMethods: Yup.array()
-    .of(Yup.string())
-    .min(1, "Будь ласка, оберіть хоча б один спосіб доставки")
-    .required("Будь ласка, оберіть спосіб доставки"),
+    .min(1, "Оберіть спосіб доставки.")
+    .required("Будь ласка, оберіть хоча б один спосіб доставки."),
+
+  price: Yup.string().when("isNegotiable", {
+    is: false,
+    then: (schema) =>
+      schema.required("Вкажіть ціну.").matches(/^\d+$/, "Тільки цифри."),
+    otherwise: (schema) => schema.notRequired(),
+  }),
 });
 
 const AdverDesktop = () => {
@@ -130,24 +106,28 @@ const AdverDesktop = () => {
     values: FormValues,
     actions: FormikHelpers<FormValues>
   ) {
+    console.log("=== SUBMIT STARTED ===");
+    console.log("FORM VALUES:", values);
+    console.log("TOKEN:", token);
+    console.log("IMAGES:", images);
+
     try {
       if (!token) return;
-
+      console.log("token", token);
       const requestPayload = {
         topSubCategoryId: values.topSubCategoryId,
         lowSubCategoryId: values.lowSubCategoryId,
         section: values.section,
         cityId: values.cityId,
-        productType: values.productType || values.condition,
+        productType: values.productType,
         price: values.price ? Number(values.price) : null,
-        title: values.title || values.product || "",
-        isNegotiable: Boolean(values.isNegotiable),
+        title: values.title,
+        isNegotiable: values.isNegotiable,
         categoryId: values.categoryId,
         description: values.description,
         deliveryMethods: values.deliveryMethods,
         rotations: images.map((img) => img.rotation ?? 0),
       };
-
       const formData = new FormData();
 
       formData.append(
@@ -235,17 +215,17 @@ const AdverDesktop = () => {
                           <span style={{ color: "#C21919" }}>*</span>
                           <Field
                             type="text"
-                            name="product"
+                            name="title"
                             placeholder="Наприклад, жіноча сукня 32 розміру грн."
                             className={`
                               ${styles.styledField}
                               ${
-                                touched.product && errors.product
+                                touched.title && errors.title
                                   ? styles.errorBorder
                                   : ""
                               }
                               ${
-                                touched.product && !errors.product
+                                touched.title && !errors.title
                                   ? styles.successBorder
                                   : ""
                               }
@@ -263,7 +243,7 @@ const AdverDesktop = () => {
                               e: React.ChangeEvent<HTMLInputElement>
                             ) => {
                               const v = e.target.value;
-                              setFieldValue("product", v);
+                              setFieldValue("title", v);
                               setDescriptionLength(
                                 v.length > 70 ? 70 : v.length
                               );
@@ -279,8 +259,8 @@ const AdverDesktop = () => {
                           </div>
                         </label>
                         <ErrorMessage
-                          touched={touched.product}
-                          error={errors.product}
+                          touched={touched.title}
+                          error={errors.title}
                           successMessage="Успішно введено назву товару"
                         />
                       </div>
@@ -289,10 +269,9 @@ const AdverDesktop = () => {
                         <label>
                           Категорія<span style={{ color: "#C21919" }}>*</span>
                           <Field
-                            // className={styles.styledField}
                             type="text"
                             name="categoryId"
-                            value={values.category}
+                            value={values.categoryLabel}
                             readOnly
                             placeholder="Оберіть категорію товару "
                             className={`
@@ -387,7 +366,7 @@ const AdverDesktop = () => {
                         <label className={styles.linkItemText}>
                           <Field
                             type="radio"
-                            name="section"
+                            name="priceType"
                             value="price"
                             className={styles.radio}
                           />
@@ -397,7 +376,7 @@ const AdverDesktop = () => {
                         <label className={styles.linkItemText}>
                           <Field
                             type="radio"
-                            name="section"
+                            name="priceType"
                             value="free"
                             className={styles.radio}
                           />
@@ -461,7 +440,7 @@ const AdverDesktop = () => {
                       {/* Стан товару */}
                       <div className={styles.conditionWrapper}>
                         <RadioButtonGroup
-                          name="condition"
+                          name="productType"
                           title="Стан товару"
                           options={[
                             { value: "NEW", label: "Нове" },
@@ -473,12 +452,12 @@ const AdverDesktop = () => {
                           inputClass={`${styles.visuallyHidden} ${
                             styles.radioboxInput
                           } ${
-                            touched.condition && errors.condition
+                            touched.productType && errors.productType
                               ? styles.errorBorder
                               : ""
                           }
                               ${
-                                touched.condition && !errors.condition
+                                touched.productType && !errors.productType
                                   ? styles.successBorder
                                   : ""
                               }`}
@@ -492,8 +471,8 @@ const AdverDesktop = () => {
                           }
                         />
                         <ErrorMessage
-                          touched={touched.condition}
-                          error={errors.condition}
+                          touched={touched.productType}
+                          error={errors.productType}
                           successMessage="Стан товару успішно додано"
                         />
                       </div>
@@ -588,12 +567,12 @@ const AdverDesktop = () => {
                   categoryId,
                   topSubCategoryId,
                   lowSubCategoryId,
-                  label,
+                  categoryLabel,
                 }) => {
                   setFieldValue("categoryId", categoryId);
                   setFieldValue("topSubCategoryId", topSubCategoryId);
                   setFieldValue("lowSubCategoryId", lowSubCategoryId);
-                  setFieldValue("category", label);
+                  setFieldValue("categoryLabel", categoryLabel);
                 }}
               />
             )}
