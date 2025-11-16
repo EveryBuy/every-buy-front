@@ -27,6 +27,7 @@ import CheckboxGroup from "../CheckboxGroup/CheckboxGroup";
 import { FilledInput } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { AdverPhoto } from "../AdverPhotoList/AdverPhotoList";
+import SuccessCreateModal from "../modals/Success/SuccessCreateModal";
 
 export type FormValues = {
   topSubCategoryId: number | null;
@@ -111,6 +112,7 @@ const AdverDesktop = () => {
   const [images, setImages] = useState<AdverPhoto[]>([]);
   const [descriptionLength, setDescriptionLength] = useState(0);
   const [categoryModalOpen, setCategoryModalOpen] = useState(false);
+  const [successOpen, setSuccessOpen] = useState(false);
 
   const dispatch = useAppDispatch();
   const token = useAppSelector(selectToken);
@@ -161,6 +163,8 @@ const AdverDesktop = () => {
 
       actions.resetForm();
       setImages([]);
+
+      setSuccessOpen(true);
     } catch (e) {
       console.error("Create advert failed:", e);
     } finally {
@@ -593,7 +597,6 @@ const AdverDesktop = () => {
                 }}
               />
             )}
-
             {previewOpen && (
               <AdverPreviewModal
                 open={previewOpen}
@@ -606,6 +609,8 @@ const AdverDesktop = () => {
                 }}
               />
             )}
+            {/* успіх при створенні */}
+            {successOpen && <SuccessCreateModal />}
           </>
         )}
       </Formik>

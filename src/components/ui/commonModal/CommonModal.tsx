@@ -9,9 +9,11 @@ export const CommonModal: React.FC<CommonModalProps> = ({
   onClose,
   children,
 }) => {
+
   if(!open){
     return
   }
+  console.log('contentClassName', contentClassName);
   return (
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     // @ts-ignore: Ignore type error for the Backdrop component
@@ -21,7 +23,7 @@ export const CommonModal: React.FC<CommonModalProps> = ({
       onClose={onClose}
       onClick={onClose}
     >
-      <div className={styles.box} onClick={(evt) => evt.stopPropagation()}>
+      <div className={`${styles.box} ${contentClassName || ""}`} onClick={(evt) => evt.stopPropagation()}>
         <button
           className={styles.closeButton}
           type="button"
@@ -29,7 +31,7 @@ export const CommonModal: React.FC<CommonModalProps> = ({
         >
           <Image src={xClose} alt="close" width={18} height={18} />
         </button>
-        <div className={`${styles.contentWrapper} ${contentClassName}`}>
+        <div className={`${styles.contentWrapper}`}>
           {children}
         </div>
       </div>
