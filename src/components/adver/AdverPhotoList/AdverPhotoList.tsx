@@ -18,15 +18,16 @@ const toastMessage: ToastOptions = {
   transition: Zoom,
 };
 
-interface AdverPhoto {
+export interface AdverPhoto {
   file: File;
   url: string;
-  rotation?: number;
+  rotation: number;
 }
 interface AdverPhotoListProps {
   images: AdverPhoto[];
   setImages: React.Dispatch<React.SetStateAction<AdverPhoto[]>>;
 }
+
 
 const AdverPhotoList: React.FC<AdverPhotoListProps> = ({
   images,
@@ -48,61 +49,38 @@ const AdverPhotoList: React.FC<AdverPhotoListProps> = ({
     return true;
   };
 
-  // const handleAddPhoto = (event: React.ChangeEvent<HTMLInputElement>) => {
-
-  //   const fileInput = event.target;
-  //   const file = fileInput.files?.[0];
-
-  //   if (!file) return;
-
-  //   if (images.length >= MAX_PHOTOS) {
-  //     toast.error("Ви не можете додати більше 10 фотографій.", toastMessage);
-  //     return;
-  //   }
-
-  //   if (!validateFile(file)) return;
-
-  //   const url = URL.createObjectURL(file);
-
-  //   setImages((prev) => [...prev, { file, url, rotation: 0 }]);
-  //   toast.success("Зображення успішно завантажено!", toastMessage);
-
-  //   fileInput.value = "";
-  // };
-
-
   const handleAddPhoto = (event: React.ChangeEvent<HTMLInputElement>) => {
-  const fileInput = event.target;
-  const files = fileInput.files;
+    const fileInput = event.target;
+    const files = fileInput.files;
 
-  if (!files || files.length === 0) return;
+    if (!files || files.length === 0) return;
 
-  const validFiles: AdverPhoto[] = [];
+    const validFiles: AdverPhoto[] = [];
 
-  for (const file of Array.from(files)) {
-    if (images.length + validFiles.length >= MAX_PHOTOS) {
-      toast.error("Ви не можете додати більше 10 фотографій.", toastMessage);
-      break;
+    for (const file of Array.from(files)) {
+      if (images.length + validFiles.length >= MAX_PHOTOS) {
+        toast.error("Ви не можете додати більше 10 фотографій.", toastMessage);
+        break;
+      }
+
+      if (!validateFile(file)) continue;
+
+      const url = URL.createObjectURL(file);
+      validFiles.push({ file, url, rotation: 0 });
     }
 
-    if (!validateFile(file)) continue;
+    if (validFiles.length > 0) {
+      setImages((prev) => [...prev, ...validFiles]);
+      toast.success(
+        validFiles.length === 1
+          ? "Зображення успішно завантажено!"
+          : `Зображення (${validFiles.length}) успішно завантажено!`,
+        toastMessage
+      );
+    }
 
-    const url = URL.createObjectURL(file);
-    validFiles.push({ file, url, rotation: 0 });
-  }
-
-  if (validFiles.length > 0) {
-    setImages((prev) => [...prev, ...validFiles]);
-    toast.success(
-      validFiles.length === 1
-        ? "Зображення успішно завантажено!"
-        : `Зображення (${validFiles.length}) успішно завантажено!`,
-      toastMessage
-    );
-  }
-
-  fileInput.value = "";
-};
+    fileInput.value = "";
+  };
 
   const handleRemovePhoto = (index: number) => {
     const removedImage = images[index];
@@ -111,12 +89,20 @@ const AdverPhotoList: React.FC<AdverPhotoListProps> = ({
     toast.success("Зображення успішно видалено!", toastMessage);
   };
 
-
-
+  // const handleRotateLeft = (index: number) => {
+  //   setImages((prev) => {
+  //     const updated = [...prev];
+  //     updated[index].rotation = ((updated[index].rotation ?? 0) + 3) % 4;
+  //     return updated;
+  //   });
+  // };
   const handleRotateLeft = (index: number) => {
     setImages((prev) => {
       const updated = [...prev];
-      updated[index].rotation = ((updated[index].rotation ?? 0) + 3) % 4; // обертання вліво
+      const current = updated[index].rotation ?? 0;
+      const newRotation = (current - 1 + 4) % 4;
+      console.log('left', newRotation)
+      updated[index].rotation = newRotation;
       return updated;
     });
   };
@@ -124,10 +110,21 @@ const AdverPhotoList: React.FC<AdverPhotoListProps> = ({
   const handleRotateRight = (index: number) => {
     setImages((prev) => {
       const updated = [...prev];
-      updated[index].rotation = ((updated[index].rotation ?? 0) + 1) % 4; // обертання вправо
+      const current = updated[index].rotation ?? 0;
+      const newRotation = (current + 1) % 4;
+      console.log('right', newRotation)
+      updated[index].rotation = newRotation;
       return updated;
     });
   };
+
+  // const handleRotateRight = (index: number) => {
+  //   setImages((prev) => {
+  //     const updated = [...prev];
+  //     updated[index].rotation = ((updated[index].rotation ?? 0) + 1) % 4;
+  //     return updated;
+  //   });
+  // };
 
   const handleDrag = (
     event: React.DragEvent<HTMLLIElement>,
@@ -148,8 +145,8 @@ const AdverPhotoList: React.FC<AdverPhotoListProps> = ({
     setImages(updatedImages);
 
     if (destinationIndex === 0 && sourceIndex !== 0) {
-  toast.success("Фото встановлено як обкладинку!", toastMessage);
-}
+      toast.success("Фото встановлено як обкладинку!", toastMessage);
+    }
   };
 
   const canAddMore = images.length < MAX_PHOTOS;
@@ -164,7 +161,7 @@ const AdverPhotoList: React.FC<AdverPhotoListProps> = ({
       <p>
         Максимально допустимий розмір фотографії
         <span> {MAX_FILE_SIZE_MB} мб.</span> Допустимий формат{" "}
-        <span>jpg, jpeg, png, bmp, gif</span>
+        <span>jpg, jpeg, png.</span>
       </p>
       <ul
         className={styles.adverPhotoList}
@@ -185,7 +182,7 @@ const AdverPhotoList: React.FC<AdverPhotoListProps> = ({
           </li>
         )}
         {images.map((img, index) => {
-          const rotationDeg = (img.rotation ?? 0) * 45;
+          const rotationDeg = (img.rotation ?? 0) * 90;
           return (
             <li
               key={index}

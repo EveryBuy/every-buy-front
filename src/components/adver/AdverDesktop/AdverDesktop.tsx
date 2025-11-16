@@ -26,6 +26,7 @@ import AdverPreviewModal from "../AdverPreviewModal/AdverPreviewModal";
 import CheckboxGroup from "../CheckboxGroup/CheckboxGroup";
 import { FilledInput } from "@mui/material";
 import { useRouter } from "next/navigation";
+import { AdverPhoto } from "../AdverPhotoList/AdverPhotoList";
 
 export type FormValues = {
   topSubCategoryId: number | null;
@@ -107,7 +108,7 @@ const AuthSchema = Yup.object().shape({
 });
 
 const AdverDesktop = () => {
-  const [images, setImages] = useState<{ file: File; url: string }[]>([]);
+  const [images, setImages] = useState<AdverPhoto[]>([]);
   const [descriptionLength, setDescriptionLength] = useState(0);
   const [categoryModalOpen, setCategoryModalOpen] = useState(false);
 
@@ -122,18 +123,14 @@ const AdverDesktop = () => {
   };
 
   const router = useRouter();
-  // всередині компонента
+
   async function handleSubmit(
     values: FormValues,
     actions: FormikHelpers<FormValues>
   ) {
     try {
-      if (!token) {
-        console.error("No token provided");
-        return;
-      }
+      if (!token) return;
 
-      // Only fields expected by backend
       const requestPayload = {
         topSubCategoryId: values.topSubCategoryId,
         lowSubCategoryId: values.lowSubCategoryId,
@@ -145,18 +142,20 @@ const AdverDesktop = () => {
         isNegotiable: Boolean(values.isNegotiable),
         categoryId: values.categoryId,
         description: values.description,
-        deliveryMethods: Array.isArray(values.deliveryMethods)
-          ? values.deliveryMethods.filter(Boolean)
-          : [],
+        deliveryMethods: values.deliveryMethods,
+        rotations: images.map((img) => img.rotation ?? 0),
       };
-      console.log("requestPayload", requestPayload);
+
       const formData = new FormData();
 
       formData.append(
         "request",
         new Blob([JSON.stringify(requestPayload)], { type: "application/json" })
       );
-      images.forEach(({ file }) => formData.append("photos", file));
+
+      images.forEach(({ file }) => {
+        formData.append("photoUrls", file);
+      });
 
       await dispatch(createAdvertisement(formData)).unwrap();
 
@@ -168,6 +167,7 @@ const AdverDesktop = () => {
       actions.setSubmitting(false);
     }
   }
+
   const submitRef = useRef<HTMLButtonElement>(null);
 
   return (
@@ -287,7 +287,7 @@ const AdverDesktop = () => {
                           <Field
                             // className={styles.styledField}
                             type="text"
-                            name="category"
+                            name="categoryId"
                             value={values.category}
                             readOnly
                             placeholder="Оберіть категорію товару "
