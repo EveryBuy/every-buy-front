@@ -154,7 +154,7 @@ const AdverDesktop = () => {
       );
 
       images.forEach(({ file }) => {
-        formData.append("photoUrls", file);
+        formData.append("photos", file);
       });
 
       await dispatch(createAdvertisement(formData)).unwrap();
@@ -445,6 +445,7 @@ const AdverDesktop = () => {
                           <p className={styles.helperText}>
                             Використовуйте лише цифри
                           </p>
+                          <p>грн.</p>
                         </div>
                       </label>
                       <ErrorMessage

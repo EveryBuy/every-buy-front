@@ -106,7 +106,7 @@ export const CategoryTreeModal = ({
       onClose();
     }
   };
-  console.log("categories", categories);
+
   return (
     <CommonModal open={open} onClose={onClose}>
       <div>

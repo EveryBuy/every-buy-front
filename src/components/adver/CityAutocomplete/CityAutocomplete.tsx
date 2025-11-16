@@ -78,7 +78,7 @@ function CityAutocomplete({
       setList(Array.isArray(data) ? data : []);
       setOpen(true);
       setHighlight(-1);
-      console.log("Міста знайдені:", data);
+
     } catch (err: any) {
       if (err?.name !== "AbortError") {
         setErrorMsg("Помилка завантаження міст");
