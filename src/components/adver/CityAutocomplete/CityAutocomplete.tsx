@@ -19,10 +19,11 @@ export type CityDto = {
 };
 
 type Props = {
-  nameField?: string; // поле для назви (у Formik)
-  idField?: string;   // поле для id (у Formik)
+  nameField?: string;
+  idField?: string;
   placeholder?: string;
   minLength?: number;
+  styledFieldClass?: string
 };
 
 function CityAutocomplete({
@@ -30,6 +31,7 @@ function CityAutocomplete({
   idField = "cityId",
   placeholder = "Вкажіть місто",
   minLength = 3,
+  styledFieldClass
 }: Props) {
   const token = useAppSelector(selectToken);
   const { values, setFieldValue, setFieldTouched } = useFormikContext<any>();
@@ -40,6 +42,8 @@ function CityAutocomplete({
   const [open, setOpen] = useState(false);
   const [highlight, setHighlight] = useState(-1);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [skipSearch, setSkipSearch] = useState(false);
+
 
   const debouncedQuery = useDebounce(inputValue, 400);
   const acRef = useRef<AbortController | null>(null);
@@ -50,14 +54,20 @@ function CityAutocomplete({
     const r = (city.region?.regionName || "").trim();
     return r ? `${c}, ${r}` : c;
   };
+
+  const onSelectCity = (city: CityDto) => {
+    // setSkipSearch(true);
+    setFieldValue(nameField, labelOf(city), true);
+    setFieldValue(idField, city.id, true);
+    setFieldTouched(nameField, true, false);
+    setOpen(false);
+  };
+  
   useEffect(() => {
-  console.log(
-    "[CityAutocomplete effect]",
-    "inputValue:", inputValue,
-    "| debouncedQuery:", debouncedQuery,
-    "| minLength:", minLength,
-    "| debouncedQuery.length:", debouncedQuery.trim().length
-  );
+    if (skipSearch) {
+    setSkipSearch(false);
+    return;
+  }
   if (debouncedQuery.trim().length < minLength) {
     setList([]);
     setOpen(false);
@@ -74,7 +84,7 @@ function CityAutocomplete({
     try {
       setLoading(true);
       setErrorMsg(null);
-      // Ось тут викликаємо searchCities (axios)
+
       const data = await searchCities(
         debouncedQuery.trim(),
         token || undefined,
@@ -83,7 +93,7 @@ function CityAutocomplete({
       setList(Array.isArray(data) ? data : []);
       setOpen(true);
       setHighlight(-1);
-      console.log("Міста знайдені:", data);
+
     } catch (err: any) {
       if (err?.name !== "AbortError") {
         setErrorMsg("Помилка завантаження міст");
@@ -96,26 +106,15 @@ function CityAutocomplete({
   })();
 
   return () => controller.abort();
-}, [debouncedQuery, token, minLength, inputValue]);
+}, [debouncedQuery, token, minLength, inputValue, skipSearch]);
 
-  const helpText = useMemo(() => {
-    const left = minLength - (inputValue?.trim()?.length ?? 0);
-    return left > 0 ? `Введіть ще ${left} символів` : "";
-  }, [inputValue, minLength]);
-
-  const onSelectCity = (city: CityDto) => {
-    setFieldValue(nameField, labelOf(city), true);
-    setFieldValue(idField, city.id, true);
-    setFieldTouched(nameField, true, false);
-    setOpen(false);
-  };
   
 
   return (
     <div className={styles.wrapper}>
       <input
         type="text"
-        className={styles.input}
+        className={styledFieldClass}
         name={nameField}
         value={inputValue}
         placeholder={placeholder}
@@ -146,7 +145,7 @@ function CityAutocomplete({
       />
 
       {loading && <div className={styles.state}>Пошук…</div>}
-      {!loading && helpText && <div className={styles.state}>{helpText}</div>}
+      {/* {!loading && helpText && <div className={styles.state}>{helpText}</div>} */}
       {errorMsg && <div className={styles.error}>{errorMsg}</div>}
 
       {open && list.length > 0 && (

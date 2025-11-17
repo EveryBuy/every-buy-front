@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import styles from "./AdverPreviewModal.module.scss";
-import type { FormValues } from "@/types/adverFormType"; // або твій шлях
+import type { FormValues } from "@/types/adverFormType";
 import { Backdrop } from "@mui/material";
 
 type Props = {
@@ -105,7 +105,7 @@ const AdverPreviewModal: React.FC<Props> = ({
             <div className={styles.pubDate}>
               Опубліковано {new Date().toLocaleDateString("uk-UA")}
             </div>
-            <h2 className={styles.title}>{values.title || values.product}</h2>
+            <h2 className={styles.title}>{values.title || values.title}</h2>
             <div className={styles.price}>
               Вартість
               <br />

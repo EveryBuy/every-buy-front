@@ -1,12 +1,10 @@
 import axios from "axios";
-import { AUTH_AUTH } from "./endpoints";
+import { API } from "@/utils/axios";
 
 async function getTokenLogin(auth: { login: string; password: string }) {
   try {
-    const response = await axios.post(AUTH_AUTH, auth);
-    const token = response.data.data.token;
-    
-    return token;
+    const response = await API.post("/auth/auth", auth);
+    return response.data.data.token;
   } catch (error) {
     console.log(error);
     throw error;

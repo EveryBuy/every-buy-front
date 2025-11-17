@@ -4,7 +4,7 @@ import { ReactNode } from "react";
 import { Providers } from "../redux/provider";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import { ThemeProvider } from "@mui/material/styles";
-// import { ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 // import { Toaster } from "react-hot-toast";
 import "react-toastify/dist/ReactToastify.css";
 import theme from "../styles/mui/theme";
@@ -44,6 +44,7 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
               </RehydrationGate>
               <Footer />
               <Message />
+              <ToastContainer />
               {/* </AuthProvider> */}
             </ThemeProvider>
           </Providers>
