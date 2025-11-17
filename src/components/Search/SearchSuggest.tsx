@@ -72,54 +72,56 @@ const SearchSuggest = (props: SearchSuggestProps): JSX.Element => {
 				searchArrSell && Array.isArray(searchArrSell) && searchArrSell.length > 0 ||
 					searchArrBuy && Array.isArray(searchArrBuy) && searchArrBuy.length > 0
 					? <>
-						{searchArrSell && searchArrSell.length > 0 && <>
-							<p className={styles.searchSection}>Продаж</p>
-							<ul className={styles.searchSuggestList}>
-								{searchArrSell.slice(0, 10).map((item) =>
-									<SuggestItem
-										key={"SELL" + item.topCategoryId}
-										item={item}
-										word={word}
-										section="SELL"
-									/>
-								)}
-							</ul>
-							<h3 className={styles.titleCats}>Перейти в категорію:</h3>
-							<ul className={styles.searchSuggestList}>
-								{searchCatArrSell && searchCatArrSell.slice(0, 10).map((item) =>
-									<SuggestCatItem
-										key={"SELL" + item.categoryId}
-										item={item}
-										word={word}
-										section="SELL"
-									/>
-								)}
-							</ul>
-						</>}
-						{searchArrBuy && searchArrBuy.length > 0 && <>
-							<p className={styles.searchSection}>Купівля</p>
-							<ul className={styles.searchSuggestList}>
-								{searchArrBuy.slice(0, 10).map((item) =>
-									<SuggestItem
-										key={"BUY" + item.topCategoryId}
-										item={item}
-										word={word}
-										section="BUY"
-									/>
-								)}
-							</ul>
-							<h3 className={styles.titleCats}>Перейти в категорію:</h3>
-							<ul className={styles.searchSuggestList}>
-								{searchCatArrBuy && searchCatArrBuy.slice(0, 10).map((item) =>
-									<SuggestCatItem
-										key={"BUY" + item.categoryId}
-										item={item}
-										word={word}
-										section="BUY"
-									/>
-								)}
-							</ul>
-						</>}
+						{searchArrSell && searchArrSell.length > 0 &&
+							<section className={styles.searchSection}>
+								<p className={styles.searchSectionTitle}>Продаж</p>
+								<ul className={styles.searchSuggestList}>
+									{searchArrSell.slice(0, 10).map((item) =>
+										<SuggestItem
+											key={"SELL" + item.topCategoryId}
+											item={item}
+											word={word}
+											section="SELL"
+										/>
+									)}
+								</ul>
+								<h3 className={styles.titleCats}>Перейти в категорію:</h3>
+								<ul className={styles.searchSuggestList}>
+									{searchCatArrSell && searchCatArrSell.slice(0, 10).map((item) =>
+										<SuggestCatItem
+											key={"SELL" + item.categoryId}
+											item={item}
+											word={word}
+											section="SELL"
+										/>
+									)}
+								</ul>
+							</section>}
+						{searchArrBuy && searchArrBuy.length > 0 &&
+							<section className={styles.searchSection}>
+								<p className={styles.searchSectionTitle}>Купівля</p>
+								<ul className={styles.searchSuggestList}>
+									{searchArrBuy.slice(0, 10).map((item) =>
+										<SuggestItem
+											key={"BUY" + item.topCategoryId}
+											item={item}
+											word={word}
+											section="BUY"
+										/>
+									)}
+								</ul>
+								<h3 className={styles.titleCats}>Перейти в категорію:</h3>
+								<ul className={styles.searchSuggestList}>
+									{searchCatArrBuy && searchCatArrBuy.slice(0, 10).map((item) =>
+										<SuggestCatItem
+											key={"BUY" + item.categoryId}
+											item={item}
+											word={word}
+											section="BUY"
+										/>
+									)}
+								</ul>
+							</section>}
 					</>
 					: <SuggestEmty />
 			}
