@@ -1,5 +1,4 @@
-import axios from "axios";
-import { AUTH_REGISTRATION } from "./endpoints";
+import { API } from "@/utils/axios";
 
 async function getTokenRegistration(
   email: string,
@@ -7,15 +6,20 @@ async function getTokenRegistration(
   password: string
 ) {
   try {
-    const response = await axios.post(AUTH_REGISTRATION, {
-      email: email,
-      phone: phone,
-      password: password,
+    const response = await API.post("/auth/registration", {
+      email,
+      phone,
+      password,
     });
-    localStorage.setItem("token", response.data.data.token);
-    return response.data.data.token;
+
+    const token = response.data.data.token;
+
+    localStorage.setItem("token", token);
+
+    return token;
   } catch (error) {
-    console.log(error);
+    console.log("Registration error:", error);
+    throw error;
   }
 }
 

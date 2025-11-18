@@ -7,7 +7,9 @@
 
 .adHeader {
   display: flex;
-  margin-bottom: 60px;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 
   h1 {
     font-size: var(--f-size-h1);
@@ -19,40 +21,21 @@
   display: flex;
   gap: 20px;
   align-items: center;
-  margin-bottom: 40px;
 }
 
 .linkItemText {
   display: flex;
   align-items: center;
-  gap: 16px;
-  color: var(--input-text);
+  gap: 8px;
+  color: #131313;
 }
 .linkItemText span {
   font-size: var(--large-body-medium);
   font-weight: 400;
 }
 
-.radio {
-  appearance: none;
-  width: 32px;
-  height: 32px;
-  border: 1px solid #131313;
-  border-radius: 50%;
-  position: relative;
-  cursor: pointer;
-
-  &:checked::before {
-    content: "";
-    display: block;
-    width: 24px;
-    height: 24px;
-    background-color: #777676;
-    border-radius: 50%;
-    position: absolute;
-    top: 3px;
-    left: 3px;
-  }
+.sellBox {
+  margin-bottom: 40px;
 }
 
 .adTitle {
@@ -64,10 +47,6 @@
 }
 
 .wrapperInput {
-  // display: flex;
-  // justify-content: space-between;
-  // gap: 30px;
-
   margin-bottom: 27px;
 }
 
@@ -87,7 +66,7 @@
   align-items: center;
   justify-content: center;
 
-  padding: 16px 47px;
+  padding: 16px 28px;
   font-size: var(--f-size-h4);
 
   border: 1px solid;
@@ -95,19 +74,22 @@
 
   color: var(--label);
 
-  width: 347px;
-  height: 61px;
+  width: 316px;
+  height: 60px;
 
   line-height: 29px;
 }
 
 .adverButtonAd {
   background: var(--button);
-  border: none
+  border: none;
 }
 
 // =============================================================
-
+.helperText {
+  font-size: 14px;
+  font-weight: 400;
+}
 .formWrapper {
   background-color: #fff;
   display: flex;
@@ -115,6 +97,7 @@
   gap: 40px;
   padding: 20px 20px 30px 20px;
   margin-bottom: 40px;
+  border-radius: 8px;
 
   label {
     font-size: 20px;
@@ -130,7 +113,6 @@
   align-items: center;
   width: 335px;
   height: 46px;
-  margin-top: 4px;
   padding: 12px;
   border-radius: 10px;
   background-color: transparent;
@@ -142,7 +124,7 @@
   font-weight: 400;
   line-height: 128.571%;
 
-  color: rgba(129, 104, 39, 0.6);
+  color: #131313;
 
   &:focus {
     outline: none;
@@ -162,6 +144,19 @@
   }
 }
 
+.errorBorder {
+  border-color: #c21919 !important;
+  box-shadow: 0 0 0 1px rgba(194, 25, 25, 0.3);
+  background-color: rgba(255, 235, 235, 0.3);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.successBorder {
+  border-color: #29b126 !important;
+  box-shadow: 0 0 0 1px rgba(184, 221, 5, 0.3);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
 .textareaText {
   display: flex;
   justify-content: space-between;
@@ -170,7 +165,7 @@
     font-size: var(--body-text);
     font-weight: 400;
     line-height: 19.5px;
-    color: #746F79;;
+    color: #746f79;
   }
 }
 
@@ -186,11 +181,11 @@
 
 .styledTexterea {
   width: 620px;
-  height: 280px;
+  height: 210px;
+  resize: none;
 }
 .toggleWrapper {
-  margin-top: 12px;
-  margin-bottom: 28px;
+  margin-left: auto;
   display: flex;
   justify-content: space-between;
 }
@@ -204,7 +199,6 @@
   font-weight: 400;
   color: var(--label);
 }
-
 
 // ================= radio ===================
 .visuallyHidden {
@@ -230,30 +224,77 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
-  margin-bottom: 10px;
+  // margin-bottom: 10px;
 }
 
 .radioboxInput {
   margin-right: 16px;
-
   width: 32px;
   height: 32px;
 }
 
+.radio {
+  appearance: none;
+  width: 32px;
+  height: 32px;
+  border: 1px solid #777676;
+  border-radius: 50%;
+  position: relative;
+  cursor: pointer;
+
+  &:checked::before {
+    content: "";
+    display: block;
+    width: 24px;
+    height: 24px;
+    background-color: #b8dd05;
+    border-radius: 50%;
+    position: absolute;
+    top: 3px;
+    left: 3px;
+  }
+}
+
+// .radioboxInput {
+//   @extend .visuallyHidden;
+// }
+
+/* саме коло */
 .radioBox {
-  position: absolute;
-  margin-left: -48px;
+  position: relative;
+  display: inline-block;
   width: 32px;
   height: 32px;
+  border: 1px solid #777676;
+  border-radius: 50%;
+  margin-right: 8px;
+  box-sizing: border-box;
+  background-color: #fff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    border-color: #555;
+  }
 }
+
+.radioboxInput:checked + .radioBox::after {
+  content: "";
+  position: absolute;
+  inset: 3px; 
+  border-radius: 50%;
+  background-color: #b8dd05;
+  transition: all 0.2s ease;
+}
+
+.radioboxInput:focus + .radioBox {
+  box-shadow: 0 0 0 3px rgba(184, 221, 5, 0.3);
+}
+
 
 .radioboxLabel {
   display: flex;
   align-items: center;
-}
-
-.check {
-  padding-left: 48px;
+  cursor: pointer;
 }
 
 .radioUnchecked {
@@ -272,3 +313,103 @@
   display: block;
 }
 
+.checkboxGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  font-size: var(--large-body-medium);
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.checkboxInput {
+  @extend .visuallyHidden;
+}
+
+.checkboxBox {
+  left: 0;
+  width: 32px;
+  height: 32px;
+  padding: 2px;
+  margin-right: 8px;
+  background-color: transparent;
+  position: relative;
+  display: inline-block;
+  border: 1px solid #777676;
+  &:hover {
+    border-color: #555;
+  }
+}
+
+.checkboxInput:checked + .checkboxBox {
+  background-color: transparent;
+}
+
+.checkboxInput:checked + .checkboxBox::after {
+  content: "";
+  position: absolute;
+  inset: 3px; 
+  background-color: #B8DD05;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+//new
+
+.priceLocationWrapper {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+
+// .priceField {
+// }
+
+.toggleText {
+  font-size: 16px;
+  color: #777676;
+  margin-right: 12px;
+}
+
+// .conditionWrapper {
+// }
+
+.locationWrapper {
+  max-width: 335px;
+}
+
+// .deliveryWrapper {
+// }
+
+// .checkboxBox {
+// }
+.locationColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  flex: 1;
+  min-width: 300px;
+  max-width: 650px;
+
+  label {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+    margin-bottom: 10px;
+  }
+}
+
+.priceColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  flex: 1;
+  min-width: 300px;
+  max-width: 650px;
+}

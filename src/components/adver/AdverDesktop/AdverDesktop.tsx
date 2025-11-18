@@ -4,11 +4,11 @@ import Image from "next/image";
 import { Formik, Form, Field, FormikHelpers, useFormikContext } from "formik";
 import * as Yup from "yup";
 
-import { CommonButton } from "@/components";
-import { RadioButtonGroup } from "@/components";
+import { CommonButton, RadioButtonGroup } from "@/components";
 import { AdverPhotoList } from "@/components";
 import { ErrorMessage } from "@/components";
-import Search from "@/assets/Svg/search.svg";
+import Select from "@/assets/Svg/reshot-icon-chevron-arrow-down-circle.svg";
+import Close from "@/assets/Svg/xClose.svg";
 import radioboxIcon from "@/assets/Svg/checkboxIcon.svg";
 import checkIcon from "@/assets/Svg/checkIcon.svg";
 
@@ -23,26 +23,12 @@ import { createAdvertisement } from "@/redux/advertisement/operations";
 import { selectToken } from "@/redux/auth/selectorsAuth";
 import CityAutocomplete from "../CityAutocomplete/CityAutocomplete";
 import AdverPreviewModal from "../AdverPreviewModal/AdverPreviewModal";
-
-export type FormValues = {
-  topSubCategoryId: number | null;
-  lowSubCategoryId: number | null;
-  categoryId: number | null;
-  section: "SELL" | "BUY";
-  cityId: number | null;
-  productType: "NEW" | "USED" | "OTHER" | "";
-  price: string | null;
-  isNegotiable: boolean;
-  title: string;
-  description: string;
-  deliveryMethods: string[];
-  product: string;
-  category: string;
-  subcategory: string;
-  location: string;
-  condition: "NEW" | "USED" | "OTHER" | "";
-  delivery: string;
-};
+import CheckboxGroup from "../CheckboxGroup/CheckboxGroup";
+import { FilledInput } from "@mui/material";
+import { useRouter } from "next/navigation";
+import { AdverPhoto } from "../AdverPhotoList/AdverPhotoList";
+import SuccessCreateModal from "../modals/Success/SuccessCreateModal";
+import { FormValues } from "@/types/adverFormType";
 
 const initialValues: FormValues = {
   topSubCategoryId: null,
@@ -50,158 +36,135 @@ const initialValues: FormValues = {
   categoryId: null,
   section: "SELL",
   cityId: null,
-  productType: "",
-  price: "",
-  isNegotiable: false,
+  categoryLabel: "",
   title: "",
   description: "",
+  productType: "",
+  price: "",
+  priceType: "WITH_PRICE",
+  isNegotiable: false,
   deliveryMethods: [],
-  product: "",
-  category: "",
-  subcategory: "",
   location: "",
-  condition: "",
-  delivery: "",
 };
 
 const AuthSchema = Yup.object().shape({
-  product: Yup.string()
+  title: Yup.string()
     .trim()
-    .min(2, "Мінімум 2 символи")
-    .max(70, "Максимум 70 символів")
-    .required("Будь ласка, вкажіть назву товару"),
-  price: Yup.string()
-    .nullable()
-    .when("isNegotiable", {
-      is: false,
-      then: (s) =>
-        s
-          .required("Будь ласка, зазначте бажану ціну")
-          .matches(/^\d+$/, "Використовуйте лише цифри")
-          .test("min-1", "Мінімум 1", (v) => {
-            if (v == null || v === "") {
-              return false;
-            }
-            return Number(v) >= 1;
-          }),
-      otherwise: (s) => s.nullable().notRequired(),
-    }),
+    .min(2, "Мінімум 2 символи.")
+    .max(70, "Максимум 70 символів.")
+    .required("Вкажіть назву товару."),
 
   description: Yup.string()
     .trim()
-    .min(30, "Вкажіть щонайменше 30 символів")
-    .max(3000, "Максимум 3000 символів")
-    .required("Будь ласка, додайте опис товару"),
+    .min(30, "Мінімум 30 символів.")
+    .max(3000, "Максимум 3000 символів.")
+    .required("Будь ласка, додайте опис товару."),
+
   categoryId: Yup.number()
-    .typeError("Будь ласка, зазначте категорію товару")
-    .required("Будь ласка, зазначте категорію товару"),
-  location: Yup.string()
-    .trim()
-    .required("Будь ласка, вкажіть місцезнаходження"),
-  condition: Yup.mixed<"NEW" | "USED" | "OTHER">()
-    .oneOf(["NEW", "USED", "OTHER"], "Будь ласка, оберіть стан товару")
-    .required("Будь ласка, оберіть стан товару"),
-  // delivery: Yup.string()
-  //   .oneOf(
-  //     ["New_mail", "Ukrposhta", "Meest_Express"],
-  //     "Будь ласка, оберіть спосіб доставки"
-  //   )
-  //   .required("Будь ласка, оберіть спосіб доставки"),
-  section: Yup.mixed<"SELL" | "BUY">().oneOf(["SELL", "BUY"]).required(),
-  // productType: Yup.string()
-  //   .oneOf(["NEW", "USED", "OTHER"])
-  //   .required("Оберіть тип товару"),
+    .typeError("Будь ласка, зазначте категорію товару.")
+    .required("Будь ласка, зазначте категорію товару."),
+
+  location: Yup.string().required("Будь ласка, вкажіть місцезнаходження."),
+
+  productType: Yup.mixed()
+    .oneOf(["NEW", "USED", "OTHER"], "Будь ласка, оберіть стан товару.")
+    .required(),
+
+  section: Yup.mixed().oneOf(["SELL", "BUY"]).required(),
+
+  deliveryMethods: Yup.array()
+    .min(1, "Оберіть спосіб доставки.")
+    .required("Будь ласка, оберіть хоча б один спосіб доставки."),
+
+  price: Yup.string().when("isNegotiable", {
+    is: false,
+    then: (schema) =>
+      schema.required("Вкажіть ціну.").matches(/^\d+$/, "Тільки цифри."),
+    otherwise: (schema) => schema.notRequired(),
+  }),
 });
 
-function FormSyncers() {
-  const { values, setFieldValue } = useFormikContext<FormValues>();
-
-  //delivery -> deliveryMethods
-  useEffect(() => {
-    const methods = values.delivery ? [values.delivery] : [];
-    setFieldValue("deliveryMethods", methods, false);
-  }, [values.delivery, setFieldValue]);
-
-  //condition -> productType
-  useEffect(() => {
-    if (values.condition && values.productType !== values.condition) {
-      setFieldValue("productType", values.condition, false);
-    }
-  }, [values.condition, values.productType, setFieldValue]);
-
-  return null;
-}
-
 const AdverDesktop = () => {
-  const [images, setImages] = useState<{ file: File; url: string }[]>([]);
+  const [images, setImages] = useState<AdverPhoto[]>([]);
   const [descriptionLength, setDescriptionLength] = useState(0);
   const [categoryModalOpen, setCategoryModalOpen] = useState(false);
+  const [successOpen, setSuccessOpen] = useState(false);
 
   const dispatch = useAppDispatch();
   const token = useAppSelector(selectToken);
 
-
   const [previewOpen, setPreviewOpen] = useState(false);
-
 
   const handlePreview = (values: FormValues) => {
     console.log("Preview values:", values);
     setPreviewOpen(true);
   };
-  // всередині компонента
+
+  const router = useRouter();
+
   async function handleSubmit(
     values: FormValues,
     actions: FormikHelpers<FormValues>
   ) {
-    try {
-      if (!token) {
-        console.error("No token provided");
-        return;
-      }
+    console.log("=== SUBMIT STARTED ===");
+    console.log("FORM VALUES:", values);
+    console.log("TOKEN:", token);
+    console.log("IMAGES:", images);
 
-      // Only fields expected by backend
+    try {
+      if (!token) return;
+      console.log("token", token);
       const requestPayload = {
         topSubCategoryId: values.topSubCategoryId,
         lowSubCategoryId: values.lowSubCategoryId,
         section: values.section,
         cityId: values.cityId,
-        productType: values.productType || values.condition,
+        productType: values.productType,
         price: values.price ? Number(values.price) : null,
-        title: values.title || values.product || "",
-        isNegotiable: Boolean(values.isNegotiable),
+        title: values.title,
+        isNegotiable: values.isNegotiable,
         categoryId: values.categoryId,
         description: values.description,
-        deliveryMethods: Array.isArray(values.deliveryMethods)
-          ? values.deliveryMethods.filter(Boolean)
-          : values.delivery
-          ? [values.delivery]
-          : [],
+        deliveryMethods: values.deliveryMethods,
+        rotations: images.map((img) => img.rotation ?? 0),
       };
-
       const formData = new FormData();
 
       formData.append(
         "request",
         new Blob([JSON.stringify(requestPayload)], { type: "application/json" })
       );
-      images.forEach(({ file }) => formData.append("photos", file));
+
+      images.forEach(({ file }) => {
+        formData.append("photos", file);
+      });
 
       await dispatch(createAdvertisement(formData)).unwrap();
 
       actions.resetForm();
       setImages([]);
+
+      setSuccessOpen(true);
     } catch (e) {
       console.error("Create advert failed:", e);
     } finally {
       actions.setSubmitting(false);
     }
   }
+
   const submitRef = useRef<HTMLButtonElement>(null);
 
   return (
     <div className={styles.adWrapper}>
       <div className={styles.adHeader}>
-        <h1>Створити оголошення</h1>
+        <div>
+          <h1>Створити оголошення</h1>
+        </div>
+        <div>
+          <button onClick={() => router.push("/")}>
+            <Image src={Close} alt="close page" width={32} height={32} />
+          </button>
+        </div>
       </div>
 
       <Formik
@@ -211,18 +174,18 @@ const AdverDesktop = () => {
       >
         {({ handleBlur, touched, errors, setFieldValue, values }) => (
           <>
-            <FormSyncers />
+            {/* <FormSyncers /> */}
             <Form autoComplete="off" className={styles.styledForm}>
               {/* buy / sell */}
-              <div className={styles.linkItem}>
-                <label className={styles.linkItemText}>
+              <div className={`${styles.linkItem} ${styles.sellBox}`}>
+                <label className={`${styles.linkItemText}`}>
                   <Field
                     type="radio"
                     name="section"
                     value="BUY"
                     className={styles.radio}
                   />
-                  <span>Куплю</span>
+                  <span style={{ fontSize: "20px" }}>Куплю</span>
                 </label>
 
                 <label className={styles.linkItemText}>
@@ -232,7 +195,7 @@ const AdverDesktop = () => {
                     value="SELL"
                     className={styles.radio}
                   />
-                  <span>Продам</span>
+                  <span style={{ fontSize: "20px" }}>Продам</span>
                 </label>
               </div>
               <div className={styles.wrapperInput}>
@@ -240,6 +203,8 @@ const AdverDesktop = () => {
                   {/* фото */}
                   <AdverPhotoList images={images} setImages={setImages} />
                 </section>
+
+                {/* назва товару */}
                 <section className={styles.formWrapper}>
                   <div style={{ display: "flex", gap: "40px" }}>
                     <div>
@@ -247,14 +212,24 @@ const AdverDesktop = () => {
                       <div style={{ marginBottom: "40px" }}>
                         <label>
                           Назва товару
-                          <span style={{ color: "red", marginLeft: "4px" }}>
-                            *
-                          </span>
+                          <span style={{ color: "#C21919" }}>*</span>
                           <Field
-                            className={styles.styledField}
                             type="text"
-                            name="product"
-                            placeholder="Вкажіть назву товару"
+                            name="title"
+                            placeholder="Наприклад, жіноча сукня 32 розміру грн."
+                            className={`
+                              ${styles.styledField}
+                              ${
+                                touched.title && errors.title
+                                  ? styles.errorBorder
+                                  : ""
+                              }
+                              ${
+                                touched.title && !errors.title
+                                  ? styles.successBorder
+                                  : ""
+                              }
+                            `}
                             onBlur={(
                               e: React.ChangeEvent<HTMLInputElement>
                             ) => {
@@ -268,37 +243,50 @@ const AdverDesktop = () => {
                               e: React.ChangeEvent<HTMLInputElement>
                             ) => {
                               const v = e.target.value;
-                              setFieldValue("product", v);
+                              setFieldValue("title", v);
                               setDescriptionLength(
                                 v.length > 70 ? 70 : v.length
                               );
                             }}
                           />
                           <div className={styles.textareaText}>
-                            <p>Введіть від 16 до 70 символів</p>
-                            <p>{Math.min(descriptionLength, 70)}/70</p>
+                            <p className={styles.helperText}>
+                              Введіть від 16 до 70 символів
+                            </p>
+                            <p className={styles.helperText}>
+                              {Math.min(descriptionLength, 70)}/70
+                            </p>
                           </div>
                         </label>
                         <ErrorMessage
-                          touched={touched.product}
-                          error={errors.product}
+                          touched={touched.title}
+                          error={errors.title}
                           successMessage="Успішно введено назву товару"
                         />
                       </div>
                       {/* Категорія */}
                       <div className={styles.fieldWrapper}>
                         <label>
-                          Категорія
-                          <span style={{ color: "red", marginLeft: "4px" }}>
-                            *
-                          </span>
+                          Категорія<span style={{ color: "#C21919" }}>*</span>
                           <Field
-                            className={styles.styledField}
                             type="text"
-                            name="category"
-                            value={values.category}
+                            name="categoryId"
+                            value={values.categoryLabel}
                             readOnly
-                            placeholder="зазначте категорію"
+                            placeholder="Оберіть категорію товару "
+                            className={`
+                              ${styles.styledField}
+                              ${
+                                touched.categoryId && errors.categoryId
+                                  ? styles.errorBorder
+                                  : ""
+                              }
+                              ${
+                                touched.categoryId && !errors.categoryId
+                                  ? styles.successBorder
+                                  : ""
+                              }
+                            `}
                             onBlur={handleBlur}
                           />
                           <button
@@ -308,8 +296,8 @@ const AdverDesktop = () => {
                           >
                             <Image
                               priority
-                              src={Search}
-                              alt="icon search"
+                              src={Select}
+                              alt="icon select"
                               width={24}
                               height={24}
                             />
@@ -325,16 +313,26 @@ const AdverDesktop = () => {
                     {/* Опис */}
                     <div>
                       <label>
-                        Опис товару
-                        <span style={{ color: "red", marginLeft: "4px" }}>
-                          *
-                        </span>
+                        Опис товару<span style={{ color: "#C21919" }}>*</span>
                         <Field
                           as="textarea"
                           name="description"
                           rows="4"
                           cols="50"
-                          className={`${styles.styledField} ${styles.styledTexterea}`}
+                          className={`
+                            ${styles.styledField} 
+                            ${styles.styledTexterea}
+                            ${
+                              touched.description && errors.description
+                                ? styles.errorBorder
+                                : ""
+                            }
+                            ${
+                              touched.description && !errors.description
+                                ? styles.successBorder
+                                : ""
+                            }
+                          `}
                           onChange={(
                             e: React.ChangeEvent<HTMLTextAreaElement>
                           ) => {
@@ -342,8 +340,12 @@ const AdverDesktop = () => {
                           }}
                         />
                         <div className={styles.textareaText}>
-                          <p>Вкажіть щонайменше 30 символів</p>
-                          <p>{(values.description || "").length}/3000</p>
+                          <p className={styles.helperText}>
+                            Вкажіть щонайменше 30 символів
+                          </p>
+                          <p className={styles.helperText}>
+                            {(values.description || "").length}/3000
+                          </p>
                         </div>
                       </label>
                       <ErrorMessage
@@ -356,24 +358,77 @@ const AdverDesktop = () => {
                 </section>
 
                 <section className={styles.formWrapper}>
-                  {/* Ціна */}
-                  <div style={{ display: "flex", gap: "40px" }}>
-                    <div style={{}}>
+                  <div className={styles.priceLocationWrapper}>
+                    {/* Ліва колонка */}
+                    <div className={styles.priceColumn}>
+                      {/* "Ціна" */}
+                      <div className={styles.linkItem}>
+                        <label className={styles.linkItemText}>
+                          <Field
+                            type="radio"
+                            name="priceType"
+                            value="price"
+                            className={styles.radio}
+                          />
+                          <span>Ціна</span>
+                        </label>
+
+                        <label className={styles.linkItemText}>
+                          <Field
+                            type="radio"
+                            name="priceType"
+                            value="free"
+                            className={styles.radio}
+                          />
+                          <span>Безкоштовно</span>
+                        </label>
+
+                        <div className={styles.toggleWrapper}>
+                          <label className={styles.linkItemText}>
+                            <span className={styles.linkItemText}>
+                              Договірна
+                            </span>
+
+                            <div>
+                              <ToggleSwitch
+                                name="isNegotiable"
+                                checked={values.isNegotiable}
+                                onChange={(checked) => {
+                                  setFieldValue("isNegotiable", checked);
+                                  if (checked) {
+                                    setFieldValue("price", "");
+                                  }
+                                }}
+                              />
+                            </div>
+                          </label>
+                        </div>
+                      </div>
                       <label>
-                        Ціна
-                        <span style={{ color: "red", marginLeft: "4px" }}>
-                          *
-                        </span>
                         <Field
-                          className={styles.styledField}
                           type="text"
                           name="price"
-                          placeholder="Вкажіть бажану ціну"
+                          placeholder="Вартість за 1 шт. в грн."
+                          className={`
+                              ${styles.styledField}
+                              ${
+                                touched.price && errors.price
+                                  ? styles.errorBorder
+                                  : ""
+                              }
+                              ${
+                                touched.price && !errors.price
+                                  ? styles.successBorder
+                                  : ""
+                              }
+                            `}
                           onBlur={handleBlur}
-                          disabled={values.isNegotiable}
                         />
                         <div className={styles.textareaText}>
-                          <p>Використовуйте лише цифри</p>
+                          <p className={styles.helperText}>
+                            Використовуйте лише цифри
+                          </p>
+                          <p>грн.</p>
                         </div>
                       </label>
                       <ErrorMessage
@@ -382,24 +437,10 @@ const AdverDesktop = () => {
                         successMessage="Ціна успішно додана"
                       />
 
-                      <div className={styles.toggleWrapper}>
-                        <label className={styles.toggleLabel}>
-                          <span className={styles.toggleText}>Договірна</span>
-                          <ToggleSwitch
-                            name="isNegotiable"
-                            checked={values.isNegotiable}
-                            onChange={(checked) => {
-                              setFieldValue("isNegotiable", checked);
-                              if (checked) {
-                                setFieldValue("price", "");
-                              }
-                            }}
-                          />
-                        </label>
-                      </div>
-                      <div>
+                      {/* Стан товару */}
+                      <div className={styles.conditionWrapper}>
                         <RadioButtonGroup
-                          name="condition"
+                          name="productType"
                           title="Стан товару"
                           options={[
                             { value: "NEW", label: "Нове" },
@@ -408,46 +449,72 @@ const AdverDesktop = () => {
                           ]}
                           groupClass={styles.radioboxGroup}
                           labelClass={`${styles.radioboxLabel} ${styles.check}`}
-                          inputClass={`${styles.visuallyHidden} ${styles.radioboxInput}`}
+                          inputClass={`${styles.visuallyHidden} ${
+                            styles.radioboxInput
+                          } ${
+                            touched.productType && errors.productType
+                              ? styles.errorBorder
+                              : ""
+                          }
+                              ${
+                                touched.productType && !errors.productType
+                                  ? styles.successBorder
+                                  : ""
+                              }`}
                           radioBoxClass={styles.radioBox}
                           radioUncheckedClass={styles.radioUnchecked}
                           radioCheckedClass={styles.radioChecked}
                           uncheckedIcon={radioboxIcon}
                           checkedIcon={checkIcon}
+                          onChange={(value) =>
+                            setFieldValue("productType", value)
+                          }
                         />
                         <ErrorMessage
-                          touched={touched.condition}
-                          error={errors.condition}
+                          touched={touched.productType}
+                          error={errors.productType}
                           successMessage="Стан товару успішно додано"
                         />
                       </div>
                     </div>
 
-                    {/* Місцезнаходження */}
-                    <div style={{}}>
-                      <div>
-                        <label>
-                          Місцезнаходження
-                          <span style={{ color: "red", marginLeft: "4px" }}>
-                            *
-                          </span>
-                          <CityAutocomplete
-                            nameField="location"
-                            idField="cityId"
-                            placeholder="введіть місто (мін. 3 символи)"
-                            minLength={3}
-                          />
-                        </label>
-                      </div>
+                    {/* Права колонка */}
+                    <div className={styles.locationColumn}>
+                      {/* Місцезнаходження */}
+                      <label className={styles.linkItemText}>
+                        Місцезнаходження
+                        <span style={{ color: "#C21919" }}>*</span>
+                      </label>
+                      <CityAutocomplete
+                        styledFieldClass={`
+                              ${styles.styledField}
+                              ${
+                                touched.location && errors.location
+                                  ? styles.errorBorder
+                                  : ""
+                              }
+                              ${
+                                touched.location && !errors.location
+                                  ? styles.successBorder
+                                  : ""
+                              }
+                            `}
+                        nameField="location"
+                        idField="cityId"
+                        placeholder="введіть місто (мін. 3 символи)"
+                        minLength={3}
+                      />
+
                       <ErrorMessage
                         touched={touched.location}
                         error={errors.location}
                         successMessage="Місто успішно додано"
                       />
 
-                      <div style={{ marginTop: "85px" }}>
-                        <RadioButtonGroup
-                          name="delivery"
+                      {/* Спосіб доставки */}
+                      <div className={styles.deliveryWrapper}>
+                        <CheckboxGroup
+                          name="deliveryMethods"
                           title="Спосіб доставки"
                           options={[
                             { value: "NOVA_POST", label: "Нова пошта" },
@@ -455,18 +522,14 @@ const AdverDesktop = () => {
                             { value: "Meest_Express", label: "Meest Express" },
                             { value: "Other", label: "Інше" },
                           ]}
-                          groupClass={styles.radioboxGroup}
-                          labelClass={`${styles.radioboxLabel} ${styles.check}`}
-                          inputClass={`${styles.visuallyHidden} ${styles.radioboxInput}`}
-                          radioBoxClass={styles.radioBox}
-                          radioUncheckedClass={styles.radioUnchecked}
-                          radioCheckedClass={styles.radioChecked}
-                          uncheckedIcon={radioboxIcon}
-                          checkedIcon={checkIcon}
+                          groupClass={styles.checkboxGroup}
+                          labelClass={styles.checkboxLabel}
+                          inputClass={styles.checkboxInput}
+                          radioBoxClass={styles.checkboxBox}
                         />
                         <ErrorMessage
-                          touched={touched.delivery}
-                          error={errors.delivery}
+                          touched={touched.deliveryMethods}
+                          error={errors.deliveryMethods}
                           successMessage="Спосіб доставки успішно додано"
                         />
                       </div>
@@ -475,6 +538,7 @@ const AdverDesktop = () => {
                 </section>
               </div>
 
+              {/* попередній перегляд */}
               <div className={styles.buttonWrapper}>
                 <CommonButton
                   type="button"
@@ -489,9 +553,11 @@ const AdverDesktop = () => {
                 />
               </div>
               {/* прихована кнопка сабміту */}
-              <button type="submit" ref={submitRef} style={{ display: "none" }}>
-                Сабміт
-              </button>
+              <button
+                type="submit"
+                ref={submitRef}
+                style={{ display: "none" }}
+              ></button>
             </Form>
             {categoryModalOpen && (
               <CategoryTreeModal
@@ -501,16 +567,15 @@ const AdverDesktop = () => {
                   categoryId,
                   topSubCategoryId,
                   lowSubCategoryId,
-                  label,
+                  categoryLabel,
                 }) => {
                   setFieldValue("categoryId", categoryId);
                   setFieldValue("topSubCategoryId", topSubCategoryId);
                   setFieldValue("lowSubCategoryId", lowSubCategoryId);
-                  setFieldValue("category", label);
+                  setFieldValue("categoryLabel", categoryLabel);
                 }}
               />
             )}
-
             {previewOpen && (
               <AdverPreviewModal
                 open={previewOpen}
@@ -523,6 +588,8 @@ const AdverDesktop = () => {
                 }}
               />
             )}
+            {/* успіх при створенні */}
+            {successOpen && <SuccessCreateModal />}
           </>
         )}
       </Formik>

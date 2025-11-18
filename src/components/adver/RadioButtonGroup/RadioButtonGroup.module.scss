@@ -1,22 +1,83 @@
-
-.wrapperClass{
-
+.wrapperClass {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
-.groupClass{
 
+.groupClass {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 24px;
 }
-.labelClass{
-font-size: var(--large-body-medium);
-}
-.radioBoxClass{
 
-}
-.inputClass{
+.labelClass {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: var(--large-body-medium);
+  font-weight: 400;
+  color: var(--label);
+  transition: color 0.2s ease;
 
+  &:hover {
+    color: var(--button);
+  }
 }
-.radioUncheckedClass{
 
-} 
-.radioLabelClass{
-  
+/* Радіо-кнопка контейнер (коло) */
+.radioBoxClass {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 28px;
+  height: 28px;
+  border: 1px solid rgba(27, 27, 26, 0.4);
+  border-radius: 50%;
+  background-color: transparent;
+  transition: all 0.2s ease;
 }
+
+/* При наведенні — м’яке підсвічування */
+.labelClass:hover .radioBoxClass {
+  border-color: var(--button);
+}
+
+/* Сам <input> прихований, але фокус ловить */
+.inputClass {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+/* Внутрішнє коло — стан “unchecked” */
+.radioUncheckedClass {
+  display: block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background-color: transparent;
+}
+
+/* Внутрішнє коло — стан “checked” */
+.radioCheckedClass {
+  display: block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background-color: var(--button);
+  box-shadow: 0 0 0 3px #fff inset;
+}
+
+/* Підпис */
+.radioLabelClass {
+  font-size: var(--large-body-medium);
+  color: var(--label);
+}
+
+/* Адаптивніст*
