@@ -2,10 +2,10 @@
 
 // import { FC } from "react";
 import styles from "./SearchSuggest.module.scss";
-import Link from 'next/link';
-import Image from 'next/image';
-import { ItemSearchType } from '@/types/listItemsForSearch';
-import imgSearchEmpty from '@/assets/Svg/searchEmpty.svg';
+import { SuggestItem } from './SuggestItem';
+import { SuggestCatItem } from './SuggestCatItem';
+import { SuggestEmpty } from './SuggestEmpty';
+import { ItemSearchType, ItemSaggestCat } from '@/types/listItemsForSearch';
 import CategoriesList from "@/assets/category.json";
 
 type SearchSuggestProps = {
@@ -15,24 +15,6 @@ type SearchSuggestProps = {
 		BUY: ItemSearchType[];
 	}
 };
-
-type ItemSaggestProps = {
-	item: ItemSearchType;
-	word: string;
-	section: string;
-}
-
-type ItemSaggestCat = {
-	categoryId: number;
-	categoryName: string;
-	categoryUrl: string;
-}
-
-type ItemSaggestCatProps = {
-	item: ItemSaggestCat;
-	word: string;
-	section: string;
-}
 
 const SearchSuggest = (props: SearchSuggestProps): JSX.Element => {
 	// console.log('props.searchArr', props.searchArr);
@@ -123,79 +105,10 @@ const SearchSuggest = (props: SearchSuggestProps): JSX.Element => {
 								</ul>
 							</section>}
 					</>
-					: <SuggestEmty />
+					: <SuggestEmpty />
 			}
 		</div>
 	)
 }
-
-const SuggestItem = (props: ItemSaggestProps): JSX.Element => {
-
-	const {
-		categoryId,
-		categoryName,
-		count,
-		topCategoryId,
-		topCategoryName,
-	} = props.item;
-
-	const word = props.word;
-
-	return (
-		<li key={topCategoryId} className={styles.searchSuggestItem}>
-			<Link href={`/catalogy?keyword=${word}&categoryId=${categoryId}&topSubCategoryId=${topCategoryId}${props.section === "SELL" ? "" : "&section=BUY"}`}>
-				<span className={styles.searchLinkItem}>{word}</span>
-				{/* <span className={styles.searchCount}>{count}</span> */}
-				<div className={styles.searchItemCategory}>
-					{categoryName} / <strong>{topCategoryName}</strong>
-					<span className={styles.searchCount}>{count}</span>
-				</div>
-
-			</Link>
-		</li>
-	)
-}
-
-const SuggestCatItem = (props: ItemSaggestCatProps): JSX.Element => {
-
-	const {
-		categoryId,
-		categoryName,
-		categoryUrl
-	} = props.item;
-
-	const word = props.word;
-
-	return (
-		<li key={categoryId} className={styles.searchSuggestItem}>
-			<Link className={styles.searchLinkCatLink} href={`/catalogy?keyword=${word}&categoryId=${categoryId}${props.section === "SELL" ? "" : "&section=BUY"}`}>
-				<Image
-					alt=""
-					src={categoryUrl}
-					width={24}
-					height={24}
-					className={styles.searchLinkCatImg}
-				/>
-				<span className={styles.searchLinkCatTitle}>{categoryName}</span>
-			</Link>
-		</li>
-	)
-}
-
-const SuggestEmty = (): JSX.Element => {
-	return (
-		<div className={styles.searchEmptyWrapper}>
-			<div className={styles.searchEmptyTitle}>Нажаль ми не знайшли жодного оголошення</div>
-			<Image
-				src={imgSearchEmpty}
-				sizes="(max-width: 480px) 144px, 175px, (max-width: 2600px) 288px, 350px"
-				// width={288}
-				// height={350}
-				alt="не має оголошення"
-			/>
-		</div>
-	);
-}
-
 
 export default SearchSuggest;
