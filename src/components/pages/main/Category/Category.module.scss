@@ -27,6 +27,7 @@
 
 .title {
 	font-weight: 400;
+	color: var(----label);
 	font-size: var(--f-size-h4);
 
 	@media (min-width: 768px) {

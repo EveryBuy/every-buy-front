@@ -106,4 +106,10 @@
 	&:hover {
 		transform: scale(1.1);
 	}
+
+	@include media-min($breakpoint-tablet) {
+		box-sizing: border-box;
+		width: 88px;
+		height: 34px;
+	}
 }

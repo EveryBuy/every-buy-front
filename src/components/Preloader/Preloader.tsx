@@ -9,7 +9,7 @@ export default function Preloader() {
 			<div className={styles.shadow}></div>
 			<div className={styles.shadow}></div>
 			<div className={styles.shadow}></div>
-			<span>Loading</span>
+			{/* <span>Loading</span> */}
 		</div>
 	);
 }

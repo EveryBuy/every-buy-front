@@ -31,11 +31,21 @@ export const CommonSectionSelector: FC<Props> = ({ section, setSection }) => {
 		<section className={styles.sectionContainer}>
 			<ul className={styles.buttonList}>
 				<li>
-					<button onClick={handleBuy}>Купують </button>
+					<button
+						onClick={handleBuy}
+						className={section === "BUY" ? "" : styles.titleToggle}
+					>
+						Купують
+					</button>
 					{section === "BUY" && <div className={styles.toggle}></div>}
 				</li>
 				<li>
-					<button onClick={handleSell}>Продають</button>
+					<button
+						onClick={handleSell}
+						className={section === "SELL" ? "" : styles.titleToggle}
+					>
+						Продають
+					</button>
 					{section === "SELL" && <div className={styles.toggle}></div>}
 				</li>
 			</ul>

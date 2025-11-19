@@ -19,6 +19,12 @@ export type ItemSearchType = {
 	topCategoryName: string;
 }
 
+export type ItemSaggestCat = {
+	categoryId: number;
+	categoryName: string;
+	categoryUrl: string;
+}
+
 export type Advertisement = {
 	advertisementId: number,
 	title: string,

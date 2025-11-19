@@ -20,8 +20,8 @@ export default function Loading() {
 			<Image
 				src="/logo-loader.gif"
 				alt="Loading..."
-				width={140}
-				height={77}
+				width={300}
+				height={216}
 				unoptimized
 				priority
 			/>

@@ -10,5 +10,12 @@
 
 	@media (min-width: 1024px) {
 		padding-top: 40px;
+
+		position: relative;
+		width: calc(100vw - 10px);
+		left: 50%;
+		right: 50%;
+		margin-left: -50vw;
+		margin-right: -50vw;
 	}
 }

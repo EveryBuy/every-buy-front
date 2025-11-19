@@ -10,6 +10,7 @@
 	justify-content: space-between;
 	align-items: flex-start;
 	font-size: 16px;
+	// color: #777676;
 
 	@include media-min($breakpoint-mobile) {
 		font-size: 24px;
@@ -22,6 +23,19 @@
 
 .buttonList li {
 	position: relative;
+
+	button.titleToggle {
+		color: #777676;
+	}
+
+	button {
+		letter-spacing: 0.05em;
+		transition: transform 0.35 ease-in-out;
+	}
+
+	button:hover {
+		transform: scale(1.05);
+	}
 }
 
 .buttonList li:first-child {
