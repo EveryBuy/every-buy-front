@@ -116,22 +116,23 @@
 	min-height: 30px;
 	padding: 8px 16px;
 	cursor: pointer;
+
+	.searchItemCategory strong,
+	.searchLinkCatTitle {
+		transition: all 0.2s ease;
+	}
 }
 
-.searchSuggestItem a:hover {
-	// background-color: #f5ffb6; // #d4d4d4
-	// transform: scale(1.05) translateX(15px);
-	// font-size: 115%;
 
+.searchSuggestItem a:hover {
+	// background-color: #f5ffb6;
 
 	.searchItemCategory strong {
 		// text-decoration: underline solid var(--button) 2px;
 		font-size: 110%;
-
 	}
 
 	.searchLinkCatTitle {
-		// text-decoration: underline solid #E3F19B 2px;
 		// color: var(--button);
 		font-size: 105%;
 		font-weight: 700;
