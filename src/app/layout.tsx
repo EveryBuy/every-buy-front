@@ -11,7 +11,7 @@ import theme from "../styles/mui/theme";
 import "./globals.scss";
 import AuthUpdater from "./(client)/(auth)/authUpdater";
 // import dynamic from "next/dynamic";
-import RehydrationGate from "@/components/auth/RehydrationGate/RehydrationGate";
+// import RehydrationGate from "@/components/auth/RehydrationGate/RehydrationGate";
 import { Footer, Header } from "@/components";
 import Message from "@/components/ui/Message/Message";
 
@@ -36,12 +36,12 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
           <Providers>
             <ThemeProvider theme={theme}>
               <Header />
-              <RehydrationGate>
+              {/* <RehydrationGate> */}
                 <AuthUpdater>
                   {/* <AuthProvider> */}
                   <main className="container">{children}</main>
                 </AuthUpdater>
-              </RehydrationGate>
+              {/* </RehydrationGate> */}
               <Footer />
               <Message />
               <ToastContainer />
