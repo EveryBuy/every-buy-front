@@ -29,6 +29,7 @@ import { useRouter } from "next/navigation";
 import { AdverPhoto } from "../AdverPhotoList/AdverPhotoList";
 import SuccessCreateModal from "../modals/Success/SuccessCreateModal";
 import { FormValues } from "@/types/adverFormType";
+import Spinner from "@/components/ui/CommonSpiner/Spinner";
 
 const initialValues: FormValues = {
   topSubCategoryId: null,
@@ -111,7 +112,6 @@ const AdverDesktop = () => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-
   const handlePreview = (values: FormValues) => {
     console.log("Preview values:", values);
     if (isLoading) return;
@@ -124,7 +124,7 @@ const AdverDesktop = () => {
     values: FormValues,
     actions: FormikHelpers<FormValues>
   ) {
-    setIsLoading(true);   
+    setIsLoading(true);
 
     try {
       // if (!token) return;
@@ -169,7 +169,7 @@ const AdverDesktop = () => {
   }
 
   const submitRef = useRef<HTMLButtonElement>(null);
-console.log('isLoading', isLoading);
+  console.log("isLoading", isLoading);
   return (
     <div className={styles.adWrapper}>
       <div className={styles.adHeader}>
@@ -559,16 +559,18 @@ console.log('isLoading', isLoading);
                 <CommonButton
                   type="button"
                   title="Попередній перегляд"
-                  disabled={isLoading}  
+                  disabled={isLoading}
                   className={styles.adverButton}
                   onClick={() => handlePreview(values)}
                 />
                 <CommonButton
                   type="submit"
-                  title={isLoading ? "Публікуємо..." : "Опублікувати"}
-                  disabled={isLoading}       
+                  title={isLoading ? "Публікуємо" : "Опублікувати"}
+                  disabled={isLoading}
                   className={`${styles.adverButton} ${styles.adverButtonAd}`}
-                />
+                >
+                  {isLoading && <Spinner />}
+                </CommonButton>
               </div>
               {/* прихована кнопка сабміту */}
               <button

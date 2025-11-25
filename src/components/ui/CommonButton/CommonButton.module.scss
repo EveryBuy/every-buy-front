@@ -44,3 +44,8 @@
   border: 1px solid var(--label);
   box-shadow: inset 0 4px 4px 0 rgba(0, 0, 0, 0.25);
 }
+
+.childrenWrap {
+  display: flex;
+  align-items: center;
+}

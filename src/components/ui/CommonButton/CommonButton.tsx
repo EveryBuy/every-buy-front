@@ -17,7 +17,8 @@ const CommonButton: FC<CommonButtonProps> = ({
       onClick={onClick}
     >
       {title}
-      {children}
+      {/* {children} */}
+      {children && <span className={styles.childrenWrap}>{children}</span>}
     </button>
   );
 };
