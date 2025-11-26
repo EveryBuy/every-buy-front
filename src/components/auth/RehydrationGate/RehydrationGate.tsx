@@ -1,34 +1,34 @@
-"use client";
+// "use client";
 
-import { ReactNode, useEffect, useState } from "react";
-import { persistor, useAppSelector } from "@/redux/store";
-import { selectRehydrated } from "@/redux/auth/selectorsAuth";
+// import { ReactNode, useEffect, useState } from "react";
+// import { persistor, useAppSelector } from "@/redux/store";
+// import { selectRehydrated } from "@/redux/auth/selectorsAuth";
 
-export default function RehydrationGate({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const [rehydrated, setRehydrated] = useState(false);
+// export default function RehydrationGate({
+//   children,
+// }: {
+//   children: React.ReactNode;
+// }) {
+//   const [rehydrated, setRehydrated] = useState(false);
 
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setRehydrated(true); // fallback: не чекаємо нескінченно
-    }, 100);
+//   useEffect(() => {
+//     const timeout = setTimeout(() => {
+//       setRehydrated(true);
+//     }, 100);
 
-    const unsub = persistor.subscribe(() => {
-      const state = persistor.getState();
-      if (state.bootstrapped) {
-        clearTimeout(timeout);
-        setRehydrated(true);
-      }
-    });
+//     const unsub = persistor.subscribe(() => {
+//       const state = persistor.getState();
+//       if (state.bootstrapped) {
+//         clearTimeout(timeout);
+//         setRehydrated(true);
+//       }
+//     });
 
-    return () => {
-      clearTimeout(timeout);
-      unsub();
-    };
-  }, []);
+//     return () => {
+//       clearTimeout(timeout);
+//       unsub();
+//     };
+//   }, []);
 
-  return <>{children}</>;
-}
+//   return <>{children}</>;
+// }

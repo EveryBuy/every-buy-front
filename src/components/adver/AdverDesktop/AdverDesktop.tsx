@@ -29,6 +29,7 @@ import { useRouter } from "next/navigation";
 import { AdverPhoto } from "../AdverPhotoList/AdverPhotoList";
 import SuccessCreateModal from "../modals/Success/SuccessCreateModal";
 import { FormValues } from "@/types/adverFormType";
+import Spinner from "@/components/ui/CommonSpiner/Spinner";
 
 const initialValues: FormValues = {
   topSubCategoryId: null,
@@ -50,15 +51,23 @@ const initialValues: FormValues = {
 const AuthSchema = Yup.object().shape({
   title: Yup.string()
     .trim()
-    .min(2, "Мінімум 2 символи.")
-    .max(70, "Максимум 70 символів.")
-    .required("Вкажіть назву товару."),
+    .required("Вкажіть назву товару.")
+    .test(
+      "min-2",
+      "Занадто коротка назва. Мінімум 2 символи.",
+      (value) => (value || "").length >= 2
+    )
+    .max(70, "Максимум 70 символів."),
 
   description: Yup.string()
     .trim()
-    .min(30, "Мінімум 30 символів.")
-    .max(3000, "Максимум 3000 символів.")
-    .required("Будь ласка, додайте опис товару."),
+    .required("Будь ласка, додайте опис товару.")
+    .test(
+      "min-30",
+      "Опис занадто короткий — мінімум 30 символів.",
+      (value) => (value || "").length >= 30
+    )
+    .max(3000, "Максимум 3000 символів."),
 
   categoryId: Yup.number()
     .typeError("Будь ласка, зазначте категорію товару.")
@@ -68,7 +77,7 @@ const AuthSchema = Yup.object().shape({
 
   productType: Yup.mixed()
     .oneOf(["NEW", "USED", "OTHER"], "Будь ласка, оберіть стан товару.")
-    .required(),
+    .required("Будь ласка, оберіть стан товару."),
 
   section: Yup.mixed().oneOf(["SELL", "BUY"]).required(),
 
@@ -79,7 +88,14 @@ const AuthSchema = Yup.object().shape({
   price: Yup.string().when("isNegotiable", {
     is: false,
     then: (schema) =>
-      schema.required("Вкажіть ціну.").matches(/^\d+$/, "Тільки цифри."),
+      schema
+        .required("Вкажіть ціну.")
+        .matches(/^\d+$/, "Можна вводити тільки цифри.")
+        .test(
+          "not-zero",
+          "Ціна не може дорівнювати 0.",
+          (value) => value !== "0"
+        ),
     otherwise: (schema) => schema.notRequired(),
   }),
 });
@@ -94,9 +110,11 @@ const AdverDesktop = () => {
   const token = useAppSelector(selectToken);
 
   const [previewOpen, setPreviewOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handlePreview = (values: FormValues) => {
     console.log("Preview values:", values);
+    if (isLoading) return;
     setPreviewOpen(true);
   };
 
@@ -106,14 +124,11 @@ const AdverDesktop = () => {
     values: FormValues,
     actions: FormikHelpers<FormValues>
   ) {
-    console.log("=== SUBMIT STARTED ===");
-    console.log("FORM VALUES:", values);
-    console.log("TOKEN:", token);
-    console.log("IMAGES:", images);
+    setIsLoading(true);
 
     try {
-      if (!token) return;
-      console.log("token", token);
+      // if (!token) return;
+      // console.log("token", token);
       const requestPayload = {
         topSubCategoryId: values.topSubCategoryId,
         lowSubCategoryId: values.lowSubCategoryId,
@@ -149,11 +164,12 @@ const AdverDesktop = () => {
       console.error("Create advert failed:", e);
     } finally {
       actions.setSubmitting(false);
+      setIsLoading(false);
     }
   }
 
   const submitRef = useRef<HTMLButtonElement>(null);
-
+  console.log("isLoading", isLoading);
   return (
     <div className={styles.adWrapper}>
       <div className={styles.adHeader}>
@@ -543,14 +559,18 @@ const AdverDesktop = () => {
                 <CommonButton
                   type="button"
                   title="Попередній перегляд"
+                  disabled={isLoading}
                   className={styles.adverButton}
                   onClick={() => handlePreview(values)}
                 />
                 <CommonButton
                   type="submit"
-                  title="Опублікувати"
+                  title={isLoading ? "Публікуємо" : "Опублікувати"}
+                  disabled={isLoading}
                   className={`${styles.adverButton} ${styles.adverButtonAd}`}
-                />
+                >
+                  {isLoading && <Spinner />}
+                </CommonButton>
               </div>
               {/* прихована кнопка сабміту */}
               <button

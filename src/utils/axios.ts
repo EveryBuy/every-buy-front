@@ -1,4 +1,3 @@
-import { persistor } from "@/redux/store";
 import axios from "axios";
 import axiosRetry from "axios-retry";
 
@@ -20,7 +19,6 @@ export const clearHeaderAuthToken = () => {
   delete API.defaults.headers.common["Authorization"];
 };
 
-
 API.interceptors.response.use(
   (response) => response,
   (error) => {
@@ -30,7 +28,8 @@ API.interceptors.response.use(
       clearHeaderAuthToken();
 
       if (typeof window !== "undefined") {
-        window.location.href = '/login';
+        window.dispatchEvent(new Event("force-logout"));
+        window.location.href = "/login";
         // useRouter().push("/login"); // якщо через хук
       }
     }
@@ -39,15 +38,14 @@ API.interceptors.response.use(
       console.warn("📳 Строк дії токену скінчився, автори зуйтесь заново");
 
       clearHeaderAuthToken();
-      persistor.purge();
 
       if (typeof window !== "undefined") {
-        window.location.href = '/login';
+        window.dispatchEvent(new Event("force-logout"));
+        window.location.href = "/login";
         // useRouter().push("/login"); // якщо через хук
       }
     }
 
     return Promise.reject(error);
-
   }
-)
+);

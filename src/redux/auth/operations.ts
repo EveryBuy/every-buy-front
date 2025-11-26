@@ -12,7 +12,8 @@ import {
   ChangeEmailData,
 } from "@/types/stateTypes";
 import { API } from "@/utils/axios";
-import { persistor, RootState } from "../store";
+import { PURGE } from "redux-persist";
+import { RootState } from "../store";
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -74,7 +75,8 @@ export const login = createAsyncThunk(
 export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
   try {
     clearHeaderAuthToken();
-    persistor.purge();
+    // persistor.purge();
+    thunkAPI.dispatch({ type: PURGE });  
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
   }
