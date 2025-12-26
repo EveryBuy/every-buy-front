@@ -1,0 +1,87 @@
+.slider {
+  width: 100%;
+  max-width: 648px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* ---------- main image ---------- */
+.mainImgWrapper {
+  width: 100%;
+  height: 440px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #f3f3f3;
+  touch-action: pan-y;
+}
+
+.mainImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.25s ease;
+}
+
+/* ---------- thumbs ---------- */
+.thumbsContainer {
+  width: 100%;
+  max-width: 648px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow: hidden;
+}
+
+.thumbs {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  max-width: 100%;
+}
+
+.thumbWrapper {
+  flex: 0 0 auto;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+
+  &.active {
+    border-color: #b6d8ff;
+  }
+}
+
+.thumb {
+  object-fit: cover;
+}
+
+/* ---------- arrows ---------- */
+.thumbArrow {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  color: rgba(0, 0, 0, 0.75);
+  font-size: 22px;
+  cursor: pointer;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.1);
+  }
+}
+
+.mainImgEmpty {
+  width: 648px;
+  height: 608px;
+  border-radius: 16px;
+  background: #f3f3f3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #777;
+}

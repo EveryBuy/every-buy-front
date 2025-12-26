@@ -3,6 +3,9 @@ import Image from "next/image";
 import styles from "./AdverPreviewModal.module.scss";
 import type { FormValues } from "@/types/adverFormType";
 import { Backdrop } from "@mui/material";
+import AdverPreviewSlider from "../AdverPreviewSlider/AdverPreviewSlider";
+import { useAppSelector } from "@/redux/store";
+import { selectUser } from "@/redux/auth/selectorsAuth";
 
 type Props = {
   open: boolean;
@@ -19,34 +22,41 @@ const AdverPreviewModal: React.FC<Props> = ({
   images,
   onPublish,
 }) => {
+  const user = useAppSelector(selectUser);
+  const userPictureUrl = user?.userPhotoUrl || "/images/user.png";
+  const sectionLabelMap: Record<string, string> = {
+    SELL: "Продаж",
+    BUY: "Купівля",
+  };
 
+  console.log("values", values);
   if (!open) return null;
   return (
-     <Backdrop
+    <Backdrop
       open={open}
       onClick={onClose}
       sx={{
         zIndex: (theme) => theme.zIndex.drawer + 1,
-        background: "rgba(0,0,0,0.14)"
+        background: "rgba(0,0,0,0.14)",
+        width: "100%",
       }}
     >
       <div
         className={styles.previewModal}
         style={{
-          maxWidth: "1080px",
-          width: "98vw",
+          maxWidth: "1600px",
+          width: "96vw",
+          height: "94vh",
           maxHeight: "96vh",
-          minHeight: "360px",
           borderRadius: "22px",
           background: "#fff",
           boxShadow: "0 8px 44px #0002",
-          overflow: "auto",
           display: "flex",
           flexDirection: "column",
           padding: "36px 40px 24px 40px",
           position: "relative",
         }}
-        onClick={e => e.stopPropagation()}
+        onClick={(e) => e.stopPropagation()}
       >
         <button
           className={styles.closeButton}
@@ -59,121 +69,100 @@ const AdverPreviewModal: React.FC<Props> = ({
             zIndex: 2,
             background: "transparent",
             border: "none",
-            cursor: "pointer"
+            cursor: "pointer",
           }}
         >
           <svg width={22} height={22} viewBox="0 0 22 22">
-            <line x1="5" y1="5" x2="17" y2="17" stroke="#333" strokeWidth={2}/>
-            <line x1="17" y1="5" x2="5" y2="17" stroke="#333" strokeWidth={2}/>
+            <line x1="5" y1="5" x2="17" y2="17" stroke="#333" strokeWidth={2} />
+            <line x1="17" y1="5" x2="5" y2="17" stroke="#333" strokeWidth={2} />
           </svg>
         </button>
-      <div className={styles.container}>
-        <div className={styles.grid}>
-          {/* Left: Images */}
-          <div className={styles.gallery}>
-            {/* Main image */}
-            {images.length > 0 ? (
-              <div className={styles.mainImg}>
-                <Image
-                  src={images[0].url}
-                  alt="main photo"
-                  width={540}
-                  height={470}
-                />
-              </div>
-            ) : (
-              <div className={styles.mainImgEmpty}>Фото не додано</div>
-            )}
-            {/* Small images */}
-            <div className={styles.thumbs}>
-              {images.map((img, i) => (
-                <Image
-                  src={img.url}
-                  width={123}
-                  height={132}
-                  alt={`photo${i}`}
-                  key={i}
-                  className={styles.thumb}
-                  style={i === 0 ? { border: "2px solid #B6D8FF" } : {}}
-                />
-              ))}
-            </div>
-          </div>
+        <div className={styles.container}>
+          <div className={styles.grid}>
+            {/* Left: Images */}
+            <AdverPreviewSlider images={images} />
 
-          {/* Right: Info */}
-          <div className={styles.info}>
-            <div className={styles.pubDate}>
-              Опубліковано {new Date().toLocaleDateString("uk-UA")}
-            </div>
-            <h2 className={styles.title}>{values.title || values.title}</h2>
-            <div className={styles.price}>
-              Вартість
-              <br />
-              <span>{values.price ? `${values.price} грн` : "Договірна"}</span>
-            </div>
-            <div className={styles.deliveryBlock}>
-              <div className={styles.deliveryTitle}>Спосіб доставки</div>
-              <div className={styles.deliveryVal}>
-                {(values.deliveryMethods || [])
-                  .map((d) => deliveryNameMap[d] || d)
-                  .join(", ")}
+            {/* Right: Info */}
+            <div className={styles.info}>
+              <div className={styles.pubDate}>
+                Опубліковано {new Date().toLocaleDateString("uk-UA")}
               </div>
-            </div>
-            <div className={styles.btns}>
-              <button className={styles.msgBtn}>Надіслати повідомлення</button>
-              <button className={styles.telBtn}>Показати телефон</button>
-            </div>
-            <div className={styles.descBlock}>
-              <div className={styles.descLabel}>Опис</div>
-              <div className={styles.desc}>{values.description}</div>
-              <div className={styles.cityBlock}>
-                <span>Місцезнаходження</span>
+
+              <div className={styles.wrapper}>
+                <h3 className={styles.title}>{values.title || values.title}</h3>
                 <div>
-                  {/* можеш вставити svg-іконку location тут */}
-                  {values.location}
+                  <h4 className={styles.label}>{sectionLabelMap[values.section] || ""}</h4>
                 </div>
               </div>
-            </div>
-            <div className={styles.sellerBlock}>
-              <div className={styles.sellerTitle}>Продавець</div>
-              {/* Тестовий продавець, можна винести у пропси */}
-              <div className={styles.sellerInfo}>
-                <Image
-                  src="/avatar.jpg"
-                  width={48}
-                  height={48}
-                  alt="seller"
-                  className={styles.sellerImg}
-                />
-                <div>
-                  <div className={styles.sellerName}>Вікторія</div>
-                  <div className={styles.sellerStatus}>
-                    <span className={styles.greenDot} /> Зараз онлайн
+              <div className={styles.price}>
+                {values.price ? `${values.price} грн` : "Договірна"}
+              </div>
+              <div className={styles.deliveryBlock}>
+                <div className={styles.deliveryTitle}>Спосіб доставки</div>
+                <div className={styles.deliveryVal}>
+                  {(values.deliveryMethods || [])
+                    .map((d) => deliveryNameMap[d] || d)
+                    .join(", ")}
+                </div>
+              </div>
+
+              <div className={styles.descBlock}>
+                <div className={styles.cityBlock}>
+                  <span>Місцезнаходження</span>
+                  <span>
+                    {/*  svg-іконку location*/}
+                    {values.location}
+                  </span>
+                </div>
+              </div>
+              <div className={styles.sellerBlock}>
+                <div className={styles.sellerTitle}>Продавець</div>
+                {/* Тестовий продавець, можна винести у пропси */}
+                <div className={styles.sellerInfo}>
+                  <Image
+                    src={userPictureUrl}
+                    width={48}
+                    height={48}
+                    alt="seller"
+                    className={styles.sellerImg}
+                  />
+                  <div>
+                    <div className={styles.sellerName}>Вікторія</div>
+                    <div className={styles.sellerStatus}>
+                      <span className={styles.greenDot} /> Зараз онлайн
+                    </div>
                   </div>
                 </div>
+                <button className={styles.allSellerAdBtn}>
+                  Усі оголошення автора
+                </button>
               </div>
-              <button className={styles.allSellerAdBtn}>
-                Усі оголошення автора
-              </button>
+              <div className={styles.modalActions}>
+                <button
+                  className={styles.editBtn}
+                  type="button"
+                  onClick={onClose}
+                >
+                  Редагувати
+                </button>
+                <button
+                  className={styles.publishBtn}
+                  type="submit"
+                  onClick={onPublish}
+                >
+                  Опублікувати
+                </button>
+              </div>
             </div>
           </div>
         </div>
-        <div className={styles.modalActions}>
-          <button
-            className={styles.editBtn}
-            type="button"
-            onClick={onClose}
-          >
-            Редагувати
-          </button>
-          <button
-            className={styles.publishBtn}
-            type="submit"
-            onClick={onPublish}
-          >
-            Опублікувати
-          </button>
-        </div>
+        <div className={styles.descriptionWrapper}>
+          <p className={styles.descriptionTitle}>Опис</p>
+          <textarea
+            className={styles.descriptionReadonly}
+            value={values.description || ""}
+            readOnly
+          />
         </div>
       </div>
     </Backdrop>
