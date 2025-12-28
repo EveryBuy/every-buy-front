@@ -1,0 +1,41 @@
+.modalActions {
+  display: flex;
+  gap: 19px;
+}
+
+.editBtn {
+  width: 314px;
+  height: 60px;
+  border: 1.5px solid var(--button);
+  background: #fff;
+  color: #2c2c2c;
+  border-radius: 11px;
+  font-size: 1.13rem;
+  font-weight: 500;
+  padding: 15px 36px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.13s;
+}
+.editBtn:hover {
+  background: #f7f7f7;
+  color: #212121;
+}
+
+.publishBtn {
+  width: 314px;
+  height: 60px;
+  background: var(--button);
+  color: #212121;
+  border-radius: 11px;
+  font-size: 1.13rem;
+  font-weight: 600;
+  border: none;
+  padding: 15px 36px;
+  margin-left: 6px;
+  box-shadow: 0 2px 16px #f7f8003c;
+  cursor: pointer;
+  transition: background 0.13s;
+}
+.publishBtn:hover {
+  background: var(--button);
+}

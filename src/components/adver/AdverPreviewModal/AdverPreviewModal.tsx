@@ -6,6 +6,13 @@ import { Backdrop } from "@mui/material";
 import AdverPreviewSlider from "../AdverPreviewSlider/AdverPreviewSlider";
 import { useAppSelector } from "@/redux/store";
 import { selectUser } from "@/redux/auth/selectorsAuth";
+import Close from "@/assets/Svg/xClose.svg";
+import DeliveryMethodsPreview from "../DeliveryMethodsPreview/DeliveryMethodsPreview";
+import PreviewHeader from "../PreviewHeader/PreviewHeader";
+import LocationPreview from "../LocationPreview/LocationPreview";
+import SellerPreview from "../SellerPreview/SellerPreview";
+import { PreviewActions } from "../PreviewActions/PreviewActions";
+import DescriptionPreview from "../DescriptionPreview/DescriptionPreview";
 
 type Props = {
   open: boolean;
@@ -24,11 +31,13 @@ const AdverPreviewModal: React.FC<Props> = ({
 }) => {
   const user = useAppSelector(selectUser);
   const userPictureUrl = user?.userPhotoUrl || "/images/user.png";
+
   const sectionLabelMap: Record<string, string> = {
     SELL: "Продаж",
     BUY: "Купівля",
   };
 
+  console.log("user", user);
   console.log("values", values);
   if (!open) return null;
   return (
@@ -72,109 +81,40 @@ const AdverPreviewModal: React.FC<Props> = ({
             cursor: "pointer",
           }}
         >
-          <svg width={22} height={22} viewBox="0 0 22 22">
-            <line x1="5" y1="5" x2="17" y2="17" stroke="#333" strokeWidth={2} />
-            <line x1="17" y1="5" x2="5" y2="17" stroke="#333" strokeWidth={2} />
-          </svg>
+          <Image src={Close} alt="close page" width={18} height={18} />
         </button>
         <div className={styles.container}>
           <div className={styles.grid}>
-            {/* Left: Images */}
             <AdverPreviewSlider images={images} />
 
-            {/* Right: Info */}
             <div className={styles.info}>
               <div className={styles.pubDate}>
                 Опубліковано {new Date().toLocaleDateString("uk-UA")}
               </div>
 
-              <div className={styles.wrapper}>
-                <h3 className={styles.title}>{values.title || values.title}</h3>
-                <div>
-                  <h4 className={styles.label}>{sectionLabelMap[values.section] || ""}</h4>
-                </div>
-              </div>
+              <PreviewHeader title={values.title} section={values.section} />
+
               <div className={styles.price}>
-                {values.price ? `${values.price} грн` : "Договірна"}
-              </div>
-              <div className={styles.deliveryBlock}>
-                <div className={styles.deliveryTitle}>Спосіб доставки</div>
-                <div className={styles.deliveryVal}>
-                  {(values.deliveryMethods || [])
-                    .map((d) => deliveryNameMap[d] || d)
-                    .join(", ")}
-                </div>
+                {values.price ? `${values.price} грн` : ""}
               </div>
 
-              <div className={styles.descBlock}>
-                <div className={styles.cityBlock}>
-                  <span>Місцезнаходження</span>
-                  <span>
-                    {/*  svg-іконку location*/}
-                    {values.location}
-                  </span>
-                </div>
-              </div>
-              <div className={styles.sellerBlock}>
-                <div className={styles.sellerTitle}>Продавець</div>
-                {/* Тестовий продавець, можна винести у пропси */}
-                <div className={styles.sellerInfo}>
-                  <Image
-                    src={userPictureUrl}
-                    width={48}
-                    height={48}
-                    alt="seller"
-                    className={styles.sellerImg}
-                  />
-                  <div>
-                    <div className={styles.sellerName}>Вікторія</div>
-                    <div className={styles.sellerStatus}>
-                      <span className={styles.greenDot} /> Зараз онлайн
-                    </div>
-                  </div>
-                </div>
-                <button className={styles.allSellerAdBtn}>
-                  Усі оголошення автора
-                </button>
-              </div>
-              <div className={styles.modalActions}>
-                <button
-                  className={styles.editBtn}
-                  type="button"
-                  onClick={onClose}
-                >
-                  Редагувати
-                </button>
-                <button
-                  className={styles.publishBtn}
-                  type="submit"
-                  onClick={onPublish}
-                >
-                  Опублікувати
-                </button>
-              </div>
+              <DeliveryMethodsPreview methods={values.deliveryMethods} />
+
+              <LocationPreview location={values.location} />
+
+              <SellerPreview
+                avatar={userPictureUrl}
+                name={user?.fullName || ""}
+              />
+
+              <PreviewActions onClose={onClose} onPublish={onPublish} />
             </div>
           </div>
         </div>
-        <div className={styles.descriptionWrapper}>
-          <p className={styles.descriptionTitle}>Опис</p>
-          <textarea
-            className={styles.descriptionReadonly}
-            value={values.description || ""}
-            readOnly
-          />
-        </div>
+        <DescriptionPreview description={values.description}/>
       </div>
     </Backdrop>
   );
-};
-
-// Мапінг коду доставки у назву
-const deliveryNameMap: Record<string, string> = {
-  NOVA_POST: "Нова пошта",
-  UKR_POST: "Укрпошта",
-  Meest_Express: "Meest Express",
-  Other: "Інше",
 };
 
 export default AdverPreviewModal;

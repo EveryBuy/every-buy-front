@@ -1,0 +1,54 @@
+.sellerBlock {
+  margin-top: 18px;
+  margin-bottom: 8px;
+}
+.sellerTitle {
+  color: #000000;
+  font-size: 24px;
+  font-size: 500;
+  margin-bottom: 8px;
+}
+.sellerInfo {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 7px;
+}
+.sellerImg {
+  border-radius: 50%;
+  border: 2.5px solid #b6d8ff;
+}
+.sellerName {
+  font-weight: 600;
+  font-size: 1.13rem;
+  color: #212121;
+}
+.sellerStatus {
+  font-size: 1.01rem;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+  margin-top: 2px;
+}
+.greenDot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #4db325;
+}
+
+.allSellerAdBtn {
+  border: none;
+  background: transparent;
+  font-size: 1.04rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.13s;
+  margin-top: 12px;
+}
+.allSellerAdBtn:hover {
+  font-weight: 600;
+}

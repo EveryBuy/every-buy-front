@@ -1,0 +1,23 @@
+.deliveryBlock {
+  margin-top: 20px;
+}
+
+.deliveryTitle {
+  color: #000000;
+  font-size: 24px;
+  font-size: 500;
+  margin-bottom: 8px;
+}
+
+.deliveryList {
+  display: flex;
+  gap: 12px;
+}
+
+.deliveryItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  font-weight: 500;
+}

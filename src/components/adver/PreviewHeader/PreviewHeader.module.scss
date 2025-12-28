@@ -1,0 +1,34 @@
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 600;
+  margin: 0 0 12px 0;
+  line-height: 1.17;
+}
+
+.labelWrapper {
+  display: flex;
+  gap: 14px;
+}
+
+.label {
+  position: relative;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.label::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 100%;
+  height: 3px;
+  background-color: var(--button);
+  border-radius: 2px;
+}

@@ -1,0 +1,19 @@
+.title {
+  color: #000000;
+  font-size: 24px;
+  font-size: 500;
+  margin-bottom: 8px;
+}
+
+.cityBlock {
+  display: grid;
+  align-items: center;
+  gap: 8px;
+  margin-top: 7px;
+  font-size: 1.02rem;
+}
+.cityBlockWrapper {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
