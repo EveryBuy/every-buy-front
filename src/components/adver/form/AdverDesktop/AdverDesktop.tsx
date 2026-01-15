@@ -16,20 +16,21 @@ import styles from "./AdverDesktop.module.scss";
 
 // -----------------------------------------
 
-import { CategoryTreeModal } from "../AdverSubCategoriesDesktop/CategoryTreeModal";
-import ToggleSwitch from "../ToggleSwitch/ToogleSwitch";
+import { CategoryTreeModal } from "../../categories/AdverSubCategoriesDesktop/CategoryTreeModal";
+import ToggleSwitch from "../../ToggleSwitch/ToogleSwitch";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { createAdvertisement } from "@/redux/advertisement/operations";
 import { selectToken } from "@/redux/auth/selectorsAuth";
-import CityAutocomplete from "../CityAutocomplete/CityAutocomplete";
-import AdverPreviewModal from "../AdverPreviewModal/AdverPreviewModal";
-import CheckboxGroup from "../CheckboxGroup/CheckboxGroup";
+import CityAutocomplete from "../LocationBlock/CityAutocomplete/CityAutocomplete";
+import AdverPreviewModal from "../../preview/AdverPreviewModal/AdverPreviewModal";
+import CheckboxGroup from "../../CheckboxGroup/CheckboxGroup";
 import { FilledInput } from "@mui/material";
 import { useRouter } from "next/navigation";
-import { AdverPhoto } from "../AdverPhotoList/AdverPhotoList";
-import SuccessCreateModal from "../modals/Success/SuccessCreateModal";
+import { AdverPhoto } from "../../photos/AdverPhotoList/AdverPhotoList";
+import SuccessCreateModal from "../../modals/Success/SuccessCreateModal";
 import { FormValues } from "@/types/adverFormType";
 import Spinner from "@/components/ui/CommonSpiner/Spinner";
+import PriceBlockDesktop from "../PriceBlock/PriceBlockDesktop";
 
 const initialValues: FormValues = {
   topSubCategoryId: null,
@@ -85,8 +86,8 @@ const AuthSchema = Yup.object().shape({
     .min(1, "Оберіть спосіб доставки.")
     .required("Будь ласка, оберіть хоча б один спосіб доставки."),
 
-  price: Yup.string().when("isNegotiable", {
-    is: false,
+  price: Yup.string().when("priceType", {
+    is: "price",
     then: (schema) =>
       schema
         .required("Вкажіть ціну.")
@@ -378,75 +379,7 @@ const AdverDesktop = () => {
                     {/* Ліва колонка */}
                     <div className={styles.priceColumn}>
                       {/* "Ціна" */}
-                      <div className={styles.linkItem}>
-                        <label className={styles.linkItemText}>
-                          <Field
-                            type="radio"
-                            name="priceType"
-                            value="price"
-                            className={styles.radio}
-                          />
-                          <span>Ціна</span>
-                        </label>
-
-                        <label className={styles.linkItemText}>
-                          <Field
-                            type="radio"
-                            name="priceType"
-                            value="free"
-                            className={styles.radio}
-                          />
-                          <span>Безкоштовно</span>
-                        </label>
-
-                        <div className={styles.toggleWrapper}>
-                          <label className={styles.linkItemText}>
-                            <span className={styles.linkItemText}>
-                              Договірна
-                            </span>
-
-                            <div>
-                              <ToggleSwitch
-                                name="isNegotiable"
-                                checked={values.isNegotiable}
-                                onChange={(checked) => {
-                                  setFieldValue("isNegotiable", checked);
-                                  if (checked) {
-                                    setFieldValue("price", "");
-                                  }
-                                }}
-                              />
-                            </div>
-                          </label>
-                        </div>
-                      </div>
-                      <label>
-                        <Field
-                          type="text"
-                          name="price"
-                          placeholder="Вартість за 1 шт. в грн."
-                          className={`
-                              ${styles.styledField}
-                              ${
-                                touched.price && errors.price
-                                  ? styles.errorBorder
-                                  : ""
-                              }
-                              ${
-                                touched.price && !errors.price
-                                  ? styles.successBorder
-                                  : ""
-                              }
-                            `}
-                          onBlur={handleBlur}
-                        />
-                        <div className={styles.textareaText}>
-                          <p className={styles.helperText}>
-                            Використовуйте лише цифри
-                          </p>
-                          <p>грн.</p>
-                        </div>
-                      </label>
+                      <PriceBlockDesktop />
                       <ErrorMessage
                         touched={touched.price}
                         error={errors.price}

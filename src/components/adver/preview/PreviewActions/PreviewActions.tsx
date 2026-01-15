@@ -5,7 +5,7 @@ type Props = {
   onPublish?: () => void;
 };
 
-export const PreviewActions: React.FC<Props> = ({ onClose, onPublish }) => {
+const PreviewActions: React.FC<Props> = ({ onClose, onPublish }) => {
   return (
     <div className={styles.modalActions}>
       <button className={styles.editBtn} onClick={onClose}>
@@ -17,3 +17,5 @@ export const PreviewActions: React.FC<Props> = ({ onClose, onPublish }) => {
     </div>
   );
 };
+
+export default PreviewActions;

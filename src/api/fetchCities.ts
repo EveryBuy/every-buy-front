@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { CityDto } from "@/components/adver/CityAutocomplete/CityAutocomplete";
+import type { CityDto } from "@/components/adver/form/LocationBlock/CityAutocomplete/CityAutocomplete";
 
 export async function searchCities(
   keyword: string,

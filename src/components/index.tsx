@@ -91,8 +91,8 @@ export { CatalogyCard } from "./Catalogy/cardCatalogy/CatalogyCard";
 export { CatalogyPage } from "./pages/catalogy/CatalogyPage";
 
 // create ad
-export { default as AdverPhotoList } from "./adver/AdverPhotoList/AdverPhotoList";
+export { default as AdverPhotoList } from "./adver/photos/AdverPhotoList/AdverPhotoList";
 export { default as RadioButtonGroup } from "./adver/RadioButtonGroup/RadioButtonGroup";
-export { default as AdverDesktop } from "./adver/AdverDesktop/AdverDesktop";
-export { default as AdverMobile } from "./adver/AdverMobile/AdverMobile";
+export { default as AdverDesktop } from "./adver/form/AdverDesktop/AdverDesktop";
+export { default as AdverMobile } from "./adver/form/AdverMobile/AdverMobile";
 export { default as ErrorMessage } from "./adver/ErrorMessage/ErrorMessage";

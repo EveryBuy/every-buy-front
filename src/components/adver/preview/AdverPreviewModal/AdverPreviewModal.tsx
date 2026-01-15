@@ -11,7 +11,7 @@ import DeliveryMethodsPreview from "../DeliveryMethodsPreview/DeliveryMethodsPre
 import PreviewHeader from "../PreviewHeader/PreviewHeader";
 import LocationPreview from "../LocationPreview/LocationPreview";
 import SellerPreview from "../SellerPreview/SellerPreview";
-import { PreviewActions } from "../PreviewActions/PreviewActions";
+import PreviewActions from "../PreviewActions/PreviewActions";
 import DescriptionPreview from "../DescriptionPreview/DescriptionPreview";
 import PreviewPrice from "../PreviewPrice/PreviewPrice";
 
