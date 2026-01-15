@@ -14,7 +14,6 @@
   overflow: auto;
 }
 
-
 .container {
   display: flex;
   flex-direction: column;
@@ -106,7 +105,7 @@
 }
 
 .price {
-  font-size: 1.25rem;
+  font-size: 24px;
   font-weight: 500;
   margin-bottom: 10px;
   span {
@@ -122,7 +121,7 @@
 .title {
   color: #000000;
   font-size: 24px;
-  font-size: 500;
+  font-weight: 500;
   margin-bottom: 8px;
 }
 .deliveryVal {
@@ -171,6 +170,17 @@
   white-space: pre-line;
   color: #222;
 }
+
+.closeButton {
+  position: absolute;
+  top: 19px;
+  right: 22px;
+  z-index: 2;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
 
 @media (max-width: 900px) {
   .previewModal {

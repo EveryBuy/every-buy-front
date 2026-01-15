@@ -1,0 +1,24 @@
+.price {
+
+  div {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+
+  h4 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #005800;
+  }
+  h3 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #000000;
+  }
+  p {
+    font-size: 20px;
+    font-weight: 400;
+    color: #005800;
+  }
+}

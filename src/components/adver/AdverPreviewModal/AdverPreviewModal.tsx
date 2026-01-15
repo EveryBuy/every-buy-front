@@ -13,6 +13,7 @@ import LocationPreview from "../LocationPreview/LocationPreview";
 import SellerPreview from "../SellerPreview/SellerPreview";
 import { PreviewActions } from "../PreviewActions/PreviewActions";
 import DescriptionPreview from "../DescriptionPreview/DescriptionPreview";
+import PreviewPrice from "../PreviewPrice/PreviewPrice";
 
 type Props = {
   open: boolean;
@@ -71,15 +72,6 @@ const AdverPreviewModal: React.FC<Props> = ({
           className={styles.closeButton}
           type="button"
           onClick={onClose}
-          style={{
-            position: "absolute",
-            top: 19,
-            right: 22,
-            zIndex: 2,
-            background: "transparent",
-            border: "none",
-            cursor: "pointer",
-          }}
         >
           <Image src={Close} alt="close page" width={18} height={18} />
         </button>
@@ -94,9 +86,11 @@ const AdverPreviewModal: React.FC<Props> = ({
 
               <PreviewHeader title={values.title} section={values.section} />
 
-              <div className={styles.price}>
-                {values.price ? `${values.price} грн` : ""}
-              </div>
+              <PreviewPrice
+                price={values.price}
+                isNegotiable={values.isNegotiable}
+                priceType={values.priceType}
+              />
 
               <DeliveryMethodsPreview methods={values.deliveryMethods} />
 
@@ -111,7 +105,7 @@ const AdverPreviewModal: React.FC<Props> = ({
             </div>
           </div>
         </div>
-        <DescriptionPreview description={values.description}/>
+        <DescriptionPreview description={values.description} />
       </div>
     </Backdrop>
   );
