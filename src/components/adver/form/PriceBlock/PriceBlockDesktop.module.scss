@@ -1,0 +1,118 @@
+.linkItem {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.linkItemText {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #131313;
+}
+.linkItemText span {
+  font-size: var(--large-body-medium);
+  font-weight: 400;
+}
+
+.helperText {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.styledField {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 335px;
+  height: 46px;
+  padding: 12px;
+  border-radius: 10px;
+  background-color: transparent;
+  border: 1px solid rgba(27, 27, 26, 0.3);
+
+  font-family: Roboto;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 128.571%;
+
+  color: #131313;
+
+  &:focus {
+    outline: none;
+  }
+
+  &::placeholder {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19px;
+  }
+
+  @media screen and (min-width: 768px) {
+    width: 620px;
+    height: 60px;
+    font-size: 16px;
+    line-height: 150%;
+  }
+}
+.radio {
+  appearance: none;
+  width: 32px;
+  height: 32px;
+  border: 1px solid #777676;
+  border-radius: 50%;
+  position: relative;
+  cursor: pointer;
+
+  &:checked::before {
+    content: "";
+    display: block;
+    width: 24px;
+    height: 24px;
+    background-color: #b8dd05;
+    border-radius: 50%;
+    position: absolute;
+    top: 3px;
+    left: 3px;
+  }
+}
+.errorBorder {
+  border-color: #c21919 !important;
+  box-shadow: 0 0 0 1px rgba(194, 25, 25, 0.3);
+  background-color: rgba(255, 235, 235, 0.3);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.successBorder {
+  border-color: #29b126 !important;
+  box-shadow: 0 0 0 1px rgba(184, 221, 5, 0.3);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.priceLocationWrapper {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.priceColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  flex: 1;
+  min-width: 300px;
+  max-width: 650px;
+}
+
+.toggleWrapper {
+  margin-left: auto;
+  display: flex;
+  justify-content: space-between;
+}
+.toggleLabel {
+  display: flex;
+  align-items: center;
+}
