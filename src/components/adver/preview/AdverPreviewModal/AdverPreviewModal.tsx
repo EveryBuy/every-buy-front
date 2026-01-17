@@ -84,7 +84,7 @@ const AdverPreviewModal: React.FC<Props> = ({
                 Опубліковано {new Date().toLocaleDateString("uk-UA")}
               </div>
 
-              <PreviewHeader title={values.title} section={values.section} />
+              <PreviewHeader title={values.title} section={values.section} productType={values.productType}/>
 
               <PreviewPrice
                 price={values.price}

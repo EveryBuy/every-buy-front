@@ -5,6 +5,7 @@ import Favorite from "@/assets/Svg/heart.svg";
 type Props = {
   title?: string;
   section?: string;
+  productType?: string;
 };
 
 const sectionLabelMap: Record<string, string> = {
@@ -12,10 +13,21 @@ const sectionLabelMap: Record<string, string> = {
   BUY: "Купівля",
 };
 
-const PreviewHeader: React.FC<Props> = ({ title, section }) => {
+const productTypeLabelMap: Record<string, string> = {
+  NEW: "Нове",
+  USED: "Вживане",
+  OTHER: "Інше",
+};
+
+const PreviewHeader: React.FC<Props> = ({ title, section, productType }) => {
   return (
     <div className={styles.wrapper}>
-      <h3 className={styles.title}>{title}</h3>
+      <div className={styles.left}>
+        <h3 className={styles.title}>{title}</h3>
+        <h4 className={styles.productType}>
+          {productTypeLabelMap[productType || ""] || ""}
+        </h4>
+      </div>
 
       <div className={styles.labelWrapper}>
         <Image src={Favorite} alt="icon select" width={24} height={24} />
@@ -26,5 +38,6 @@ const PreviewHeader: React.FC<Props> = ({ title, section }) => {
     </div>
   );
 };
+
 
 export default PreviewHeader;

@@ -35,6 +35,8 @@ import SectionSwitch from "../SectionSwitch/SectionSwitch";
 import TitleField from "../TitleField/TitleField";
 import CategoryField from "../CategoryField/CategoryField";
 import DescriptionField from "../DescriptionField/DescriptionField";
+import ProductConditionField from "../ProductConditionField/ProductConditionField";
+import LocationAndDeliveryField from "../LocationAndDeliveryField/LocationAndDeliveryField";
 
 const initialValues: FormValues = {
   topSubCategoryId: null,
@@ -203,130 +205,35 @@ const AdverDesktop = () => {
                 <section className={styles.formWrapper}>
                   <AdverPhotoList images={images} setImages={setImages} />
                 </section>
+                {/* Назва товару, категорія та опис */}
                 <section className={styles.formWrapper}>
                   <div style={{ display: "flex", gap: "40px" }}>
                     <div>
-                      {/* Назва товару */}
                       <TitleField
                         descriptionLength={descriptionLength}
                         setDescriptionLength={setDescriptionLength}
                       />
-
-                      {/* Категорія */}
-                      <CategoryField onOpenModal={() => setCategoryModalOpen(true)} />
+                      <CategoryField
+                        onOpenModal={() => setCategoryModalOpen(true)}
+                      />
                     </div>
-                    {/* Опис */}
-                    <DescriptionField/>
+                    <DescriptionField />
                   </div>
                 </section>
 
                 <section className={styles.formWrapper}>
                   <div className={styles.priceLocationWrapper}>
-                    {/* Ліва колонка */}
+                    {/* Ціна та стан товару */}
                     <div className={styles.priceColumn}>
-                      {/* "Ціна" */}
                       <PriceBlockDesktop />
-                      {/* Стан товару */}
-                      <div className={styles.conditionWrapper}>
-                        <RadioButtonGroup
-                          name="productType"
-                          title="Стан товару"
-                          options={[
-                            { value: "NEW", label: "Нове" },
-                            { value: "USED", label: "Вживане" },
-                            { value: "OTHER", label: "Інше" },
-                          ]}
-                          groupClass={styles.radioboxGroup}
-                          labelClass={`${styles.radioboxLabel} ${styles.check}`}
-                          inputClass={`${styles.visuallyHidden} ${
-                            styles.radioboxInput
-                          } ${
-                            touched.productType && errors.productType
-                              ? styles.errorBorder
-                              : ""
-                          }
-                              ${
-                                touched.productType && !errors.productType
-                                  ? styles.successBorder
-                                  : ""
-                              }`}
-                          radioBoxClass={styles.radioBox}
-                          radioUncheckedClass={styles.radioUnchecked}
-                          radioCheckedClass={styles.radioChecked}
-                          uncheckedIcon={radioboxIcon}
-                          checkedIcon={checkIcon}
-                          onChange={(value) =>
-                            setFieldValue("productType", value)
-                          }
-                        />
-                        <ErrorMessage
-                          touched={touched.productType}
-                          error={errors.productType}
-                          successMessage="Стан товару успішно додано"
-                        />
-                      </div>
+                      <ProductConditionField />
                     </div>
-
-                    {/* Права колонка */}
-                    <div className={styles.locationColumn}>
-                      {/* Місцезнаходження */}
-                      <label className={styles.linkItemText}>
-                        Місцезнаходження
-                        <span style={{ color: "#C21919" }}>*</span>
-                      </label>
-                      <CityAutocomplete
-                        styledFieldClass={`
-                              ${styles.styledField}
-                              ${
-                                touched.location && errors.location
-                                  ? styles.errorBorder
-                                  : ""
-                              }
-                              ${
-                                touched.location && !errors.location
-                                  ? styles.successBorder
-                                  : ""
-                              }
-                            `}
-                        nameField="location"
-                        idField="cityId"
-                        placeholder="введіть місто (мін. 3 символи)"
-                        minLength={3}
-                      />
-
-                      <ErrorMessage
-                        touched={touched.location}
-                        error={errors.location}
-                        successMessage="Місто успішно додано"
-                      />
-
-                      {/* Спосіб доставки */}
-                      <div className={styles.deliveryWrapper}>
-                        <CheckboxGroup
-                          name="deliveryMethods"
-                          title="Спосіб доставки"
-                          options={[
-                            { value: "NOVA_POST", label: "Нова пошта" },
-                            { value: "UKR_POST", label: "Укрпошта" },
-                            { value: "Meest_Express", label: "Meest Express" },
-                            { value: "Other", label: "Інше" },
-                          ]}
-                          groupClass={styles.checkboxGroup}
-                          labelClass={styles.checkboxLabel}
-                          inputClass={styles.checkboxInput}
-                          radioBoxClass={styles.checkboxBox}
-                        />
-                        <ErrorMessage
-                          touched={touched.deliveryMethods}
-                          error={errors.deliveryMethods}
-                          successMessage="Спосіб доставки успішно додано"
-                        />
-                      </div>
-                    </div>
+                    {/* Місцезнаходження та доставка*/}
+                    <LocationAndDeliveryField />
                   </div>
                 </section>
               </div>
-              {/* попередній перегляд */}
+
               <div className={styles.buttonWrapper}>
                 <CommonButton
                   type="button"
@@ -380,7 +287,7 @@ const AdverDesktop = () => {
                 }}
               />
             )}
-            {/* успіх при створенні */}
+
             {successOpen && <SuccessCreateModal />}
           </>
         )}

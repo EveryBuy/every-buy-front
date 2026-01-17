@@ -1,0 +1,96 @@
+.conditionWrapper {
+  margin-top: 6px;
+}
+
+.radioboxGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  h2 {
+    font-size: var(--large-body-medium);
+  }
+}
+
+.radioboxLabel {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  white-space: nowrap;
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
+
+.visuallyHidden:checked + .radioBox .radioUnchecked {
+  display: none;
+}
+
+.visuallyHidden:checked + .radioBox .radioChecked {
+  display: block;
+}
+
+.radioboxInput {
+  margin-right: 16px;
+  width: 32px;
+  height: 32px;
+}
+
+.radioBox {
+  position: relative;
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  border: 1px solid #777676;
+  border-radius: 50%;
+  margin-right: 8px;
+  box-sizing: border-box;
+  background-color: #fff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  font-size: var(--large-body-medium);
+
+  &:hover {
+    border-color: #555;
+  }
+}
+.radioboxInput:checked + .radioBox::after {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border-radius: 50%;
+  background-color: #b8dd05;
+  transition: all 0.2s ease;
+}
+
+.radioboxInput:focus + .radioBox {
+  box-shadow: 0 0 0 3px rgba(184, 221, 5, 0.3);
+}
+
+.radioUnchecked {
+  display: block;
+}
+
+.radioChecked {
+  display: none;
+}
+
+.errorBorder {
+  border-color: #c21919 !important;
+  box-shadow: 0 0 0 1px rgba(194, 25, 25, 0.3);
+  background-color: rgba(255, 235, 235, 0.3);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.successBorder {
+  border-color: #007600 !important;
+  box-shadow: 0 0 0 1px rgba(184, 221, 5, 0.3);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
