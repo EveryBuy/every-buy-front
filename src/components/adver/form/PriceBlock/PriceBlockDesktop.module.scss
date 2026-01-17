@@ -15,9 +15,16 @@
   font-weight: 400;
 }
 
+.textareaText {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+}
+
 .helperText {
   font-size: 14px;
   font-weight: 400;
+  color: #777676;
 }
 
 .styledField {
@@ -101,7 +108,7 @@
 .priceColumn {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 18px;
   flex: 1;
   min-width: 300px;
   max-width: 650px;

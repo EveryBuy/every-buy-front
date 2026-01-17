@@ -31,6 +31,10 @@ import SuccessCreateModal from "../../modals/Success/SuccessCreateModal";
 import { FormValues } from "@/types/adverFormType";
 import Spinner from "@/components/ui/CommonSpiner/Spinner";
 import PriceBlockDesktop from "../PriceBlock/PriceBlockDesktop";
+import SectionSwitch from "../SectionSwitch/SectionSwitch";
+import TitleField from "../TitleField/TitleField";
+import CategoryField from "../CategoryField/CategoryField";
+import DescriptionField from "../DescriptionField/DescriptionField";
 
 const initialValues: FormValues = {
   topSubCategoryId: null,
@@ -191,186 +195,28 @@ const AdverDesktop = () => {
       >
         {({ handleBlur, touched, errors, setFieldValue, values }) => (
           <>
-            {/* <FormSyncers /> */}
             <Form autoComplete="off" className={styles.styledForm}>
               {/* buy / sell */}
-              <div className={`${styles.linkItem} ${styles.sellBox}`}>
-                <label className={`${styles.linkItemText}`}>
-                  <Field
-                    type="radio"
-                    name="section"
-                    value="BUY"
-                    className={styles.radio}
-                  />
-                  <span style={{ fontSize: "20px" }}>Куплю</span>
-                </label>
-
-                <label className={styles.linkItemText}>
-                  <Field
-                    type="radio"
-                    name="section"
-                    value="SELL"
-                    className={styles.radio}
-                  />
-                  <span style={{ fontSize: "20px" }}>Продам</span>
-                </label>
-              </div>
+              <SectionSwitch />
+              {/* фото */}
               <div className={styles.wrapperInput}>
                 <section className={styles.formWrapper}>
-                  {/* фото */}
                   <AdverPhotoList images={images} setImages={setImages} />
                 </section>
-
-                {/* назва товару */}
                 <section className={styles.formWrapper}>
                   <div style={{ display: "flex", gap: "40px" }}>
                     <div>
                       {/* Назва товару */}
-                      <div style={{ marginBottom: "40px" }}>
-                        <label>
-                          Назва товару
-                          <span style={{ color: "#C21919" }}>*</span>
-                          <Field
-                            type="text"
-                            name="title"
-                            placeholder="Наприклад, жіноча сукня 32 розміру грн."
-                            className={`
-                              ${styles.styledField}
-                              ${
-                                touched.title && errors.title
-                                  ? styles.errorBorder
-                                  : ""
-                              }
-                              ${
-                                touched.title && !errors.title
-                                  ? styles.successBorder
-                                  : ""
-                              }
-                            `}
-                            onBlur={(
-                              e: React.ChangeEvent<HTMLInputElement>
-                            ) => {
-                              handleBlur(e);
-                              const trimmed = (e.target.value || "").trim();
-                              if (trimmed && !values.title) {
-                                setFieldValue("title", trimmed);
-                              }
-                            }}
-                            onChange={(
-                              e: React.ChangeEvent<HTMLInputElement>
-                            ) => {
-                              const v = e.target.value;
-                              setFieldValue("title", v);
-                              setDescriptionLength(
-                                v.length > 70 ? 70 : v.length
-                              );
-                            }}
-                          />
-                          <div className={styles.textareaText}>
-                            <p className={styles.helperText}>
-                              Введіть від 16 до 70 символів
-                            </p>
-                            <p className={styles.helperText}>
-                              {Math.min(descriptionLength, 70)}/70
-                            </p>
-                          </div>
-                        </label>
-                        <ErrorMessage
-                          touched={touched.title}
-                          error={errors.title}
-                          successMessage="Успішно введено назву товару"
-                        />
-                      </div>
+                      <TitleField
+                        descriptionLength={descriptionLength}
+                        setDescriptionLength={setDescriptionLength}
+                      />
+
                       {/* Категорія */}
-                      <div className={styles.fieldWrapper}>
-                        <label>
-                          Категорія<span style={{ color: "#C21919" }}>*</span>
-                          <Field
-                            type="text"
-                            name="categoryId"
-                            value={values.categoryLabel}
-                            readOnly
-                            placeholder="Оберіть категорію товару "
-                            className={`
-                              ${styles.styledField}
-                              ${
-                                touched.categoryId && errors.categoryId
-                                  ? styles.errorBorder
-                                  : ""
-                              }
-                              ${
-                                touched.categoryId && !errors.categoryId
-                                  ? styles.successBorder
-                                  : ""
-                              }
-                            `}
-                            onBlur={handleBlur}
-                          />
-                          <button
-                            type="button"
-                            className={styles.buttonInput}
-                            onClick={() => setCategoryModalOpen(true)}
-                          >
-                            <Image
-                              priority
-                              src={Select}
-                              alt="icon select"
-                              width={24}
-                              height={24}
-                            />
-                          </button>
-                        </label>
-                        <ErrorMessage
-                          touched={touched.categoryId}
-                          error={errors.categoryId}
-                          successMessage="Категорія успішно додана"
-                        />
-                      </div>
+                      <CategoryField onOpenModal={() => setCategoryModalOpen(true)} />
                     </div>
                     {/* Опис */}
-                    <div>
-                      <label>
-                        Опис товару<span style={{ color: "#C21919" }}>*</span>
-                        <Field
-                          as="textarea"
-                          name="description"
-                          rows="4"
-                          cols="50"
-                          className={`
-                            ${styles.styledField} 
-                            ${styles.styledTexterea}
-                            ${
-                              touched.description && errors.description
-                                ? styles.errorBorder
-                                : ""
-                            }
-                            ${
-                              touched.description && !errors.description
-                                ? styles.successBorder
-                                : ""
-                            }
-                          `}
-                          onChange={(
-                            e: React.ChangeEvent<HTMLTextAreaElement>
-                          ) => {
-                            setFieldValue("description", e.target.value);
-                          }}
-                        />
-                        <div className={styles.textareaText}>
-                          <p className={styles.helperText}>
-                            Вкажіть щонайменше 30 символів
-                          </p>
-                          <p className={styles.helperText}>
-                            {(values.description || "").length}/3000
-                          </p>
-                        </div>
-                      </label>
-                      <ErrorMessage
-                        touched={touched.description}
-                        error={errors.description}
-                        successMessage="Опис товару успішно додано"
-                      />
-                    </div>
+                    <DescriptionField/>
                   </div>
                 </section>
 
@@ -380,12 +226,6 @@ const AdverDesktop = () => {
                     <div className={styles.priceColumn}>
                       {/* "Ціна" */}
                       <PriceBlockDesktop />
-                      <ErrorMessage
-                        touched={touched.price}
-                        error={errors.price}
-                        successMessage="Ціна успішно додана"
-                      />
-
                       {/* Стан товару */}
                       <div className={styles.conditionWrapper}>
                         <RadioButtonGroup
@@ -486,7 +326,6 @@ const AdverDesktop = () => {
                   </div>
                 </section>
               </div>
-
               {/* попередній перегляд */}
               <div className={styles.buttonWrapper}>
                 <CommonButton

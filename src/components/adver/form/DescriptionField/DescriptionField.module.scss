@@ -1,0 +1,76 @@
+.wrapper {
+  margin-bottom: 40px;
+}
+
+.required {
+  color: #c21919;
+  margin-left: 4px;
+}
+
+.styledField {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  width: 335px;
+  height: 46px;
+  padding: 12px;
+  border-radius: 10px;
+  background-color: transparent;
+  border: 1px solid rgba(27, 27, 26, 0.3);
+
+  font-family: Roboto;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 128.571%;
+
+  color: #131313;
+
+  &:focus {
+    outline: none;
+  }
+
+  &::placeholder {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19px;
+  }
+
+  @media screen and (min-width: 768px) {
+    width: 620px;
+    height: 60px;
+    font-size: 16px;
+    line-height: 150%;
+  }
+}
+
+.styledTexterea {
+  width: 620px;
+  height: 210px;
+  resize: none;
+}
+.errorBorder {
+  border-color: #c21919 !important;
+  box-shadow: 0 0 0 1px rgba(194, 25, 25, 0.3);
+  background-color: rgba(255, 235, 235, 0.3);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.successBorder {
+  border-color: #007600 !important;
+  box-shadow: 0 0 0 1px rgba(184, 221, 5, 0.3);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.textareaText {
+  display: flex;
+  justify-content: space-between;
+}
+
+.helperText {
+  font-size: 14px;
+  font-weight: 400;
+  color: #777676;
+}
