@@ -37,6 +37,14 @@ import CategoryField from "../CategoryField/CategoryField";
 import DescriptionField from "../DescriptionField/DescriptionField";
 import ProductConditionField from "../ProductConditionField/ProductConditionField";
 import LocationAndDeliveryField from "../LocationAndDeliveryField/LocationAndDeliveryField";
+import { toast, Zoom, ToastPosition, ToastOptions } from "react-toastify";
+
+const toastMessage: ToastOptions = {
+  position: "top-center" as ToastPosition,
+  autoClose: 1500,
+  theme: "colored",
+  transition: Zoom,
+};
 
 const initialValues: FormValues = {
   topSubCategoryId: null,
@@ -195,7 +203,15 @@ const AdverDesktop = () => {
         validationSchema={AuthSchema}
         onSubmit={handleSubmit}
       >
-        {({ handleBlur, touched, errors, setFieldValue, values }) => (
+        {({
+          handleBlur,
+          touched,
+          errors,
+          setFieldValue,
+          setTouched,
+          values,
+          validateForm,
+        }) => (
           <>
             <Form autoComplete="off" className={styles.styledForm}>
               {/* buy / sell */}
@@ -240,8 +256,27 @@ const AdverDesktop = () => {
                   title="Попередній перегляд"
                   disabled={isLoading}
                   className={styles.adverButton}
-                  onClick={() => handlePreview(values)}
+                  onClick={async () => {
+                    const validationErrors = await validateForm();
+
+                    if (Object.keys(validationErrors).length > 0) {
+
+                      toast.error("Заповніть обовʼязкові поля", toastMessage);
+
+                      setTouched(
+                        Object.keys(validationErrors).reduce((acc, key) => {
+                          acc[key] = true;
+                          return acc;
+                        }, {} as Record<string, boolean>)
+                      );
+
+                      return false;
+                    }
+
+                    setPreviewOpen(true);
+                  }}
                 />
+
                 <CommonButton
                   type="submit"
                   title={isLoading ? "Публікуємо" : "Опублікувати"}
