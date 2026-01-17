@@ -127,11 +127,11 @@ const AdverDesktop = () => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handlePreview = (values: FormValues) => {
-    console.log("Preview values:", values);
-    if (isLoading) return;
-    setPreviewOpen(true);
-  };
+  // const handlePreview = (values: FormValues) => {
+  //   console.log("Preview values:", values);
+  //   if (isLoading) return;
+  //   setPreviewOpen(true);
+  // };
 
   const router = useRouter();
 
