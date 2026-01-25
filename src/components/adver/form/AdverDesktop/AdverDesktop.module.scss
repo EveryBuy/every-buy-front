@@ -118,6 +118,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: 10px;
   width: 335px;
   height: 46px;
   padding: 12px;
@@ -159,7 +160,7 @@
 }
 
 .successBorder {
-  border-color: #29b126 !important;
+  border-color: #007600 !important;
   box-shadow: 0 0 0 1px rgba(184, 221, 5, 0.3);
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
@@ -262,11 +263,6 @@
   }
 }
 
-// .radioboxInput {
-//   @extend .visuallyHidden;
-// }
-
-/* саме коло */
 .radioBox {
   position: relative;
   display: inline-block;
@@ -384,18 +380,11 @@
   margin-right: 12px;
 }
 
-// .conditionWrapper {
-// }
 
 .locationWrapper {
   max-width: 335px;
 }
 
-// .deliveryWrapper {
-// }
-
-// .checkboxBox {
-// }
 .locationColumn {
   display: flex;
   flex-direction: column;

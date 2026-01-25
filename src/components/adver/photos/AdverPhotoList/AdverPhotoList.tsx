@@ -89,42 +89,27 @@ const AdverPhotoList: React.FC<AdverPhotoListProps> = ({
     toast.success("Зображення успішно видалено!", toastMessage);
   };
 
-  // const handleRotateLeft = (index: number) => {
-  //   setImages((prev) => {
-  //     const updated = [...prev];
-  //     updated[index].rotation = ((updated[index].rotation ?? 0) + 3) % 4;
-  //     return updated;
-  //   });
-  // };
-  const handleRotateLeft = (index: number) => {
-    setImages((prev) => {
-      const updated = [...prev];
-      const current = updated[index].rotation ?? 0;
-      const newRotation = (current - 1 + 4) % 4;
-      console.log('left', newRotation)
-      updated[index].rotation = newRotation;
-      return updated;
-    });
-  };
-
   const handleRotateRight = (index: number) => {
-    setImages((prev) => {
-      const updated = [...prev];
-      const current = updated[index].rotation ?? 0;
-      const newRotation = (current + 1) % 4;
-      console.log('right', newRotation)
-      updated[index].rotation = newRotation;
-      return updated;
-    });
-  };
+  setImages(prev => {
+    const updated = [...prev];
+    updated[index] = {
+      ...updated[index],
+      rotation: (updated[index].rotation + 1) % 4,
+    };
+    return updated;
+  });
+};
 
-  // const handleRotateRight = (index: number) => {
-  //   setImages((prev) => {
-  //     const updated = [...prev];
-  //     updated[index].rotation = ((updated[index].rotation ?? 0) + 1) % 4;
-  //     return updated;
-  //   });
-  // };
+const handleRotateLeft = (index: number) => {
+  setImages(prev => {
+    const updated = [...prev];
+    updated[index] = {
+      ...updated[index],
+      rotation: (updated[index].rotation + 3) % 4,
+    };
+    return updated;
+  });
+};
 
   const handleDrag = (
     event: React.DragEvent<HTMLLIElement>,
@@ -182,7 +167,7 @@ const AdverPhotoList: React.FC<AdverPhotoListProps> = ({
           </li>
         )}
         {images.map((img, index) => {
-          const rotationDeg = (img.rotation ?? 0) * 90;
+          const rotationDeg = img.rotation * 90;
           return (
             <li
               key={index}

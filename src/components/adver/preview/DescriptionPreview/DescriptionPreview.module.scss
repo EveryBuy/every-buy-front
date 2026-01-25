@@ -1,0 +1,46 @@
+.descriptionWrapper {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.descriptionTitle {
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.descriptionReadonly {
+  width: 100%;
+  max-height: 230px;
+  min-height: 230px;
+  resize: none;
+  padding: 12px 0px;
+  font-size: 18px;
+  line-height: 1.5;
+  color: #333;
+  overflow-y: auto;
+  outline: none;
+  cursor: default;
+
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: break-word;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #d0d0d0;
+    border-radius: 6px;
+  }
+}
+
+.empty {
+  padding: 12px;
+  font-size: 14px;
+  color: #9ca3af;
+  font-style: italic;
+  background: #f9fafb;
+  border-radius: 12px;
+}

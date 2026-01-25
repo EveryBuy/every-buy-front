@@ -1,8 +1,8 @@
 .previewModal {
   max-width: 1100px;
   width: 98vw;
-  max-height: 96vh;
-  min-height: 640px;
+  max-height: 94vh;
+  min-height: 92vh;
   background: #fff;
   border-radius: 22px;
   padding: 36px 40px 22px 40px;
@@ -11,7 +11,7 @@
   box-shadow: 0 8px 44px #0001;
   position: relative;
   justify-content: flex-start;
-  overflow: auto;   
+  overflow: auto;
 }
 
 .container {
@@ -25,7 +25,6 @@
   gap: 38px;
   flex: 1 1 auto;
   min-height: 260px;
-  overflow: auto;
   min-width: 0;
   max-width: 100%;
 }
@@ -98,23 +97,15 @@
   position: relative;
 }
 
-
 .pubDate {
-  color: #999;
-  font-size: 1.02rem;
+  color: #746f79;
+  font-size: 14px;
   margin-bottom: 6px;
   letter-spacing: 0.02em;
 }
 
-.title {
-  font-size: 2.15rem;
-  font-weight: 700;
-  margin: 0 0 12px 0;
-  line-height: 1.17;
-}
-
 .price {
-  font-size: 1.25rem;
+  font-size: 24px;
   font-weight: 500;
   margin-bottom: 10px;
   span {
@@ -127,13 +118,11 @@
   }
 }
 
-.deliveryBlock {
-  margin-bottom: 14px;
-}
-.deliveryTitle {
-  color: #838383;
-  font-size: 1.01rem;
-  margin-bottom: 2px;
+.title {
+  color: #000000;
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 8px;
 }
 .deliveryVal {
   font-size: 1.13rem;
@@ -182,118 +171,16 @@
   color: #222;
 }
 
-.cityBlock {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: #525252;
-  margin-top: 7px;
-  font-size: 1.02rem;
-  svg {
-    width: 19px;
-    height: 19px;
-    opacity: 0.77;
-  }
-}
-
-.sellerBlock {
-  margin-top: 18px;
-  margin-bottom: 8px;
-}
-.sellerTitle {
-  font-weight: 700;
-  margin-bottom: 8px;
-  font-size: 1.07rem;
-}
-.sellerInfo {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 7px;
-}
-.sellerImg {
-  border-radius: 50%;
-  border: 2.5px solid #b6d8ff;
-}
-.sellerName {
-  font-weight: 600;
-  font-size: 1.13rem;
-  color: #212121;
-}
-.sellerStatus {
-  font-size: 1.01rem;
-  color: #4db325;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-weight: 500;
-  margin-top: 2px;
-}
-.greenDot {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: #4db325;
-}
-.allSellerAdBtn {
+.closeButton {
+  position: absolute;
+  top: 19px;
+  right: 22px;
+  z-index: 2;
+  background: transparent;
   border: none;
-  background: #f4fafd;
-  color: #1e88e5;
-  padding: 8px 20px;
-  border-radius: 7px;
-  font-size: 1.04rem;
   cursor: pointer;
-  font-weight: 500;
-  transition: background 0.13s;
-  margin-top: 3px;
-}
-.allSellerAdBtn:hover {
-  background: #e1f1ff;
 }
 
-.modalActions {
-  display: flex;
-  gap: 19px;
-  justify-content: flex-end;
-  margin-top: 34px;
-  padding-bottom: 4px;
-  flex-shrink: 0;
-}
-
-.editBtn {
-  border: 1.5px solid #b3b3b3;
-  background: #fff;
-  color: #2c2c2c;
-  border-radius: 11px;
-  font-size: 1.13rem;
-  font-weight: 500;
-  padding: 15px 36px;
-  cursor: pointer;
-  transition: background 0.15s, color 0.13s;
-  box-shadow: 0 2px 8px #b2b2b240;
-}
-.editBtn:hover {
-  background: #f7f7f7;
-  color: #212121;
-}
-
-.publishBtn {
-  background: #f7f800;
-  color: #212121;
-  border-radius: 11px;
-  font-size: 1.13rem;
-  font-weight: 600;
-  border: none;
-  padding: 15px 36px;
-  margin-left: 6px;
-  box-shadow: 0 2px 16px #f7f8003c;
-  cursor: pointer;
-  transition: background 0.13s;
-}
-.publishBtn:hover {
-  background: #ffff3c;
-}
 
 @media (max-width: 900px) {
   .previewModal {

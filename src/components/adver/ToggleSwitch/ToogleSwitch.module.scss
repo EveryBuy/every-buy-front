@@ -5,6 +5,12 @@
   gap: 12px;
 }
 
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: not-allowed;
+} 
+
 .label {
   font-size: 16px;
   color: var(--label);
