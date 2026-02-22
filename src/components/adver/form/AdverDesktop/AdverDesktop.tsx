@@ -127,12 +127,6 @@ const AdverDesktop = () => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  // const handlePreview = (values: FormValues) => {
-  //   console.log("Preview values:", values);
-  //   if (isLoading) return;
-  //   setPreviewOpen(true);
-  // };
-
   const router = useRouter();
 
   async function handleSubmit(
@@ -142,8 +136,6 @@ const AdverDesktop = () => {
     setIsLoading(true);
 
     try {
-      // if (!token) return;
-      // console.log("token", token);
       const requestPayload = {
         topSubCategoryId: values.topSubCategoryId,
         lowSubCategoryId: values.lowSubCategoryId,
