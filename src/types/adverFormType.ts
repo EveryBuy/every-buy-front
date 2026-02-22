@@ -19,4 +19,6 @@ export type FormValues = {
   description: string;
 
   deliveryMethods: string[];
+
+  images: string[]
 };

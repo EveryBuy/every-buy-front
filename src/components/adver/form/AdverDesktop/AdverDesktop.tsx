@@ -61,6 +61,7 @@ const initialValues: FormValues = {
   isNegotiable: false,
   deliveryMethods: [],
   location: "",
+  images: [],
 };
 
 const AuthSchema = Yup.object().shape({
@@ -87,7 +88,14 @@ const AuthSchema = Yup.object().shape({
   categoryId: Yup.number()
     .nullable()
     .transform((value, originalValue) => (originalValue === "" ? null : value))
-    .required("Будь ласка, зазначте категорію товару."),
+    .required("Будь ласка, зазначте категорію товару.")
+    .test("check-subcategories", "Оберіть підкатегорію", function (value) {
+      const { topSubCategoryId } = this.parent;
+      if (value && !topSubCategoryId) {
+        return false;
+      }
+      return true;
+    }),
 
   location: Yup.string().required("Будь ласка, вкажіть місцезнаходження."),
 
@@ -102,18 +110,14 @@ const AuthSchema = Yup.object().shape({
     .required("Будь ласка, оберіть хоча б один спосіб доставки."),
 
   price: Yup.string().when("priceType", {
-    is: "price",
+    is: (val: string) => val === "WITH_PRICE",
     then: (schema) =>
-      schema
-        .required("Вкажіть ціну.")
-        .matches(/^\d+$/, "Можна вводити тільки цифри.")
-        .test(
-          "not-zero",
-          "Ціна не може дорівнювати 0.",
-          (value) => value !== "0",
-        ),
+      schema.required("Вкажіть ціну.").matches(/^\d+$/, "Тільки цифри"),
     otherwise: (schema) => schema.notRequired(),
   }),
+  images: Yup.array()
+    .min(1, "Будь ласка, додайте хоча б одне фото.")
+    .required("Фото обов’язкове."),
 });
 
 const AdverDesktop = () => {
@@ -145,7 +149,7 @@ const AdverDesktop = () => {
         section: values.section,
         cityId: values.cityId,
         productType: values.productType,
-        price: values.price ? Number(values.price) : null,
+        price: values.price ? Number(values.price) : 0,
         title: values.title,
         isNegotiable: values.isNegotiable,
         categoryId: values.categoryId,
@@ -295,23 +299,29 @@ const AdverDesktop = () => {
               <CategoryTreeModal
                 open={categoryModalOpen}
                 onClose={() => setCategoryModalOpen(false)}
-                // onSelect={async ({ categoryId, categoryLabel }) => {
-                //   await setFieldValue("categoryId", Number(categoryId));
-                //   await setFieldValue("categoryLabel", categoryLabel);
-                //   setFieldTouched("categoryId", true, true);
-
-                onSelect={({ categoryId, categoryLabel }) => {
+                onSelect={({
+                  categoryId,
+                  topSubCategoryId,
+                  lowSubCategoryId,
+                  categoryLabel,
+                }) => {
                   setValues(
                     {
-                      ...values, // зберігаємо інші поля
+                      ...values,
                       categoryId: Number(categoryId),
                       categoryLabel: categoryLabel,
+                      topSubCategoryId: topSubCategoryId
+                        ? Number(topSubCategoryId)
+                        : null,
+                      lowSubCategoryId: lowSubCategoryId
+                        ? Number(lowSubCategoryId)
+                        : null,
                     },
                     true,
-                  ); // другий аргумент 'true' примусово запускає валідацію
+                  );
 
-                  // Тепер явно кажемо, що поле торкнуте
                   setFieldTouched("categoryId", true, false);
+                  setFieldTouched("topSubCategoryId", true, false);
                 }}
               />
             )}
