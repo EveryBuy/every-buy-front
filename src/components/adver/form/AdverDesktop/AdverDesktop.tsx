@@ -70,7 +70,7 @@ const AuthSchema = Yup.object().shape({
     .test(
       "min-2",
       "Занадто коротка назва. Мінімум 2 символи.",
-      (value) => (value || "").length >= 2
+      (value) => (value || "").length >= 2,
     )
     .max(70, "Максимум 70 символів."),
 
@@ -80,12 +80,13 @@ const AuthSchema = Yup.object().shape({
     .test(
       "min-30",
       "Опис занадто короткий — мінімум 30 символів.",
-      (value) => (value || "").length >= 30
+      (value) => (value || "").length >= 30,
     )
     .max(3000, "Максимум 3000 символів."),
 
   categoryId: Yup.number()
-    .typeError("Будь ласка, зазначте категорію товару.")
+    .nullable()
+    .transform((value, originalValue) => (originalValue === "" ? null : value))
     .required("Будь ласка, зазначте категорію товару."),
 
   location: Yup.string().required("Будь ласка, вкажіть місцезнаходження."),
@@ -109,7 +110,7 @@ const AuthSchema = Yup.object().shape({
         .test(
           "not-zero",
           "Ціна не може дорівнювати 0.",
-          (value) => value !== "0"
+          (value) => value !== "0",
         ),
     otherwise: (schema) => schema.notRequired(),
   }),
@@ -127,23 +128,17 @@ const AdverDesktop = () => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  // const handlePreview = (values: FormValues) => {
-  //   console.log("Preview values:", values);
-  //   if (isLoading) return;
-  //   setPreviewOpen(true);
-  // };
-
   const router = useRouter();
 
   async function handleSubmit(
     values: FormValues,
-    actions: FormikHelpers<FormValues>
+    actions: FormikHelpers<FormValues>,
   ) {
     setIsLoading(true);
 
     try {
-      // if (!token) return;
-      // console.log("token", token);
+      if (!token) return;
+      console.log("token", token);
       const requestPayload = {
         topSubCategoryId: values.topSubCategoryId,
         lowSubCategoryId: values.lowSubCategoryId,
@@ -162,7 +157,9 @@ const AdverDesktop = () => {
 
       formData.append(
         "request",
-        new Blob([JSON.stringify(requestPayload)], { type: "application/json" })
+        new Blob([JSON.stringify(requestPayload)], {
+          type: "application/json",
+        }),
       );
 
       images.forEach(({ file }) => {
@@ -184,7 +181,7 @@ const AdverDesktop = () => {
   }
 
   const submitRef = useRef<HTMLButtonElement>(null);
-  console.log("isLoading", isLoading);
+
   return (
     <div className={styles.adWrapper}>
       <div className={styles.adHeader}>
@@ -204,10 +201,9 @@ const AdverDesktop = () => {
         onSubmit={handleSubmit}
       >
         {({
-          handleBlur,
-          touched,
-          errors,
           setFieldValue,
+          setValues,
+          setFieldTouched,
           setTouched,
           values,
           validateForm,
@@ -260,14 +256,16 @@ const AdverDesktop = () => {
                     const validationErrors = await validateForm();
 
                     if (Object.keys(validationErrors).length > 0) {
-
                       toast.error("Заповніть обовʼязкові поля", toastMessage);
 
                       setTouched(
-                        Object.keys(validationErrors).reduce((acc, key) => {
-                          acc[key] = true;
-                          return acc;
-                        }, {} as Record<string, boolean>)
+                        Object.keys(validationErrors).reduce(
+                          (acc, key) => {
+                            acc[key] = true;
+                            return acc;
+                          },
+                          {} as Record<string, boolean>,
+                        ),
                       );
 
                       return false;
@@ -297,16 +295,23 @@ const AdverDesktop = () => {
               <CategoryTreeModal
                 open={categoryModalOpen}
                 onClose={() => setCategoryModalOpen(false)}
-                onSelect={({
-                  categoryId,
-                  topSubCategoryId,
-                  lowSubCategoryId,
-                  categoryLabel,
-                }) => {
-                  setFieldValue("categoryId", categoryId);
-                  setFieldValue("topSubCategoryId", topSubCategoryId);
-                  setFieldValue("lowSubCategoryId", lowSubCategoryId);
-                  setFieldValue("categoryLabel", categoryLabel);
+                // onSelect={async ({ categoryId, categoryLabel }) => {
+                //   await setFieldValue("categoryId", Number(categoryId));
+                //   await setFieldValue("categoryLabel", categoryLabel);
+                //   setFieldTouched("categoryId", true, true);
+
+                onSelect={({ categoryId, categoryLabel }) => {
+                  setValues(
+                    {
+                      ...values, // зберігаємо інші поля
+                      categoryId: Number(categoryId),
+                      categoryLabel: categoryLabel,
+                    },
+                    true,
+                  ); // другий аргумент 'true' примусово запускає валідацію
+
+                  // Тепер явно кажемо, що поле торкнуте
+                  setFieldTouched("categoryId", true, false);
                 }}
               />
             )}

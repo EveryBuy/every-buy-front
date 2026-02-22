@@ -12,40 +12,33 @@ type Props = {
 };
 
 const CategoryField: React.FC<Props> = ({ onOpenModal }) => {
-  const { touched, errors, handleBlur, values } =
+  const { touched, errors, submitCount, values } =
     useFormikContext<FormValues>();
-
+const isInvalid = !!(errors.categoryId && (touched.categoryId || submitCount > 0));
+  console.log('FIELD STATE:', { 
+  value: values.categoryId, 
+  error: errors.categoryId, 
+  touched: touched.categoryId 
+});
   return (
     <div className={styles.fieldWrapper}>
       <label>
         Категорія<span className={styles.required}>*</span>
         <div className={styles.inputWrapper}>
-          <Field
+          <input
             type="text"
             name="categoryId"
-            value={values.categoryLabel}
+            value={values.categoryLabel || ""}
             readOnly
             placeholder="Оберіть категорію товару"
-            className={`
-              ${styles.styledField}
-              ${
-                touched.categoryId && errors.categoryId
-                  ? styles.errorBorder
-                  : ""
-              }
-              ${
-                touched.categoryId && !errors.categoryId
-                  ? styles.successBorder
-                  : ""
-              }
-            `}
-            onBlur={handleBlur}
+            className={`${styles.styledField} ${isInvalid ? styles.errorBorder : ""}`}
+            onClick={onOpenModal}
           />
 
           <button
             type="button"
             className={styles.buttonInput}
-            onClick={onOpenModal}
+            // onClick={onOpenModal}
           >
             <Image
               priority
@@ -59,7 +52,7 @@ const CategoryField: React.FC<Props> = ({ onOpenModal }) => {
       </label>
 
       <ErrorMessage
-        touched={touched.categoryId}
+        touched={touched.categoryId || submitCount > 0}
         error={errors.categoryId}
         successMessage="Категорія успішно додана"
       />
