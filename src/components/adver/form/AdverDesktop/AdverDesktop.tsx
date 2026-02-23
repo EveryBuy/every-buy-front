@@ -61,6 +61,7 @@ const initialValues: FormValues = {
   isNegotiable: false,
   deliveryMethods: [],
   location: "",
+  images: [],
 };
 
 const AuthSchema = Yup.object().shape({
@@ -70,7 +71,7 @@ const AuthSchema = Yup.object().shape({
     .test(
       "min-2",
       "Занадто коротка назва. Мінімум 2 символи.",
-      (value) => (value || "").length >= 2
+      (value) => (value || "").length >= 2,
     )
     .max(70, "Максимум 70 символів."),
 
@@ -80,13 +81,21 @@ const AuthSchema = Yup.object().shape({
     .test(
       "min-30",
       "Опис занадто короткий — мінімум 30 символів.",
-      (value) => (value || "").length >= 30
+      (value) => (value || "").length >= 30,
     )
     .max(3000, "Максимум 3000 символів."),
 
   categoryId: Yup.number()
-    .typeError("Будь ласка, зазначте категорію товару.")
-    .required("Будь ласка, зазначте категорію товару."),
+    .nullable()
+    .transform((value, originalValue) => (originalValue === "" ? null : value))
+    .required("Будь ласка, зазначте категорію товару.")
+    .test("check-subcategories", "Оберіть підкатегорію", function (value) {
+      const { topSubCategoryId } = this.parent;
+      if (value && !topSubCategoryId) {
+        return false;
+      }
+      return true;
+    }),
 
   location: Yup.string().required("Будь ласка, вкажіть місцезнаходження."),
 
@@ -101,18 +110,14 @@ const AuthSchema = Yup.object().shape({
     .required("Будь ласка, оберіть хоча б один спосіб доставки."),
 
   price: Yup.string().when("priceType", {
-    is: "price",
+    is: (val: string) => val === "WITH_PRICE",
     then: (schema) =>
-      schema
-        .required("Вкажіть ціну.")
-        .matches(/^\d+$/, "Можна вводити тільки цифри.")
-        .test(
-          "not-zero",
-          "Ціна не може дорівнювати 0.",
-          (value) => value !== "0"
-        ),
+      schema.required("Вкажіть ціну.").matches(/^\d+$/, "Тільки цифри"),
     otherwise: (schema) => schema.notRequired(),
   }),
+  images: Yup.array()
+    .min(1, "Будь ласка, додайте хоча б одне фото.")
+    .required("Фото обов’язкове."),
 });
 
 const AdverDesktop = () => {
@@ -127,30 +132,24 @@ const AdverDesktop = () => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  // const handlePreview = (values: FormValues) => {
-  //   console.log("Preview values:", values);
-  //   if (isLoading) return;
-  //   setPreviewOpen(true);
-  // };
-
   const router = useRouter();
 
   async function handleSubmit(
     values: FormValues,
-    actions: FormikHelpers<FormValues>
+    actions: FormikHelpers<FormValues>,
   ) {
     setIsLoading(true);
 
     try {
-      // if (!token) return;
-      // console.log("token", token);
+      if (!token) return;
+      console.log("token", token);
       const requestPayload = {
         topSubCategoryId: values.topSubCategoryId,
         lowSubCategoryId: values.lowSubCategoryId,
         section: values.section,
         cityId: values.cityId,
         productType: values.productType,
-        price: values.price ? Number(values.price) : null,
+        price: values.price ? Number(values.price) : 0,
         title: values.title,
         isNegotiable: values.isNegotiable,
         categoryId: values.categoryId,
@@ -162,7 +161,9 @@ const AdverDesktop = () => {
 
       formData.append(
         "request",
-        new Blob([JSON.stringify(requestPayload)], { type: "application/json" })
+        new Blob([JSON.stringify(requestPayload)], {
+          type: "application/json",
+        }),
       );
 
       images.forEach(({ file }) => {
@@ -184,7 +185,7 @@ const AdverDesktop = () => {
   }
 
   const submitRef = useRef<HTMLButtonElement>(null);
-  console.log("isLoading", isLoading);
+
   return (
     <div className={styles.adWrapper}>
       <div className={styles.adHeader}>
@@ -204,10 +205,9 @@ const AdverDesktop = () => {
         onSubmit={handleSubmit}
       >
         {({
-          handleBlur,
-          touched,
-          errors,
           setFieldValue,
+          setValues,
+          setFieldTouched,
           setTouched,
           values,
           validateForm,
@@ -260,14 +260,16 @@ const AdverDesktop = () => {
                     const validationErrors = await validateForm();
 
                     if (Object.keys(validationErrors).length > 0) {
-
                       toast.error("Заповніть обовʼязкові поля", toastMessage);
 
                       setTouched(
-                        Object.keys(validationErrors).reduce((acc, key) => {
-                          acc[key] = true;
-                          return acc;
-                        }, {} as Record<string, boolean>)
+                        Object.keys(validationErrors).reduce(
+                          (acc, key) => {
+                            acc[key] = true;
+                            return acc;
+                          },
+                          {} as Record<string, boolean>,
+                        ),
                       );
 
                       return false;
@@ -303,10 +305,23 @@ const AdverDesktop = () => {
                   lowSubCategoryId,
                   categoryLabel,
                 }) => {
-                  setFieldValue("categoryId", categoryId);
-                  setFieldValue("topSubCategoryId", topSubCategoryId);
-                  setFieldValue("lowSubCategoryId", lowSubCategoryId);
-                  setFieldValue("categoryLabel", categoryLabel);
+                  setValues(
+                    {
+                      ...values,
+                      categoryId: Number(categoryId),
+                      categoryLabel: categoryLabel,
+                      topSubCategoryId: topSubCategoryId
+                        ? Number(topSubCategoryId)
+                        : null,
+                      lowSubCategoryId: lowSubCategoryId
+                        ? Number(lowSubCategoryId)
+                        : null,
+                    },
+                    true,
+                  );
+
+                  setFieldTouched("categoryId", true, false);
+                  setFieldTouched("topSubCategoryId", true, false);
                 }}
               />
             )}

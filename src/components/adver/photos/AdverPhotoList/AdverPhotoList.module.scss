@@ -96,23 +96,12 @@
 
 .adverPhotoItem {
   background: rgba(184, 221, 5, 0.2) !important;
-  // border: none !important;
 
   &:hover,
   &:focus {
     background-color: rgb(120, 238, 120) !important;
   }
 }
-
-// .photoItem {
-//   position: relative;
-//   width: 100%;
-//   aspect-ratio: 1 / 1;
-//   border-radius: 8px;
-//   overflow: hidden;
-//   background: #f3f3f3;
-// }
-
 .photoItem {
   position: relative;
   width: 240px;
@@ -289,4 +278,22 @@
   font-size: 20px;
   font-weight: 500;
   margin-bottom: 4px;
+}
+.headerWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.errorText {
+  color: #c21919;
+  font-size: 14px;
+}
+
+.errorBorder {
+  border: 1px solid #c21919;
+  border-radius: 12px;
+  padding: 10px;
+  background-color: rgba(194, 25, 25, 0.05);
+  transition: all 0.3s ease;
 }
