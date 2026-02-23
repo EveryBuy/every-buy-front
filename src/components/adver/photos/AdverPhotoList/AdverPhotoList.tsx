@@ -7,6 +7,7 @@ import ArrowTurnLeft from "@/assets/Svg/turnLeft.svg";
 import ArrowTurnRight from "@/assets/Svg/turnRight.svg";
 import Delete from "@/assets/Svg/delete.svg";
 import { toast, Zoom, ToastPosition, ToastOptions } from "react-toastify";
+import { useFormikContext } from "formik";
 
 const MAX_PHOTOS = 10;
 const MAX_FILE_SIZE_MB = 5;
@@ -28,7 +29,6 @@ interface AdverPhotoListProps {
   setImages: React.Dispatch<React.SetStateAction<AdverPhoto[]>>;
 }
 
-
 const AdverPhotoList: React.FC<AdverPhotoListProps> = ({
   images,
   setImages,
@@ -41,7 +41,7 @@ const AdverPhotoList: React.FC<AdverPhotoListProps> = ({
     if (file.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
       toast.error(
         `Розмір файлу не повинен перевищувати ${MAX_FILE_SIZE_MB} МБ.`,
-        toastMessage
+        toastMessage,
       );
 
       return false;
@@ -75,7 +75,7 @@ const AdverPhotoList: React.FC<AdverPhotoListProps> = ({
         validFiles.length === 1
           ? "Зображення успішно завантажено!"
           : `Зображення (${validFiles.length}) успішно завантажено!`,
-        toastMessage
+        toastMessage,
       );
     }
 
@@ -90,31 +90,31 @@ const AdverPhotoList: React.FC<AdverPhotoListProps> = ({
   };
 
   const handleRotateRight = (index: number) => {
-  setImages(prev => {
-    const updated = [...prev];
-    updated[index] = {
-      ...updated[index],
-      rotation: (updated[index].rotation + 1) % 4,
-    };
-    return updated;
-  });
-};
+    setImages((prev) => {
+      const updated = [...prev];
+      updated[index] = {
+        ...updated[index],
+        rotation: (updated[index].rotation + 1) % 4,
+      };
+      return updated;
+    });
+  };
 
-const handleRotateLeft = (index: number) => {
-  setImages(prev => {
-    const updated = [...prev];
-    updated[index] = {
-      ...updated[index],
-      rotation: (updated[index].rotation + 3) % 4,
-    };
-    return updated;
-  });
-};
+  const handleRotateLeft = (index: number) => {
+    setImages((prev) => {
+      const updated = [...prev];
+      updated[index] = {
+        ...updated[index],
+        rotation: (updated[index].rotation + 3) % 4,
+      };
+      return updated;
+    });
+  };
 
   const handleDrag = (
     event: React.DragEvent<HTMLLIElement>,
     sourceIndex: number,
-    destinationIndex: number
+    destinationIndex: number,
   ) => {
     event.preventDefault();
     if (
@@ -135,6 +135,11 @@ const handleRotateLeft = (index: number) => {
   };
 
   const canAddMore = images.length < MAX_PHOTOS;
+  const { setFieldValue, errors, touched, submitCount } = useFormikContext<any>();
+  useEffect(() => {
+    setFieldValue("images", images);
+  }, [images, setFieldValue]);
+  const showError = !!(errors.images && (touched.images || submitCount > 0));
 
   return (
     <section className={styles.adverPhoto}>
@@ -143,6 +148,9 @@ const handleRotateLeft = (index: number) => {
       >
         Фото<span style={{ color: "#C21919" }}>*</span>
       </p>
+      {showError && (
+        <span className={styles.errorText}>{errors.images as string}</span>
+      )}
       <p>
         Максимально допустимий розмір фотографії
         <span> {MAX_FILE_SIZE_MB} мб.</span> Допустимий формат{" "}
@@ -179,7 +187,7 @@ const handleRotateLeft = (index: number) => {
                 handleDrag(
                   event,
                   Number(event.dataTransfer.getData("index")),
-                  index
+                  index,
                 )
               }
               className={styles.photoItem}
