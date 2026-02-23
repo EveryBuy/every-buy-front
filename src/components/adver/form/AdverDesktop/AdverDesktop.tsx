@@ -141,8 +141,6 @@ const AdverDesktop = () => {
     setIsLoading(true);
 
     try {
-      if (!token) return;
-      console.log("token", token);
       const requestPayload = {
         topSubCategoryId: values.topSubCategoryId,
         lowSubCategoryId: values.lowSubCategoryId,

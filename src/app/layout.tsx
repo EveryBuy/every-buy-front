@@ -14,6 +14,7 @@ import AuthUpdater from "./(client)/(auth)/authUpdater";
 // import RehydrationGate from "@/components/auth/RehydrationGate/RehydrationGate";
 import { Footer, Header } from "@/components";
 import Message from "@/components/ui/Message/Message";
+import { AuthProvider } from "@/context/AuthContextType";
 
 // const Header = dynamic(() => import("../components/header/Header"), {
 //   ssr: false,
@@ -35,17 +36,15 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
         <AppRouterCacheProvider>
           <Providers>
             <ThemeProvider theme={theme}>
-              <Header />
-              {/* <RehydrationGate> */}
+              <AuthProvider>
                 <AuthUpdater>
-                  {/* <AuthProvider> */}
-                  <main className="container">{children}</main>
+                <Header />
+                <main className="container">{children}</main>
+                <Footer />
+                <Message />
+                <ToastContainer />
                 </AuthUpdater>
-              {/* </RehydrationGate> */}
-              <Footer />
-              <Message />
-              <ToastContainer />
-              {/* </AuthProvider> */}
+              </AuthProvider>
             </ThemeProvider>
           </Providers>
         </AppRouterCacheProvider>
