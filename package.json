@@ -43,7 +43,7 @@
     "@types/react-slick": "^0.23.13",
     "eslint": "^9.39.4",
     "eslint-config-next": "^15.5.12",
-    "typescript": "^5"
+    "typescript": "^5.9.3"
   },
   "overrides": {
     "redux-persist": {
