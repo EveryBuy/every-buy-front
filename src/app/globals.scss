@@ -1,7 +1,7 @@
-@import "../styles/reset";
-@import "../styles/fonts.scss";
-@import "../styles/mixins";
-@import "../styles/breakpoints";
+@use "../styles/reset";
+@use "../styles/fonts.scss";
+@use "../styles/mixins" as *;
+@use "../styles/breakpoints" as *;
 
 :root {
 	--font-family: "Inter", Arial, sans-serif;

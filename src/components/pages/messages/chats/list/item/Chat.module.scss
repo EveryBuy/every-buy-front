@@ -1,59 +1,65 @@
-@import "@/styles/mixins";
-@import "@/styles/breakpoints";
+@use "@/styles/breakpoints" as *;
+@use "@/styles/mixins" as *;
+
 
 .blockWrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 5px 10px 5px 10px;
-  column-gap: 10px;
-  @media (min-width: 425px) {
-    column-gap: 10px;
-  }
-  @include media-min($breakpoint-tablet) {
-    padding: 6px 8px;
-    column-gap: 8px;
-  }
-  @include media-min($breakpoint-laptop-large) {
-    padding: 14px 10px;
-    column-gap: 14px;
-  }
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 5px 10px 5px 10px;
+	column-gap: 10px;
+
+	@media (min-width: 425px) {
+		column-gap: 10px;
+	}
+
+	@include media-min($breakpoint-tablet) {
+		padding: 6px 8px;
+		column-gap: 8px;
+	}
+
+	@include media-min($breakpoint-laptop-large) {
+		padding: 14px 10px;
+		column-gap: 14px;
+	}
 }
 
 .imageWrapper {
-  position: relative;
+	position: relative;
 }
 
 .image {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  object-fit: cover;
-  @include media-min($breakpoint-laptop-large) {
-    width: 72px;
-    height: 72px;
-  }
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	object-fit: cover;
+
+	@include media-min($breakpoint-laptop-large) {
+		width: 72px;
+		height: 72px;
+	}
 }
 
 .point {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 25px;
-  height: 25px;
-  position: absolute;
-  left: 25px;
-  bottom: 4px;
-  border-radius: 50%;
-  background-color: var(--color-yellow);
-  font-size: 12px;
-  @include media-min($breakpoint-laptop-large) {
-    width: 36px;
-    height: 36px;
-    left: 45px;
-    bottom: 5px;
-    font-size: 16px;
-  }
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 25px;
+	height: 25px;
+	position: absolute;
+	left: 25px;
+	bottom: 4px;
+	border-radius: 50%;
+	background-color: var(--color-yellow);
+	font-size: 12px;
+
+	@include media-min($breakpoint-laptop-large) {
+		width: 36px;
+		height: 36px;
+		left: 45px;
+		bottom: 5px;
+		font-size: 16px;
+	}
 }
 
 // .triangleWrapper {
@@ -65,72 +71,79 @@
 // }
 
 .triangle {
-  position: absolute;
-  left: 25px;
-  bottom: 4px;
-  width: 0;
-  height: 0;
-  border-left: 8px solid transparent;
-  border-right: 8px solid transparent;
-  border-bottom: 15px solid red;
-  @include media-min($breakpoint-laptop-large) {
-    left: 50px;
-    bottom: 5px;
-    border-left: 12px solid transparent;
-    border-right: 12px solid transparent;
-    border-bottom: 25px solid red;
-  }
+	position: absolute;
+	left: 25px;
+	bottom: 4px;
+	width: 0;
+	height: 0;
+	border-left: 8px solid transparent;
+	border-right: 8px solid transparent;
+	border-bottom: 15px solid red;
+
+	@include media-min($breakpoint-laptop-large) {
+		left: 50px;
+		bottom: 5px;
+		border-left: 12px solid transparent;
+		border-right: 12px solid transparent;
+		border-bottom: 25px solid red;
+	}
 }
 
 .number {
-  width: 15px;
-  height: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+	width: 15px;
+	height: 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .textWrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  row-gap: 8px;
-  width: 140px;
-  height: 49px;
-  @media (min-width: 375px) {
-    width: 60%;
-  }
-  @include media-min($breakpoint-tablet) {
-    width: 50%;
-  }
-  @include media-min($breakpoint-laptop-large) {
-    height: 55px;
-    width: 228px;
-  }
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	row-gap: 8px;
+	width: 140px;
+	height: 49px;
+
+	@media (min-width: 375px) {
+		width: 60%;
+	}
+
+	@include media-min($breakpoint-tablet) {
+		width: 50%;
+	}
+
+	@include media-min($breakpoint-laptop-large) {
+		height: 55px;
+		width: 228px;
+	}
 }
 
 .title {
-  @include media-min($breakpoint-tablet) {
-    font-size: var(--body-text);
-  }
-  @include media-min($breakpoint-laptop-large) {
-    font-size: var(--large-body-medium);
-  }
+	@include media-min($breakpoint-tablet) {
+		font-size: var(--body-text);
+	}
+
+	@include media-min($breakpoint-laptop-large) {
+		font-size: var(--large-body-medium);
+	}
 }
 
 .text {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  font-size: var(--body-mobile-text);
-  @include media-min($breakpoint-tablet) {
-    font-size: 12px;
-  }
-  @include media-min($breakpoint-laptop-large) {
-    font-size: var(--body-text);
-  }
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	font-size: var(--body-mobile-text);
+
+	@include media-min($breakpoint-tablet) {
+		font-size: 12px;
+	}
+
+	@include media-min($breakpoint-laptop-large) {
+		font-size: var(--body-text);
+	}
 }
 
 .hidden {
-  display: none;
+	display: none;
 }

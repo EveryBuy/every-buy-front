@@ -1,43 +1,48 @@
-@import "@/styles/mixins";
-@import "@/styles/breakpoints";
+@use "@/styles/breakpoints" as *;
+@use "@/styles/mixins" as *;
 
 .blockWrapper {
-  display: none;
-  @include media-min($breakpoint-laptop) {
-    width: 64%;
-    display: flex;
-    flex-direction: column;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-  }
+	display: none;
+
+	@include media-min($breakpoint-laptop) {
+		width: 64%;
+		display: flex;
+		flex-direction: column;
+		border: 1px solid var(--border);
+		border-radius: 10px;
+	}
 }
 
 .noMessagesBlockWrapper {
-  // width: 64%;
-  // display: none;
-  margin: 0 auto;
-  position: relative;
-  @include media-min($breakpoint-laptop) {
-    width: 64%;
-    display: flex;
-    flex-direction: column;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-  }
+	// width: 64%;
+	// display: none;
+	margin: 0 auto;
+	position: relative;
+
+	@include media-min($breakpoint-laptop) {
+		width: 64%;
+		display: flex;
+		flex-direction: column;
+		border: 1px solid var(--border);
+		border-radius: 10px;
+	}
 }
 
 .visible {
-  display: block;
-  width: 100%;
-  @include media-min($breakpoint-tablet) {
-    border-top: 1px solid var(--border);
-  }
-  @include media-min($breakpoint-laptop) {
-    width: 64%;
-    display: flex;
-  }
-  // @media screen and (max-width: 1023px) {
-  //   display: block;
-  //   width: 100%;
-  // }
+	display: block;
+	width: 100%;
+
+	@include media-min($breakpoint-tablet) {
+		border-top: 1px solid var(--border);
+	}
+
+	@include media-min($breakpoint-laptop) {
+		width: 64%;
+		display: flex;
+	}
+
+	// @media screen and (max-width: 1023px) {
+	//   display: block;
+	//   width: 100%;
+	// }
 }

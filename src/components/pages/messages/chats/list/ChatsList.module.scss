@@ -1,46 +1,52 @@
-@import "@/styles/mixins";
-@import "@/styles/breakpoints";
+@use "@/styles/breakpoints" as *;
+@use "@/styles/mixins" as *;
 
 .listWrapper {
-  overflow-y: auto;
-  margin-top: 20px;
-  padding: 0px 20px;
+	overflow-y: auto;
+	margin-top: 20px;
+	padding: 0px 20px;
 
-  @include media-min($breakpoint-tablet) {
-    // height: 550px;
-    height: 485px;
-    padding: 8px 0px;
-    border-radius: 10px;
-    margin-top: 0px;
+	@include media-min($breakpoint-tablet) {
+		// height: 550px;
+		height: 485px;
+		padding: 8px 0px;
+		border-radius: 10px;
+		margin-top: 0px;
 
-    &::-webkit-scrollbar {
-      width: 8px;
-    }
-    &::-webkit-scrollbar-track {
-      background-color: #f1f1f1;
-    }
-    &::-webkit-scrollbar-thumb {
-      background-color: #e5ff46;
-      border-radius: 4px;
-    }
-    &::-webkit-scrollbar-thumb:hover {
-      background-color: #b3c638;
-    }
-  }
-  @include media-min($breakpoint-laptop) {
-    border: 1px solid var(--border);
-  }
-  @include media-min($breakpoint-laptop-large) {
-    height: 639px;
-    padding: 10px 0px;
-  }
+		&::-webkit-scrollbar {
+			width: 8px;
+		}
+
+		&::-webkit-scrollbar-track {
+			background-color: #f1f1f1;
+		}
+
+		&::-webkit-scrollbar-thumb {
+			background-color: #e5ff46;
+			border-radius: 4px;
+		}
+
+		&::-webkit-scrollbar-thumb:hover {
+			background-color: #b3c638;
+		}
+	}
+
+	@include media-min($breakpoint-laptop) {
+		border: 1px solid var(--border);
+	}
+
+	@include media-min($breakpoint-laptop-large) {
+		height: 639px;
+		padding: 10px 0px;
+	}
 }
 
 .listItem {
-  border-bottom: solid 1px gray;
-  &:last-child {
-    border-bottom: none;
-  }
+	border-bottom: solid 1px gray;
+
+	&:last-child {
+		border-bottom: none;
+	}
 }
 
 // .hidden {

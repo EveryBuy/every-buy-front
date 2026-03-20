@@ -1,16 +1,18 @@
-@import "@/styles/mixins";
-@import "@/styles/breakpoints";
+@use "@/styles/breakpoints" as *;
+@use "@/styles/mixins" as *;
 
 .blockWrapper {
-  width: 55px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  row-gap: 16px;
-  @include media-min($breakpoint-tablet) {
-    width: 60px;
-  }
-  @include media-min($breakpoint-laptop-large) {
-    width: 81px;
-  }
+	width: 55px;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	row-gap: 16px;
+
+	@include media-min($breakpoint-tablet) {
+		width: 60px;
+	}
+
+	@include media-min($breakpoint-laptop-large) {
+		width: 81px;
+	}
 }

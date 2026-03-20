@@ -1,9 +1,9 @@
-@import "@/styles/mixins";
-@import "@/styles/breakpoints";
+@use "@/styles/breakpoints" as *;
+@use "@/styles/mixins" as *;
 
 .preloaderContainer {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }

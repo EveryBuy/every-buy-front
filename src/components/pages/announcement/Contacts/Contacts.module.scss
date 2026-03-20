@@ -1,5 +1,5 @@
-@import "../../../../styles/mixins";
-@import "../../../../styles/breakpoints";
+@use "@/styles/breakpoints" as *;
+@use "@/styles/mixins" as *;
 
 .list {
 	margin-top: 16px;
