@@ -1,61 +1,65 @@
-@import "@/styles/mixins";
-@import "@/styles/breakpoints";
+@use "@/styles/breakpoints" as *;
+@use "@/styles/mixins" as *;
 
 .blockWrapper {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  background-color: #ffffff;
-  padding: 12px 40px;
-  @include media-min($breakpoint-tablet) {
-    margin: 8px 0px 15px;
-    padding: 10px 20px;
-  }
-  @include media-min($breakpoint-laptop-large) {
-    margin: 8px 0px;
-    padding: 12px 40px;
-  }
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	background-color: #ffffff;
+	padding: 12px 40px;
+
+	@include media-min($breakpoint-tablet) {
+		margin: 8px 0px 15px;
+		padding: 10px 20px;
+	}
+
+	@include media-min($breakpoint-laptop-large) {
+		margin: 8px 0px;
+		padding: 12px 40px;
+	}
 }
 
 .picture,
 .noPicture {
-  margin-right: 8px;
-  border-radius: 10%;
+	margin-right: 8px;
+	border-radius: 10%;
 }
 
 .picture {
-  width: 40px;
-  height: 40px;
-  @include media-min($breakpoint-tablet) {
-    width: 50px;
-    height: 50px;
-  }
+	width: 40px;
+	height: 40px;
+
+	@include media-min($breakpoint-tablet) {
+		width: 50px;
+		height: 50px;
+	}
 }
 
 .noPicture {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 50px;
-  height: 50px;
-  background-color: var(--bg-header-footer);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 50px;
+	height: 50px;
+	background-color: var(--bg-header-footer);
 }
 
 .textInfo {
-  display: flex;
-  flex-direction: column;
-  row-gap: 8px;
+	display: flex;
+	flex-direction: column;
+	row-gap: 8px;
 }
 
 .name {
-  @include media-min($breakpoint-tablet) {
-    font-size: var(--large-body-medium);
-  }
+	@include media-min($breakpoint-tablet) {
+		font-size: var(--large-body-medium);
+	}
 }
 
 .sum {
-  font-size: 12px;
-  @include media-min($breakpoint-tablet) {
-    font-size: inherit;
-  }
+	font-size: 12px;
+
+	@include media-min($breakpoint-tablet) {
+		font-size: inherit;
+	}
 }

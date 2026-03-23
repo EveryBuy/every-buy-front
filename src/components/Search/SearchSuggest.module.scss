@@ -1,5 +1,5 @@
-@import "@/styles/_mixins";
-@import "@/styles/_breakpoints";
+@use "@/styles/_mixins" as *;
+@use "@/styles/_breakpoints" as *;
 
 .searchSuggest {
 	display: block;

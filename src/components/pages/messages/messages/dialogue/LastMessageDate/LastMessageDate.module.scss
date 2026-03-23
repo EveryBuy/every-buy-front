@@ -1,28 +1,31 @@
-@import "@/styles/mixins";
-@import "@/styles/breakpoints";
+@use "@/styles/breakpoints" as *;
+@use "@/styles/mixins" as *;
 
 .dateWrapper {
-  display: none;
-  @include media-min($breakpoint-tablet) {
-    position: absolute;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    left: 0;
-    top: -14px;
-    // z-index: 1;
-  }
+	display: none;
+
+	@include media-min($breakpoint-tablet) {
+		position: absolute;
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		left: 0;
+		top: -14px;
+		// z-index: 1;
+	}
 }
 
 .date {
-  text-align: center;
-  width: 145px;
-  background-color: var(--main-background);
-  font-size: var(--large-body-medium);
-  @include media-min($breakpoint-tablet) {
-    font-size: var(--body-text);
-  }
-  @include media-min($breakpoint-laptop-large) {
-    font-size: var(--large-body-medium);
-  }
+	text-align: center;
+	width: 145px;
+	background-color: var(--main-background);
+	font-size: var(--large-body-medium);
+
+	@include media-min($breakpoint-tablet) {
+		font-size: var(--body-text);
+	}
+
+	@include media-min($breakpoint-laptop-large) {
+		font-size: var(--large-body-medium);
+	}
 }

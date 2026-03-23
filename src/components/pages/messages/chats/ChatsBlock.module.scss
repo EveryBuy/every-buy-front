@@ -1,99 +1,104 @@
-@import "@/styles/mixins";
-@import "@/styles/breakpoints";
+@use "@/styles/breakpoints" as *;
+@use "@/styles/mixins" as *;
 
 .blockWrapper {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
 
-  @include media-min($breakpoint-laptop) {
-    width: 36%;
-  }
+	@include media-min($breakpoint-laptop) {
+		width: 36%;
+	}
 }
 
 .buttonsWrapper {
-  height: 67px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0px 11px;
-  background-color: #ffffff;
+	height: 67px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0px 11px;
+	background-color: #ffffff;
 
-  @include media-min($breakpoint-laptop) {
-    height: 65px;
-    border-radius: 10px;
-    padding: 0px 10px;
-  }
-  @include media-min($breakpoint-laptop-large) {
-    height: 81px;
-    flex-direction: row;
-    justify-content: space-between;
-  }
+	@include media-min($breakpoint-laptop) {
+		height: 65px;
+		border-radius: 10px;
+		padding: 0px 10px;
+	}
+
+	@include media-min($breakpoint-laptop-large) {
+		height: 81px;
+		flex-direction: row;
+		justify-content: space-between;
+	}
 }
 
 .iconsWrapper {
-  display: flex;
-  justify-content: space-between;
-  column-gap: 16px;
-  width: 80px;
+	display: flex;
+	justify-content: space-between;
+	column-gap: 16px;
+	width: 80px;
 
-  @include media-min($breakpoint-laptop) {
-    width: 55px;
-    column-gap: 0px;
-  }
-  @include media-min($breakpoint-laptop-large) {
-    width: 80px;
-  }
+	@include media-min($breakpoint-laptop) {
+		width: 55px;
+		column-gap: 0px;
+	}
+
+	@include media-min($breakpoint-laptop-large) {
+		width: 80px;
+	}
 }
 
 .savedMessagesHeaderBlock {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 5.5px 0px;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 5.5px 0px;
 
-  @include media-min($breakpoint-tablet) {
-    padding: 9px 0px;
-  }
+	@include media-min($breakpoint-tablet) {
+		padding: 9px 0px;
+	}
 
-  & .arrow {
-    width: 20px;
-    height: 15px;
-    margin-right: 10px;
-    @include media-min($breakpoint-tablet) {
-      margin: 0px 20px 0px 12px;
-    }
-  }
+	& .arrow {
+		width: 20px;
+		height: 15px;
+		margin-right: 10px;
 
-  & .text {
-    display: flex;
-    align-items: center;
-    font-size: var(--body-text);
-    @include media-min($breakpoint-tablet) {
-      font-size: var(--f-size-h4);
-    }
-  }
+		@include media-min($breakpoint-tablet) {
+			margin: 0px 20px 0px 12px;
+		}
+	}
+
+	& .text {
+		display: flex;
+		align-items: center;
+		font-size: var(--body-text);
+
+		@include media-min($breakpoint-tablet) {
+			font-size: var(--f-size-h4);
+		}
+	}
 }
 
 .iconHeart,
 .iconFolder {
-  cursor: auto;
-  width: 32px;
-  height: 32px;
-  @include media-min($breakpoint-tablet) {
-    margin-right: 21px;
-    width: 24px;
-    height: 24px;
-  }
+	cursor: auto;
+	width: 32px;
+	height: 32px;
+
+	@include media-min($breakpoint-tablet) {
+		margin-right: 21px;
+		width: 24px;
+		height: 24px;
+	}
 }
 
 .preloader {
-  padding: 0;
+	padding: 0;
 }
 
 .hidden {
-  @media screen and (max-width: 1023px) {
-    display: none;
-  }
+	@media screen and (max-width: 1023px) {
+		display: none;
+	}
 }

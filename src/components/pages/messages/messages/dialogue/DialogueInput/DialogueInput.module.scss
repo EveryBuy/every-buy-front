@@ -1,115 +1,127 @@
-@import "@/styles/mixins";
-@import "@/styles/breakpoints";
+@use "@/styles/breakpoints" as *;
+@use "@/styles/mixins" as *;
 
 .blockBackground,
 .blockMessage {
-  width: 100%;
-  background-color: var(--background);
-  padding: 10px 0px 10px;
-  @include media-min($breakpoint-tablet) {
-    padding: 0px;
-    border-radius: 10px;
-    margin: 5px 0px 1px;
-  }
-  @include media-min($breakpoint-laptop-large) {
-    margin-top: 10px;
-  }
+	width: 100%;
+	background-color: var(--background);
+	padding: 10px 0px 10px;
+
+	@include media-min($breakpoint-tablet) {
+		padding: 0px;
+		border-radius: 10px;
+		margin: 5px 0px 1px;
+	}
+
+	@include media-min($breakpoint-laptop-large) {
+		margin-top: 10px;
+	}
 }
 
 .inputBlockWrapper {
-  width: 100%;
-  min-height: 10%;
-  display: flex;
-  justify-content: space-between;
-  background-color: #ffffff;
-  border-radius: 10px;
-  padding: 0px 10px;
-  @include media-min($breakpoint-tablet) {
-    padding: 0px 15px 2px;
-    height: 54px;
-  }
-  & .input {
-    & div:first-child {
-      height: 100%;
-      // padding: 10px 14px;
-    }
-  }
-  & label::after {
-    content: "";
-  }
+	width: 100%;
+	min-height: 10%;
+	display: flex;
+	justify-content: space-between;
+	background-color: #ffffff;
+	border-radius: 10px;
+	padding: 0px 10px;
+
+	@include media-min($breakpoint-tablet) {
+		padding: 0px 15px 2px;
+		height: 54px;
+	}
+
+	& .input {
+		& div:first-child {
+			height: 100%;
+			// padding: 10px 14px;
+		}
+	}
+
+	& label::after {
+		content: "";
+	}
 }
 
 .inputIconsWrapper {
-  // width: 20%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-right: 10px;
-  @include media-min($breakpoint-tablet) {
-    margin-right: 0px;
-  }
-  @include media-min($breakpoint-laptop-large) {
-    width: 8%;
-    margin-right: 10px;
-  }
+	// width: 20%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-right: 10px;
+
+	@include media-min($breakpoint-tablet) {
+		margin-right: 0px;
+	}
+
+	@include media-min($breakpoint-laptop-large) {
+		width: 8%;
+		margin-right: 10px;
+	}
 }
 
 .iconPic {
-  width: 23px;
-  height: 18px;
+	width: 23px;
+	height: 18px;
 }
+
 .iconClip {
-  width: 22px;
-  height: 22px;
+	width: 22px;
+	height: 22px;
 }
 
 .input {
-  & fieldset {
-    border: 0px;
-    padding-right: 15px;
-  }
+	& fieldset {
+		border: 0px;
+		padding-right: 15px;
+	}
 }
 
 .sendIconWrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
+
 .iconSend {
-  width: 24px;
-  height: 24px;
+	width: 24px;
+	height: 24px;
 }
 
 .blockMessage,
 .chatBlockedByCompanion {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  height: 144px;
-  padding: 20px 13px;
-  background-color: var(--errorMessagesMessage);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	height: 144px;
+	padding: 20px 13px;
+	background-color: var(--errorMessagesMessage);
 
-  & p:first-child {
-    text-align: center;
-  }
-  & p:last-child {
-    cursor: pointer;
+	& p:first-child {
+		text-align: center;
+	}
 
-    &:hover {
-      text-decoration: underline;
-    }
-  }
+	& p:last-child {
+		cursor: pointer;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
 }
 
 .chatBlockedByCompanion {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  & p:first-child {
-    cursor: default;
-  }
-  & p:first-child:hover {
-    text-decoration: none;
-  }
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	& p:first-child {
+		cursor: default;
+	}
+
+	& p:first-child:hover {
+		text-decoration: none;
+	}
 }

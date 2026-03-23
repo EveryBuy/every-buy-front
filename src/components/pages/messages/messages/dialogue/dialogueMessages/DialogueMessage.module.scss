@@ -1,123 +1,136 @@
-@import "@/styles/mixins";
-@import "@/styles/breakpoints";
+@use "@/styles/breakpoints" as *;
+@use "@/styles/mixins" as *;
 
 .wrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  width: 286px;
-  height: fit-content;
-  margin-top: 16px;
-  @include media-min($breakpoint-tablet) {
-    width: 285px;
-  }
-  @include media-min($breakpoint-laptop-large) {
-    width: 410px;
-    margin-top: 25px;
-  }
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	width: 286px;
+	height: fit-content;
+	margin-top: 16px;
+
+	@include media-min($breakpoint-tablet) {
+		width: 285px;
+	}
+
+	@include media-min($breakpoint-laptop-large) {
+		width: 410px;
+		margin-top: 25px;
+	}
 }
 
 .picture {
-  display: none;
-  @include media-min($breakpoint-tablet) {
-    display: block;
-    width: 40px;
-    height: 40px;
-  }
-  @include media-min($breakpoint-laptop-large) {
-    display: block;
-    width: 48px;
-    height: 48px;
-  }
+	display: none;
+
+	@include media-min($breakpoint-tablet) {
+		display: block;
+		width: 40px;
+		height: 40px;
+	}
+
+	@include media-min($breakpoint-laptop-large) {
+		display: block;
+		width: 48px;
+		height: 48px;
+	}
 }
 
 .picture img {
-  border-radius: 50%;
-  object-fit: cover;
-  @include media-min($breakpoint-tablet) {
-    width: 40px;
-    height: 40px;
-  }
-  @include media-min($breakpoint-laptop-large) {
-    width: 48px;
-    height: 48px;
-  }
+	border-radius: 50%;
+	object-fit: cover;
+
+	@include media-min($breakpoint-tablet) {
+		width: 40px;
+		height: 40px;
+	}
+
+	@include media-min($breakpoint-laptop-large) {
+		width: 48px;
+		height: 48px;
+	}
 }
 
 .noPicture {
-  display: none;
-  @include media-min($breakpoint-tablet) {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    background-color: var(--bg-header-footer);
-    width: 60px;
-    height: 40px;
-  }
-  @include media-min($breakpoint-laptop-large) {
-    width: 48px;
-    height: 48px;
-  }
+	display: none;
 
-  & svg {
-    width: 30px;
-    height: 30px;
-    color: white;
-  }
+	@include media-min($breakpoint-tablet) {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		border-radius: 50%;
+		background-color: var(--bg-header-footer);
+		width: 60px;
+		height: 40px;
+	}
+
+	@include media-min($breakpoint-laptop-large) {
+		width: 48px;
+		height: 48px;
+	}
+
+	& svg {
+		width: 30px;
+		height: 30px;
+		color: white;
+	}
 }
 
 .textWrapperLeft,
 .textWrapperRight {
-  width: 360px;
-  position: relative;
-  display: flex;
-  order: 2;
-  justify-content: space-between;
-  column-gap: 10px;
-  padding: 11px 8px 11px 22px;
-  border-radius: 0 10px 10px 0;
-  & .text {
-    word-break: break-word;
-  }
-  & .file {
-    width: 50px;
-    height: 50px;
-    & svg {
-      width: 50px;
-      height: 50px;
-    }
-  }
-  & .time {
-    display: flex;
-    align-items: flex-end;
-    font-size: 12px;
-    color: var(--input-text);
-  }
+	width: 360px;
+	position: relative;
+	display: flex;
+	order: 2;
+	justify-content: space-between;
+	column-gap: 10px;
+	padding: 11px 8px 11px 22px;
+	border-radius: 0 10px 10px 0;
+
+	& .text {
+		word-break: break-word;
+	}
+
+	& .file {
+		width: 50px;
+		height: 50px;
+
+		& svg {
+			width: 50px;
+			height: 50px;
+		}
+	}
+
+	& .time {
+		display: flex;
+		align-items: flex-end;
+		font-size: 12px;
+		color: var(--input-text);
+	}
 }
 
 .textWrapperRight {
-  padding: 11px 20px 11px 22px;
-  border-radius: 10px 0 0 10px;
+	padding: 11px 20px 11px 22px;
+	border-radius: 10px 0 0 10px;
 }
 
 .leftSign::after {
-  content: "";
-  position: absolute;
-  bottom: 1px;
-  right: 0px;
-  width: 12px;
-  height: 100%;
-  background-color: var(--background);
-  border-bottom-left-radius: 80%;
+	content: "";
+	position: absolute;
+	bottom: 1px;
+	right: 0px;
+	width: 12px;
+	height: 100%;
+	background-color: var(--background);
+	border-bottom-left-radius: 80%;
 }
+
 .rightSign::before {
-  content: "";
-  position: absolute;
-  bottom: 1px;
-  left: 0px;
-  width: 12px;
-  height: 100%;
-  background-color: var(--background);
-  border-bottom-right-radius: 80%;
+	content: "";
+	position: absolute;
+	bottom: 1px;
+	left: 0px;
+	width: 12px;
+	height: 100%;
+	background-color: var(--background);
+	border-bottom-right-radius: 80%;
 }

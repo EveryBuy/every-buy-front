@@ -1,100 +1,109 @@
-@import "@/styles/mixins";
-@import "@/styles/breakpoints";
+@use "@/styles/breakpoints" as *;
+@use "@/styles/mixins" as *;
 
 .blockWrapper {
-  height: calc(100vh - 275px);
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  @include media-min($breakpoint-tablet) {
-    height: 382px;
-    border-top: 1px solid var(--border);
-  }
-  @include media-min($breakpoint-laptop-large) {
-    height: 525px;
-  }
+	height: calc(100vh - 275px);
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+
+	@include media-min($breakpoint-tablet) {
+		height: 382px;
+		border-top: 1px solid var(--border);
+	}
+
+	@include media-min($breakpoint-laptop-large) {
+		height: 525px;
+	}
 }
 
 .dateWrapper {
-  position: absolute;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  left: 0;
-  top: -14px;
+	position: absolute;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	left: 0;
+	top: -14px;
 }
 
 .date {
-  text-align: center;
-  width: 145px;
-  background-color: var(--main-background);
-  font-size: var(--large-body-medium);
+	text-align: center;
+	width: 145px;
+	background-color: var(--main-background);
+	font-size: var(--large-body-medium);
 }
 
 .noticeWrapper {
-  width: 263px;
-  height: 263px;
-  padding: 32px 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  border-radius: 25px;
-  border: 1px solid var(--border);
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%, 35%);
+	width: 263px;
+	height: 263px;
+	padding: 32px 10px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	border-radius: 25px;
+	border: 1px solid var(--border);
+	position: absolute;
+	left: 50%;
+	transform: translate(-50%, 35%);
 
-  & p {
-    text-align: center;
-  }
+	& p {
+		text-align: center;
+	}
 }
 
 .dialogueWrapper {
-  width: 100%;
-  height: 100%;
-  padding: 20px 10px 0px;
-  overflow-y: auto;
+	width: 100%;
+	height: 100%;
+	padding: 20px 10px 0px;
+	overflow-y: auto;
 
-  @include media-min($breakpoint-tablet) {
-    padding: 10px 20px 0px;
-    margin-top: 10px;
-    &::-webkit-scrollbar {
-      width: 8px;
-    }
-    &::-webkit-scrollbar-track {
-      background-color: #f1f1f1;
-    }
-    &::-webkit-scrollbar-thumb {
-      background-color: #e5ff46;
-      border-radius: 4px;
-    }
-    &::-webkit-scrollbar-thumb:hover {
-      background-color: #b3c638;
-    }
-  }
-  @include media-min($breakpoint-laptop-large) {
-    // height: 455px;
-    height: 440px;
-    padding: 10px 40px 0px;
-  }
+	@include media-min($breakpoint-tablet) {
+		padding: 10px 20px 0px;
+		margin-top: 10px;
 
-  & div:first-child {
-    @include media-min($breakpoint-tablet) {
-      margin-top: 0px;
-    }
-    @include media-min($breakpoint-laptop-large) {
-      margin-top: 16px;
-    }
-  }
+		&::-webkit-scrollbar {
+			width: 8px;
+		}
+
+		&::-webkit-scrollbar-track {
+			background-color: #f1f1f1;
+		}
+
+		&::-webkit-scrollbar-thumb {
+			background-color: #e5ff46;
+			border-radius: 4px;
+		}
+
+		&::-webkit-scrollbar-thumb:hover {
+			background-color: #b3c638;
+		}
+	}
+
+	@include media-min($breakpoint-laptop-large) {
+		// height: 455px;
+		height: 440px;
+		padding: 10px 40px 0px;
+	}
+
+	& div:first-child {
+		@include media-min($breakpoint-tablet) {
+			margin-top: 0px;
+		}
+
+		@include media-min($breakpoint-laptop-large) {
+			margin-top: 16px;
+		}
+	}
 }
 
 .inputWrapper {
-  width: 92%;
-  & div {
-    gap: 0px;
-    max-width: 100%;
-  }
+	width: 92%;
+
+	& div {
+		gap: 0px;
+		max-width: 100%;
+	}
 }

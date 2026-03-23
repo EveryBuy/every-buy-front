@@ -1,134 +1,140 @@
-@import "@/styles/mixins";
-@import "@/styles/breakpoints";
+@use "@/styles/breakpoints" as *;
+@use "@/styles/mixins" as *;
 
 .companionWrapper {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  padding: 13px 20px 13px;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	padding: 13px 20px 13px;
 
-  @include media-min($breakpoint-laptop-large) {
-    padding: 14px 30px 14px 40px;
-    border-bottom: 1px solid var(--border);
-  }
+	@include media-min($breakpoint-laptop-large) {
+		padding: 14px 30px 14px 40px;
+		border-bottom: 1px solid var(--border);
+	}
 }
 
 .companion {
-  display: flex;
-  align-items: center;
+	display: flex;
+	align-items: center;
 }
 
 .backArrow {
-  margin: 0px;
-  width: 40px;
-  height: 40px;
-  @include media-min($breakpoint-laptop) {
-    display: none;
-  }
+	margin: 0px;
+	width: 40px;
+	height: 40px;
+
+	@include media-min($breakpoint-laptop) {
+		display: none;
+	}
 }
 
 .picture,
 .noPicture {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 31px;
-  height: 31px;
-  border-radius: 50%;
-  background-color: var(--bg-header-footer);
-  margin-right: 8px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 31px;
+	height: 31px;
+	border-radius: 50%;
+	background-color: var(--bg-header-footer);
+	margin-right: 8px;
 
-  @include media-min($breakpoint-tablet) {
-    width: 50px;
-    height: 50px;
-    margin-right: 20px;
-  }
-  @include media-min($breakpoint-laptop-large) {
-    width: 72px;
-    height: 72px;
-    margin-right: 31px;
-  }
+	@include media-min($breakpoint-tablet) {
+		width: 50px;
+		height: 50px;
+		margin-right: 20px;
+	}
 
-  & svg {
-    width: 18px;
-    height: 20px;
-    @include media-min($breakpoint-tablet) {
-      width: 24px;
-      height: 24px;
-    }
-  }
+	@include media-min($breakpoint-laptop-large) {
+		width: 72px;
+		height: 72px;
+		margin-right: 31px;
+	}
+
+	& svg {
+		width: 18px;
+		height: 20px;
+
+		@include media-min($breakpoint-tablet) {
+			width: 24px;
+			height: 24px;
+		}
+	}
 }
 
 .picture {
-  object-fit: cover;
+	object-fit: cover;
 }
 
 .companionInfo {
-  display: flex;
-  flex-direction: column;
-  row-gap: 4px;
+	display: flex;
+	flex-direction: column;
+	row-gap: 4px;
 }
 
 .name {
-  @include media-min($breakpoint-tablet) {
-    font-size: var(--large-body-medium);
-  }
+	@include media-min($breakpoint-tablet) {
+		font-size: var(--large-body-medium);
+	}
 }
 
 .blocked {
-  color: var(--errorMessagesMessage);
+	color: var(--errorMessagesMessage);
 }
 
 .time {
-  display: flex;
-  align-items: center;
-  color: var(--input-text);
-  font-size: 12px;
+	display: flex;
+	align-items: center;
+	color: var(--input-text);
+	font-size: 12px;
 
-  @include media-min($breakpoint-tablet) {
-    font-size: var(--body-mobile-text);
-  }
-  @include media-min($breakpoint-laptop-large) {
-    font-size: var(--large-body-medium);
-  }
+	@include media-min($breakpoint-tablet) {
+		font-size: var(--body-mobile-text);
+	}
 
-  &::before {
-    content: "";
-    width: 8px;
-    height: 8px;
-    background-color: var(--input-text);
-    margin-right: 4px;
-    border-radius: 50%;
-  }
+	@include media-min($breakpoint-laptop-large) {
+		font-size: var(--large-body-medium);
+	}
+
+	&::before {
+		content: "";
+		width: 8px;
+		height: 8px;
+		background-color: var(--input-text);
+		margin-right: 4px;
+		border-radius: 50%;
+	}
 }
 
 .companionMenuWrapper {
-  display: flex;
-  align-items: center;
+	display: flex;
+	align-items: center;
 }
 
 .companionMenu {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  row-gap: 4px;
-  height: 32px;
-  cursor: pointer;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	row-gap: 4px;
+	height: 32px;
+	cursor: pointer;
 
-  & div {
-    width: 6px;
-    height: 6px;
-    background-color: var(--label);
-    border-radius: 50%;
-    @include media-min($breakpoint-tablet) {
-      width: 4px;
-      height: 4px;
-    }
-    @include media-min($breakpoint-laptop-large) {
-      width: 8px;
-      height: 8px;
-    }
-  }
+	& div {
+		width: 6px;
+		height: 6px;
+		background-color: var(--label);
+		border-radius: 50%;
+
+		@include media-min($breakpoint-tablet) {
+			width: 4px;
+			height: 4px;
+		}
+
+		@include media-min($breakpoint-laptop-large) {
+			width: 8px;
+			height: 8px;
+		}
+	}
 }
