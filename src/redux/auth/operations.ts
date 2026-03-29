@@ -76,8 +76,12 @@ export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
   try {
     clearHeaderAuthToken();
     // persistor.purge();
-    thunkAPI.dispatch({ type: PURGE });  
-  } catch (error) {
+    // thunkAPI.dispatch({ type: PURGE });
+    if (typeof window !== "undefined") {
+      localStorage.removeItem('persist:root');
+    }
+    return;
+  } catch (error: any) {
     return thunkAPI.rejectWithValue(error);
   }
 });

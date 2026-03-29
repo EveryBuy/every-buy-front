@@ -68,26 +68,26 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(validate.rejected, (state) => {
-        state.user = {
-          userId: null,
-          fullName: null,
-          email: null,
-          phone: null,
-          userPhotoUrl: null,
-        };
-        state.token = null;
-        state.isLoggedIn = false;
-        state.error = null;
-      })
+      // .addCase(validate.rejected, (state) => {
+      //   state.user = {
+      //     userId: null,
+      //     fullName: null,
+      //     email: null,
+      //     phone: null,
+      //     userPhotoUrl: null,
+      //   };
+      //   state.token = null;
+      //   state.isLoggedIn = false;
+      //   state.error = null;
+      // })
+      .addCase(validate.rejected, () => initialState)
       .addCase(
         register.fulfilled,
         (state, action: PayloadAction<AuthResponse>) => {
-          
           state.user = action.payload.data;
           state.token = action.payload.token;
           state.isLoggedIn = true;
-        }
+        },
       )
       .addCase(register.rejected, (state, action: PayloadAction<any>) => {
         state.isLoggedIn = false;
@@ -106,17 +106,18 @@ const authSlice = createSlice({
         const message = loginMessages(action.payload.status);
         toast.error(message);
       })
-      .addCase(logout.fulfilled, (state) => {
-        state.user = {
-          userId: null,
-          fullName: null,
-          email: null,
-          phone: null,
-          userPhotoUrl: null,
-        };
-        state.token = null;
-        state.isLoggedIn = false;
-      })
+      // .addCase(logout.fulfilled, (state) => {
+      //   state.user = {
+      //     userId: null,
+      //     fullName: null,
+      //     email: null,
+      //     phone: null,
+      //     userPhotoUrl: null,
+      //   };
+      //   state.token = null;
+      //   state.isLoggedIn = false;
+      // })
+      .addCase(logout.fulfilled, () => initialState)
       .addCase(logout.rejected, (state, action: PayloadAction<any>) => {
         state.error = action.payload;
         state.isLoggedIn = false;
@@ -125,7 +126,20 @@ const authSlice = createSlice({
         state.user = payload;
         state.isLoggedIn = true;
       })
-      .addCase(refreshUser.rejected, (state, action: PayloadAction<any>) => {
+      // .addCase(refreshUser.rejected, (state, action: PayloadAction<any>) => {
+      //   state.token = null;
+      //   state.isLoggedIn = false;
+      //   state.user = {
+      //     userId: null,
+      //     fullName: null,
+      //     email: null,
+      //     phone: null,
+      //     userPhotoUrl: null,
+      //   };
+      //   state.error = action.payload;
+      //   toast.error("Сесія завершена. Увійдіть знову.");
+      // })
+      .addCase(refreshUser.rejected, (state, action) => {
         state.token = null;
         state.isLoggedIn = false;
         state.user = {
@@ -137,6 +151,7 @@ const authSlice = createSlice({
         };
         state.error = action.payload;
         toast.error("Сесія завершена. Увійдіть знову.");
+        return { ...initialState, error: action.payload };
       })
       .addCase(deleteUser.fulfilled, (state, { payload }) => {
         state.isDeleted = true;
@@ -164,7 +179,7 @@ const authSlice = createSlice({
           state.error = null;
           state.user.fullName = action.payload.fullName;
           toast.success("Name successfully changed!");
-        }
+        },
       )
       .addCase(changeUserName.rejected, (state, action: PayloadAction<any>) => {
         state.error = action.payload;
@@ -179,7 +194,7 @@ const authSlice = createSlice({
         (state, action: PayloadAction<User>) => {
           state.user = action.payload;
           toast.success("Phone successfully changed!");
-        }
+        },
       )
       .addCase(
         changeUserPhone.rejected,
@@ -187,26 +202,23 @@ const authSlice = createSlice({
           state.error = action.payload;
           const message = changePhoneMessages(action.payload.status);
           toast.error(message);
-        }
+        },
       )
       .addCase(changeUserEmail.pending, (state, _) => {
         state.error = null;
       })
-      .addCase(
-        changeUserEmail.fulfilled,
-        (state, action) => {
-          state.user = action.payload.data;
-          state.token = action.payload.token;
-          toast.success("Email successfully changed!");
-        }
-      )
+      .addCase(changeUserEmail.fulfilled, (state, action) => {
+        state.user = action.payload.data;
+        state.token = action.payload.token;
+        toast.success("Email successfully changed!");
+      })
       .addCase(
         changeUserEmail.rejected,
         (state, action: PayloadAction<any>) => {
           state.error = action.payload;
           const message = changeEmailMessages(action.payload.status);
           toast.error(message);
-        }
+        },
       )
       .addCase(changeUserPhoto.fulfilled, (state, action) => {
         state.user.userPhotoUrl = action.payload.data.userPhotoUrl;
@@ -230,7 +242,7 @@ const authSlice = createSlice({
           state.error = action.payload.message;
           const message = unsubscribeMessages(action.payload.status);
           toast.error(message);
-        }
+        },
       );
   },
 });

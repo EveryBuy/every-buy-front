@@ -157,7 +157,7 @@ export const changeAdvertisementStatus = createAsyncThunk(
   "advert/changeStatus",
   async (id: number, thunkAPI) => {
     try {
-      const response = await API.put(`/product/${id}/change-status`);
+      const response = await API.patch(`/product/${id}/change-status`);
       return response.data;
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.message);
