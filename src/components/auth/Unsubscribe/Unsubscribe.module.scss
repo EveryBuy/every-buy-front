@@ -1,0 +1,95 @@
+.modalBox {
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 750px;
+  height: 80%;
+  overflow-y: auto;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  color: #000;
+  font-size: 20px;
+  line-height: 1.6;
+  scrollbar-width: thin; 
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+}
+
+.modalTitle {
+  font-size: 24px;
+  margin-bottom: 24px;
+  font-weight: 600;
+}
+
+.modalBox form > div {
+  margin-bottom: 24px;
+}
+
+.modalBox label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.modalBox input[type="checkbox"],
+.modalBox input[type="radio"] {
+  margin-right: 8px;
+  margin-bottom: 8px;
+}
+
+.modalBox input[type="text"],
+.modalBox input[type="email"] {
+  display: block;
+  width: 100%;
+  max-width: 400px;
+  margin-top: 8px;
+  margin-bottom: 12px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.submitButton {
+  background-color: #f0f0f0;
+  color: black;
+  font-weight: 500;
+  padding: 10px 75px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.submitButton:hover {
+  border-color: var(--input-text);
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+.cancelButton {
+  background-color: #e5ff46;
+  color: #000;
+  font-weight: 500;
+  padding: 10px 75px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-left: 10px;
+  transition: border-color 0.3s ease;
+}
+
+.cancelButton:hover {
+  border-color: var(--input-text);
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+.modalBox button {
+  margin-top: 20px;
+}
+
+.buttonGroup{
+  display: flex;
+  justify-content: center;
+  align-items: center;          
+  text-align: center;
+  gap: 21px;
+}
